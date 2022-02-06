@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=3.00;
+float thisversion=3.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -23,10 +23,12 @@ float thisversion=3.00;
 #define Neither 0
 #define Short 1
 #define Regular 2
+#define INDIVIDUAL	1
+#define ESTATE	2
 
-int BoxA, BoxB, BoxC, BoxD, BoxE, Num_Days = 0;
+int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 
-/*-----------Tax Routines Copied From taxsolve_US_1040_2021.c ----------------*/
+/*-----------Tax Routines Copied From taxsolve_US_1040_2021.c----------------*/
 
 			/* Following values taken from 1040-Instructions pg 110. */	/* Updated for 2021. */
 double brkpt[4][9]={
@@ -74,12 +76,21 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
  return tx;
 }
 
+/* 2021 Tax Rate Schedule for Estates/Trusts - From 2021 Form 1041 Instructions, page 30 */
+
+double Estate_Trust_TaxRateFunction( double income )
+{
+ if (income < 2650.0) return income * 0.10; else
+ if (income < 9550.0) return  265.0 + (income - 2650.0) * 0.24; else
+ if (income < 13050.0) return 1921.0 + (income - 9550.0) * 0.35; else
+ return 3146.0 + (income - 13050.0) * 0.37; 
+}
 
 /*----------------------------------------------------------------------------*/
 
 int main( int argc, char *argv[] )
 {
-  int i, j, k, status, individual = Yes;
+  int i, j, k, status, entity;
  char word[4000], outfname[4000], *infname=0;
  time_t now;
 
@@ -177,8 +188,13 @@ fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
 
  get_parameter( infile, 's', word, "Entity" );
  get_parameter( infile, 'w', word, "Entity?");
- if (strncasecmp(word,"Individual",3)==0) individual = Yes;
- fprintf(outfile,"Entity = %s (%d)\n", word, individual);
+ if (strncasecmp(word,"Individual",3)==0){
+ 	entity = INDIVIDUAL;
+ }
+ else if(strncasecmp(word,"Estate/Trust",3)==0){
+	entity = ESTATE;
+ }
+ fprintf(outfile,"Entity = %s (%d)\n", word, entity);
 
 get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
@@ -198,7 +214,7 @@ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/
  GetLineF( "L1", &L[1] );
  GetLineF( "L2", &L[2] );
  GetLineF( "L3", &L[3] );
- L[4] = L[1] + L[2] + L[3];
+ L[4] = L[1] + L[2] - L[3];
  showline( 4 );
  L[5] = L[4] * 0.90;
  showline( 5 );
@@ -252,10 +268,14 @@ if((L[4] < 1000) || (L[7] < 1000))
 	fprintf(outfile, "Line 4 or Line 7 less than $1,000.  Don't file Form 2210. You don't owe a penalty.\n");
 
 else if(L[6] >= L[9]){
-	if(BoxE == Yes)
+	fprintf(outfile, "Line 6 is equal to or more than Line 9.\n");
+	if(BoxE == Yes){
+
 		fprintf(outfile, "You don't owe a penalty.  Because Box E in Part II applies, file page 1 of Form 2210.\n");
-	else
+	}
+	else{
 		fprintf(outfile, "You don't owe a penalty.  Don't file Form 2210.\n");
+	}
 }
 else if((BoxA == Yes) || (BoxB == Yes) || (BoxC == Yes) || (BoxD == Yes) || (BoxE == Yes)){
 	fprintf(outfile, "You MUST file Form 2210.\n");
@@ -266,6 +286,7 @@ else if((BoxA == Yes) || (BoxB == Yes) || (BoxC == Yes) || (BoxD == Yes) || (Box
 }
 else
 	fprintf(outfile, "%s", "Don't file Form 2210. You aren't required to figure\nyour penalty because the IRS will figure it and send\nyou a bill for any unpaid amount. If you want to figure\nit, you may use Part III as a worksheet and\nenter your penalty amount on your tax return, but\ndon't file Form 2210.\n");
+
 
 	/* Inputs must be read; */
 	/* otherwise, error message re: unexpected input is thrown */
@@ -334,20 +355,58 @@ else
 	
 	  /* Schedule AI - PART 1 */
 
-	if(individual == Yes){
-	
-		a[2] = 4.0;
-		b[2] = 2.4;
-		c[2] = 1.5;
-		d[2] = 1.0;
-	}
-	else{
+  if(BoxC == Yes){
+
+	if(entity == ESTATE){
+
 		a[2] = 6.0;
 		b[2] = 3.0;
 		c[2] = 1.71429;
 		d[2] = 1.09091;
-	}
+
+		a[3] = a[1] * a[2];
+		b[3] = b[1] * b[2];
+		c[3] = c[1] * c[2];
+		d[3] = d[1] * d[2];
+
+		for(i = 4; i <= 8; i++){
+		
+			a[i] = 0;
+			b[i] = 0;
+			c[i] = 0;
+			d[i] = 0;
+		}
+
+		a[10] = 0;
+		b[10] = 0;
+		c[10] = 0;
+		d[10] = 0;
 	
+	       	a[11] = a[3] - a[9];	
+		b[11] = b[3] - b[9];
+		c[11] = c[3] - c[9];
+		d[11] = d[3] - d[9];
+
+		a[13] = NotLessThanZero(a[11] - a[12]);
+		b[13] = NotLessThanZero(b[11] - b[12]);
+		c[13] = NotLessThanZero(c[11] - c[12]);
+		d[13] = NotLessThanZero(d[11] - d[12]);
+
+		if(a[14] < 0)
+			a[14] = Estate_Trust_TaxRateFunction(a[13]);	/* else defaults to the entered value */
+		if(b[14] < 0)		
+			b[14] = Estate_Trust_TaxRateFunction(b[13]);
+		if(c[14] < 0)
+			c[14] = Estate_Trust_TaxRateFunction(c[13]);
+		if(d[14] < 0)
+			d[14] = Estate_Trust_TaxRateFunction(d[13]);
+	}
+	else{
+		a[2] = 4.0;
+		b[2] = 2.4;
+		c[2] = 1.5;
+		d[2] = 1.0;
+
 		a[3] = a[1] * a[2];
 		b[3] = b[1] * b[2];
 		c[3] = c[1] * c[2];
@@ -368,34 +427,30 @@ else
 		c[8] = LargerOf(c[6], c[7]);
 		d[8] = LargerOf(d[6], d[7]);
 	
-		if(individual == Yes){
+		a[10] = a[8] + a[9];		
+		b[10] = b[8] + b[9];
+		c[10] = c[8] + c[9];
+		d[10] = d[8] + d[9];
 	
-			a[10] = a[8] + a[9];		
-			b[10] = b[8] + b[9];
-			c[10] = c[8] + c[9];
-			d[10] = d[8] + d[9];
-	
-	       	        a[11] = a[3] - a[10];	
-			b[11] = b[3] - b[10];
-			c[11] = c[3] - c[10];
-			d[11] = d[3] - d[10];
-		}
-		else{
-	       	        a[11] = a[3] - a[9];	
-			b[11] = b[3] - b[9];
-			c[11] = c[3] - c[9];
-			d[11] = d[3] - d[9];		
-		}
-		
+       	        a[11] = a[3] - a[10];	
+		b[11] = b[3] - b[10];
+		c[11] = c[3] - c[10];
+		d[11] = d[3] - d[10];
+
 		a[13] = NotLessThanZero(a[11] - a[12]);
 		b[13] = NotLessThanZero(b[11] - b[12]);
 		c[13] = NotLessThanZero(c[11] - c[12]);
 		d[13] = NotLessThanZero(d[11] - d[12]);
 
-		a[14] = TaxRateFunction(a[13], status);
-		b[14] = TaxRateFunction(b[13], status);
-		c[14] = TaxRateFunction(c[13], status);
-		d[14] = TaxRateFunction(d[13], status);
+		if(a[14] < 0)
+			a[14] = TaxRateFunction(a[13], status);
+		if(b[14] < 0)
+			b[14] = TaxRateFunction(b[13], status);
+		if(c[14] < 0)
+			c[14] = TaxRateFunction(c[13], status);
+		if(d[14] < 0)
+			d[14] = TaxRateFunction(d[13], status);
+	}
 	
 		/* Interrupt Part I to Calculate Line 15 */
 	
@@ -493,8 +548,16 @@ else
 		d[26] = d[24] + d[25];
 		d[27] = SmallerOf(d[23], d[26]);
 		D[10] = d[27];
-	
+  }
 		/* Penalty Computation - PART III */
+
+		else if(BoxC == No){
+
+			A[10] = Round(L[9] * 0.25);
+			B[10] = Round(L[9] * 0.25);
+			C[10] = Round(L[9] * 0.25);
+			D[10] = Round(L[9] * 0.25);
+		}
 	
 		A[15] = A[11];
 		if(A[10] >= A[15])
@@ -550,26 +613,37 @@ else
 		fprintf(outfile, "L19 %0.2lf\n", 0.0);
 		}
 		else{
-			fprintf(outfile, "\n%s\n", "There is an underpayment for one or more periods.\nUse the 	Worksheet for Form 2210, Part III, Section B-Figure the Penalty\n(Penalty Worksheet), in the instructions to figure your penalty.\nEnter the penalty amount in the OTS GUI for Form 2210 (last line).\n");
+			fprintf(outfile, "\n%s\n", "There is an underpayment for one or more periods.\nIf you are required to calculate the penalty, or choose to do so, use the\nWorksheet for Form 2210, Part III, Section B-Figure the Penalty\n(Penalty Worksheet), in the instructions to figure your penalty.\nEnter the penalty amount in the OTS GUI for Form 2210 (last line).\n");
 
-		fprintf(outfile, "L19 %0.2lf     %s\n\n", L[19], "This is the penalty amount YOU HAVE ENTERED.  It defaults to zero\nuntil you enter your penalty.  DO NOT INTERPRET THE DEFAULT ZERO VALUE TO\nINDICATE YOU DO NOT OWE A PENALTY.  See above instructions and the form 2210\ninstructions to determine if you need to calculate a penalty.");
+		fprintf(outfile, "L19 %0.2lf     %s\n", L[19], "This is the penalty amount YOU have entered from the Penalty Worksheet.\nIt defaults to zero until YOU enter your penalty.\nDO NOT INTERPRET THE DEFAULT ZERO VALUE TO INDICATE YOU DO NOT OWE\nA PENALTY.\nSee above instructions and the form 2210 instructions to determine if you need\nto calculate a penalty.");
 
 		fprintf(outfile, "%s\n", "In certain circumstances, the IRS will waive all or part of the underpayment\npenalty.  See Waiver of Penalty in the form 2210 instructions.\n");
 		}
 
-		for(i = 1; i <= 31; i++){
+  if(BoxC == Yes){
+		for(i = 1; i <= 27; i++){
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
 		}
 
-		for(i = 33; i <= 36; i++){
-			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
-			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
-			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
-			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
+		if((a[28] > 0.0) || (b[28] > 0.0) || (c[28] > 0.0) || (d[28] > 0.0)){
+			for(i = 18; i <= 31; i++){
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
+			}
+
+			for(i = 33; i <= 36; i++){
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
+				fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
+			}
 		}
+  }
 
  fclose(infile);
  grab_any_pdf_markups( infname, outfile );

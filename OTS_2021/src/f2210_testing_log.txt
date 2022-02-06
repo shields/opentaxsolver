@@ -1,0 +1,66 @@
+f2210 2021 testing
+
+FIXED:  line 3 needs to be subtracted, not added.
+
+OK-FIX NOT NEEDED:	schedule AI, line 21(d) incorrect rounding?  233,554 * 0.9 = 210198.6, which should round to 210,199; cell shows 210,198.  Turning off rounding in meta.dat gave 233,553.70; therefore, 233,553.70 * 0.9 = 210,198.33, which rounds to 210,198.  Thus, this is simply a case of the usual rounding discrepancy.
+
+FIXED:  numbers in PDF are a bit too far to the right; edit meta.dat file to move them slightly to the left.  Some should be moved up very slightly (1 pixel).  Checkbox "X" moved a pixel to the left.
+
+FIXED:  Template Box E text has 2019 date that should be 2020.
+
+FIXED:  Line 10 is different depending upon whether or not BoxC is checked.  Wasn't implemented.
+
+FIXED:	No need to fill out Schedule AI if BoxC is not checked.  Distraction/complication for users/checkers to do Schedule AI if it's not needed.  User can always check BoxC to see results of using AI method if it might be helpful (e.g., modeling to decide whether to take income in one period or the next).
+
+FIXED:	Noted in doing above fix that choice of entity was defaulting to individual = Yes (1) regardless of choice, although correct choice was printed as text.  Fixed poor implementation of binary choice.  Annualization factors for individuals and for estates/trusts now properly selected.
+
+Check exact payment case, which should yield no underpayments or overpayments.  Expected result obtained.
+
+Change values on line 11 so that all are overpayments.  Some taxpayers deliberately overpay a bit to ensure against a penalty or as a means of saving to get a refund at tax time.  Expected results obtained.
+
+FIXED (FIX might be enhanced?)
+Use of the form by estates and trusts could be confusing.  Estates and trusts file Form 1041.  On the first page of that form, they list items of income, then deductions, and then taxable income on line 23, which is to be put into line 1 of Schedule AI.  Thus, there are no additional itemized deductions and no standard deduction for estates and trusts.  Schedule AI specifies skipping various lines when the entity is an estate or trust.  Not entering itemized deductions and standard deductions automatically makes the necessary skips, which is easily seen by examining the PDF.  The instructions on the form tell estates and trusts to not fill in line 4 and to skip to line 9.  They are also to skip line 10.  This allows form 2210 to be used for estates and trusts with the only specific action being to replace the annualization factors on line 2 with the appropriate values for estates and trusts.  Users will make their own tax calculations using form 1041, schedule G and enter them on line 14 through the GUI.
+
+There are several possible ways to make the process clearer and minimize mistakes by those who might be filing for an estate or trust with limited experience.  (1) Add appropriate language in the template on the lines for entering itemized deductions and the standard deduction to state that entities filing as estates/trusts should enter zeros on these lines.  (2)  Add the above explanation to the README file if my suggestion to add one is adopted.  (3)  Add the above explanation to the CAUTION bloc at the beginning of the results file. (4) Code could be added to set lines 4 through 9 and 10 to zeros if the filing entity is estate/trust, even if the user erroneously enters values for itemized deductions and/or standard deduction. (5) Code could be added to print an error message to the results file if lines 4 and 7a are not zero or blank. (6) Code could be added to do the Schedule G tax calculations. 
+
+Items (1), (4) and (6) were implemented.  Template already had instruction to enter zero on line 4 if an estate/trust.  Added to line 7a, standard deduction line, even though it may be superfluous.
+
+Re-checked calculations in this scenario for both individual and estate/trust to see if anything was broken by the changes. All OK.
+
+FIXED
+Status is incorrect when filing entity is estate/trust since it defaults to single, MFJ, etc.  Status is imbedded in so many ways in OTS that adding a new status category would be a major task.  Adding it as a status category to the existing tax rate calculation functions also appears non-trivial as the number of brackets differs.  Easier to implement as a separate function.
+
+Program exits if no status is selected or if status is not one of the five recognized categories for individual filers.  Least complex fix is to add a note to the template that single should be selected for estates/trusts.  This is better than a default Single entry, which might leave the user wondering if it's correct for estates/trusts.
+
+FIXED
+User must be able to enter own tax calculation if not using tax tables or tax rate schedule. Need to implement default calculation of tax when user does not use alternative tax calculation method (e.g., Schedule D, QDCGTW).  The easiest fix would seem to be to have the user enter a negative value (e.g., -1) into those fields that the program is to calculate and either zero or a positive value in a field that is a user calculation.  This works and has been implemented.  It is not the most elegant solution that can be envisioned, but most users should be able to understand and use it.  Users need to be able to enter a zero value since the intent here is that the alternative tax calculation method will yield a lower tax and that lower tax could be zero.  Detecting a blank entry, or perhaps a string such as "calc", and distinguishing those from a double is obviously possible, but is that functionality worth the extra implementation effort.
+
+FIXED
+There is a lot of verbiage in the template regarding default tax calculation.  It is specific for individual taxpayers and could be misleading for estates/trusts.  Changes are needed to explain the negative entry hack.
+
+PARTIAL FIX (date changed; will OTS add estimated tax versions?)
+There is reference to the 2021 estimated tax version of OTS.  Should be changed to 2022 if a commitment to produce it is made; otherwise, the statement needs to be deleted.  What is the "2022 estimated tax version of OTS"?  I make this every year for myself by taking the current version and putting in the values for the subsequent year for the tas rates, deductions, and thresholds.  These are readily available on the Internet prior to the April 15 payment date for the first estimated tax payment for the new year.  Each time I do my estimated taxes, I compare the values I get with my own software to this "estimated tax version of OTS".  They usually agree within a dollar or two.  Note: CA has used the previous year's values for estimated tax calcuations.  Other states might do likewise.  Could change at any time.
+This could also be called "2022 Modeling Version of OTS" or "2022 Estimated Tax/Modeling Version of OTS"?
+
+FIX?
+The PDF displays the wrong annualization factors for estates and trusts since the values for individual taxpayers are present in the image.  It would be possible to white out the values on the images before making the form_pdf.dat file and then print the correct values for both individuals and estates/trusts onto the image.  In fact, there were a few years when the IRS did not pre-print the values on the form.  Another possible fix is to put a message on the PDF using the overprinting functionality to remind the users/checkers to use the correct values for estates and trusts.  There is sufficient white space in the first line for this, but it might be a poor idea to print anything with an area that is likely to be scanned by IRS when processing the form.  Thus, the message would best be removed before printing the filed copy?
+
+Yet another approach would be to over-print the correct values for estates and trusts.  The first two values are single digit.  They could be printed in the adjacent whitespace and a strike-through printed atop the value for individuals.  The last two periods are problematic in that the annualization factors are lengthy (1.71429 and 1.09091, respectively), and they will not fit in adjacent white space.  Another option would simply be to strike-through the pre-printed values when the calculations are for estates/trusts as a reminder that these are not the applicable values.  The line notation already tells estates and trusts to see the instructions.  Line 5 also shows the pre-printed annualization factors, but these are not used for estates and trusts.  Still, it might be worthwhile to strike through them.  Again, there might be issues with scanning errors from extraneous text in the area containing the numbers.
+
+Another possibility would be to put a message with the margin at the top of the page.  If there, it might not have to be removed for printing since this is not an area in which results are shown.
+
+FIXED
+Some values are being written to Part II, Annualized Self-Employment Tax when BoxC is checked, even if user does not put any values into line 28.  Even zero entries in this section are distracting.Easiest fix would be to suppress printing of all lines in Part II (lines 28-36) if all entries on line 28 are zero.  Part II not applicable to estates/trusts, but no need to implement suppression in addition to fix for individual taxpayers.
+
+Checked that all messages are displayed as intended, even if combinations of boxes (e.g., Box E and either Box B, Box C, or Box D) are checked.  Expected results obtained.
+
+FIXED
+Template needs to tell users that after filling in part I and part II, saving, and clicking to see if form needs to be filed that they need to ignore any messages below the initial statements about whether or not to file (i.e., ignore all messages below the start of the SecA results.  Added message to instructions on template.
+
+FIXED
+Message near end of results file associated with underpayment specifically states to use Penalty Worksheet to calculate penalty.  Should state "If you are required to calculate the penalty, or choose to do so, use the Panalty Worksheet ...".
+
+FIXED
+Language regarding default zero penalty value should state "This is the penalty value YOU have entered from the Penalty Worksheet.  It defaults to zero until you enter your penalty.  ..."
+
+  

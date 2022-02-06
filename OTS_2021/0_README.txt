@@ -15,16 +15,15 @@ corresponding to a given form.
 This package contains programs and templates for:
 	- US-1040 - which also does the Schedules A, B, D, and forms 8949. 
 	- Schedule C for US-1040.
-	- State Income Taxes for Ohio, New Jersey, 
-	  Virginia, Pennsylvania, Massachusetts, and North Carolina.
-	  A beta-version version of the updated California taxes was added.
-	  All updated for 2021 Tax-Year.
+	- State Income Taxes for Ohio, New Jersey, Virginia, Pennsylvania,
+	  Massachusetts, North Carolina, and California taxes updated for
+	  the 2021 Tax-Year.
 Also contains an Automatic PDF Form-Fillout function:
 	- Supports all Federal Forms and State Forms.
 	  Saves time by filling out many of the numbers.  
 	  You may still need to enter some information or check boxes
 	  that are not handled by OTS.
-	  Tested to work properly with many viewers.
+	  Tested to work properly with many PDF viewers.
 	- You can edit your forms with Libre-Office.
 
 -----------------------------------------------------------

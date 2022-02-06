@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -519,10 +519,10 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	      printf("Error: Reading Fed s1_8%c '%s%s'\n", 'a' + j, word, fline);
 	      fprintf(outfile, "Error: Reading Fed s1_8%c '%s%s'\n", 'a' + j, word, fline);
 	     }
+	    if (verbose) printf("FedLin.S1_8%c] = %2.2f\n", 'a' + j, fed_data->s1_8[j] );
 	   }
 	  else
 	   printf("Error: Unexpected line '%s'\n", word );
-         if (verbose) printf("FedLin.S1_8%c] = %2.2f\n", 'a' + j, fed_data->s1_8[j] );
 	}
        else
        if ((strncmp( tword, "24", 2 ) == 0) && (tword[2] >= 'a') && (tword[2] <= 'z'))
@@ -536,10 +536,10 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	      printf("Error: Reading Fed s1_24%c '%s%s'\n", 'a' + j, word, fline);
 	      fprintf(outfile, "Error: Reading Fed s1_24%c '%s%s'\n", 'a' + j, word, fline);
 	     }
+	    if (verbose) printf("FedLin.S1_24%c = %2.2f\n", 'a' + j, fed_data->s1_24[j] );
 	   }
 	  else
 	   printf("Error: Unexpected line '%s'\n", word );
-         if (verbose) printf("FedLin.S1_24%c = %2.2f\n", 'a' + j, fed_data->s1_24[j] );
 	}
        else
 	{
@@ -573,10 +573,10 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	      printf("Error: Reading Fed s2_17%c '%s%s'\n", 'a' + j, word, fline);
 	      fprintf(outfile, "Error: Reading Fed s2_17%c '%s%s'\n", 'a' + j, word, fline);
 	     }
+	    if (verbose) printf("FedLin.S2_17%c = %2.2f\n", 'a' + j, fed_data->s2_17[j] );
 	   }
 	  else
 	   printf("Error: Unexpected line '%s'\n", word );
-         if (verbose) printf("FedLin.S2_17%c = %2.2f\n", 'a' + j, fed_data->s2_17[j] );
 	}
     }
    else
@@ -595,10 +595,10 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	      printf("Error: Reading Fed s3_6%c '%s%s'\n", 'a' + j, word, fline);
 	      fprintf(outfile, "Error: Reading Fed s3_6%c '%s%s'\n", 'a' + j, word, fline);
 	     }
+	    if (verbose) printf("FedLin.S3_6%c = %2.2f\n", 'a' + j, fed_data->s3_6[j] );
 	   }
 	  else
 	   printf("Error: Unexpected line '%s'\n", word );
-         if (verbose) printf("FedLin.S3_6%c = %2.2f\n", 'a' + j, fed_data->s3_6[j] );
 	}
        else
        if ((strncmp( tword, "13", 2 ) == 0) && (tword[2] >= 'a') && (tword[2] <= 'z'))
@@ -612,10 +612,10 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	      printf("Error: Reading Fed s3_13%c '%s%s'\n", 'a' + j, word, fline);
 	      fprintf(outfile, "Error: Reading Fed s3_13%c '%s%s'\n", 'a' + j, word, fline);
 	     }
+	    if (verbose) printf("FedLin.S3_13%c = %2.2f\n", 'a' + j, fed_data->s3_13[j] );
 	   }
 	  else
 	   printf("Error: Unexpected line '%s'\n", word );
-         if (verbose) printf("FedLin.S3_13%c = %2.2f\n", 'a' + j, fed_data->s3_13[j] );
 	}
     }
 
@@ -700,7 +700,7 @@ void display_part2( int j )
 /*----------------------------------------------------------------------------*/
 int main( int argc, char *argv[] )
 {
- int argk, j, k, iline7, iline8, iline9, iline10;
+ int argk, j, k, iline7, iline8, iline9, iline10, CkFYHealthCoverage=0;
  double min2file=0.0, sched540A[MAX_LINES], sched540B[MAX_LINES], sched540C[MAX_LINES],
 	sched540Ab[MAX_LINES], sched540Ac[MAX_LINES],
 	sched540Bb[MAX_LINES], sched540Bc[MAX_LINES],
@@ -1505,7 +1505,28 @@ int main( int argc, char *argv[] )
  showline_wmsg(78,"Total Payments");
 
  GetLineF( "L91", &L[91] );	/* Use Tax. */
- GetLineF( "L92", &L[92] );	/* Individual Shared Responsibility (ISR) Penalty. */
+
+
+ // GetYesNo( "CkFYHealthCoverage", &CkFYHealthCoverage );
+ // GetLineF( "L92", &L[92] );	/* Individual Shared Responsibility (ISR) Penalty. */
+
+ /* Only this year (2021), handle next line(s) optionally, due to change in template. */
+ get_parameter( infile, 'l', word, "CkFYHealthCoverage" );
+ if (strcmp( word, "CkFYHealthCoverage" ) == 0)
+  {
+   get_parameters( infile, 'b', &CkFYHealthCoverage, "CkFYHealthCoverage" );
+   if (CkFYHealthCoverage != 0)
+    fprintf(outfile, "CkFYHealthCoverage X\n");
+   /* Now go ahead and get the expected next line. */
+   GetLineF( "L92", &L[92] );  /* Individual Shared Responsibility (ISR) Penalty. */
+  }
+ else
+ if (strcmp( word, "L92" ) == 0)
+  { /* Get remaining part of line. */
+   get_parameters( infile, 'f', &L[92], "L92" );
+   fprintf(outfile, "L92 = %6.2f\n", L[92] );
+  }
+
 
  if (L[78] > L[91])
   {

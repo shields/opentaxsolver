@@ -29,7 +29,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -1726,12 +1726,11 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  get_cap_gains();	 /* Capital gains. (Schedule-D). This popuates "schedD[]" and L[7]. */
  
 
-
  /* Determine your Std. Deduction value. */
  fprintf(outfile, "StdDedChart_NumBoxesChecked = %d\n", StdDedChart_NumBoxesChecked ); 
  if (StdDedChart_NumBoxesChecked == 0)
   {
-   S_STD_DEDUC   = 12500.0;						/* Updated for 2021. */
+   S_STD_DEDUC   = 12550.0;						/* Updated for 2021. */
    MFJ_STD_DEDUC = 25100.0;
    MFS_STD_DEDUC = 12550.0;
    HH_STD_DEDUC  = 18800.0;

@@ -35,7 +35,7 @@ BoxC	Yes	 {  (answer: Yes, No) }
  instead of in equal amounts on the payment due dates. You must  figure your
  penalty and file Form 2210.}
 BoxD	No	 {  (answer: Yes, No) }
- { You filed or are filing a joint return for either 2019 or 2021, but not
+ { You filed or are filing a joint return for either 2020 or 2021, but not
  for both years, and line 8  above is smaller than line 5 above. You must
  file page 1 of Form 2210, but you aren't required to figure your  penalty
  (unless box B, C, or D applies).}

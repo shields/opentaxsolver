@@ -1,0 +1,16 @@
+f8959_2021 testing 5 Feb 2021
+
+Took originally written example file and put an entry into each field on the input form, naming the file example2.
+Checked to make sure that the calculations were correct on the PDF by doing them manually.
+
+Initially, status = single.  Calculations are correct.  Many of the entered values are below the thresholds; therefore, in example3 all entered income values should exceed the thresholds.  In example4, all income values are below the thresholds.
+
+Checked that messages written to results file match those on the PDF.
+
+Run through all status categories to make sure that indicated threshold amounts vary properly according to status.
+
+OTS ENHANCEMENT NEEDED?
+Accidentally entered 459,39 into line 23 entry box (comma instead of intended decimal point).  Value was read as 45,939.00.  Value is being retrieved with GetLineF function.  Perhaps data entry errors of this kind could be reported as made using the new popup function?
+
+Example5 used to study the edge cases (+/- one cent on income and withholding lines -> positive value, zero, or zero due to negative value) using threshold values for the three status categories.
+
