@@ -90,7 +90,7 @@ double Estate_Trust_TaxRateFunction( double income )
 
 int main( int argc, char *argv[] )
 {
-  int i, j, k, status, entity;
+  int i, j, k, status, entity=INDIVIDUAL;
  char word[4000], outfname[4000], *infname=0;
  time_t now;
 
@@ -194,6 +194,8 @@ fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
  else if(strncasecmp(word,"Estate/Trust",3)==0){
 	entity = ESTATE;
  }
+ else
+  fprintf(outfile,"Error: Unexpected Entity '%s', assuming 'Individual'.\n", word );
  fprintf(outfile,"Entity = %s (%d)\n", word, entity);
 
 get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */

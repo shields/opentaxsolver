@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=3.00;
+float thisversion=3.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -18,57 +18,59 @@ float thisversion=3.00;
 #define MARRIED_FILING_SEPARAT 3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
+#define INDIVIDUAL	1
+#define ESTATE	2
 #define Yes 1
 #define No  0
 #define NotApplicable 3
 #define Short 1
 #define Annualized 2
 
-/* The following two tax functions copied from taxsolve_CA_540_2021.c. */
+/* The following two tax functions copied from taxsolve_CA_540_2020.c. */
+/* 2020 tax rates are used in California for calculating estimated taxes */
 
 double TaxRateFormula( double income, int status )
-{									/* Updated for 2021. */
+{									/* Updated for 2021 to the 2020 CA-tax-table. */
  double tax;
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income <   9325.00)  tax =             0.01 * income;                else
-   if (income <  22107.00)  tax =    93.25 +  0.02 * (income -   9325.00);  else
-   if (income <  34892.00)  tax =   348.89 +  0.04 * (income -  22107.00);  else
-   if (income <  48435.00)  tax =   860.29 +  0.06 * (income -  34892.00);  else
-   if (income <  61214.00)  tax =  1672.87 +  0.08 * (income -  48435.00);  else
-   if (income < 312686.00)  tax =  2695.19 + 0.093 * (income -  61214.00);  else
-   if (income < 375221.00)  tax = 26082.09 + 0.103 * (income - 312686.00);  else
-   if (income < 625369.00)  tax = 32523.20 + 0.113 * (income - 375221.00);
-   else                     tax = 60789.92 + 0.123 * (income - 625369.00);
+   if (income <   8932.00)  tax =             0.01 * income;                else
+   if (income <  21175.00)  tax =    89.32 +  0.02 * (income -   8832.00);  else
+   if (income <  33421.00)  tax =   334.18 +  0.04 * (income -  21175.00);  else
+   if (income <  46394.00)  tax =   824.02 +  0.06 * (income -  33421.00);  else
+   if (income <  58634.00)  tax =  1602.40 +  0.08 * (income -  46394.00);  else
+   if (income < 299508.00)  tax =  2581.60 + 0.093 * (income -  58634.00);  else
+   if (income < 359407.00)  tax = 24982.88 + 0.103 * (income - 299508.00);  else
+   if (income < 599012.00)  tax = 31152.48 + 0.113 * (income - 359407.00);
+   else                     tax = 58227.85 + 0.123 * (income - 599012.00);
   }
  else
  if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))
   {
-   if (income <   18650.00)  tax =              0.01 * income;                 else
-   if (income <   44214.00)  tax =    186.50 +  0.02 * (income -   18650.00);  else
-   if (income <   69784.00)  tax =    697.78 +  0.04 * (income -   44214.00);  else
-   if (income <   96870.00)  tax =   1720.58 +  0.06 * (income -   69784.00);  else
-   if (income <  122428.00)  tax =   3345.74 +  0.08 * (income -   96870.00);  else
-   if (income <  625372.00)  tax =   5390.38 + 0.093 * (income -  122428.00);  else
-   if (income <  750442.00)  tax =  52164.17 + 0.103 * (income -  625372.00);  else
-   if (income < 1250738.00)  tax =  65046.38 + 0.113 * (income -  750442.00);
-   else                      tax = 121579.83 + 0.123 * (income - 1250738.00);
+   if (income <   17864.00)  tax =              0.01 * income;                 else
+   if (income <   42350.00)  tax =    178.64 +  0.02 * (income -   17864.00);  else
+   if (income <   66842.00)  tax =    668.36 +  0.04 * (income -   42350.00);  else
+   if (income <   92788.00)  tax =   1648.04 +  0.06 * (income -   66842.00);  else
+   if (income <  117268.00)  tax =   3204.80 +  0.08 * (income -   92788.00);  else
+   if (income <  599016.00)  tax =   5163.20 + 0.093 * (income -  117268.00);  else
+   if (income <  718814.00)  tax =  49965.76 + 0.103 * (income -  599016.00);  else
+   if (income < 1198024.00)  tax =  62304.95 + 0.113 * (income -  718814.00);
+   else                      tax = 116455.68 + 0.123 * (income - 1198024.00);
   }
  else
   {
-   if (income <  18663.00)  tax =             0.01 * income;                else
-   if (income <  44217.00)  tax =   186.63 +  0.02 * (income -  18663.00);  else
-   if (income <  56999.00)  tax =   697.71 +  0.04 * (income -  44217.00);  else
-   if (income <  70542.00)  tax =  1208.99 +  0.06 * (income -  56999.00);  else
-   if (income <  83324.00)  tax =  2021.57 +  0.08 * (income -  70542.00);  else
-   if (income < 425251.00)  tax =  3044.13 + 0.093 * (income -  83324.00);  else
-   if (income < 510303.00)  tax = 34843.34 + 0.103 * (income - 425251.00);  else
-   if (income < 850503.00)  tax = 43603.70 + 0.113 * (income - 510303.00); 
-   else                     tax = 82046.30 + 0.123 * (income - 850503.00);
+   if (income <  17876.00)  tax =             0.01 * income;                else
+   if (income <  42353.00)  tax =   178.76 +  0.02 * (income -  17876.00);  else
+   if (income <  54597.00)  tax =   668.30 +  0.04 * (income -  42353.00);  else
+   if (income <  67569.00)  tax =  1158.06 +  0.06 * (income -  54597.00);  else
+   if (income <  79812.00)  tax =  1936.38 +  0.08 * (income -  67569.00);  else
+   if (income < 407329.00)  tax =  2915.82 + 0.093 * (income -  79812.00);  else
+   if (income < 488796.00)  tax = 33374.90 + 0.103 * (income - 407329.00);  else
+   if (income < 814658.00)  tax = 41766.00 + 0.113 * (income - 488796.00); 
+   else                     tax = 78588.41 + 0.123 * (income - 814658.00);
   }
  return (int)(tax+0.5);
 }
-
 
 double TaxRateFunction( double income, int status )     /* Emulates table lookup or function appropriately. */
 {
@@ -89,7 +91,6 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
   tx = TaxRateFormula( income, status );
  return tx;
 }
-
 
 double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status){
 
@@ -131,12 +132,13 @@ double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3,
 
 int main( int argc, char *argv[] )
 {
-  int i, j, k, status, individual = Yes;
+  int i, j, k, status, entity = INDIVIDUAL, Quest4 = Yes;
  char word[4000], outfname[4000], *infname=0;
  time_t now;
 
  int Quest2, Quest3 = 0, Num_Days = -1;		/* negative Num_Days used as a flag below */
  double Wthd_Per_1, Wthd_Per_2, Wthd_Per_3, Wthd_Per_4, CA_AGI;
+ double a10add, b10add, c10add, d10add;
  
 
  /* line entry variables L[n] are declared in taxsolve_routines.c */
@@ -255,8 +257,14 @@ for(i = 0; i <= 13; i++){
 
  get_parameter( infile, 's', word, "Entity" );
  get_parameter( infile, 'w', word, "Entity?");
- if (strncasecmp(word,"Individual",3)==0) individual = Yes;
- fprintf(outfile,"Entity = %s (%d)\n", word, individual);
+ if (strncasecmp(word,"Individual",3)==0){
+ 	entity = INDIVIDUAL;
+ }
+ else if(strncasecmp(word,"Estate/Trust",3)==0){
+	entity = ESTATE;
+ }
+ fprintf(outfile,"Entity = %s (%d)\n", word, entity);
+
 
 get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
@@ -271,6 +279,19 @@ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/
    fprintf(outfile,"Error: unrecognized status '%s'. Exiting.\n", word); 
    exit(1);
   }
+
+ if((entity == ESTATE) && (status != SINGLE)){
+
+	#ifdef microsoft
+	 system( "start bin\\notify_popup -delay 3 -expire 60 \"Setting Status to Single as required for estates/trusts.\"" );
+	#else
+	 system( "bin/notify_popup -delay 3 -expire 60 \"Setting Status to Single as required for estates/trusts.\" &" );
+	#endif
+
+	strcpy(word, "Single");
+	status = SINGLE;
+	fprintf(outfile, "Setting Status to Single as required for estates/trusts\n");
+ }
  fprintf(outfile,"Status = %s (%d)\n", word, status);
 
  get_parameter( infile, 's', word, "Quest1" );
@@ -317,13 +338,22 @@ else {
  get_parameter( infile, 's', word, "Quest4" );
  get_parameter( infile, 'w', word, "Quest4?");
  if (strncasecmp(word,"Yes",1)==0){
-	 // Quest4 = Yes;
+	 Quest4 = Yes;
 	fprintf(outfile,"CkQuest4Yes X\n");
 }
 else if (strncasecmp(word,"No",2)==0){
-	// Quest4 = No;
+	Quest4 = No;
 	fprintf(outfile,"CkQuest4No X\n");
 }
+
+ if(Quest4 == Yes){
+
+	fprintf(outfile, "Estates and grantor trusts, which receive the residue of the decedent's estate,\nare required to make estimated income tax payments for any year ending two or\nmore years after the date of the decedent's death. If you answer \"Yes\" to\nPart I, Question 4, complete Part I only and attach form FTB 5805 to the\nback of your tax return.\n");
+
+  exit(1);
+ 
+ }
+
 
 /* Part II - Required Annual Payment */
 
@@ -403,10 +433,25 @@ showline( 6 );
 	   GetLine( "SchdAI_1c", &c[1] );
 	   GetLine( "SchdAI_1d", &d[1] );
 
-	   GetLine1( "SchdAI_2a", &a[2] );
-	   GetLine1( "SchdAI_2b", &b[2] );
-	   GetLine1( "SchdAI_2c", &c[2] );
-	   GetLine1( "SchdAI_2d", &d[2] );
+	   if(entity == ESTATE){
+
+		a[2] = 6.0;
+		b[2] = 3.0;
+		c[2] = 1.71429;
+		d[2] = 1.09091;
+
+	   }
+	   else{
+		a[2] = 4.0;
+		b[2] = 2.4;
+		c[2] = 1.5;
+		d[2] = 1.0;
+	   }
+
+//	   GetLine1( "SchdAI_2a", &a[2] );
+//	   GetLine1( "SchdAI_2b", &b[2] );
+//	   GetLine1( "SchdAI_2c", &c[2] );
+//	   GetLine1( "SchdAI_2d", &d[2] );
  	
 	   GetLine( "SchdAI_4a", &a[4] );
 	   GetLine( "SchdAI_4b", &b[4] );
@@ -423,10 +468,10 @@ showline( 6 );
 	   c[7] = a[7];
 	   d[7] = a[7];
 	
-	   GetLine( "SchdAI_10a_add", &a[10] );
-	   GetLine( "SchdAI_10b_add", &b[10] );
-	   GetLine( "SchdAI_10c_add", &c[10] );
-	   GetLine( "SchdAI_10d_add", &d[10] ); 
+	   GetLine( "SchdAI_10a_add", &a10add );
+	   GetLine( "SchdAI_10b_add", &b10add );
+	   GetLine( "SchdAI_10c_add", &c10add );
+	   GetLine( "SchdAI_10d_add", &d10add ); 
 
 	   GetLine( "SchdAI_11a", &a[11] );
 	   GetLine( "SchdAI_11b", &b[11] );
@@ -550,6 +595,11 @@ showline( 6 );
 	c[10] = TaxRateFunction( c[9], status);
 	d[10] = TaxRateFunction( d[9], status);
 
+	a[10] += a10add;
+	b[10] += b10add;	
+	c[10] += c10add;
+	d[10] += d10add;
+
 	a[12] = a[10] - a[11];
 	b[12] = b[10] - b[11];
 	c[12] = c[10] - c[11];
@@ -560,7 +610,7 @@ showline( 6 );
 	L14ac = NotLessThanZero(c[12] - c[13]);
 	L14ad = NotLessThanZero(d[12] - d[13]);
 
-	L14ca =  L14aa + L14ba;		/* first lower case letter is row; second lower case letter is column */
+	L14ca = L14aa + L14ba;		/* first lower case letter is row; second lower case letter is column */
 	L14cb = L14ab + L14bb;
 	L14cc = L14ac + L14bc;
 	L14cd = L14ad + L14bd;
@@ -692,7 +742,32 @@ showline( 6 );
 			fprintf(outfile, "SecA_%d%s %0.2lf\n", i, "d", D[i]);
 		}
 
-		for(i = 1; i <= 13; i++){
+		i = 1;
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
+
+		i = 2;
+			fprintf(outfile, "SchdAI_%d%s %0.1lf\n", i, "a", a[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.1lf\n", i, "b", b[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.5lf\n", i, "c", c[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.5lf\n", i, "d", d[i]);
+
+		for(i = 3; i <= 9; i++){
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
+		}
+
+		i = 10;
+			fprintf(outfile, "SchdAI_%d%s %0.2lf     = calculated: %0.2lf + additions: %0.2lf\n", i, "a", a[i], a[10] - a10add, a10add);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf     = calculated: %0.2lf + additions: %0.2lf\n", i, "b", b[i], b[10] - b10add, b10add);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf     = calculated: %0.2lf + additions: %0.2lf\n", i, "c", c[i], c[10] - c10add, c10add);
+			fprintf(outfile, "SchdAI_%d%s %0.2lf     = calculated: %0.2lf + additions: %0.2lf\n", i, "d", d[i], d[10] - d10add, d10add);
+
+		for(i = 11; i <= 13; i++){
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "a", a[i]);
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "b", b[i]);
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "c", c[i]);
