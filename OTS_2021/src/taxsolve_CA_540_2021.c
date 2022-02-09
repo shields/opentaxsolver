@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.02;
+float thisversion=19.03;
 
 #include <stdio.h>
 #include <time.h>
@@ -1588,27 +1588,31 @@ int main( int argc, char *argv[] )
  writeout_line = 0;
  // Your1stName = GetTextLineF( "Your1stName:" );
  YourMidInitial = pull_initial( Your1stName );
- Your1stName[11] = '\0';
  fprintf(outfile,"Your1stName: %s\n", Your1stName );
  fprintf(outfile,"YourMidInit: %s\n", YourMidInitial );
  // YourLastName   = GetTextLineF( "YourLastName:" );
- YourLastName[15] = '\0';
  fprintf(outfile,"YourLastName: %s\n", YourLastName );
  // your_socsec = GetTextLineF( "YourSocSec#:" );
  format_socsec( your_socsec, 1 );
  fprintf(outfile,"YourSocSec#: %s\n", your_socsec );
 
- // Spouse1stName = GetTextLineF( "Spouse1stName:" );
- SpouseMidInitial = pull_initial( Spouse1stName );
- Spouse1stName[11] = '\0';
- fprintf(outfile,"Spouse1stName: %s\n", Spouse1stName );
- fprintf(outfile,"SpouseMidInit: %s\n", SpouseMidInitial );
- // SpouseLastName = GetTextLineF( "SpouseLastName:" );
- SpouseLastName[15] = '\0';
- fprintf(outfile,"SpouseLastName: %s\n", SpouseLastName );
- // spouse_socsec = GetTextLineF( "SpouseSocSec#:" );
- format_socsec( spouse_socsec, 1 );
- fprintf(outfile,"SpouseSocSec#: %s\n", spouse_socsec );
+ if ((status != SINGLE) && (status != WIDOW))
+  {
+   // Spouse1stName = GetTextLineF( "Spouse1stName:" );
+   SpouseMidInitial = pull_initial( Spouse1stName );
+   fprintf(outfile,"Spouse1stName: %s\n", Spouse1stName );
+   fprintf(outfile,"SpouseMidInit: %s\n", SpouseMidInitial );
+   // SpouseLastName = GetTextLineF( "SpouseLastName:" );
+   fprintf(outfile,"SpouseLastName: %s\n", SpouseLastName );
+   // spouse_socsec = GetTextLineF( "SpouseSocSec#:" );
+   format_socsec( spouse_socsec, 1 );
+   fprintf(outfile,"SpouseSocSec#: %s\n", spouse_socsec );
+  }
+ else
+  {
+   Spouse1stName[0] = '\0';
+   SpouseLastName[0] = '\0';
+  }
  writeout_line = 1;
 
  if (strlen( YourLastName ) > 0)
@@ -1616,7 +1620,7 @@ int main( int argc, char *argv[] )
    strcpy( YourName, Your1stName );
    strcat( YourName, " " );
    strcat( YourName, YourLastName );
-   YourName[15] = '\0';		/* Limit name to 15 characters. */
+   YourName[26] = '\0';		/* Limit to no longer than about 25 characters. */
    fprintf(outfile,"YourName: %s\n", YourName );
 
    if (strcmp( YourLastName, SpouseLastName ) == 0)
@@ -1626,7 +1630,6 @@ int main( int argc, char *argv[] )
     sprintf(YourNames,"%s %s & %s %s", Your1stName, YourLastName, Spouse1stName, SpouseLastName );
    else
     sprintf(YourNames,"%s %s", Your1stName, YourLastName );
-   YourNames[33] = '\0';
    fprintf(outfile,"YourNames: %s\n", YourNames );
   }
  // GetTextLineF( "Number&Street:" );

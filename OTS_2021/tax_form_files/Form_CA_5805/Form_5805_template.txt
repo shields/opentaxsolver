@@ -133,7 +133,8 @@ SchdAI_10a_add	;{ For individuals, and for estates/trusts, this program will aut
  for the period here, such as tax from form FTB 3803 (see instructions).
  NOTE:  AMT and mental health services tax are entered below on
  line 14b.  Estates or Trusts, see form 541 instructions for information
- about additional taxes you may need to add here.}
+ about additional taxes you may need to add here.
+}
 SchdAI_10b_add	;{ For individuals, and for estates/trusts, this program will automatically 
  calculate the estimated tax due on the amount on lime 9 using 
  the 2020 tax rate schedules.  California uses prior year rates
@@ -141,7 +142,8 @@ SchdAI_10b_add	;{ For individuals, and for estates/trusts, this program will aut
  for the period here, such as tax from form FTB 3803 (see instructions).
  NOTE:  AMT and mental health services tax are entered below on
  line 14b.  Estates or Trusts, see form 541 instructions for information
- about additional taxes you may need to add here.}
+ about additional taxes you may need to add here.
+}
 SchdAI_10c_add	;{ For individuals, and for estates/trusts, this program will automatically 
  calculate the estimated tax due on the amount on lime 9 using 
  the 2020 tax rate schedules.  California uses prior year rates
@@ -149,7 +151,8 @@ SchdAI_10c_add	;{ For individuals, and for estates/trusts, this program will aut
  for the period here, such as tax from form FTB 3803 (see instructions).
  NOTE:  AMT and mental health services tax are entered below on
  line 14b.  Estates or Trusts, see form 541 instructions for information
- about additional taxes you may need to add here.}
+ about additional taxes you may need to add here.
+}
 SchdAI_10d_add	;{ For individuals, and for estates/trusts, this program will automatically 
  calculate the estimated tax due on the amount on lime 9 using 
  the 2020 tax rate schedules.  California uses prior year rates
@@ -157,7 +160,8 @@ SchdAI_10d_add	;{ For individuals, and for estates/trusts, this program will aut
  for the period here, such as tax from form FTB 3803 (see instructions).
  NOTE:  AMT and mental health services tax are entered below on
  line 14b.  Estates or Trusts, see form 541 instructions for information
- about additional taxes you may need to add here.}
+ about additional taxes you may need to add here.
+}
 
 SchdAI_11a	;{ Enter the total amount of exemption credits from your
  2021 Form 540, line 32 or Form 541, line 22.  See
@@ -200,11 +204,9 @@ SchdAI_14bc	;{ Enter the alternative minimum tax and mental health tax
  period 1/1/21-7/31/21. Figure the alternative minimum tax
  and mental health services tax you owe based on income
  earned during the period. }
-SchdAI_14bd	;{ Enter the alternative minimum tax and mental health tax
- for the period 1/1/21-12/31/21.  Estates and trusts: for the
- period 1/1/21-11/30/21. Figure the alternative minimum tax
- and mental health services tax you owe based on income
- earned during the period. }
+SchdAI_14bd	;{ Enter the amounts from your 2021 Form 540, line 61 and
+ line 62; 2020 Form 540NR, line 71 and line 72; or 2020 Form
+ 541, line 26 and line 27. }
 SchdAI_14da	;{ Enter the excess SDI from Form 540, line 74 or Form
  540NR, line 84. }
 SchdAI_14db	;{ Enter the excess SDI from Form 540, line 74 or Form
