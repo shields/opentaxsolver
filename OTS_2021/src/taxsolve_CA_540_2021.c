@@ -647,9 +647,11 @@ char *pull_initial( char *name )
 { /* Expect names like:  "John, D.", and pull initial out. */
   int j=0;
   char midinitial[10];
-  while ((name[j] != '\0') && (name[j] != ','))
+  while ((name[j] != '\0') && (name[j] == ' '))
    j++;
-  if (name[j] == ',')
+  while ((name[j] != '\0') && (name[j] != ',') && (name[j] != ' '))
+   j++;
+  if ((name[j] == ',') || (name[j] == ' '))
    {
     name[j++] = '\0';
     while ((name[j] != '\0') && (isspace( name[j] )))

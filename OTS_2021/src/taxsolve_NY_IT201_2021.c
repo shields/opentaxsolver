@@ -26,7 +26,7 @@
 /* Corrections 2020 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=19.00;
+float thisversion=19.01;
 
 #include "taxsolve_routines.c"
 
@@ -1340,7 +1340,7 @@ int main( int argc, char *argv[] )
   }
 
  // GetLineF( "L18", &L[18] );	/* Total federal adjustments to income (pg 14) */
- L[18] = PrelimFedReturn.sched[1][22];
+ L[18] = PrelimFedReturn.sched[1][26];
  showline(18);
 
  L[19] = L[17] - L[18];
