@@ -224,6 +224,13 @@ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/
  L[7] = L[4] - L[6];
  showline( 7 );
  GetLineF( "L8", &L[8] );
+ if(L[8] == 0){
+	#ifdef microsoft
+	 system( "start bin\\notify_popup -delay 3 -expire 60 \"Line 8 is zero or blank, indicating you had no tax liability last year.  Is this correct?\"" );
+	#else
+	 system( "bin/notify_popup -delay 3 -expire 60 \"Line 8 is zero or blank, indicating you had no tax liability last year.  Is this correct?\" &" );
+	#endif
+ }
  L[9] = SmallerOf(L[5], L[8]);
  showline( 9 );
  if(L[9] > L[6])

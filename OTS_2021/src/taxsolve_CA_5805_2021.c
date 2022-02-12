@@ -346,7 +346,7 @@ else if (strncasecmp(word,"No",2)==0){
 	fprintf(outfile,"CkQuest4No X\n");
 }
 
- if(Quest4 == Yes){
+ if((entity == ESTATE) && (Quest4 == Yes)){
 
 	fprintf(outfile, "Estates and grantor trusts, which receive the residue of the decedent's estate,\nare required to make estimated income tax payments for any year ending two or\nmore years after the date of the decedent's death. If you answer \"Yes\" to\nPart I, Question 4, complete Part I only and attach form FTB 5805 to the\nback of your tax return.\n");
 

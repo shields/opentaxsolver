@@ -619,7 +619,6 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	}
     }
 
-
    else
    if (strcmp(word,"Status") == 0)
     {

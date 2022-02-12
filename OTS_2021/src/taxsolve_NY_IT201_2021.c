@@ -282,8 +282,8 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	next_word(fline, word, " \teh=" );
 	while (word[0] != '\0')
 	 {
-	  if (sscanf(word,"%lf", &fed_data->schedD[linenum]) != 1) 
-	   fprintf(outfile,"Error: Reading Fed schedD %d '%s %s'\n", linenum, word, fline);
+	  if (sscanf(word,"%lf", &fed_data->schedD[linenum]) != 1)
+	    fprintf(outfile,"Error: Reading Fed schedD %d '%s %s'\n", linenum, word, fline);
 	  if (round_to_whole_dollars)
 	   fed_data->schedD[linenum] = Round( fed_data->schedD[linenum] );
 	  next_word(fline, word, " \teh=" );
@@ -307,31 +307,60 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
      if (verbose) printf("FedLin[%d] = %2.2f\n", linenum, fed_data->schedD[linenum]);
     }
    else
-   if (strncmp(word,"S1_",3) == 0)
+   if (strcmp(word,"S1_2a") == 0)
+    {
+     next_word(fline, word, " \t=:");
+     if (sscanf(word,"%lf", &fed_data->sched[1][2]) != 1) 
+      {
+       printf("Error: Reading Fed sched1 line 2 '%s'\n", word );
+       fprintf(outfile,"Error: Reading Fed sched1 line 2 '%s'\n", word );
+      }
+     if (round_to_whole_dollars)
+      fed_data->sched[1][2] = Round( fed_data->sched[1][2] );
+    }
+   else
+   if (strcmp(word,"S1_2b:") == 0)
+    {
+	; // ignore this entry.
+    }
+   else
+   if ((strncmp(word,"S1_",3) == 0) && (strstr( word, "_Type" ) == 0))
     {
      next_word( &(word[3]), tword, " \t=:");
      if (sscanf( tword, "%d", &linenum) != 1)
-      printf("Error: Reading Fed sched1 line-number '%s'\n", word );
+      {
+       printf("Error: Reading Fed sched1 line-number '%s'\n", word );
+       fprintf(outfile,"Error: Reading Fed sched1 line-number '%s'\n", word );
+      }
      else
       {
 	next_word(fline, word, " \t=:");
 	if (sscanf(word,"%lf", &fed_data->sched[1][linenum]) != 1) 
-	 printf("Error: Reading Fed sched1 line '%s'\n", word );
+         {
+	  printf("Error: Reading Fed sched1 line %d '%s'\n", linenum, word );
+	  fprintf(outfile,"Error: Reading Fed sched1 line %d '%s'\n", linenum, word );
+	 }
 	if (round_to_whole_dollars)
 	 fed_data->sched[1][linenum] = Round( fed_data->sched[1][linenum] );
       }
     }
    else
-   if (strncmp(word,"S2_",3) == 0)
+   if ((strncmp(word,"S2_",3) == 0) && (strstr( word, "_Type" ) == 0))
     {
      next_word( &(word[3]), tword, " \t=:");
      if (sscanf( tword, "%d", &linenum) != 1)
-      printf("Error: Reading Fed sched2 line-number '%s'\n", word );
+      {
+       printf("Error: Reading Fed sched2 line-number '%s'\n", word );
+       fprintf(outfile,"Error: Reading Fed sched2 line-number '%s'\n", word );
+      }
      else
       {
 	next_word(fline, word, " \t=:");
 	if (sscanf(word,"%lf", &fed_data->sched[2][linenum]) != 1) 
-	 printf("Error: Reading Fed sched2 line '%s'\n", word );
+	 {
+	  printf("Error: Reading Fed sched2 line %d '%s'\n", linenum, word );
+	  fprintf(outfile,"Error: Reading Fed sched2 line %d '%s'\n", linenum, word );
+	 }
 	if (round_to_whole_dollars)
 	 fed_data->sched[2][linenum] = Round( fed_data->sched[2][linenum] );
       }
@@ -341,12 +370,19 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
     {
      next_word( &(word[3]), tword, " \t=:");
      if (sscanf( tword, "%d", &linenum) != 1)
-      printf("Error: Reading Fed sched3 line-number '%s'\n", word );
+      {
+       printf("Error: Reading Fed sched3 line-number '%s'\n", word );
+       fprintf(outfile,"Error: Reading Fed sched3 line-number '%s'\n", word );
+      }
      else
+     if ((linenum != 6) && (linenum != 13))
       {
 	next_word(fline, word, " \t=:");
 	if (sscanf(word,"%lf", &fed_data->sched[3][linenum]) != 1) 
-	 printf("Error: Reading Fed sched3 line '%s'\n", word );
+	 {
+	  printf("Error: Reading Fed sched3 line %d '%s'\n", linenum, word );
+	  fprintf(outfile,"Error: Reading Fed sched3 line %d '%s'\n", linenum, word );
+	 }
 	if (round_to_whole_dollars)
 	 fed_data->sched[3][linenum] = Round( fed_data->sched[3][linenum] );
       }
@@ -1325,7 +1361,7 @@ int main( int argc, char *argv[] )
  L[27] = L[15];
 
  // GetLineF( "L16", &L[16] );	/* Other income (pg. 14) */
- L[16] = PrelimFedReturn.sched[1][8];
+ L[16] = PrelimFedReturn.sched[1][9];
  showline(16);
 
  for (j = 1; j <= 11; j++)
@@ -1738,16 +1774,19 @@ int main( int argc, char *argv[] )
  if (Zipcode[0] != '\0')
   fprintf(outfile,"Zipcode: %s\n", Zipcode );
 
+ consume_leading_trailing_whitespace( YourLastName );
  if (strlen( YourLastName ) > 0)
   {
    strcpy( YourNames, YourLastName );
    strcat( YourNames, ", " );
    strcat( YourNames, Your1stName );
+   consume_leading_trailing_whitespace( YourInitial );
    if (YourInitial[0] != '\0')
     {
      strcat( YourNames, ", " );
      strcat( YourNames, YourInitial );
     }
+   consume_leading_trailing_whitespace( Spouse1stName );
    if (Spouse1stName[0] != '\0')
     {
      strcat( YourNames, ", " );

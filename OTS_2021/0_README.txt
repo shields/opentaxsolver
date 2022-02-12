@@ -34,6 +34,7 @@ Also contains an Automatic PDF Form-Fillout function:
 History:
     * v19.03 (2/11/2022) - Fixed NY state line 18 input from Fed Sched-1.
 	- Updates to California form 5805 and examples.
+	- Updates to California form 540 PDF printout of Single name and initial.
     * v19.02 (2/07/2022) - Fixed Fed-1040 std-deduction for single filers.
 	- Added Health-Insurance checkbox to CA-540 state form.
 	- Updated Form 2210.
