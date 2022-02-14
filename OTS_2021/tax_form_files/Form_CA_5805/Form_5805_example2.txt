@@ -5,7 +5,7 @@ YourName:	Scenario Two
 YourSocSec#:	222-22-2222	
 	 {--- Filing Status ---}
 Entity	Estate/Trust	 { Filing For?  (answer: Individual, Estate/Trust) }
-Status { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
+Status Single	{ Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
      Estates/Trusts MUST choose \"Single\" }
  {Are you requesting a waiver of the penalty? }
 Quest1	Yes	 {  (answer: Yes, No) }

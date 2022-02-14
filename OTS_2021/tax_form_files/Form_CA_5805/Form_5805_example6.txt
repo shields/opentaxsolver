@@ -5,7 +5,7 @@ YourName:	John Jay
 YourSocSec#:	333-33-3333	
 	 {--- Filing Status ---}
 Entity	Individual	 { Filing For?  (answer: Individual, Estate/Trust) }
-Status { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
+Status Single	{ Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
      Estates/Trusts MUST choose \"Single\" }
  {Are you requesting a waiver of the penalty? }
 Quest1	No	 {  (answer: Yes, No) }

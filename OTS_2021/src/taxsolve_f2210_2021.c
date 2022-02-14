@@ -161,17 +161,13 @@ int main( int argc, char *argv[] )
  now = time(0);
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
 
-fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
- fprintf(outfile,"--- NOT YET FULLY UPDATED FOR 2021. ---\n\n");
-
+ // fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
  // MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2021."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2021.\"" );
- add_pdf_markup( "NotReady", 2, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2021.\"" );
- add_pdf_markup( "NotReady", 3, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2021.\"" );
+ // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2021.\"" );
 
 
  fprintf(outfile, "%s\n", "==================================================");
- fprintf(outfile, "%s\n", "                                                            CAUTION\nThis program fills out Form 2210 to determine WHETHER OR NOT you owe a penalty\nfor underpayment of estimated tax.  It does NOT calculate the AMOUNT of any\npenalty you may owe.  If you owe a penalty, you may need to fill out the Penalty\nWorksheet in the Form 2210 instructions to calculate the amount of your penalty.\nDO NOT INTERPRET the default zero value shown on page 2, line 19, of the filled\nPDF to indicate that you do not owe a penalty.  Scroll down about 1/3 of the way in\nthis results file (to BELOW the SecA results lines) to see if you might owe a penalty.");
+ fprintf(outfile, "%s\n", "    CAUTION\nThis program fills out Form 2210 to determine WHETHER OR NOT you owe a penalty\nfor underpayment of estimated tax.  It does NOT calculate the AMOUNT of any\npenalty you may owe.  If you owe a penalty, you may need to fill out the Penalty\nWorksheet in the Form 2210 instructions to calculate the amount of your penalty.\nDO NOT INTERPRET the default zero value shown on page 2, line 19, of the filled\nPDF to indicate that you do not owe a penalty.  Scroll down about 1/3 of the way in\nthis results file (to BELOW the SecA results lines) to see if you might owe a penalty.");
  fprintf(outfile, "%s\n\n", "==================================================");
 
  /* ----- Accept form data and process the numbers.         ------ */

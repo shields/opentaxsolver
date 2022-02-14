@@ -37,9 +37,14 @@ L29	    	;	{ Pension and annuity income exclusion }
 L30	    	;	{ New York's 529 college savings program deduction/earnings }
 L31	    	;	{ Other (Form IT-225, line 18) }
 
+	{ ----- IT-196 Entries ----- }
 LTcare%	    	;	{ Percent of long-term care premiums in Fed-Sched-A line 1, if any. }	
 AddAdj	    	;	{ Any additional itemization adjustments (worksheet line k pg 26) }
 CollegeDed  	;	{ College tuition itemized deduction (Form IT-272 ) }
+IT196_41	;	{ State, local, and foreign income tax subtraction adjustments }
+IT196_43	;	{ College tuition itemized deduction. }
+IT196_44	;	{ Addition adjustments (see IT-196 instructions)}
+IT196_48	;	{ College tuition itemized deduction. }
 
 L36	    	;	{ Number of Dependent Exemptions (Pg 21) }
 Exemptions   0		{ Number of NY dependent exemptions, Pg 21. }

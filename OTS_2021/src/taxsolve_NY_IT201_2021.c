@@ -26,15 +26,15 @@
 /* Corrections 2020 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include "taxsolve_routines.c"
 
 double A[10], S[10];
 
 #define SINGLE                  1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY	2
+#define MARRIED_FILING_SEPARAT 	3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW                   5
 #define Yes 1
@@ -1158,9 +1158,9 @@ int main( int argc, char *argv[] )
  int j, k, argk, day, month, yyyy;
  char word[1000], *infname=0, outfname[1000], *answ;
  time_t now;
- int Dependent, Exemptions, nyc_resident;
- double itemized_ded, std_ded=0.0, LTC=0, AddAdj=0.0, CollegeDed=0.0;
- double ded_sched[MAX_LINES];
+ int Dependent, Exemptions, nyc_resident, IT588=0, L36=0;
+ double itemized_ded, std_ded=0.0, LTC=0, AddAdj=0.0, CollegeDed=0.0, L19a=0.0;
+ double form_IT196[MAX_LINES], dedthresh, IT588_L9=0.0, IT588_L16=0.0;
  char prelim_1040_outfilename[5000];
  char YourNames[2048]="";
 
@@ -1198,7 +1198,7 @@ int main( int argc, char *argv[] )
  for (j=0; j<MAX_LINES; j++) 
   {
    L[j] = 0.0;
-   ded_sched[j] = 0.0;
+   form_IT196[j] = 0.0;
   }
 
  /* Accept parameters from input file. */
@@ -1386,7 +1386,19 @@ int main( int argc, char *argv[] )
    printf(" Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
    fprintf(outfile," Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
   }
- // TODO - L19a recomputed federal agi. (page 16, 19a worksheet)
+ // L19a recomputed federal agi. (page 16, 19a worksheet)
+ if (IT588)
+  { double wrksht[10];
+    wrksht[1] = L[19];
+    wrksht[2] = IT588_L9;
+    wrksht[3] = wrksht[1] + wrksht[2];
+    wrksht[4] = IT588_L16;
+    wrksht[5] = wrksht[3] - wrksht[4]; 
+    L19a = wrksht[5];
+  }
+ else
+  L19a = L[19];
+ showline_wlabel( "L19a", L19a );
 
  GetLineF( "L20", &L[20] );	/* Interest income from non-NY state or local bonds */
 
@@ -1439,34 +1451,156 @@ int main( int argc, char *argv[] )
  GetLine( "AddAdj", &AddAdj );
  GetLine( "CollegeDed", &CollegeDed );
 
- ded_sched[1] = PrelimFedReturn.schedA[1];
- ded_sched[2] = L[19];
- ded_sched[3] = 0.10 * ded_sched[2];
- ded_sched[4] = NotLessThanZero( ded_sched[1] - ded_sched[3] );
- ded_sched[5] = PrelimFedReturn.schedA5a;
- ded_sched[6] = PrelimFedReturn.schedA5b;
- ded_sched[7] = PrelimFedReturn.schedA5c;
- ded_sched[8] = PrelimFedReturn.schedA[6];
+ form_IT196[1] = PrelimFedReturn.schedA[1];
+ form_IT196[2] = L19a;
+ form_IT196[3] = 0.10 * form_IT196[2];
+ form_IT196[4] = NotLessThanZero( form_IT196[1] - form_IT196[3] );
+ form_IT196[5] = PrelimFedReturn.schedA5a;
+ form_IT196[6] = PrelimFedReturn.schedA5b;
+ form_IT196[7] = PrelimFedReturn.schedA5c;
+ form_IT196[8] = PrelimFedReturn.schedA[6];
  for (j=5; j <= 8; j++)
-  ded_sched[9] = ded_sched[9] + ded_sched[j];
- ded_sched[10] = PrelimFedReturn.schedA8a;
- ded_sched[11] = PrelimFedReturn.schedA8b;
- ded_sched[12] = PrelimFedReturn.schedA8c;
- ded_sched[14] = PrelimFedReturn.schedA[9];
+  form_IT196[9] = form_IT196[9] + form_IT196[j];
+ form_IT196[10] = PrelimFedReturn.schedA8a;
+ form_IT196[11] = PrelimFedReturn.schedA8b;
+ form_IT196[12] = PrelimFedReturn.schedA8c;
+ form_IT196[14] = PrelimFedReturn.schedA[9];
  for (j=10; j <= 14; j++)
-  ded_sched[15] = ded_sched[15] + ded_sched[j];
- ded_sched[16] = PrelimFedReturn.schedA[11];
- ded_sched[17] = PrelimFedReturn.schedA[12];
- ded_sched[18] = PrelimFedReturn.schedA[13];
+  form_IT196[15] = form_IT196[15] + form_IT196[j];
+ form_IT196[16] = PrelimFedReturn.schedA[11];
+ form_IT196[17] = PrelimFedReturn.schedA[12];
+ form_IT196[18] = PrelimFedReturn.schedA[13];
  for (j=16; j <= 18; j++)
-  ded_sched[19] = ded_sched[19] + ded_sched[j];
- ded_sched[20] = PrelimFedReturn.schedA[15];
- ded_sched[39] = PrelimFedReturn.schedA[16];
- ded_sched[40] = ded_sched[4] + ded_sched[9] + ded_sched[15] + ded_sched[19] + ded_sched[20] 
-		 + ded_sched[28] + ded_sched[39];	
- itemized_ded = ded_sched[40];
- for (j=1; j <= 49; j++)
-  showline_wrksht_nz( "DeductionWrksht_", j, ded_sched );
+  form_IT196[19] = form_IT196[19] + form_IT196[j];
+ form_IT196[20] = PrelimFedReturn.schedA[15];
+ form_IT196[39] = PrelimFedReturn.schedA[16];
+
+ switch (status)	/* Determine the Deduction Threshold (IT196 pg 18). */
+  {
+   case WIDOW: 
+   case MARRIED_FILING_JOINTLY: dedthresh = 338850.0;	break;
+   case HEAD_OF_HOUSEHOLD: 	dedthresh = 310600.0;	break;
+   case SINGLE: 		dedthresh = 282400.0;	break;
+   case MARRIED_FILING_SEPARAT: 
+   default:			dedthresh = 169400.0;	break;
+  }
+
+ if (L19a <= dedthresh)
+  {
+   form_IT196[40] = form_IT196[4] + form_IT196[9] + form_IT196[15] + form_IT196[19] + form_IT196[20] 
+		 + form_IT196[28] + form_IT196[39];	
+   fprintf(outfile,"Check_IT196_DedNotLimited = X\n");
+  }
+ else
+  { double dedwksht[100];	/* Total itemized deductions worksheet. pg 18. */
+   fprintf(outfile,"Check_IT196_DedMaybeLimited = X\n");
+   for (j=0; j< 100; j++) dedwksht[j] = 0.0;
+   dedwksht[1] = form_IT196[4] + form_IT196[9] + form_IT196[15] + form_IT196[19] + form_IT196[20] +
+		 form_IT196[28] + form_IT196[39];
+   dedwksht[2] = form_IT196[4] + form_IT196[14] + form_IT196[16] + form_IT196[20] + form_IT196[29] +
+		 form_IT196[30] + form_IT196[37];
+   if (dedwksht[2] < dedwksht[1])
+    {
+     dedwksht[3] = dedwksht[1] - dedwksht[2];
+     dedwksht[4] = 0.80 * dedwksht[3];
+     dedwksht[5] = L19a;
+     dedwksht[6] = dedthresh;
+     if (dedwksht[6] < dedwksht[5])
+      {
+	dedwksht[7] = dedwksht[5] - dedwksht[6];
+	dedwksht[8] = 0.03 * dedwksht[7];
+	dedwksht[9] = smallerof( dedwksht[4], dedwksht[8] );
+	dedwksht[10] = dedwksht[1] - dedwksht[9];
+	form_IT196[40] = dedwksht[10];
+      }
+     else
+      { /* Deduction not limited. */
+       form_IT196[40] = dedwksht[1];
+      }
+    }
+   else
+    { /* Deduction not limited. */
+     form_IT196[40] = dedwksht[1];
+    }
+   for (j=1; j <= 10; j++)
+    showline_wrksht_nz( " DedWrksht_", j, dedwksht );
+  }
+ itemized_ded = form_IT196[40];		// Tentative only for now, finalized below.
+
+ get_parameter( infile, 'l', word, "IT196_41 or L36" );
+ if (strcmp( word, "IT196_41" ) == 0)
+  {
+   get_parameters( infile, 'f', &form_IT196[41], word );
+   GetLine( "IT196_43", &form_IT196[43] );
+   GetLine( "IT196_44", &form_IT196[44] );
+   GetLine( "IT196_48", &form_IT196[45] );
+   get_parameter( infile, 's', word, "L36" );	/* Number of Dependent Exemptions (Pg 76, line e) */
+  }
+
+ form_IT196[42] = form_IT196[40] - form_IT196[41];
+ form_IT196[45] = form_IT196[42] + form_IT196[43] + form_IT196[44];
+ if (L[33] > 100000.0)
+  { double ws[20];
+    for (j=0; j<20; j++) ws[j] = 0.0;
+   if (L[33] < 475000.0)
+    { /*wrksheet3 - IT196-Pg20*/
+      ws[1] = L[33];
+      switch (status)
+	{
+	 case SINGLE:
+	 case MARRIED_FILING_SEPARAT:	ws[2] = 100000.0;	break;
+	 case HEAD_OF_HOUSEHOLD:	ws[2] = 150000.0;	break;
+	 case WIDOW:
+	 case MARRIED_FILING_JOINTLY:	ws[2] = 200000.0;	break;
+ 	}
+      ws[3] = ws[1] - ws[2];
+      if (ws[3] >= 0.0)
+       {
+        ws[4] = smallerof( ws[3], 50000.0 );
+        ws[5] = 0.0001 * (double)Round( 10000.0 * (ws[4] / 50000.0) );
+        ws[6] = 0.25 * form_IT196[45];
+        ws[7] = ws[5] * ws[6];
+	form_IT196[46] = ws[7];
+       }
+    } /*wrksheet3 - IT196-Pg20*/
+   else
+   if (L[33] < 525000.0)
+    { /*wrksheet4 - IT196-Pg20*/
+      ws[1] = L[33] - 475000.0;
+      ws[2] = 0.0001 * (double)Round( 10000.0 * (ws[1] / 50000.0) );
+      ws[3] = 0.25 * form_IT196[45];
+      ws[4] = ws[2] * ws[3];
+      ws[5] = ws[3] * ws[4];
+      form_IT196[46] = ws[5];
+    } /*wrksheet4 - IT196-Pg20*/
+   else
+   if (L[33] < 1000000.0)
+    { 
+     form_IT196[46] = 0.50 * form_IT196[45];
+    } 
+   else
+   if (L[33] < 10000000.0)
+    { /*wrksheet5 - IT196-Pg20*/
+      ws[1] = form_IT196[45];
+      ws[2] = 0.50 * form_IT196[19];
+      ws[3] = ws[1] - ws[2];
+      form_IT196[46] = ws[3];
+    } /*wrksheet5 - IT196-Pg20*/
+   else
+    { /*wrksheet6 - IT196-Pg20*/
+      ws[1] = form_IT196[45];
+      ws[2] = 0.25 * form_IT196[19];
+      ws[3] = ws[1] - ws[2];
+      form_IT196[46] = ws[3];
+    } /*wrksheet6 - IT196-Pg20*/
+  }
+ form_IT196[47] = form_IT196[45] - form_IT196[46];
+ form_IT196[49] = form_IT196[47] + form_IT196[48];
+ itemized_ded = form_IT196[49];
+
+ for (j=1; j <= 49; j++)	/* Display all the IT196 lines. */
+  showline_wrksht_nz( "IT196_", j, form_IT196 );
+
 
  switch (status)	/* Determine the Std. Deduction. Pg. 19. */
   {
@@ -1496,12 +1630,12 @@ int main( int argc, char *argv[] )
  if (L[35] < 0.0) L[35] = 0.0;
  else showline(35);
 
- get_parameter( infile, 's', word, "L36" );	/* Number of Dependent Exemptions (Pg 76, line e) */
- get_parameters( infile, 'i', &k, "L36" );
- L[36] = 1000.0 * (double)k;
+ // get_parameter( infile, 's', word, "L36" );	/* Number of Dependent Exemptions (Pg 76, line e) */
+ get_parameters( infile, 'i', &L36, "L36" );
+ L[36] = 1000.0 * (double)L36;
  showline(36);
- if (k > 0)
-  fprintf(outfile, "L36_enter %d\n", k ); 
+ if (L36 > 0)
+  fprintf(outfile, "L36_enter %d\n", L36 ); 
 
  L[37] = L[35] - L[36];
  if (L[37] < 0.0)
