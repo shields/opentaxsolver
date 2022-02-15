@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.52;
-char package_date[]="February 11, 2022";
-char ots_release_package[]="19.03";
+float version=2.53;
+char package_date[]="February 17, 2022";
+char ots_release_package[]="19.04";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -2467,7 +2467,7 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
    return;
   }
 
- if ((allforms_toggle) && (selected_form == form_US_1040))
+ if ((allforms_toggle) && ((selected_form == form_US_1040) || (selected_form == form_NY_IT201)))
   strcpy( run_options, "-allforms" );
  else
   strcpy( run_options, "" );

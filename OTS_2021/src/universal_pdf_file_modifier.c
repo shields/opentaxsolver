@@ -1072,7 +1072,7 @@ void page_collector( char *rawpdfname, char *outfname )
      results_list = optional_print_list->results;
      form_page = optional_print_list->form_page;
      optional_print_list = optional_print_list->nxt;
-     // printf("Printing Optional Form page: %d\n", form_page );
+     if (verbose)  printf("Printing Optional Form page: %d\n", form_page );
      if (last_form_page != form_page - 1)
       { /*Re-position raw_pdf file read-pt.*/
 	// printf(" ... Re-Syncing Form-Data file\n");

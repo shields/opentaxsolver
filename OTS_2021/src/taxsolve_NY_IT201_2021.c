@@ -39,6 +39,8 @@ double A[10], S[10];
 #define WIDOW                   5
 #define Yes 1
 #define No  0
+#define True  1
+#define False 0
 
 int 	status=0;
 
@@ -1155,12 +1157,12 @@ void tax_computation_worksheet( int status )
 
 int main( int argc, char *argv[] )
 {
- int j, k, argk, day, month, yyyy;
+ int j, k, argk, day, month, yyyy, itemize=0, all_forms=0;
  char word[1000], *infname=0, outfname[1000], *answ;
  time_t now;
  int Dependent, Exemptions, nyc_resident, IT588=0, L36=0;
  double itemized_ded, std_ded=0.0, LTC=0, AddAdj=0.0, CollegeDed=0.0, L19a=0.0;
- double form_IT196[MAX_LINES], dedthresh, IT588_L9=0.0, IT588_L16=0.0;
+ double form_IT196[MAX_LINES], form_IT196_16a=0.0, dedthresh, IT588_L9=0.0, IT588_L18=0.0;
  char prelim_1040_outfilename[5000];
  char YourNames[2048]="";
 
@@ -1171,7 +1173,9 @@ int main( int argc, char *argv[] )
  {
   if (strcmp(argv[argk],"-verbose")==0)  verbose = 1;
   else
-  if (strcmp(argv[argk],"-round_to_whole_dollars")==0)  { round_to_whole_dollars = 1; }
+  if (strcmp(argv[argk],"-round_to_whole_dollars")==0)  { round_to_whole_dollars = True; }
+  else
+  if (strcmp(argv[argk],"-allforms")==0)  { all_forms = True; }    /* Force printing of all form pages. */
   else
   if (k==1)
    {
@@ -1386,13 +1390,13 @@ int main( int argc, char *argv[] )
    printf(" Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
    fprintf(outfile," Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
   }
- // L19a recomputed federal agi. (page 16, 19a worksheet)
+ // L19a recomputed federal agi. (IT201-instructions page 14, 19a worksheet)
  if (IT588)
   { double wrksht[10];
     wrksht[1] = L[19];
     wrksht[2] = IT588_L9;
     wrksht[3] = wrksht[1] + wrksht[2];
-    wrksht[4] = IT588_L16;
+    wrksht[4] = IT588_L18;
     wrksht[5] = wrksht[3] - wrksht[4]; 
     L19a = wrksht[5];
   }
@@ -1467,7 +1471,8 @@ int main( int argc, char *argv[] )
  form_IT196[14] = PrelimFedReturn.schedA[9];
  for (j=10; j <= 14; j++)
   form_IT196[15] = form_IT196[15] + form_IT196[j];
- form_IT196[16] = PrelimFedReturn.schedA[11];
+ form_IT196_16a = PrelimFedReturn.schedA[11];
+ form_IT196[16] = form_IT196_16a;
  form_IT196[17] = PrelimFedReturn.schedA[12];
  form_IT196[18] = PrelimFedReturn.schedA[13];
  for (j=16; j <= 18; j++)
@@ -1492,12 +1497,12 @@ int main( int argc, char *argv[] )
    fprintf(outfile,"Check_IT196_DedNotLimited = X\n");
   }
  else
-  { double dedwksht[100];	/* Total itemized deductions worksheet. pg 18. */
+  { double dedwksht[100];	/* Total itemized deductions worksheet. IT196instr pg 18. */
    fprintf(outfile,"Check_IT196_DedMaybeLimited = X\n");
    for (j=0; j< 100; j++) dedwksht[j] = 0.0;
    dedwksht[1] = form_IT196[4] + form_IT196[9] + form_IT196[15] + form_IT196[19] + form_IT196[20] +
 		 form_IT196[28] + form_IT196[39];
-   dedwksht[2] = form_IT196[4] + form_IT196[14] + form_IT196[16] + form_IT196[20] + form_IT196[29] +
+   dedwksht[2] = form_IT196[4] + form_IT196[14] + form_IT196_16a + form_IT196[20] + form_IT196[29] +
 		 form_IT196[30] + form_IT196[37];
    if (dedwksht[2] < dedwksht[1])
     {
@@ -1533,7 +1538,7 @@ int main( int argc, char *argv[] )
    get_parameters( infile, 'f', &form_IT196[41], word );
    GetLine( "IT196_43", &form_IT196[43] );
    GetLine( "IT196_44", &form_IT196[44] );
-   GetLine( "IT196_48", &form_IT196[45] );
+   GetLine( "IT196_48", &form_IT196[48] );
    get_parameter( infile, 's', word, "L36" );	/* Number of Dependent Exemptions (Pg 76, line e) */
   }
 
@@ -1570,7 +1575,7 @@ int main( int argc, char *argv[] )
       ws[2] = 0.0001 * (double)Round( 10000.0 * (ws[1] / 50000.0) );
       ws[3] = 0.25 * form_IT196[45];
       ws[4] = ws[2] * ws[3];
-      ws[5] = ws[3] * ws[4];
+      ws[5] = ws[3] + ws[4];
       form_IT196[46] = ws[5];
     } /*wrksheet4 - IT196-Pg20*/
    else
@@ -1598,8 +1603,13 @@ int main( int argc, char *argv[] )
  form_IT196[49] = form_IT196[47] + form_IT196[48];
  itemized_ded = form_IT196[49];
 
- for (j=1; j <= 49; j++)	/* Display all the IT196 lines. */
+ for (j=1; j <= 16; j++)	/* Display the IT196 lines. */
   showline_wrksht_nz( "IT196_", j, form_IT196 );
+ fprintf(outfile,"IT196_16a = %6.2f\n", form_IT196_16a );
+ fprintf(outfile," (Note: IT-196 Line-16 assumes Gifts are all qualified contributions.)\n");
+ for (j=17; j <= 49; j++)	/* Display remaining IT196 lines. */
+  showline_wrksht_nz( "IT196_", j, form_IT196 );
+
 
 
  switch (status)	/* Determine the Std. Deduction. Pg. 19. */
@@ -1607,8 +1617,8 @@ int main( int argc, char *argv[] )
    case SINGLE: if (Dependent)   std_ded = 3100.0; 
 		else 		 std_ded = 8000.0;			/* Updated for 2021. */
 	break;
-   case MARRIED_FILING_JOINTLY: std_ded = 16050.0; break;
-   case MARRIED_FILING_SEPARAT: std_ded =  8000.0; break;
+   case MARRIED_FILING_JOINTLY:  std_ded = 16050.0; break;
+   case MARRIED_FILING_SEPARAT:  std_ded =  8000.0; break;
    case HEAD_OF_HOUSEHOLD: 	 std_ded = 11200.0; break;
    case WIDOW: 			 std_ded = 16050.0; break;
   }
@@ -1618,12 +1628,24 @@ int main( int argc, char *argv[] )
    L[34] = std_ded;
    fprintf(outfile,"Check_Std = X\n");
    showline_wmsg(34,"(Mark Std-deduction)");
+   itemize = False;
   }
  else
   {
    L[34] = itemized_ded;
    fprintf(outfile,"Check_Item = X\n");
    showline_wmsg(34,"(Mark Itemized-deduction)");
+   itemize = True;
+  }
+
+ if ((itemize) || (all_forms))
+  {
+   fprintf(outfile,"PDFpage: 5 5\n");
+   fprintf(outfile,"EndPDFpage.\n");
+   fprintf(outfile,"PDFpage: 6 6\n");
+   fprintf(outfile,"EndPDFpage.\n");
+   fprintf(outfile,"PDFpage: 7 7\n");
+   fprintf(outfile,"EndPDFpage.\n");
   }
 
  L[35] = L[33] - L[34];
