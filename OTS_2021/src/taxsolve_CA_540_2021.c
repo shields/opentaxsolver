@@ -701,7 +701,7 @@ void display_part2( int j )
 /*----------------------------------------------------------------------------*/
 int main( int argc, char *argv[] )
 {
- int argk, j, k, iline7, iline8, iline9, iline10, CkFYHealthCoverage=0;
+ int argk, j, k, iline7, iline8, iline9, iline10, CkFYHealthCoverage=0, L7a=0;
  double min2file=0.0, sched540A[MAX_LINES], sched540B[MAX_LINES], sched540C[MAX_LINES],
 	sched540Ab[MAX_LINES], sched540Ac[MAX_LINES],
 	sched540Bb[MAX_LINES], sched540Bc[MAX_LINES],
@@ -794,31 +794,53 @@ int main( int argc, char *argv[] )
  get_word(infile, prelim_1040_outfilename );
  ImportFederalReturnData( prelim_1040_outfilename, &PrelimFedReturn );
 
+
+ /* Only this year (2021), handle next line(s) optionally, due to change in template. */
+ get_parameter( infile, 'l', word, "CountyName:" );
+ if (strcmp( word, "CountyName:" ) == 0)
+  { 
+   get_parameter( infile, 'w', word, "CountyName:" );
+   consume_leading_trailing_whitespace( word );
+   if (word[0] != '\0')
+    fprintf(outfile, " CountyName: %s\n", word );
+   
+   get_parameter( infile, 's', word, "CkSameAddress:" );
+   get_parameter( infile, 'b', &j, "CkSameAddress:");
+   if (j != 0)
+    fprintf(outfile, "CkSameAddress: X\n");
+   /* Now get the expected next line. */
+   get_parameter( infile, 's', word, "L6" );   /* Are you a dependent? (yes/No). */
+  }
+
+
  /* Filing Status. */
+ fprintf(outfile,"Fill-in Filing-Status box %d\n", status );
  switch (status)
  {
-  case SINGLE: 			fprintf(outfile,"Status = Single (%d)\nCkSingle: X\nL7a = 1\n", status); break;
-  case MARRIED_FILING_JOINTLY: fprintf(outfile,"Status = Married/Joint (%d)\nCkMFJ: X\nL7a = 2\n", status); break;
-  case MARRIED_FILING_SEPARAT: fprintf(outfile,"Status = Married/Sep (%d)\nCkMFS: X\nL7a = 1\n", status); break;
-  case HEAD_OF_HOUSEHOLD: 	fprintf(outfile,"Status = Head_of_Household (%d)\nCkHH: X\nL7a = 1\n", status); break;
-  case WIDOW: 		  	fprintf(outfile,"Status = Widow(er) (%d)\nCkQW: X\nL7a = 1\n", status); break;
+  case SINGLE: 		       fprintf(outfile,"Status = Single (%d)\nCkSingle: X\n", status );      L7a = 1; break;
+  case MARRIED_FILING_JOINTLY: fprintf(outfile,"Status = Married/Joint (%d)\nCkMFJ: X\n", status );  L7a = 2; break;
+  case MARRIED_FILING_SEPARAT: fprintf(outfile,"Status = Married/Sep (%d)\nCkMFS: X\n", status );    L7a = 1; break;
+  case HEAD_OF_HOUSEHOLD:      fprintf(outfile,"Status = Head_of_Household (%d)\nCkHH: X\n", status); L7a = 1; break;
+  case WIDOW: 		       fprintf(outfile,"Status = Widow(er) (%d)\nCkQW: X\n", status );       L7a = 1; break;
  }
- fprintf(outfile,"\nStep-2 fill-in box %d\n", status );
+
 
  /* Exemptions. */
- get_parameter( infile, 's', word, "L6" );	/* Are you a dependent? (yes/No). */
+ // get_parameter( infile, 's', word, "L6" );	/* Are you a dependent? (yes/No). */
  get_parameter( infile, 'b', &j, "L6");
  L[6] = j;
  if (L[6] == 0)
-  fprintf(outfile," L6 = no\n");
+  fprintf(outfile,"L6 = no\n");
  else
-  fprintf(outfile," L6 = yes, (check box on line 6).\n  CkDep: X\n");
+  fprintf(outfile,"L6 = yes, (check box on line 6).\n  CkDep: X\n");
 
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT) || (status==HEAD_OF_HOUSEHOLD))
   iline7 = 1;  else  iline7 = 2;
  if (L[6] != 0.0) iline7 = 0; /* <-- Possible exceptions here. */
  L[7] = 129.0 * iline7;							/* Updated for 2021. */
  showline(7);
+
+ fprintf(outfile,"L7a = %d\n", L7a );
 
  get_parameter( infile, 's', word, "L8" );	/* Blind?, 1 if you or spouse, 2 if both. */
  get_parameter( infile, 'i', &iline8, "L8" );

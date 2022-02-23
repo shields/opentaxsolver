@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.00;
+float thisversion=19.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -623,7 +623,7 @@ int main( int argc, char *argv[] )
   {
    L[65] = L[53] - L[64];
    fprintf(outfile, "L65 = %6.2f	DUE !!!\n", L[65] );
-   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[65] / (L[41] + 1e-9) );
+   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[65] / (L[53] + 1e-9) );
    showline_wmsg( 76, "( Total Adjustments to tax due )");
    L[77] = L[65] + L[76];
    showline_wmsg( 77, "Balance Due" );

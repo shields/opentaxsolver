@@ -29,7 +29,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.02;
+float thisversion=19.03;
 
 #include <stdio.h>
 #include <time.h>
@@ -105,18 +105,16 @@ double TaxRateFormula( double x, int status )  /* Returns tax due. */
 }
 
 
-void Report_bracket_info( double income, double addedtx, int status )  
+void Report_bracket_info( double income, double actual_tax, int status )  
 {
-  double tx;
   int  bracket=0;
-  tx = TaxRateFormula( income, status );  
   if (status == WIDOW) status = MARRIED_FILING_JOINTLY;  /* Handle case of widow(er). */
   status = status - 1;  /* Arrays start at zero; not one. */
   while (brkpt[status][bracket+1] < income) bracket++;
   printf(" You are in the %2.1f%% marginal tax bracket,\n and you are paying an effective %2.1f%% tax on your income.\n",
-          100.0 * txrt[status][bracket], 100.0 * (tx + addedtx) / (income + 1e-9) );
+          100.0 * txrt[status][bracket], 100.0 * (actual_tax) / (income + 1e-9) );
   fprintf(outfile," You are in the %2.1f%% marginal tax bracket,\n and you are paying an effective %2.1f%% tax on your income.\n",
-          100.0 * txrt[status][bracket], 100.0 * (tx + addedtx) / (income + 1e-9) );
+          100.0 * txrt[status][bracket], 100.0 * (actual_tax) / (income + 1e-9) );
 }
 
 
@@ -2140,7 +2138,7 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
     Do_QDCGTW = Yes;
    if (Do_QDCGTW)
     {
-     fprintf(outfile,"Doing 'Qualified Dividends and Capital Gain tax Worksheet', page 33.\n");
+     fprintf(outfile,"Doing 'Qualified Dividends and Capital Gain tax Worksheet', page 36.\n");
      capgains_qualdividends_worksheets( status );
     }
    else
@@ -2295,8 +2293,6 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  L[17] = Sched2[3];
  showline( 17 );
 
- Report_bracket_info( L[15], Sched2[3], status );
-
  L[18] = L[16] + L[17];
  showline( 18 );
 
@@ -2448,6 +2444,8 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
 
  L[24] = L[22] + L[23];
  showline_wmsg( 24, "Total Tax" );
+
+ Report_bracket_info( L[15], L[24], status );
  
  showline_wlabelnz( "L25a", L25a );
  showline_wlabelnz( "L25b", L25b );

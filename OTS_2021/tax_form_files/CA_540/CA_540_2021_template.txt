@@ -4,6 +4,10 @@ Title:  CA State Tax Form 540 - 2021
 
 FileName   tax_form_files/US_1040/fed_out.txt { File-name of Federal Return output file. }
 
+CountyName:   		{ Name of your County at time of filing. }
+CkSameAddress:  Yes     { Same residence address at time of filing ?  (answer: Yes, No ) }
+
+
 {--Exemptions--}
 L6              no      { Are you a dependent? (answer: Yes, No) }
 L8               0      { Blind? (answer: 0, 1, 2) - Enter 0 if not blind, 1 if you or spouse, 2 if both. }

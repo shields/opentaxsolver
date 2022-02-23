@@ -40,7 +40,7 @@
 #define MaxPages 100
 #define MAXLINE 2048
 
-float version=1.10;
+float version=1.11;
 int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
@@ -107,11 +107,28 @@ void add_showifzero( char *label )
 }
 
 
+/* Check for partial match of strings ending in wildcard '*'. */
+int checkwildcard( char *needle, char *haystack )
+{ char *twrd;  int sl, ret;
+ sl = strlen( needle );
+ if ((sl < 2) || (strstr( needle, "*" ) == 0))
+  return 0;
+ twrd = strdup( needle );
+ twrd[ sl - 1 ] = '\0';
+ if (strstr( haystack, twrd ) != 0)
+  ret = 1;
+ else
+  ret = 0;
+ free( twrd );
+ return ret;
+}
+
+
 int checknzoveride( char *label )
 { /* Return 0 if label is to display even if zero. Else return 1. */
   struct showzero_rec *item;
   item = showevenifzerolist;
-  while (item && (strcmp( item->label, label ) != 0))
+  while (item && ((strcmp( item->label, label ) != 0) && (checkwildcard( item->label, label ) == 0)))
    item = item->nxt;
  if (item) 
   return 0;

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-Feb 11, 2022 v19.03 - For 2021 tax-year.
+Feb 24, 2022 v19.05 - For 2021 tax-year.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,13 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v19.05 (2/24/2022) - In California state form, added County-name and
+	  check-box for Same-Residence address on first PDF page.
+	- Improved informational message in Fed-1040, and NJ-1040 programs.
+    * v19.04 (2/17/2022) - Added complete NY state IT-196 form for
+	  limited itemized deductions to the NY-IT201 program.  
+	  The program will add to PDF fill-out when needed.
+	- Revised California form 5805 Question-4 condition.
     * v19.03 (2/11/2022) - Fixed NY state line 18 input from Fed Sched-1.
 	- Updates to California form 5805 and examples.
 	- Updates to California form 540 PDF printout of Single name and initial.

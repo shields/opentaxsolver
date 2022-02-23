@@ -86,6 +86,7 @@ L30		;	{ Recovery rebate credit. }
 L38		;	{ Estimated Tax Under-payment Penalty }
 
 { --- Schedule D: Capital Gains/Loses --- }
+  { When there are multiple buy-dates, specify "various-short" or "various-long", instead of a specific date. }
  {Text Editor Note: When adding a security, All values must be present. "~" is a necessary place holder for No Adjustment. }
 
 CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (Form 8949 check A or D) }
