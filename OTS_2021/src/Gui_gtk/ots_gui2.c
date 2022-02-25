@@ -45,8 +45,8 @@
 /********************************************************/
 
 float version=2.53;
-char package_date[]="February 17, 2022";
-char ots_release_package[]="19.04";
+char package_date[]="February 24, 2022";
+char ots_release_package[]="19.05";
 
 /************************************************************/
 /* Design Notes - 					    */

@@ -135,7 +135,7 @@ int main( int argc, char *argv[] )
  L[12] = L[10] + L[11];
  showline_wmsg( 12, "Also enter this number on Schedule-2, line 4." );
  L[13] = L[12] * 0.5;
- showline_wmsg( 13, "Also enter this number on Schedule-1, line 4." );
+ showline_wmsg( 13, "Also enter this number on Schedule-1, line 15." );
 
  L[14] = 5880.0;									/* Updated for 2021. */
 

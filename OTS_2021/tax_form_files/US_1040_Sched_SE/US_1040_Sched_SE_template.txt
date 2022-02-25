@@ -7,7 +7,7 @@ YourSocSec#:
 
 { --- Self-Employment Tax --- }
 
-L2		; { Net Profit/Loss }
+L2		; { Net Profit/Loss, from Sched-C line-31, etc.. }
 
 L5a		; { Church employee income from Form w-2 }
 

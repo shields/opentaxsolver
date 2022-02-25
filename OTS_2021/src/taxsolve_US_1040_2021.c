@@ -713,7 +713,8 @@ void print_capgain_list( struct capgain_record *list, int section, char *message
     strcpy(pdf_adj_code, item->adj_code);
    }
    fprintf(outfile," F8949_1%cf = %3s\n", row, pdf_adj_code );
-   fprintf(outfile," F8949_1%cg = %14.2f\n", row, item->adj_amnt );
+   if (item->adj_amnt != 0.0)
+    fprintf(outfile," F8949_1%cg = %14.2f\n", row, item->adj_amnt );
    fprintf(outfile," F8949_1%ch = %14.2f\n", row, item->sell_amnt + item->buy_amnt + item->adj_amnt);
    row++;
    item = item->nxt;
