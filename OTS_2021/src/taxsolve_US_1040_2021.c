@@ -29,7 +29,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.03;
+float thisversion=19.04;
 
 #include <stdio.h>
 #include <time.h>
@@ -1565,7 +1565,8 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  double ntcpe=0.0, pyei=0.0;
  double Sched2_17[50];
  char *S2_17a_Type, *S2_17z_Type, *S3_6z_Type, *S3_13z_Type;
-
+ int got_charity=0;
+ double charityCC=0.0, charityOT=0.0, charityCO=0.0;
 
  /* Decode any command-line arguments. */
  printf("US 1040 2021 - v%3.2f\n", thisversion);
@@ -1704,7 +1705,43 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  GetLineF( "L5b", &L[5] );	/* Taxable pensions, and annuities. */
  GetLineF( "L6a", &L6a );	/* Social Security benefits.  Forms SSA-1099 box-5. */
 
- GetLine( "L13", &L[13] );	/* Qualified business income deduction. */
+
+ /* Previous to version 19.06, the charity-contributions were always read on line A11 of the Itemizations schedule-A.
+    This corresponded to all the IRS tax forms for the past several decades.
+    Around the 2020 tax-year, the IRS added an option, when not itemizing, of including charity-contribs on the main 1040 form.
+    Since the OTS program always decided automatically on itemizing or std-deduction based on the calculations, 
+    and since it was assumed this option was only for that year, it made sense to continue entering charity-contribs 
+    on A11 -- and then based on the results, OTS automatically placed the charity-contributions in the right line - on the 
+    main 1040 form if not itemizing.  This works fine, and avoids having users needing to enter their charity-contributions
+    twice - in two different places - with the possible issue then of non-matching values, etc..
+    However, during the 2021 tax year, we began receiving questions from newer users about where to enter charity-contribs,
+    especially for those not expecting to itemize on Schedule-A.
+    Since the charity option on the main form no longer appears to be a one-time thing, it probably makes sense to
+    just have a single named-entry called "Charity_Contributions", irrespective of any line number(s).
+    And then let the OTS progam calculate which line to place the value on.
+ */
+ /* Look for optional CharityDonations line.  (Remove *optional* logic for 2022, once CharityDonations is on ALL templates.) */
+ get_parameter( infile, 'l', labelx, "CharityCC or L13");
+ if (strcmp( labelx, "CharityCC" ) == 0)
+  {
+   get_parameters( infile, 'f', &charityCC, labelx );	/* Charity Contributions by Cash or Check. */
+   GetLine( "CharityOT", &charityOT );			/* Charity Contributions Other Than cash or check. */
+   GetLine( "CharityCO", &charityCO );			/* Charity Contributions Carried Over from last year. */
+   got_charity = 1;
+   /* Next, go ahead and get the next expected line. */
+   GetLine( "L13", &L[13] );	/* Qualified business income deduction. */
+  }
+ else
+ if (strcmp( labelx, "L13" ) == 0)
+  {
+   get_parameters( infile, 'f', &L[13], labelx );
+  }
+ else
+  {
+   printf("Error: Found '%s' when expecteding CharityCC or L13.\n", labelx );
+   fprintf(outfile,"Error: Found '%s' when expecteding CharityCC or L13.\n", labelx );
+   exit(1);
+  }
 
  GetLine( "L19", &L[19] );	/* Child tax credit/credit for other dependents. */
 
@@ -1958,13 +1995,24 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
    exit(1);
   }
  // GetLine( "A9", &SchedA[9] );	/* Investment interest. Attach Form 4952*/	/* Optionally read-in just above. */
- GetLine( "A11", &SchedA[11] );	/* Charity contributions by cash or check.*/
- GetLine( "A12", &SchedA[12] );	/* Contributions other than cash or check.*/
- GetLine( "A13", &SchedA[13] );	/* Carryover from prior year*/
+
+ if (got_charity)
+  {
+   SchedA[11] = charityCC;	/* Charity contributions by cash or check.*/
+   SchedA[12] = charityOT;	/* Contributions other than cash or check.*/
+   SchedA[13] = charityCO;	/* Carryover from prior year*/
+  }
+ else
+  {
+   GetLine( "A11", &SchedA[11] ); 	/* Charity contributions by cash or check.*/
+   GetLine( "A12", &SchedA[12] );	/* Contributions other than cash or check.*/
+   GetLine( "A13", &SchedA[13] );	/* Carryover from prior year*/
+  }
+
  GetLine( "A15", &SchedA[15] );	/* Casualty or theft loss(es).*/
  GetLine( "A16", &SchedA[16] );	/* Other expenses*/
 
- /* Look for optional Force-Itemize line.  (Remove *optional* logic for 2021, once A18 is on ALL templates.) */
+ /* Look for optional Force-Itemize line.  (Remove *optional* logic for 2022, once A18 is on ALL templates.) */
  get_parameter( infile, 'l', labelx, "A18 or B7a");
  if (strcmp( labelx, "A18" ) == 0)
   {

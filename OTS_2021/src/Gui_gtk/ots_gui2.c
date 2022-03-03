@@ -2807,7 +2807,7 @@ void get_pdf_viewer()
  strcat( fname, "gui_settings.conf" );
  configfile = fopen( fname, "r" );
  if (configfile == 0)
-  printf("Could not open 'gui_settings.conf'.\n");
+  printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
  else
   {
    /* Expect config file to have options like:  PDF_VIEWER: acroread	*/
@@ -2923,7 +2923,7 @@ void saveconfig( GtkWidget *wdg, void *data )
  /* First make a backup config-file. */
  infile = fopen( fname, "r" );
  if (infile == 0)
-  printf("Could not open 'gui_settings.conf' for reading.\n");
+  printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
  else
   {
    strcpy( bckfile, toolpath );

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-Feb 24, 2022 v19.05 - For 2021 tax-year.
+March 3, 2022 v19.06 - For 2021 tax-year.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,12 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v19.06 (3/3/2022) - Clarified where to enter Charity Donations on
+	  the Federal 1040 form, by creating designated Charity line.
+	- For MacOS platforms, added MacSetup command file for allowing
+	  operation under the increased security restrictions of MacOS
+	  Catalina (10.15), Big Sur (11), Monterey (12), and beyond.
+	  On MacOS, run 'MacSetup' once, before running the OTS-GUI.
     * v19.05 (2/24/2022) - In California state form, added County-name and
 	  check-box for Same-Residence address on first PDF page.
 	- Improved informational message in Fed-1040, and NJ-1040 programs.

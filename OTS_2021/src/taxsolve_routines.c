@@ -105,7 +105,7 @@ void get_word( FILE *infile, char *word )	/* Absorb comments. */
   } 
  while ((!feof(infile)) && ((word[j]==' ') || (word[j]=='\t') || (word[j]==ltc) || (word[j]=='\r')));
  if (word[j]=='$')
-  word[j]=getc(infile);
+  word[j] = getc(infile);
  if (word[j]==';') 
   j++;
  else
@@ -124,7 +124,12 @@ void get_word( FILE *infile, char *word )	/* Absorb comments. */
   { /* Normal case. */
    do {	/*Get word until white-space or ;.*/
         j++;  word[j] = getc(infile);
-        if (word[j]=='{') do word[j] = getc(infile); while ((!feof(infile)) && (word[j]!='}'));
+        if (word[j]=='{')
+	 {
+	  do { word[j] = getc(infile); }
+	  while ((!feof(infile)) && (word[j] != '}'));
+	  word[j] = ' ';
+	 }
 	if (word[j]==',') word[j] = getc(infile);
       } 
    while ((!feof(infile)) && ((word[j]!=spc) && (word[j]!='\t') && (word[j]!='\n') && (word[j]!=';')));
@@ -308,7 +313,7 @@ int valid_float( char *word )	/* Check for a valid decimal value in string, and 
 /*------------------------------------------------------------------------------*/
 void get_parameter( FILE *infile, char kind, void *x, char *emssg )
 {
- char word[2048], *owrd;
+ char word[4096], *owrd;
  int i, *ii;
  double y, *yy;
 

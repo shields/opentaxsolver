@@ -9,6 +9,7 @@ no_zero_entries
 showevenifzero L45
 round_to_whole_numbers
 no_show_decimal_pt
+solid_status_check 17 6 30 .
 
  YourSocSec#: 	100 190 0 19
  SpouseSocSec#: 100 248 0 19
@@ -18,26 +19,26 @@ no_show_decimal_pt
  State:		703 308 0
  Zipcode: 	772 308 0 13.1
  CountyCode	159 307 0 20
- Check_single   110 479 0
- Check_mfj      110 504 0
- Check_sep      110 530 0
- SpouseSocSec#Sep: 450 522 0 19
- Check_hh       110 553 0
- Check_widow    110 577 0
- Check_Spouse   355 675 0
+ Check_single    92 479 0
+ Check_mfj       92 503 0
+ Check_sep       92 531 0
+ Check_hh        92 554 0
+ Check_widow     92 579 0
+ Check_Spouse   341 676 0
  Check_DomPartner 506 675 0
+ SpouseSocSec#Sep: 450 522 0 19
  L6a		656 675 0
  L6 		792 675 0
- Check_Over65  	233 718 0
- Check_SpOver65 355 718 0
+ Check_Over65  	221 718 0
+ Check_SpOver65 340 718 0
  L7a 		654 712 0
  L7 		792 712 0
- Check_Blind  	233 754 0
- Check_SpBlind  355 753 0
+ Check_Blind  	220 755 0
+ Check_SpBlind  340 755 0
  L8a 		654 750 0
  L8 		792 750 0
- Check_Vet	233 780 0
- Check_SpVet	355 781 0
+ Check_Vet	220 781 0
+ Check_SpVet	340 782 0
  L9a 		654 779 0
  L9 		792 779 0
 
