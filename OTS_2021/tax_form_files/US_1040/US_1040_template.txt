@@ -60,7 +60,7 @@ L25c		;       { Federal income tax withheld, from other forms. }
 L26		;	{ Estimated tax payments made for the year. }
 
 { -- Refundable Credits -- }
-L27a		;	{ Earned Income Credit (EIC) }
+L27a		;	{ Earned Income Credit (EIC). If Married/Sep, review restrictions. }
 L27b		;	{ Nontaxable combat pay election }
 L27c		;	{ Prior year (2019) earned income }
 L28		;	{ Child Tax Credit, Schedule 8812 }

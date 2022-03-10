@@ -1751,6 +1751,8 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  L[25] = L25a + L25b + L25c;
  GetLine( "L26", &L[26] );	/* Estimated tax payments for 2021. */ 
  GetLine( "L27a", &L[27] );	/* Refundable credit: EIC */
+ // if (status == MARRIED_FILING_SEPARAT)
+ //  L[27] = 0.0;
  GetLine( "L27b", &ntcpe );	/* Nontaxable combat pay election */
  GetLine( "L27c", &pyei );	/* Prior year (2019) earned income */
  GetLine( "L28", &L[28] );	/* Refundable credit: Sch. 8812 */
