@@ -27,7 +27,7 @@
 /* Not updated for 2021 tax year:						*/
 /************************************************************************/
 
-float thisversion=19.00;
+float thisversion=19.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -92,11 +92,11 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title: 8889 HSA Form - 2021" );
 
  GetTextLineF( "YourName:" );
  GetTextLineF( "YourSocSec#:" );
  
-
  writeout_line = 0;     /* Suppress GetLineF's from immediately writing to outfile. */
  answ = GetTextLineF( "L1:" );
  next_word( answ, word, " \t;" );

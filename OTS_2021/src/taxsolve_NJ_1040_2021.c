@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -204,6 +204,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ) );
+ check_form_version( word, "Title:  NJ-1040 State 2021" );
 
  /* get_parameter(infile, kind, x, mesage ) */
  get_parameter( infile, 's', word, "Status" );

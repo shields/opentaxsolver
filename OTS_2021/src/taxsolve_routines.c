@@ -984,6 +984,29 @@ void substitute_chars( char *line, char *badchars, char replace_char )
 }
 
 
+int check_form_version( char *title_as_read_in, char *expected_title )
+{ /* Check that Form input file matched intended Program.  Return 1 if good.  Or 0 if not-match. */
+ if (strstr( title_as_read_in, expected_title ) == 0)
+  {
+   printf("\nWarning: Looks like wrong Program for this Form-file.\n");
+   printf("     Expecting: '%s'\n", expected_title );
+   printf("     But found: '%s'.\n\n", title_as_read_in );
+   fprintf(outfile,"\nWarning: Looks like wrong Program for this Form-file.\n");
+   fprintf(outfile,"    Expecting: '%s'\n", expected_title );
+   fprintf(outfile,"    But found: '%s'.\n\n\n", title_as_read_in );
+   #ifdef microsoft
+    system( "start bin\\notify_popup -delay 3 -expire 20 \"Warning: Warning: Looks like wrong Program for this Form-file.\"" );
+   #else
+    system( "bin/notify_popup -delay 3 -expire 20 \"Warning: Warning: Looks like wrong Program for this Form-file.\" &" );
+   #endif
+   return 0;
+  }
+ else
+  return 1;
+}
+
+
+
 /* --- PDF Markup Support --- */
 /* This class supports the ability to intercept "MarkupPDF" commands in a Tax Input File,
    and to forward them to the Tax Output File, where they can be interpretted by the

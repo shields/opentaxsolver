@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=3.01;
+float thisversion=3.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -237,6 +237,7 @@ for(i = 0; i <= 13; i++){
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  Form 5805 for Tax Year 2021" );
 
  // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 20xx.\"" );
 

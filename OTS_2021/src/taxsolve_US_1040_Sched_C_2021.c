@@ -29,7 +29,7 @@
 /* Earlier Updates	Robert Heller  heller@deepsoft.com		*/
 /************************************************************************/
 
-float thisversion=19.00;
+float thisversion=19.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -104,6 +104,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  1040 Schedule C - 2021" );
 
  GetTextLineF( "YourName:" );
  GetTextLineF( "YourSocSec#:" );

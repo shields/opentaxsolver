@@ -4,7 +4,7 @@
 /* Provided by Fred Robinson - 2021-7-8.				*/	
 /************************************************************************/
 
-float thisversion = 1.00;
+float thisversion = 1.01;
 
 #include <math.h>
 #include <stdio.h>
@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
   read_line(infile, word);
   now = time(0);
   fprintf(outfile, "\n%s,  v%2.2f, %s\n", word, thisversion, ctime(&now));
+  check_form_version( word, "Title: Form 8606 for tax-year 2021" );
 
   // Begin form-specific code
 

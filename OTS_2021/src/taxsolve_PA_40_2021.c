@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-#define thisversion 19.00
+#define thisversion 19.01
 
 #include "taxsolve_routines.c"
 
@@ -97,6 +97,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  PA State Tax Form PA-40 for 2021" );
 
  /* get_parameter(infile, kind, x, emssg ) */
  get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Widow(er) */

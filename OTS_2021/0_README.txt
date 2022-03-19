@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 3, 2022 v19.06 - For 2021 tax-year.
+March 19, 2022 v19.07 - For 2021 tax-year.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,9 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v19.07 (3/19/2022) - Added check for matching input Form-type.
+	  Checks that it matches the Program being run, as intended.
+	  Otherwise it shows a warning message.
     * v19.06 (3/3/2022) - Clarified where to enter Charity Donations on
 	  the Federal 1040 form, by creating designated Charity line.
 	- For MacOS platforms, added MacSetup command file for allowing

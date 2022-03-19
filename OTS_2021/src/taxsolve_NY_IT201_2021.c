@@ -26,7 +26,7 @@
 /* Corrections 2020 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=19.02;
+float thisversion=19.03;
 
 #include "taxsolve_routines.c"
 
@@ -1218,6 +1218,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  NY State 2021" );
 
  get_parameter( infile, 's', word, "FileName" );      /* Preliminary Return Output File-name. */
  get_word(infile, prelim_1040_outfilename );

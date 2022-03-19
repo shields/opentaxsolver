@@ -27,7 +27,7 @@
 
  ************************************************************************/
 
-float thisversion=2.00;
+float thisversion=2.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -95,6 +95,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  1040 Schedule SE - 2021" );
 
 
  /* ----- Accept form data and process the numbers.         ------ */

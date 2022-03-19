@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=19.00;
+float thisversion=19.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY 2
@@ -117,6 +117,7 @@ int main( int argc, char *argv[] )
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ));
+ check_form_version( word, "Title:  VA-760 State 2021" );
 
  /* get_parameter(infile, kind, x, emssg ) */
  get_parameter( infile, 's', word, "Status" );
