@@ -1627,7 +1627,7 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  read_line( infile, word );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ) );
- check_form_version( word, "Title: US Federal 1040 Tax Form - 2021" );
+ check_form_version( word, "Title:  US Federal 1040 Tax Form - 2021" );
 
  get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
