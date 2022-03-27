@@ -2050,7 +2050,7 @@ int main( int argc, char *argv[] )						/* Updated for 2021. */
  SchedA[14] = SchedA[11] + SchedA[12] + SchedA[13];
  SchedA[17] = SchedA[4] + SchedA[7] + SchedA[10] + SchedA[14] + SchedA[15] + SchedA[16];
 
- if (status != MARRIED_FILING_SEPARAT)		/* Now, Tentatively set 12b value, assuming NOT-itemizing. */
+ if (status == MARRIED_FILING_JOINTLY)		/* Now, Tentatively set 12b value, assuming NOT-itemizing. */
   L12b = smallerof( SchedA[14], 600.0 );
  else
   L12b = smallerof( SchedA[14], 300.0 );

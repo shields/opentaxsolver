@@ -984,9 +984,36 @@ void substitute_chars( char *line, char *badchars, char replace_char )
 }
 
 
+int whitespace_invariant_strstr( char *haystack, char *needle )	/* Return 1 if match, otherwise 0 if mismatch. */
+{
+ int ret;
+ char *hay, *ne, *wrd1, *wrd2;
+ hay = strdup( haystack );
+ wrd1 = (char *)malloc( strlen( haystack ) + 1 );
+ ne = strdup( needle );
+ wrd2 = (char *)malloc( strlen( needle ) + 1 );
+ do 
+  {
+   next_word( hay, wrd1, " \t\n\r" );
+   next_word( ne, wrd2, " \t\n\r" );
+   // printf("Comparing '%s' to '%s'\n", wrd1, wrd2 );
+  }
+ while ((wrd2[0] != '\0') && (strcmp(wrd1,wrd2) == 0));
+ if (wrd2[0] != '\0')
+  ret = 0;	/* Mismatch. */
+ else
+  ret = 1;	/* Matched. */
+ free( hay );
+ free( ne );
+ free( wrd1 );
+ free( wrd2 );
+ return ret;
+}
+
+
 int check_form_version( char *title_as_read_in, char *expected_title )
 { /* Check that Form input file matched intended Program.  Return 1 if good.  Or 0 if not-match. */
- if (strstr( title_as_read_in, expected_title ) == 0)
+ if (whitespace_invariant_strstr( title_as_read_in, expected_title ) == 0)
   {
    printf("\nWarning: Looks like wrong Program for this Form-file.\n");
    printf("     Expecting: '%s'\n", expected_title );

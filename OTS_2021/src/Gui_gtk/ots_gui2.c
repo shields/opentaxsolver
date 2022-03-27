@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.54;
-char package_date[]="March 3, 2022";
-char ots_release_package[]="19.06";
+float version=2.55;
+char package_date[]="March 27, 2022";
+char ots_release_package[]="19.07";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1122,6 +1122,98 @@ int mouse_unclicked( GtkWidget *widget, GdkEventButton *event, gpointer data )
 /* ----------------- End Tax Instructions Helper -------------------- */
 
 
+int whitespace_invariant_strstr( char *haystack, char *needle )	/* Return 1 if match, otherwise 0 if mismatch. */
+{
+ int ret;
+ char *hay, *ne, *wrd1, *wrd2;
+ hay = strdup( haystack );
+ wrd1 = (char *)malloc( strlen( haystack ) + 1 );
+ ne = strdup( needle );
+ wrd2 = (char *)malloc( strlen( needle ) + 1 );
+ do 
+  {
+   fb_next_word( hay, wrd1, " \t\n\r" );
+   fb_next_word( ne, wrd2, " \t\n\r" );
+   // printf("Comparing '%s' to '%s'\n", wrd1, wrd2 );
+  }
+ while ((wrd2[0] != '\0') && (strcmp(wrd1,wrd2) == 0));
+ if (wrd2[0] != '\0')
+  ret = 0;	/* Mismatch. */
+ else
+  ret = 1;	/* Matched. */
+ free( hay );
+ free( ne );
+ free( wrd1 );
+ free( wrd2 );
+ return ret;
+}
+
+int check_form_version( char *title_as_read_in, char *expected_title )
+{ /* Check that Form input file matched intended Program.  Return 1 if good.  Or 0 if not-match. */
+ char msg[4096];
+printf(" COmparing '%s' to '%s'\n", title_as_read_in, expected_title );
+ if (whitespace_invariant_strstr( title_as_read_in, expected_title ) == 0)
+  {
+   // GeneralWarning( "Warning: Looks like wrong Form-file for selected tax-progam. ??" );
+   strcpy(msg,"\nWarning: Looks like wrong Form-file for selected tax-progam. ??.\n");
+   strcat(msg,"     Expecting:  '");
+   strcat(msg, expected_title );
+   strcat(msg,"'\n     But found:  '");
+   strcat(msg, title_as_read_in );
+   strcat(msg,"'\n\nMaybe go back and switch your tax-selection or input file.\n\n" );
+   GeneralPopup( "Warning:", msg, 1);
+   return 0;
+  }
+ else
+  return 1;
+}
+
+void check_form_type( char *title_line )
+{
+printf("CHECKING: '%s'\n", title_line );
+ switch (selected_form)
+  {
+   case form_US_1040: check_form_version( title_line, "Title:  US Federal 1040 Tax Form" );
+	break;
+   case form_US_1040_Sched_C: check_form_version( title_line, "Title:  1040 Schedule C" );
+	break;
+   case form_PA_40: check_form_version( title_line, "Title:  PA State Tax Form PA-40" );
+	break;
+   case form_CA_540: check_form_version( title_line, "Title:  CA State Tax Form 540" );
+	break;
+   case form_OH_IT1040: check_form_version( title_line, "Title:  Ohio IT1040 State" );
+	break;
+   case form_VA_760: check_form_version( title_line, "Title:  VA-760 State 2021" );
+	break;
+   case form_NJ_1040: check_form_version( title_line, "Title:  NJ-1040 State 2021" );
+	break;
+   case form_NY_IT201: check_form_version( title_line, "Title:  NY State 2021" );
+	break;
+   case form_MA_1: check_form_version( title_line, "Title:  Massachusetts Form 1 Tax Form" );
+	break;
+   case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2021" );
+	break;
+   default:
+	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
+	  check_form_version( title_line, "Title: 8889 HSA Form" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
+	  check_form_version( title_line, "Title:  1040 Schedule SE" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
+	  check_form_version( title_line, "Title: 2021 Form 8959" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8960" ) != 0)
+	  check_form_version( title_line, "Title: 2021 Form 8960" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f2210" ) != 0)
+	  check_form_version( title_line, "Title:  Form 2210 for Tax Year 2021" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
+	  check_form_version( title_line, "Title:  Form 5805" );
+  }
+}
+
 
 /* Check if entry looks like a date. */
 /* If so, return 1, else return 0.  */
@@ -1163,6 +1255,7 @@ void Read_Tax_File( char *fname )
  /* Accept the form's Title line.  (Must be first line!) */
  fgets(word, 200, infile);
  title_line = strdup( word );
+ check_form_type( title_line );
  j = strlen(word);
  if (j>0) word[j-1] = '\0';
  // printf("Title: '%s'\n", word);
@@ -3571,6 +3664,7 @@ void slcttxprog( GtkWidget *wdg, void *data )
    fb_ban_files( ".dll" );
    fb_ban_files( ".dylib" );
    fb_ban_files( "convert_results2xfdf" );
+   fb_ban_files( "notify_popup" );
    fb_ban_files( "ots_gui" );
    fb_ban_files( "universal_pdf_file_modifier" );
 
