@@ -29,7 +29,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.06;
+float thisversion=19.07;
 
 #include <stdio.h>
 #include <time.h>
@@ -278,7 +278,7 @@ double form6251_AlternativeMinimumTax( int itemized )						/* Updated for 2021. 
  switch (status)
   {
      case SINGLE: case HEAD_OF_HOUSEHOLD:
-	thresholdA = 523800.0;
+	thresholdA = 523600.0;
 	thresholdB = 818000.0;
 	thresholdC = 199900.0;
 	offsetA = 3998.0;
