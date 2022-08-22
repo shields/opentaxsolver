@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include <time.h>
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include "taxsolve_routines.c"
 
@@ -301,6 +301,7 @@ int main( int argc, char *argv[] )
    showline_wmsg(11,word);
   }
 
+#if (0)
  GetLine( "L12", &L[12] );	/* Child under 13... */
  ShowLineNonZero(12);
 
@@ -314,8 +315,29 @@ int main( int argc, char *argv[] )
    sprintf(word,"a. %d x 3,600 ", dep_deduct);
    showline_wmsg(13, word);
   }
+#else
+ get_parameter( infile, 'l', word, "L12" );	/* Unused now. */
+ if (strcmp( word, "L12" ) == 0)
+  {
+   get_parameters( infile, 'f', &L[12], "L12" );
+   get_parameter( infile, 's', word, "L13"); /* Dependent under 12. */
+   get_parameter( infile, 'i', &dep_deduct, "L13");
+   GetLine( "L14a", &L[14] );	/* Rental Paid */
+  }
+ else
+ if (strcmp( word, "L14a" ) == 0)
+  {
+   get_parameters( infile, 'f', &L[14], "L14" );
+  }
+ else
+  {
+   printf("Error: Expected 'L14', but found '%s'. Exiting.\n", word ); 
+   fprintf(outfile,"Error: Expected 'L14', but found  '%s'. Exiting.\n", word); 
+   exit(1);
+  }
+#endif
 
- GetLine( "L14a", &L[14] );	/* Rental Paid */
+ // GetLine( "L14a", &L[14] );	/* Rental Paid */
  showline_wlabel( "L14a", L[14] );
  L[14] = L[14] / 2.0;
  if (status == MARRIED_FILING_SEPARAT)

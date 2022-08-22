@@ -44,6 +44,7 @@ int notappvalue=0;
 int single_line_entry=0;
 int whole_line_entry=0;
 int round_to_whole_dollars=0;	/* Option to use whole-dollars. */
+int value_was_detected=0;
 
 struct date_rec  /* Used by get_gain_and_losses  and  gen_date_rec */
 {
@@ -319,6 +320,7 @@ void get_parameter( FILE *infile, char kind, void *x, char *emssg )
 
  if (kind=='w') 
   { single_line_entry = 1;  whole_line_entry = 1; }
+ value_was_detected = 0;
 
  get_word(infile, word);
 
@@ -328,6 +330,8 @@ void get_parameter( FILE *infile, char kind, void *x, char *emssg )
    if (outfile) fprintf(outfile,"ERROR: Unexpected EOF on '%s'\n",emssg);
    exit(1);
   }
+ if (word[0] != '\0')
+  value_was_detected = 1;
  if (kind=='i')
   {
    if ((!valid_int(word)) || (sscanf(word,"%d",&i)!=1))
@@ -414,9 +418,10 @@ void get_parameters( FILE *infile, char kind, void *x, char *emssg )
  if (kind == 'f') { yy = (double *)x;  *yy = 0.0; }
  else
  if (kind == 'w') { owrd = (char *)x;  owrd[0] = '\0'; }
+ value_was_detected = 0;
 
  get_word(infile,word);
- while (word[0]!=';')
+ while (word[0] != ';')
  {
  if (feof(infile))
   {printf("ERROR: Unexpected EOF on '%s'\n",emssg); fprintf(outfile,"ERROR: Unexpected EOF on '%s'\n",emssg); exit(1);}
@@ -480,6 +485,7 @@ void get_parameters( FILE *infile, char kind, void *x, char *emssg )
   }
  else
   {printf("ERROR: Unknown type '%c'\n", kind); fprintf(outfile,"ERROR: Unknown type '%c'\n", kind); exit(1);}
+ value_was_detected++;
  get_word(infile,word);
  }
 }

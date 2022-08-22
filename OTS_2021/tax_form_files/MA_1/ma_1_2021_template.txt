@@ -39,8 +39,6 @@ L9		;       { Other income, Alimony received. }
 
 L11a  		;	{ Amount you paid to SS, Medicare, RR, US, or Mass retirement }
 L11b		;	{ Amount spouse paid to SS, Medicare, RR, US, or Mass retirement }
-L12		;	{ Child under 13, or disabled dependent/spouse }
-L13		0	{ Number of dependents < 12, or deps >= 65, or disabled deps, not more than 2 }
 L14a		;	{ Rental Paid }
 L15		;	{ Other - Sched Y, L19 }
   

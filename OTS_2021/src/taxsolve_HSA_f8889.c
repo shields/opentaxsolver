@@ -27,7 +27,7 @@
 /* Not updated for 2021 tax year:						*/
 /************************************************************************/
 
-float thisversion=19.01;
+float thisversion=19.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -111,7 +111,12 @@ int main( int argc, char *argv[] )
  GetLineF( "L4", &L[4] );
  L[5] = NotLessThanZero( L[3] - L[4] );
  showline( 5 );
- GetLineF( "L6", &L[6] );
+
+ GetLine( "L6", &L[6] );
+ if (!value_was_detected)
+  L[6] = L[5];			/* If user did not supply a value for L6, then L6 must be set to L5. */
+ showline( 6 );
+
  GetLineF( "L7", &L[7] );
  L[8] = L[6] + L[7];
  showline( 8 );

@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2021	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=19.04;
+float thisversion=19.05;
 
 #include <stdio.h>
 #include <time.h>
@@ -717,6 +717,7 @@ int main( int argc, char *argv[] )
 	 sched540Cb24f=0.0, sched540Cc24f=0.0, sched540Cb24g=0.0,  sched540Cc24g=0.0, 
 	 sched540Cb24i=0.0, sched540Cb24j=0.0, sched540Cb24k=0.0, sched540Cb24z=0.0,
 	 sched540Cc24z=0.0;
+ int CkPayedUseTaxCDTFA=0;
  time_t now;
 
  /* Decode any command-line arguments. */
@@ -1530,12 +1531,24 @@ int main( int argc, char *argv[] )
 
  GetLineF( "L91", &L[91] );	/* Use Tax. */
 
-
+ // GetYesNo( "CkPayedUseTaxCDTFA", &CkPayedUseTaxCDTFA );
  // GetYesNo( "CkFYHealthCoverage", &CkFYHealthCoverage );
  // GetLineF( "L92", &L[92] );	/* Individual Shared Responsibility (ISR) Penalty. */
 
  /* Only this year (2021), handle next line(s) optionally, due to change in template. */
  get_parameter( infile, 'l', word, "CkFYHealthCoverage" );
+ if (strcmp( word, "CkPayedUseTaxCDTFA" ) == 0)
+  {
+    get_parameters( infile, 'b', &CkPayedUseTaxCDTFA, "CkPayedUseTaxCDTFA" );
+    get_parameter( infile, 'l', word, "CkFYHealthCoverage" );
+  }
+ if (L[91] == 0.0)
+  {
+    if (CkPayedUseTaxCDTFA == 0)
+     fprintf(outfile," CkNoUseTaxOwed = X\n");
+    else
+     fprintf(outfile," CkPayedUseTaxCDTFA = X\n");
+  }
  if (strcmp( word, "CkFYHealthCoverage" ) == 0)
   {
    get_parameters( infile, 'b', &CkFYHealthCoverage, "CkFYHealthCoverage" );
@@ -1671,10 +1684,10 @@ int main( int argc, char *argv[] )
  for (j=1; j <=3; j++)
   if (strlen(PrelimFedReturn.Dep1stName[j]) > 0)
    {
-    fprintf(outfile,"L10Dep%dFrstName: %s\n", j, PrelimFedReturn.Dep1stName[1] );
-    fprintf(outfile,"L10Dep%dLastName: %s\n", j, PrelimFedReturn.DepLastName[1] );
-    fprintf(outfile,"L10Dep%dSSN: %s\n", j, PrelimFedReturn.DepSocSec[1] );
-    fprintf(outfile,"L10Dep%dRelation: %s\n", j, PrelimFedReturn.DepRelation[1] );
+    fprintf(outfile,"L10Dep%dFrstName: %s\n", j, PrelimFedReturn.Dep1stName[j] );
+    fprintf(outfile,"L10Dep%dLastName: %s\n", j, PrelimFedReturn.DepLastName[j] );
+    fprintf(outfile,"L10Dep%dSSN: %s\n", j, PrelimFedReturn.DepSocSec[j] );
+    fprintf(outfile,"L10Dep%dRelation: %s\n", j, PrelimFedReturn.DepRelation[j] );
    }
 
  fclose(infile);

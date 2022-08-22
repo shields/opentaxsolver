@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 19, 2022 v19.07 - For 2021 tax-year.
+August 19, 2022 v19.08 - For 2021 tax-year.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,9 +32,15 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-    * v19.07 (3/19/2022) - Added check for matching input Form-type.
-	  Checks that it matches the Program being run, as intended.
-	  Otherwise it shows a warning message.
+    * v19.08 (8/19/202) - Compilation of remedial revisions from last several months.
+	  On CA_540, fixed printing of multiple dependent names, and added question about Use-Tax payments.
+	  On Massachusetts form, removed lines 12+13, which are not used in 2021.
+	  On HSA Form 8889, now set line-6 to line-5 value, if no value is specified on line-6.
+    * v19.07 (3/27/2022) - Added check for matching input Form-types.
+	  Checks that input files match the selected Program to run.
+	  In case of mismatch, it now displays a warning message.
+	  On Fed-1040, adjusted the limit to charitable deductions for
+	  non-married filers who are not optimizing.
     * v19.06 (3/3/2022) - Clarified where to enter Charity Donations on
 	  the Federal 1040 form, by creating designated Charity line.
 	- For MacOS platforms, added MacSetup command file for allowing

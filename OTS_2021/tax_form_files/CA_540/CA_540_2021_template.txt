@@ -134,6 +134,7 @@ CA540_P2_21		; { Other expenses - investment, safe deposit box, etc. }
  L77               ;     { Net Premium Assistance Subsidy (PAS). }
 
  L91		   ;	 { Use Tax. }
+ CkPayedUseTaxCDTFA    ; { Answer Yes if Use Tax was paid directly to CDTFA. (answer: Yes, No) }
  CkFYHealthCoverage    ; { You and your household had full-year health care coverage. (answer: Yes, No) }
  L92		   ;	 { Individual Shared Responsibility (ISR) Penalty. }
  L98               ;     { Amount of refund you want applied to 2022 estimated teaxes. }
