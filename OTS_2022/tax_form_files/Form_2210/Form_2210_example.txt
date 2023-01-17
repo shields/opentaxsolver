@@ -1,0 +1,221 @@
+Title:  Form 2210 for Tax Year 2022
+
+ {--- Your Identity --- }
+YourName:	Alexander Hamilton	
+YourSocSec#:	123-45-6789	
+Entity	Individual	 { Filing For?  (answer: Individual, Estate/Trust) }
+Status	Married/Joint	 { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er) }
+ {--- Part I Required Annual Payment --- }
+L1	150000		; { Enter your 2022 tax after credits from Form 1040,
+ 1040-SR, or 1040-NR, line 22.  Estates  or trusts, enter the
+ amount from Form 1041, Schedule G, line 3.  See
+ instructions.}
+L2	50000		; { Other taxes, including self-employment tax and, if applicable, Additional Medicare Tax and/or
+ Net Investment Income Tax  (see instructions)}
+L3	1000		; { Other payments and refundable credits
+ (see instructions)}
+L6	40000		; { Withholding taxes. Don't include estimated tax payments.
+ See instructions)}
+L8	110000		; { Maximum required annual payment based on prior year's
+ tax (see instructions)}
+ {--- Part II Reasons for Filing. If none apply, don't file Form 2210. ---}
+ { You request a waiver (see instructions) of your entire penalty. You must
+ check this box and  file page 1 of Form 2210, but you aren't required to
+ figure your penalty. }
+BoxA	No	 {  (answer: Yes, No) }
+ { You request a waiver (see instructions) of part of your penalty. You must
+ figure your penalty  and waiver amount and file Form 2210.}
+BoxB	No	 {  (answer: Yes, No) }
+ { Your income varied during the year and your penalty is reduced or
+ eliminated when figured using  the annualized income installment method.
+ You must figure the penalty using Schedule Al and file Form 2210.}
+BoxC	Yes	 {  (answer: Yes, No) }
+ { Your penalty is lower when figured by treating the federal income tax
+ withheld from your income as  paid on the dates it was actually withheld,
+ instead of in equal amounts on the payment due dates. You must  figure your
+ penalty and file Form 2210.}
+BoxD	No	 {  (answer: Yes, No) }
+ { You filed or are filing a joint return for either 2021 or 2022, but not
+ for both years, and line 8  above is smaller than line 5 above. You must
+ file page 1 of Form 2210, but you aren't required to figure your  penalty
+ (unless box B, C, or D applies).}
+BoxE	No	 {  (answer: Yes, No) }
+ { Click "Save" to save this form and then click
+ "Compute Tax" to determine if you need  to file Form 2210.  If so,
+return to this input form and continue.}
+ {--- Part III Section A ---}
+ { IMPORTANT:  Note carefully the starting and ending dates for each period.
+ The periods all begin January 1.  They are not calendar quarters!}
+SecA_11a	16000		; { Estimated tax paid and tax withheld for the period
+ 1/1/2121-3/31/2121, due 4/15/21 (Estates and trusts: for the period
+ 1/1/21-2/29/21).  See instructions.}
+SecA_11b	30000		; { Estimated tax paid and tax withheld for the period
+ 1/1/2121-5/31/2121, due 6/15/21 (Estates and trusts: for the period
+ 1/1/21-4/30/21).  See instructions.}
+SecA_11c	8000		; { Estimated tax paid and tax withheld for the period
+ 1/1/2121-8/31/2121, due 9/15/21 (Estates and trusts: for the period
+ 1/1/21-7/31/21).  See instructions.}
+SecA_11d	25000		; { Estimated tax paid and tax withheld for the period
+ 1/1/2121-12/31/2121, due 1/15/22  (Estates and trusts: for the period
+ 1/1/21-11/30/21).  See instructions.}
+ {--- Schedule AI-Annualized Income Installment Method (See the instructions.) ---}
+ {--- Part I Annualized Income Installments ---}
+SchdAI_1a	100000		; { Enter your adjusted gross income for the period
+ 1/1/21-3/31/21.  (Estates and trusts: enter your  taxable
+ income without your exemption for the period
+ 1/1/21-2/28/21)}
+SchdAI_1b	150000		; { Enter your adjusted gross income for the period
+ 1/1/21-5/31/21.  (Estates and trusts: enter your  taxable
+ income without your exemption for the period
+ 1/1/21-4/30/21)}
+SchdAI_1c	400000		; { Enter your adjusted gross income for the period
+ 1/1/21-8/31/21.  (Estates and trusts: enter your  taxable
+ income without your exemption for the period
+ 1/1/21-7/31/21)}
+SchdAI_1d	800000		; { Enter your adjusted gross income for the period
+ 1/1/21-12/31/21.  (Estates and trusts: enter your  taxable
+ income without your exemption for the period
+ 1/1/21-11/30/21)}
+SchdAI_4a			; { If you itemize, enter itemized deductions for the period
+ 1/1/21-3/31/21; otherwise, enter -0-.  Estates and trusts:
+ enter "0". }
+SchdAI_4b			; { If you itemize, enter itemized deductions for the period
+ 1/1/21-5/31/21; otherwise, enter -0-.  Estates and trusts:
+ enter "0". }
+SchdAI_4c			; { If you itemize, enter itemized deductions for the period
+ 1/1/21-8/31/21; otherwise, enter -0-.  Estates and trusts:
+ enter "0". }
+SchdAI_4d			; { If you itemize, enter itemized deductions for the period
+ 1/1/21-12/31/21; otherwise, enter -0-.    Estates and
+ trusts: enter "0". }
+SchdAI_7a	14350		; { Enter the SUM of your standard deduction and line 12b from
+ Form 1040 or 1040-SR. (Form 1040-  NR filers, enter
+ -0-.  If you're a resident of India and a student or
+ business apprentice, enter your  standard deduction from
+ Form 1040-NR, line 12.}
+SchdAI_9a			; { Deduction for qualified business income for the period
+ 1/1/21-3/31/21.  Estates and trusts: for the  period
+ 1/1/21-2/28/21.}
+SchdAI_9b			; { Deduction for qualified business income for the period
+ 1/1/21-5/31/21.  Estates and trusts: for the  period
+ 1/1/21-4/30/21.}
+SchdAI_9c			; { Deduction for qualified business income for the period
+ 1/1/21-8/31/21.  Estates and trusts: for the  period
+ 1/1/21-7/31/21.}
+SchdAI_9d	250		; { Deduction for qualified business income for the period
+ 1/1/21-12/31/21.  Estates and trusts: for the  period
+ 1/1/21-11/30/21. }
+SchdAI_12a	0		; { Form 1040, 1040-SR, or 1040-NR filers, enter -0-. 
+ Estates and trusts, use the exemption amount  shown on your
+ return.}
+ { The following four fields are for entry of the tax due on the annualized
+ income extrapolated from the income and deductions during the respective
+ period.  If you are able to use the tax tables or tax rate schedules, make
+ no entries in these fields, and the program will calculate the tax. This
+ will simplify your calculations; however, you may pay more estimated tax
+ than necessary.}
+ { If you have tax preference items, such as capital gains and/or qualified
+ dividends, you can reduce your estimated tax by using the Qualified
+ Dividends and Capital Gains Tax Worksheet or other appropriate worksheet to
+ calculate the annualized tax due each period.  To do this, multiply each
+ item of income and each deduction that varies by period by the
+ annualization factor for that period to estimate your taxable income for
+ the year.}
+ { Period 1:      4
+ Period 2:      2.4
+ Period 3;      1.5
+ Period 4:      1 }
+ { You may also have, and/or be eligible for, certain credits---some of
+ which may be based upon your estimated taxable income for the year.  You
+ may be able to reduce one or more of your estimated tax payments by
+ including these credits in your tax calculation.  You can use the 2022
+ estimated tax version of OTS to calculate the tax due on your estimated
+ income for the year that was extrapolated from the information for the
+ relevant period.    See instructions for form 2210 and IRS publication 505.
+}
+SchdAI_14a			; { Total tax for the year extrapolated from the period
+ 1/1/21-3/31/21.  Estates and trusts: for the period
+ 1/1/21-2/28/21.}
+SchdAI_14b			; { Total tax for the year extrapolated from the period
+ 1/1/21-5/31/21.  Estates and trusts: for the period
+ 1/1/21-4/30/21.}
+SchdAI_14c			; { Total tax for the year extrapolated from the period
+ 1/1/21-8/31/21.  Estates and trusts: for the period
+ 1/1/21-7/31/21.}
+SchdAI_14d			; { Total tax for the year extrapolated from the period
+ 1/1/21-12/31/21.  Estates and trusts: for the period
+ 1/1/21-11/30/21.}
+SchdAI_16a			; { Enter other taxes extrapolated from the period
+ 1/1/21-3/31/21 (Estates and trusts: for the period
+ 1/1/21-2/28/21), including, if applicable, Alternative
+ Minimum Tax, Additional Medicare Tax and/or Net Investment
+ Income Tax}
+SchdAI_16b			; { Enter other taxes extrapolated from the period
+ 1/1/21-5/31/21.  (Estates and trusts: for the period
+ 1/1/21-4/30/21), including, if applicable, Alternative
+ Minimum Tax, Additional Medicare Tax and/or Net Investment
+ Income Tax}
+SchdAI_16c			; { Enter other taxes extrapolated from the period
+ 1/1/21-8/31/21.  (Estates and trusts: for the period
+ 1/1/21-7/31/21), including, if applicable, Alternative
+ Minimum Tax, Additional Medicare Tax and/or Net Investment
+ Income Tax}
+SchdAI_16d			; { Enter other taxes extrapolated from the period
+ 1/1/21-12/31/21.  (Estates and trusts: for the period
+ 1/1/21-11/30/21), including, if applicable, Alternative
+ Minimum Tax, Additional Medicare Tax and/or Net Investment
+ Income Tax}
+SchdAI_18a			; { Enter the same type of credits as allowed on Form 2210,
+ Part I, lines 1 and 3, extrapolated from  the period
+ 1/1/21-3/31/21 (Estates and trusts:  for the period
+ 1/1/21-2/28/21).  See instructions.}
+SchdAI_18b			; { Enter the same type of credits as allowed on Form 2210,
+ Part I, lines 1 and 3, extrapolated from  the period
+ 1/1/21-5/31/21.  (Estates and trusts:  for the period
+ 1/1/21-4/30/21).  See instructions.}
+SchdAI_18c			; { Enter the same type of credits as allowed on Form 2210,
+ Part I, lines 1 and 3, extrapolated from  the period
+ 1/1/21-8/31/21.  (Estates and trusts:  for the period
+ 1/1/21-7/31/21),.  See instructions.}
+SchdAI_18d			; { Enter the same type of credits as allowed on Form 2210,
+ Part I, lines 1 and 3, extrapolated from  the period
+ 1/1/21-12/31/21.  (Estates and trusts:  for the period
+ 1/1/21-11/30/21).  See instructions.}
+ {--- Part II Annualized Self-Employment Tax (Form 1040, 1040-SR, or 1040-NR filers only) ---}
+SchdAI_28a	10000		; { Net earnings from self-employment for the period
+ 1/1/21-3/31/21.  See instructions.}
+SchdAI_28b	15000		; { Net earnings from self-employment for the period
+ 1/1/21-5/31/21.  See instructions.}
+SchdAI_28c	20000		; { Net earnings from self-employment for the period
+ 1/1/21-8/31/21.  See instructions.}
+SchdAI_28d	150000		; { Net earnings from self-employment for the period
+ 1/1/21-12/31/21.  See instructions.}
+SchdAI_30a	45000		; { Actual wages for the period 1/1/21-3/31/21 subject to
+ social security tax or the 6.2% portion of the 7.65%
+ railroad retirement (tier 1) tax.  Exception: If you filed
+ Form 4137 or Form  8919, see instructions}
+SchdAI_30b	67000		; { Actual wages for the period 1/1/21-5/31/21 subject to
+ social security tax or the 6.2% portion of the 7.65%
+ railroad retirement (tier 1) tax.  Exception: If you filed
+ Form 4137 or Form  8919, see instructions}
+SchdAI_30c	79000		; { Actual wages for the period 1/1/21-8/31/21 subject to
+ social security tax or the 6.2% portion of the 7.65%
+ railroad retirement (tier 1) tax.  Exception: If you filed
+ Form 4137 or Form  8919, see instructions}
+SchdAI_30d	126000		; { Actual wages for the period 1/1/21-12/31/21 subject to
+ social security tax or the 6.2% portion of the 7.65%
+ railroad retirement (tier 1) tax.  Exception: If you filed
+ Form 4137 or Form  8919, see instructions}
+SchdAI_32a			; { Annualization amounts (see instructions).}
+SchdAI_32b			; { Annualization amounts (see instructions).}
+SchdAI_32c			; { Annualization amounts (see instructions).}
+SchdAI_32d			; { Annualization amounts (see instructions).}
+ {After you have filled out all of the applicable fields above, click
+ "Save" to save this form and  then click "Compute Tax" to see if you owe a
+ penalty. }
+L19			; { Penalty. Enter the total penalty from line 14 of the
+ Worksheet for Form 2210, Part III, Section B-Figure the
+ Penalty. Also include this amount on Form 1040, 1040-SR, or
+ 1040-NR, line 38; or Form 1041, line 27. Don't file Form
+ 2210 unless you checked a box in Part II.}
+ {-------------------------------------------- }
