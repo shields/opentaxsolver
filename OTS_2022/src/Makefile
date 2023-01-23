@@ -3,10 +3,8 @@ CC      =  cc
 CFLAGS  =
 COPTIM  = -O -Wall
 
-
 SRC     = taxsolve_routines.c
 LIBS    =
-
 
 # It would be nice to create a taxsolve_routines.h so the routines.c source only needs to be compiled once. 
 # OBJS    =  taxsolve_routines.o

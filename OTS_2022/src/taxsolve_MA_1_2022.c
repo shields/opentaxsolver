@@ -27,13 +27,13 @@
 /* Robert Heller 2-10-2004	heller@deepsoft.com			*/
 /* Updated 1-26-05	Aston Roberts & Robert Heller			*/
 /*  ...									*/
-/* Updated 1-2-2022	Aston Roberts 					*/
+/* Updated 1-2-2023	Aston Roberts 					*/
 /************************************************************************/
 
 #include <stdio.h>
 #include <time.h>
 
-float thisversion=19.02;
+float thisversion=20.00;
 
 #include "taxsolve_routines.c"
 
@@ -56,7 +56,7 @@ double Sum( double *v, int start_slot, int end_slot )
 
 
 double ComputeTax(double taxableIncome)
-{ double taxrate=0.05;					/* Not updated for 2022. */
+{ double taxrate=0.05;					/* Updated for 2022. */
  if (taxableIncome < 24000.0)
   return (int)(taxrate * (taxableIncome + 25.0) + 0.5);
  else
@@ -81,7 +81,7 @@ void check_if_yes( char *label )
 /*----------------------------------------------------------------------------*/
 int main( int argc, char *argv[] )
 {
- int i, j, k, status=0, i65, iblind, ndep, dep_deduct, ndep12=0;
+ int i, j, k, status=0, i65, iblind, ndep, ndep12=0;
  int flag, notaxstatus=0;
  char word[4000], *infname=0, outfname[4000], *answ;
  time_t now;
@@ -89,7 +89,7 @@ int main( int argc, char *argv[] )
  double MassBankInterest, Iexempt, AGI;
  double Unemployment, Lottery;
  double MassRetirement[2];
- double L23a=0.0, L33[6], L35a=0.0, L35b=0.0;
+ double L23a=0.0, L33[6], L35a=0.0, L35b=0.0, L38a=0.0, L38b=0.0, L38c=0.0;
  double L43a=0.0, L43b=0.0;
  
  printf("Massachusetts Form-1 2022 - v%3.2f\n", thisversion);
@@ -301,43 +301,7 @@ int main( int argc, char *argv[] )
    showline_wmsg(11,word);
   }
 
-#if (0)
- GetLine( "L12", &L[12] );	/* Child under 13... */
- ShowLineNonZero(12);
-
- get_parameter( infile, 's', word, "L13"); /* Dependent under 12. */
- get_parameter( infile, 'i', &dep_deduct, "L13");
- if (dep_deduct > 2) dep_deduct = 2;
- if ((L[12] == 0) && ((status == MARRIED_FILING_JOINTLY) || (status == HEAD_OF_HOUSEHOLD))
-     && (dep_deduct > 0))
-  {
-   L[13] = dep_deduct * 3600.0;
-   sprintf(word,"a. %d x 3,600 ", dep_deduct);
-   showline_wmsg(13, word);
-  }
-#else
- get_parameter( infile, 'l', word, "L12" );	/* Unused now. */
- if (strcmp( word, "L12" ) == 0)
-  {
-   get_parameters( infile, 'f', &L[12], "L12" );
-   get_parameter( infile, 's', word, "L13"); /* Dependent under 12. */
-   get_parameter( infile, 'i', &dep_deduct, "L13");
-   GetLine( "L14a", &L[14] );	/* Rental Paid */
-  }
- else
- if (strcmp( word, "L14a" ) == 0)
-  {
-   get_parameters( infile, 'f', &L[14], "L14" );
-  }
- else
-  {
-   printf("Error: Expected 'L14', but found '%s'. Exiting.\n", word ); 
-   fprintf(outfile,"Error: Expected 'L14', but found  '%s'. Exiting.\n", word); 
-   exit(1);
-  }
-#endif
-
- // GetLine( "L14a", &L[14] );	/* Rental Paid */
+ GetLine( "L14a", &L[14] );	/* Rental Paid */
  showline_wlabel( "L14a", L[14] );
  L[14] = L[14] / 2.0;
  if (status == MARRIED_FILING_SEPARAT)
@@ -391,7 +355,7 @@ int main( int argc, char *argv[] )
  L[28] = Sum( L, 22, 26 );
 
  if ((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == MARRIED_FILING_JOINTLY))
- { /* AGI Worksheet pg 14. */
+ { /* AGI Worksheet pg 13. */
    double ws[20], threshA, threshB;
    for (j=0; j<20; j++) ws[j] = 0.0;
    ws[1] = NotLessThanZero( L[10] );
@@ -438,7 +402,7 @@ int main( int argc, char *argv[] )
 }
 
  if (notaxstatus) L[28] = 0.0;
- showline_wmsg(28, "Total Tax");
+ showline_wmsg(28, "Total Income Tax");
 
  GetLine1( "L29", &L[29] ); 	/* Limited Income Credit */
  GetLine1( "L30", &L[30] ); 	/* Income tax paid to another state or jurisdiction (from Schedule OJC). */
@@ -486,7 +450,10 @@ int main( int argc, char *argv[] )
  
  /* Payments section. */
 
- GetLine( "L38", &L[38] );	/* Mass income tax withheld, Forms W-2, 1099 */
+ GetLineFnz( "L38a", &L38a );	/* Mass income tax withheld, Forms W-2 */
+ GetLineFnz( "L38b", &L38b );	/* Mass income tax withheld, Forms 1099 */
+ GetLineFnz( "L38c", &L38c );	/* Mass income tax withheld, Other forms. */
+ L[38] = L38a + L38b + L38c;
  ShowLineNonZero(38);
 
  GetLine( "L39", &L[39] );	/* Last year's overpayment you want applied to 2022 estimated tax */
@@ -523,31 +490,34 @@ int main( int argc, char *argv[] )
  GetLine( "L47", &L[47] );	/* Refundable credits, Sched CMS. */
  ShowLineNonZero(47);
 
- GetLine( "L48", &L[48] );	/* Excess Paid Family Leave withholding. */
- ShowLineNonZero(48);
+ L[48] = Sum( L, 43, 47 );
+ showline_wmsg( 48, "total refundable credits");
 
- L[49] = Sum( L, 38, 48 );
- showline_wmsg(49,"total payments");
+ GetLine( "L49", &L[49] );	/* Excess Paid Family Leave withholding. */
+ ShowLineNonZero(49);
 
- GetLine( "L51", &L[51] );	/* Overpayment to be applied to next year's estimated tax */
+ L[50] = Sum( L, 38, 42 ) + Sum( L, 48, 49 );
+ showline_wmsg( 50, "total");
+
+ GetLine( "L52", &L[52] );	/* Overpayment to be applied to next year's estimated tax */
 
  /* Refund or Owe section. */
- if (L[37] < L[49]) 
+ if (L[37] < L[50]) 
   {
-   L[50] = L[49] - L[37];
-   fprintf(outfile,"L50 = %6.2f  Overpayment!\n", L[50] );
-   if (L[51] > L[50])
-    L[51] = L[50];
-   showline_wmsg(51, "Overpayment to be applied to next year's estimated tax");
-   L[52] = L[50] - L[51];
-   fprintf(outfile,"L52 = %6.2f  THIS IS YOUR REFUND\n", L[52] );
+   L[51] = L[50] - L[37];
+   fprintf(outfile,"L51 = %6.2f  Overpayment!\n", L[51] );
+   if (L[52] > L[51])
+    L[52] = L[51];
+   showline_wmsg( 52, "Overpayment to be applied to next year's estimated tax" );
+   L[53] = L[51] - L[52];
+   fprintf(outfile,"L53 = %6.2f  THIS IS YOUR REFUND\n", L[53] );
   }
  else 
   {
-   L[53] = L[37] - L[49];
-   fprintf(outfile,"L53 = %6.2f  TAX DUE !!!\n", L[53] );
-   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[53] / (L[37] + 1e-9) );
-   if ((L[53] > 400.0) && (L[49] < 0.80 * L[37]))
+   L[54] = L[37] - L[50];
+   fprintf(outfile,"L54 = %6.2f  TAX DUE !!!\n", L[54] );
+   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[54] / (L[37] + 1e-9) );
+   if ((L[54] > 400.0) && (L[50] < 0.80 * L[37]))
     fprintf(outfile," You may owe Underpayment of Estimated Tax penalty.\n");
   }
 
