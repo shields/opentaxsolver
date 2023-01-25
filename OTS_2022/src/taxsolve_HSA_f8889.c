@@ -24,10 +24,10 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Not updated for 2022 tax year:						*/
+/* Updated for 2022 tax year:						*/
 /************************************************************************/
 
-float thisversion=19.02;
+float thisversion=20.00;
 
 #include <stdio.h>
 #include <time.h>

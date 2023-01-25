@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=2.01;
+float thisversion=3.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -13,8 +13,8 @@ float thisversion=2.01;
 #include "taxsolve_routines.c"
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 #define Yes 1
@@ -86,7 +86,6 @@ int main( int argc, char *argv[] )
 
  // MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2022."
  // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2022.\"" );
-
 
 
  // Example:

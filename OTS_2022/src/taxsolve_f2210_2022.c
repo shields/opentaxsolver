@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=3.02;
+float thisversion=4.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -14,28 +14,28 @@ float thisversion=3.02;
 #include "taxsolve_routines.c"
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 #define Yes 1
 #define No  0
-#define Neither 0
-#define Short 1
-#define Regular 2
-#define INDIVIDUAL	1
-#define ESTATE	2
+#define Neither    0
+#define Short      1
+#define Regular    2
+#define INDIVIDUAL 1
+#define ESTATE	   2
 
 int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 
 /*-----------Tax Routines Copied From taxsolve_US_1040_2022.c----------------*/
 
-			/* Following values taken from 1040-Instructions pg 110. */	/* Not updated for 2022. */
-double brkpt[4][9]={
-		{ 0.0,   9950.0,  40525.0,  86375.0, 164925.0, 209425.0, 523600.0, 9e19 },  /* Single */
-		{ 0.0,  19900.0,  81050.0, 172750.0, 329850.0, 418850.0, 628300.0, 9e19 },  /* Married, filing jointly. */
-		{ 0.0,   9950.0,  40525.0,  86375.0, 164925.0, 209425.0, 314150.0, 9e19 },  /* Married, filing separate. */
-		{ 0.0,  14200.0,  54200.0,  86350.0, 164900.0, 209400.0, 523600.0, 9e19 },  /* Head of Household. */
+			/* Following values taken from 1040-Instructions pg 109. */	/* Updated for 2022. */
+  double brkpt[4][9]={
+		{ 0.0,  10275.0,  41775.0,  89075.0, 170050.0, 215950.0, 539900.0, 9e19 },  /* Single */
+		{ 0.0,  20550.0,  83550.0, 178150.0, 340100.0, 431900.0, 647850.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  10275.0,  41775.0,  89075.0, 170050.0, 215950.0, 323925.0, 9e19 },  /* Married, filing separate. */
+		{ 0.0,  14650.0,  55900.0,  89050.0, 170050.0, 215950.0, 539900.0, 9e19 },  /* Head of Household. */
 		     };
   double txrt[4][9] ={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Single */
@@ -43,6 +43,7 @@ double brkpt[4][9]={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Married, filing separate. */
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Head of Household. */
 		     };
+
 
 double TaxRateFormula( double x, int status )  /* Returns tax due. */
 {		

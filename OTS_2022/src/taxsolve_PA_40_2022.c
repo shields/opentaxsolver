@@ -24,18 +24,18 @@
 /* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-#define thisversion 19.01
+#define thisversion 20.00
 
 #include "taxsolve_routines.c"
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define WIDOW		        1
 #define Yes 1
 #define No  0
 
-double Tax_Rate = 0.0307;		/* Not updated for 2022 tax-year. */
+double Tax_Rate = 0.0307;		/* Updated for 2022 tax-year. */
 
 
 double pos( double x )

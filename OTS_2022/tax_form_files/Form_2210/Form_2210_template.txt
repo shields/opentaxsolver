@@ -12,17 +12,17 @@ Status {  Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
 
 {--- Part I Required Annual Payment --- }
 
-L1	;{ Enter your 2022 tax after credits from Form 1040,
+L1	; { Enter your 2022 tax after credits from Form 1040,
  1040-SR, or 1040-NR, line 22.  Estates  or trusts, enter the
  amount from Form 1041, Schedule G, line 3.  See
  instructions.}
-L2	;{ Other taxes, including self-employment tax and, if applicable, Additional Medicare Tax and/or
+L2	; { Other taxes, including self-employment tax and, if applicable, Additional Medicare Tax and/or
  Net Investment Income Tax  (see instructions)}
-L3	;{ Other payments and refundable credits
+L3	; { Other payments and refundable credits
  (see instructions)}
-L6	;{ Withholding taxes. Don't include estimated tax payments.
+L6	; { Withholding taxes. Don't include estimated tax payments.
  See instructions)}
-L8	;{ Maximum required annual payment based on prior year's
+L8	; { Maximum required annual payment based on prior year's
  tax (see instructions)}
 
 {--- Part II Reasons for Filing. If none apply, don't file Form 2210. ---}
@@ -61,50 +61,50 @@ page, return to this input form and continue.}
  The periods all begin January 1.  They are not calendar quarters!}
 
 SecA_11a	;{ Estimated tax paid and tax withheld for the period
- 1/1/2121-3/31/2121, due 4/15/21 (Estates and trusts: for the period
- 1/1/21-2/29/21).  See instructions.}
+ 1/1/2022-3/31/2022, due 4/15/2022 (Estates and trusts: for the period
+ 1/12022-2/292022).  See instructions.}
 SecA_11b	;{ Estimated tax paid and tax withheld for the period
- 1/1/2121-5/31/2121, due 6/15/21 (Estates and trusts: for the period
- 1/1/21-4/30/21).  See instructions.}
+ 1/1/2022-5/31/2022, due 6/15/2022 (Estates and trusts: for the period
+ 1/1/2022-4/30/2022).  See instructions.}
 SecA_11c	;{ Estimated tax paid and tax withheld for the period
- 1/1/2121-8/31/2121, due 9/15/21 (Estates and trusts: for the period
- 1/1/21-7/31/21).  See instructions.}
+ 1/1/2022-8/31/2022, due 9/15/2022 (Estates and trusts: for the period
+ 1/1/2022-7/31/2022).  See instructions.}
 SecA_11d	;{ Estimated tax paid and tax withheld for the period
- 1/1/2121-12/31/2121, due 1/15/22  (Estates and trusts: for the period
- 1/1/21-11/30/21).  See instructions.}
+ 1/1/2022-12/31/2022, due 1/15/2023  (Estates and trusts: for the period
+ 1/1/2022-11/30/2022).  See instructions.}
 
 {--- Schedule AI-Annualized Income Installment Method (See the instructions.) ---}
 
 {--- Part I Annualized Income Installments ---}
  				 
 SchdAI_1a	;{ Enter your adjusted gross income for the period
- 1/1/21-3/31/21.  (Estates and trusts: enter your  taxable
+ 1/1/2022-3/31/2022.  (Estates and trusts: enter your  taxable
  income without your exemption for the period
- 1/1/21-2/28/21)}
+ 1/1/2022-2/28/2022)}
 SchdAI_1b	;{ Enter your adjusted gross income for the period
- 1/1/21-5/31/21.  (Estates and trusts: enter your  taxable
+ 1/1/2022-5/31/2022.  (Estates and trusts: enter your  taxable
  income without your exemption for the period
- 1/1/21-4/30/21)}
+ 1/1/2022-4/30/2022)}
 SchdAI_1c	;{ Enter your adjusted gross income for the period
- 1/1/21-8/31/21.  (Estates and trusts: enter your  taxable
+ 1/1/2022-8/31/2022.  (Estates and trusts: enter your  taxable
  income without your exemption for the period
- 1/1/21-7/31/21)}
+ 1/1/2022-7/31/2022)}
 SchdAI_1d	;{ Enter your adjusted gross income for the period
- 1/1/21-12/31/21.  (Estates and trusts: enter your  taxable
+ 1/1/2022-12/31/2022.  (Estates and trusts: enter your  taxable
  income without your exemption for the period
- 1/1/21-11/30/21)}
+ 1/1/2022-11/30/2022)}
 
 SchdAI_4a	;{ If you itemize, enter itemized deductions for the period
- 1/1/21-3/31/21; otherwise, enter -0-.  Estates and trusts:
+ 1/1/2022-3/31/2022; otherwise, enter -0-.  Estates and trusts:
  enter "0". }
 SchdAI_4b	;{ If you itemize, enter itemized deductions for the period
- 1/1/21-5/31/21; otherwise, enter -0-.  Estates and trusts:
+ 1/1/2022-5/31/2022; otherwise, enter -0-.  Estates and trusts:
  enter "0". }
 SchdAI_4c	;{ If you itemize, enter itemized deductions for the period
- 1/1/21-8/31/21; otherwise, enter -0-.  Estates and trusts:
+ 1/1/2022-8/31/2022; otherwise, enter -0-.  Estates and trusts:
  enter "0". } 	
 SchdAI_4d	;{ If you itemize, enter itemized deductions for the period
- 1/1/21-12/31/21; otherwise, enter -0-.    Estates and
+ 1/1/2022-12/31/2022; otherwise, enter -0-.    Estates and
  trusts: enter "0". }
 
 SchdAI_7a	;{ Enter the SUM of your standard deduction and line 12b from
@@ -113,17 +113,17 @@ SchdAI_7a	;{ Enter the SUM of your standard deduction and line 12b from
  deduction from Form 1040-NR, line 12.}
 
 SchdAI_9a	;{ Deduction for qualified business income for the period
- 1/1/21-3/31/21.  Estates and trusts: for the  period
- 1/1/21-2/28/21.}
+ 1/1/2022-3/31/2022.  Estates and trusts: for the  period
+ 1/1/2022-2/28/2022.}
 SchdAI_9b	;{ Deduction for qualified business income for the period
- 1/1/21-5/31/21.  Estates and trusts: for the  period
- 1/1/21-4/30/21.}
+ 1/1/2022-5/31/2022.  Estates and trusts: for the  period
+ 1/1/2022-4/30/2022.}
 SchdAI_9c	;{ Deduction for qualified business income for the period
- 1/1/21-8/31/21.  Estates and trusts: for the  period
- 1/1/21-7/31/21.}
+ 1/1/2022-8/31/2022.  Estates and trusts: for the  period
+ 1/1/2022-7/31/2022.}
 SchdAI_9d	;{ Deduction for qualified business income for the period
- 1/1/21-12/31/21.  Estates and trusts: for the  period
- 1/1/21-11/30/21. }
+ 1/1/2022-12/31/2022.  Estates and trusts: for the  period
+ 1/1/2022-11/30/2022. }
 
 SchdAI_12a	;{ Form 1040, 1040-SR, or 1040-NR filers, enter -0-. 
  Estates and trusts, use the exemption amount  shown on your
@@ -150,7 +150,7 @@ SchdAI_12a	;{ Form 1040, 1040-SR, or 1040-NR filers, enter -0-.
 { You may also have, and/or be eligible for, certain credits---some of
  which may be based upon your estimated taxable income for the year.  You
  may be able to reduce one or more of your estimated tax payments by
- including these credits in your tax calculation.  You can use the 2022
+ including these credits in your tax calculation.  You can use the 2023
  estimated tax version of OTS to calculate the tax due on your estimated
  income for the year that was extrapolated from the information for the
  relevant period.  See instructions for form 2210 and IRS publication 505.}
@@ -163,80 +163,80 @@ SchdAI_12a	;{ Form 1040, 1040-SR, or 1040-NR filers, enter -0-.
  period.}
  
 SchdAI_14a	;{ Total tax for the year extrapolated from the period
- 1/1/21-3/31/21.  Estates and trusts: for the period
- 1/1/21-2/28/21.}
+ 1/1/2022-3/31/2022.  Estates and trusts: for the period
+ 1/1/2022-2/28/2022.}
 SchdAI_14b	;{ Total tax for the year extrapolated from the period
- 1/1/21-5/31/21.  Estates and trusts: for the period
- 1/1/21-4/30/21.}
+ 1/1/2022-5/31/2022.  Estates and trusts: for the period
+ 1/1/2022-4/30/2022.}
 SchdAI_14c	;{ Total tax for the year extrapolated from the period
- 1/1/21-8/31/21.  Estates and trusts: for the period
- 1/1/21-7/31/21.}
+ 1/1/2022-8/31/2022.  Estates and trusts: for the period
+ 1/1/2022-7/31/2022.}
 SchdAI_14d	;{ Total tax for the year extrapolated from the period
- 1/1/21-12/31/21.  Estates and trusts: for the period
- 1/1/21-11/30/21.}
+ 1/1/2022-12/31/2022.  Estates and trusts: for the period
+ 1/1/2022-11/30/2022.}
 
 SchdAI_16a	;{ Enter other taxes extrapolated from the period
- 1/1/21-3/31/21 (Estates and trusts: for the period
- 1/1/21-2/28/21), including, if applicable, Alternative
+ 1/1/2022-3/31/2022 (Estates and trusts: for the period
+ 1/1/2022-2/28/2022), including, if applicable, Alternative
  Minimum Tax, Additional Medicare Tax and/or Net Investment
  Income Tax}
 SchdAI_16b	;{ Enter other taxes extrapolated from the period
- 1/1/21-5/31/21.  (Estates and trusts: for the period
- 1/1/21-4/30/21), including, if applicable, Alternative
+ 1/1/2022-5/31/2022.  (Estates and trusts: for the period
+ 1/1/2022-4/30/2022), including, if applicable, Alternative
  Minimum Tax, Additional Medicare Tax and/or Net Investment
  Income Tax}
 SchdAI_16c	;{ Enter other taxes extrapolated from the period
- 1/1/21-8/31/21.  (Estates and trusts: for the period
- 1/1/21-7/31/21), including, if applicable, Alternative
+ 1/1/2022-8/31/2022.  (Estates and trusts: for the period
+ 1/1/2022-7/31/2022), including, if applicable, Alternative
  Minimum Tax, Additional Medicare Tax and/or Net Investment
  Income Tax}
 SchdAI_16d	;{ Enter other taxes extrapolated from the period
- 1/1/21-12/31/21.  (Estates and trusts: for the period
- 1/1/21-11/30/21), including, if applicable, Alternative
+ 1/1/2022-12/31/2022.  (Estates and trusts: for the period
+ 1/1/2022-11/30/2022), including, if applicable, Alternative
  Minimum Tax, Additional Medicare Tax and/or Net Investment
  Income Tax}
 
 SchdAI_18a	;{ Enter the same type of credits as allowed on Form 2210,
  Part I, lines 1 and 3, extrapolated from  the period
- 1/1/21-3/31/21 (Estates and trusts:  for the period
- 1/1/21-2/28/21).  See instructions.}
+ 1/1/2022-3/31/2022 (Estates and trusts:  for the period
+ 1/1/2022-2/28/2022).  See instructions.}
 SchdAI_18b	;{ Enter the same type of credits as allowed on Form 2210,
  Part I, lines 1 and 3, extrapolated from  the period
- 1/1/21-5/31/21.  (Estates and trusts:  for the period
- 1/1/21-4/30/21).  See instructions.}
+ 1/1/2022-5/31/2022.  (Estates and trusts:  for the period
+ 1/1/2022-4/30/2022).  See instructions.}
 SchdAI_18c	;{ Enter the same type of credits as allowed on Form 2210,
  Part I, lines 1 and 3, extrapolated from  the period
- 1/1/21-8/31/21.  (Estates and trusts:  for the period
- 1/1/21-7/31/21),.  See instructions.}
+ 1/1/2022-8/31/2022.  (Estates and trusts:  for the period
+ 1/1/2022-7/31/2022),.  See instructions.}
 SchdAI_18d	;{ Enter the same type of credits as allowed on Form 2210,
  Part I, lines 1 and 3, extrapolated from  the period
- 1/1/21-12/31/21.  (Estates and trusts:  for the period
- 1/1/21-11/30/21).  See instructions.}
+ 1/1/2022-12/31/2022.  (Estates and trusts:  for the period
+ 1/1/2022-11/30/2022).  See instructions.}
 
 {--- Part II Annualized Self-Employment Tax (Form 1040, 1040-SR, or 1040-NR filers only) ---}
 
 SchdAI_28a	;{ Net earnings from self-employment for the period
- 1/1/21-3/31/21.  See instructions.}
+ 1/1/2022-3/31/2022.  See instructions.}
 SchdAI_28b	;{ Net earnings from self-employment for the period
- 1/1/21-5/31/21.  See instructions.}
+ 1/1/2022-5/31/2022.  See instructions.}
 SchdAI_28c	;{ Net earnings from self-employment for the period
- 1/1/21-8/31/21.  See instructions.}
+ 1/1/2022-8/31/2022.  See instructions.}
 SchdAI_28d	;{ Net earnings from self-employment for the period
- 1/1/21-12/31/21.  See instructions.}
+ 1/1/2022-12/31/2022.  See instructions.}
 
-SchdAI_30a	;{ Actual wages for the period 1/1/21-3/31/21 subject to
+SchdAI_30a	;{ Actual wages for the period 1/1/2022-3/31/2022 subject to
  social security tax or the 6.2% portion of the 7.65%
  railroad retirement (tier 1) tax.  Exception: If you filed
  Form 4137 or Form  8919, see instructions}
-SchdAI_30b	;{ Actual wages for the period 1/1/21-5/31/21 subject to
+SchdAI_30b	;{ Actual wages for the period 1/1/2022-5/31/2022 subject to
  social security tax or the 6.2% portion of the 7.65%
  railroad retirement (tier 1) tax.  Exception: If you filed
  Form 4137 or Form  8919, see instructions}
-SchdAI_30c	;{ Actual wages for the period 1/1/21-8/31/21 subject to
+SchdAI_30c	;{ Actual wages for the period 1/1/2022-8/31/2022 subject to
  social security tax or the 6.2% portion of the 7.65%
  railroad retirement (tier 1) tax.  Exception: If you filed
  Form 4137 or Form  8919, see instructions}
-SchdAI_30d	;{ Actual wages for the period 1/1/21-12/31/21 subject to
+SchdAI_30d	;{ Actual wages for the period 1/1/2022-12/31/2022 subject to
  social security tax or the 6.2% portion of the 7.65%
  railroad retirement (tier 1) tax.  Exception: If you filed
  Form 4137 or Form  8919, see instructions}

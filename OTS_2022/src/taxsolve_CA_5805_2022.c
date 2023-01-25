@@ -3,7 +3,7 @@
 /*  User contributed.							*/
 /************************************************************************/
 
-float thisversion=3.02;
+float thisversion=4.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -26,48 +26,48 @@ float thisversion=3.02;
 #define Short 1
 #define Annualized 2
 
-/* The following two tax functions copied from taxsolve_CA_540_2021.c. */
-/* 2021 tax rates are used in California for calculating estimated taxes */
+/* The following two tax functions copied from taxsolve_CA_540_2022.c. */
+/* 2022 tax rates are used in California for calculating estimated taxes */
 
 double TaxRateFormula( double income, int status )
-{									/* Not updated for 2022 to the 2021 CA-tax-table. */
+{											/* Updated for 2022. */
  double tax;
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income <   8932.00)  tax =             0.01 * income;                else
-   if (income <  21175.00)  tax =    89.32 +  0.02 * (income -   8832.00);  else
-   if (income <  33421.00)  tax =   334.18 +  0.04 * (income -  21175.00);  else
-   if (income <  46394.00)  tax =   824.02 +  0.06 * (income -  33421.00);  else
-   if (income <  58634.00)  tax =  1602.40 +  0.08 * (income -  46394.00);  else
-   if (income < 299508.00)  tax =  2581.60 + 0.093 * (income -  58634.00);  else
-   if (income < 359407.00)  tax = 24982.88 + 0.103 * (income - 299508.00);  else
-   if (income < 599012.00)  tax = 31152.48 + 0.113 * (income - 359407.00);
-   else                     tax = 58227.85 + 0.123 * (income - 599012.00);
+   if (income <  10099.00)  tax =             0.01 * income;                else
+   if (income <  23942.00)  tax =   100.99 +  0.02 * (income -  10099.00);  else
+   if (income <  37788.00)  tax =   377.85 +  0.04 * (income -  23942.00);  else
+   if (income <  52455.00)  tax =   931.69 +  0.06 * (income -  37788.00);  else
+   if (income <  66295.00)  tax =  1811.71 +  0.08 * (income -  52455.00);  else
+   if (income < 338639.00)  tax =  2918.91 + 0.093 * (income -  66295.00);  else
+   if (income < 406364.00)  tax = 28246.90 + 0.103 * (income - 338639.00);  else
+   if (income < 677275.00)  tax = 32222.58 + 0.113 * (income - 406364.00);
+   else                     tax = 65835.52 + 0.123 * (income - 677275.00);
   }
  else
  if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))
   {
-   if (income <   17864.00)  tax =              0.01 * income;                 else
-   if (income <   42350.00)  tax =    178.64 +  0.02 * (income -   17864.00);  else
-   if (income <   66842.00)  tax =    668.36 +  0.04 * (income -   42350.00);  else
-   if (income <   92788.00)  tax =   1648.04 +  0.06 * (income -   66842.00);  else
-   if (income <  117268.00)  tax =   3204.80 +  0.08 * (income -   92788.00);  else
-   if (income <  599016.00)  tax =   5163.20 + 0.093 * (income -  117268.00);  else
-   if (income <  718814.00)  tax =  49965.76 + 0.103 * (income -  599016.00);  else
-   if (income < 1198024.00)  tax =  62304.95 + 0.113 * (income -  718814.00);
-   else                      tax = 116455.68 + 0.123 * (income - 1198024.00);
+   if (income <   20198.00)  tax =              0.01 * income;                 else
+   if (income <   47884.00)  tax =    201.98 +  0.02 * (income -   20198.00);  else
+   if (income <   75576.00)  tax =    755.70 +  0.04 * (income -   47884.00);  else
+   if (income <  104910.00)  tax =   1863.38 +  0.06 * (income -   75576.00);  else
+   if (income <  132590.00)  tax =   3623.42 +  0.08 * (income -  104910.00);  else
+   if (income <  677278.00)  tax =   5837.82 + 0.093 * (income -  132590.00);  else
+   if (income <  812728.00)  tax =  56493.80 + 0.103 * (income -  677278.00);  else
+   if (income < 1354550.00)  tax =  70445.15 + 0.113 * (income -  812728.00);
+   else                      tax = 131671.04 + 0.123 * (income - 1354550.00);
   }
  else
-  {
-   if (income <  17876.00)  tax =             0.01 * income;                else
-   if (income <  42353.00)  tax =   178.76 +  0.02 * (income -  17876.00);  else
-   if (income <  54597.00)  tax =   668.30 +  0.04 * (income -  42353.00);  else
-   if (income <  67569.00)  tax =  1158.06 +  0.06 * (income -  54597.00);  else
-   if (income <  79812.00)  tax =  1936.38 +  0.08 * (income -  67569.00);  else
-   if (income < 407329.00)  tax =  2915.82 + 0.093 * (income -  79812.00);  else
-   if (income < 488796.00)  tax = 33374.90 + 0.103 * (income - 407329.00);  else
-   if (income < 814658.00)  tax = 41766.00 + 0.113 * (income - 488796.00); 
-   else                     tax = 78588.41 + 0.123 * (income - 814658.00);
+  { /* Head of Household. */
+   if (income <  20212.00)  tax =             0.01 * income;                else
+   if (income <  47887.00)  tax =   202.12 +  0.02 * (income -  20212.00);  else
+   if (income <  61730.00)  tax =   755.62 +  0.04 * (income -  47887.00);  else
+   if (income <  76397.00)  tax =  1309.34 +  0.06 * (income -  61730.00);  else
+   if (income <  90240.00)  tax =  2189.36 +  0.08 * (income -  76397.00);  else
+   if (income < 460547.00)  tax =  3296.80 + 0.093 * (income -  90240.00);  else
+   if (income < 552658.00)  tax = 37735.35 + 0.103 * (income - 460547.00);  else
+   if (income < 921095.00)  tax = 47222.78 + 0.113 * (income - 552658.00); 
+   else                     tax = 88856.16 + 0.123 * (income - 921095.00);
   }
  return (int)(tax+0.5);
 }
@@ -92,6 +92,13 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
  return tx;
 }
 
+
+double		/* Reoccuring threshold values. */	/* Not updated for 2022. */
+	thresh_sep_single =	212288.0,
+	thresh_mfj =		424581.0,
+	thresh_HoH =		318437.0;
+
+
 double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status){
 
 	double L[14];
@@ -112,11 +119,11 @@ double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3,
 	L[7] = Round(L[6] * 0.80);
 	L[8] = FAIWSL3;
 	if((status == MARRIED_FILING_JOINTLY) || (status == WIDOW))
-		L[9] = 424581;
+		L[9] = thresh_mfj;
 	else if((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) 
-		L[9] = 212288;
+		L[9] = thresh_sep_single;
 	else if(status == HEAD_OF_HOUSEHOLD)
-		L[9] = 318437;
+		L[9] = thresh_HoH;
 	L[10] = L[8] - L[9];
 	L[11] = Round(L[10] * 0.06);
 	L[12] = SmallerOf(L[7], L[11]);
@@ -239,7 +246,8 @@ for(i = 0; i <= 13; i++){
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
  check_form_version( word, "Title:  Form 5805 for Tax Year 2022" );
 
- // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 20xx.\"" );
+add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2022.\"" );
+fprintf(outfile, "This program is NOT ready for 2022.\n\n");
 
  fprintf(outfile, "%s\n", "==================================================");
  fprintf(outfile, "%s\n", "                                                            CAUTION\nThis program fills out Form 5805 to determine WHETHER OR NOT you owe a penalty\nfor underpayment of estimated tax.  It calculates the AMOUNT of any penalty you\nmay owe for the MOST LIKELY CASE in which up to four estimated tax payments have\n been made.  You should carefully review the instructions for Form 5805 to see if the\ncalculations are correct for your particular tax situation.  DO NOT INTERPRET a\ndefault zero value for the penalty on the filled PDF to indicate that you do not owe\na penalty, especially if you have not input all required information, including the\nactual dates on which you made your payments. Scroll down to the end of this\nresults file to see if you had an underpayment for any period.  If so, you may owe\na penalty.\n\nItemized deductions are limited for high-income taxpayers.  When you are\nchecking calculations, values on line 6 of Part III may appear to be in error due to\nthese limitations.  See this results file and the last page of the output PDF for the\nlimitation calculations.  Also note that the annualization factor values on lines 4\nof the last page of the output PDF round by default to the nearest integer.  Use\nthe values in this results file for lines L6WS_4a, L6WS_4b, L6WS_4c, and L6WS_4d,\n which for most individual taxpayers will be 4.0, 2.4, 1.5, and 1.0, respectively.\n\nThis program does not calculate the phase-out of exemption credits for high-income\ntaxpayers as collection of the necessary information for each period would\nunnecessarily complicate this program for most users and the impact of exemption\nlimitations on the tax estimates would be negligible.  See instructions for line 11.");
@@ -267,7 +275,7 @@ for(i = 0; i <= 13; i++){
  fprintf(outfile,"Entity = %s (%d)\n", word, entity);
 
 
-get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
+ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
  if (strncasecmp(word,"Single",4)==0) status = SINGLE; else
  if (strncasecmp(word,"Married/Joint",13)==0) status = MARRIED_FILING_JOINTLY; else
@@ -302,7 +310,7 @@ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/
 	fprintf(outfile,"CkQuest1Yes X\n");
 }
 else {
-		fprintf(outfile,"CkQuest1No X\n");
+	fprintf(outfile,"CkQuest1No X\n");
 }
 
  get_parameter( infile, 's', word, "Quest2" );
@@ -535,9 +543,9 @@ showline( 6 );
 	fprintf(outfile, "FAIWS_3a\t%0.2lf\n", FAIWS_a[3]);
 
 	if(a[4] > 0){
-		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_a[3] > 424581.00)) || \
-	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_a[3] > 212288.00)) || \
-	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_a[3] > 318437.00))){
+		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_a[3] > thresh_mfj)) || \
+	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_a[3] > thresh_sep_single)) || \
+	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_a[3] > thresh_HoH))){
 			a[6] = L6WS('a', a[4], L6WS_a[2], a[5], FAIWS_a[3], status);
 		}
 	}
@@ -548,9 +556,9 @@ showline( 6 );
 	fprintf(outfile, "FAIWS_3b\t%0.2lf\n", FAIWS_b[3]);
 
 	if(b[4] > 0){
-		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_b[3] > 424581.00)) || \
-	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_b[3] > 212288.00)) || \
-	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_b[3] > 318437.00))){
+		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_b[3] > thresh_mfj)) || \
+	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_b[3] > thresh_sep_single)) || \
+	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_b[3] > thresh_HoH))){
 			b[6] = L6WS('b', b[4], L6WS_b[2], b[5], FAIWS_b[3], status);
 		}	
 	}
@@ -561,9 +569,9 @@ showline( 6 );
 	fprintf(outfile, "FAIWS_3c\t%0.2lf\n", FAIWS_c[3]);
 
 	if(c[4] > 0){
-		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_c[3] > 424581.00)) || \
-	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_c[3] > 212288.00)) || \
-	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_c[3] > 318437.00))){
+		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_c[3] > thresh_mfj)) || \
+	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_c[3] > thresh_sep_single)) || \
+	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_c[3] > thresh_HoH))){
 			c[6] = L6WS('c', c[4], L6WS_c[2], c[5], FAIWS_c[3], status);
 		}
 	}
@@ -574,9 +582,9 @@ showline( 6 );
 	fprintf(outfile, "FAIWS_3d\t%0.2lf\n", FAIWS_d[3]);
 
 	if(d[4] > 0){
-		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_d[3] > 424581.00)) || \
-	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_d[3] > 212288.00)) || \
-	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_d[3] > 318437.00))){
+		if((((status == MARRIED_FILING_JOINTLY) || (status == WIDOW)) && (FAIWS_d[3] > thresh_mfj)) || \
+	(((status == SINGLE) || (status == MARRIED_FILING_SEPARAT)) && (FAIWS_d[3] > thresh_sep_single)) || \
+	((status == HEAD_OF_HOUSEHOLD) && (FAIWS_d[3] > thresh_HoH))){
 			d[6] = L6WS('d', d[4], L6WS_d[2], d[5], FAIWS_d[3], status);
 		}
 	}

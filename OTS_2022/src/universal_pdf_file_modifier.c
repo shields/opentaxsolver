@@ -1035,7 +1035,7 @@ void page_collector( char *rawpdfname, char *outfname )
  if ((fscanf( infile, "%d", &npages) != 1) || (npages < 1) || (npages > 999))
   { printf("Error reading npages in '%s'\n", rawpdfname );  exit(1); }
  if (npages != num_defined_pages)
-  printf("Assertion Violation: npages (%d in RawPDF file) != num_defined_pages (%d in MetaDate file)\n", 
+  printf("Assertion Violation: npages (%d in RawPDF file) != num_defined_pages (%d in MetaData file)\n", 
 	  npages, num_defined_pages );
  fscanf( infile, "%s", wrd1 );	/* Consume "Pages" */
 

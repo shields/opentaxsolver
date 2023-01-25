@@ -4,7 +4,7 @@
 /* Provided by Fred Robinson - 2022-7-8.				*/	
 /************************************************************************/
 
-float thisversion = 1.01;
+float thisversion = 2.00;
 
 #include <math.h>
 #include <stdio.h>
