@@ -45,7 +45,7 @@
 /********************************************************/
 
 float version=2.56;
-char package_date[]="January 15, 2023";
+char package_date[]="January 25, 2023";
 char ots_release_package[]="20.00";
 
 /************************************************************/
@@ -4138,8 +4138,8 @@ int main(int argc, char *argv[] )
  make_sized_label( mpanel, winwidth / 2 - 60, y, "2022 Tax Year", 11.0 );
 
 /* Place warning about this being a 'development version'. */
-tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
-set_widget_color( tmpwdg, "#ff0000" );
+// tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
+// set_widget_color( tmpwdg, "#ff0000" );
 
  y = y + 35;
  make_sized_label( mpanel, 10, 135, "Select Tax Program:", 12.0 );

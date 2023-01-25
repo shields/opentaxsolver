@@ -177,7 +177,9 @@ void test_tax_function()
 
 struct FedReturnData
  {
-  double fedline[MAX_LINES], schedA[MAX_LINES], fed_L2a, fed_L3a,
+  double fedline[MAX_LINES], schedA[MAX_LINES], 
+	fed_L1a, fed_L1b, fed_L1c, fed_L1d, fed_L1e, fed_L1f, fed_L1g, fed_L1h, fed_L1z, 
+	fed_L2a, fed_L3a,
 	fed_L4a, fed_L4b, fed_L5a, fed_L5b, fed_L6a, fed_L6b,
 	schedA5a, schedA5b, schedA5c, schedA5,
 	schedA8a, schedA8b, schedA8c, schedA8d,
@@ -255,6 +257,15 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
    fed_data->schedA[linenum] = 0.0;
    fed_data->sched1[linenum] = 0.0;
   }
+ fed_data->fed_L1a = 0;
+ fed_data->fed_L1b = 0;
+ fed_data->fed_L1c = 0;
+ fed_data->fed_L1d = 0;
+ fed_data->fed_L1e = 0;
+ fed_data->fed_L1f = 0;
+ fed_data->fed_L1g = 0;
+ fed_data->fed_L1h = 0;
+ fed_data->fed_L1z = 0;
  fed_data->fed_L2a = 0;
  fed_data->fed_L3a = 0;
  fed_data->fed_L4a = 0;
@@ -312,6 +323,33 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
    next_word(fline, word, " \t=");
    if ((word[0] == 'L') && (strstr(fline," = ")!=0))
     { /*L*/
+     if (strcmp(word,"L1a") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1a) );
+     else
+     if (strcmp(word,"L1b") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1b) );
+     else
+     if (strcmp(word,"L1c") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1c) );
+     else
+     if (strcmp(word,"L1d") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1d) );
+     else
+     if (strcmp(word,"L1e") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1e) );
+     else
+     if (strcmp(word,"L1f") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1f) );
+     else
+     if (strcmp(word,"L1g") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1g) );
+     else
+     if (strcmp(word,"L1h") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1h) );
+     else
+     if (strcmp(word,"L1z") == 0)
+      grab_line_value( word, fline, &(fed_data->fed_L1z) );
+     else
      if (strcmp(word,"L2a") == 0)
       grab_line_value( word, fline, &(fed_data->fed_L2a) );
      else
@@ -710,6 +748,12 @@ int main( int argc, char *argv[] )
  char word[4000], *infname=0, outfname[4000], prelim_1040_outfilename[5000];
  char	YourName[2048]="", YourNames[2048]="", 
 	*YourMidInitial="", *SpouseMidInitial="";
+ double  sched540A1a_sub=0.0, sched540A1b_sub=0.0, sched540A1c_sub=0.0, sched540A1d_sub=0.0,
+	 sched540A1e_sub=0.0, sched540A1f_sub=0.0, sched540A1g_sub=0.0, sched540A1h_sub=0.0,
+	 sched540A1z_sub=0.0;
+ double  sched540A1a_add=0.0, sched540A1b_add=0.0, sched540A1c_add=0.0, sched540A1d_add=0.0,
+	 sched540A1e_add=0.0, sched540A1f_add=0.0, sched540A1g_add=0.0, sched540A1h_add=0.0,
+	 sched540A1i_add=0.0, sched540A1z_add=0.0;
  double  sched540Bc8a=0.0, sched540Bb8b=0.0, sched540Bb8c=0.0, sched540Bc8c=0.0, sched540Bc8d=0.0,
 	 sched540Bc8e=0.0, sched540Bb8f=0.0, sched540Bc8k=0.0, sched540Bb8n=0.0, 
 	 sched540Bb8o=0.0, sched540Bb8p=0.0, sched540Bc8p=0.0, sched540Bb8z=0.0, sched540Bc8z=0.0,
@@ -871,8 +915,32 @@ int main( int argc, char *argv[] )
 
  /* -- Sched540 Part I -- */
 
-  GetLine("CA540_Subtr_A1", &(sched540Ab[1]) );
-  GetLine("CA540_Addit_A1", &(sched540Ac[1]) );
+  GetLine("CA540_Subtr_A1a", &sched540A1a_sub );
+  GetLine("CA540_Addit_A1a", &sched540A1a_add );
+
+  GetLine("CA540_Subtr_A1b", &sched540A1b_sub );
+  GetLine("CA540_Addit_A1b", &sched540A1b_add );
+
+  GetLine("CA540_Subtr_A1c", &sched540A1c_sub );
+  GetLine("CA540_Addit_A1c", &sched540A1c_add );
+
+  GetLine("CA540_Subtr_A1d", &sched540A1d_sub );
+  GetLine("CA540_Addit_A1d", &sched540A1d_add );
+
+  GetLine("CA540_Subtr_A1e", &sched540A1e_sub );
+  GetLine("CA540_Addit_A1e", &sched540A1e_add );
+
+  GetLine("CA540_Subtr_A1f", &sched540A1f_sub );
+  GetLine("CA540_Addit_A1f", &sched540A1f_add );
+
+  GetLine("CA540_Subtr_A1g", &sched540A1g_sub );
+  GetLine("CA540_Addit_A1g", &sched540A1g_add );
+
+  GetLine("CA540_Subtr_A1h", &sched540A1h_sub );
+  GetLine("CA540_Addit_A1h", &sched540A1h_add );
+
+  GetLine("CA540_Addit_A1i", &sched540A1i_add );
+
   GetLine("CA540_Subtr_A2", &(sched540Ab[2]) );
   GetLine("CA540_Addit_A2", &(sched540Ac[2]) );
   GetLine("CA540_Subtr_A3", &(sched540Ab[3]) );
@@ -940,16 +1008,50 @@ int main( int argc, char *argv[] )
   GetLine("CA540_Subtr_C24z", &sched540Cb24z );
   GetLine("CA540_Addit_C24z", &sched540Cc24z );
 
+  showline_wlabelnz( " SchedCA540_A1a", PrelimFedReturn.fed_L1a );
+  showline_wlabelnz( " SchedCA540_A1b", PrelimFedReturn.fed_L1b );
+  showline_wlabelnz( " SchedCA540_A1c", PrelimFedReturn.fed_L1c );
+  showline_wlabelnz( " SchedCA540_A1d", PrelimFedReturn.fed_L1d );
+  showline_wlabelnz( " SchedCA540_A1e", PrelimFedReturn.fed_L1e );
+  showline_wlabelnz( " SchedCA540_A1f", PrelimFedReturn.fed_L1f );
+  showline_wlabelnz( " SchedCA540_A1g", PrelimFedReturn.fed_L1g );
+  showline_wlabelnz( " SchedCA540_A1h", PrelimFedReturn.fed_L1h );
+  showline_wlabelnz( " SchedCA540_A1z", PrelimFedReturn.fed_L1z );
 
-  sched540A[1] = PrelimFedReturn.fedline[1];
+  showline_wlabelnz( " SchedCA540_A1ab", sched540A1a_sub );
+  showline_wlabelnz( " SchedCA540_A1bb", sched540A1b_sub );
+  showline_wlabelnz( " SchedCA540_A1cb", sched540A1c_sub );
+  showline_wlabelnz( " SchedCA540_A1db", sched540A1d_sub );
+  showline_wlabelnz( " SchedCA540_A1eb", sched540A1e_sub );
+  showline_wlabelnz( " SchedCA540_A1fb", sched540A1f_sub );
+  showline_wlabelnz( " SchedCA540_A1gb", sched540A1g_sub );
+  showline_wlabelnz( " SchedCA540_A1hb", sched540A1h_sub );
+  sched540A1z_sub = sched540A1a_sub + sched540A1b_sub + sched540A1c_sub + sched540A1d_sub +
+		    sched540A1e_sub + sched540A1f_sub + sched540A1g_sub + sched540A1h_sub;
+  showline_wlabelnz( " SchedCA540_A1zb", sched540A1z_sub );
+
+  showline_wlabelnz( " SchedCA540_A1ac", sched540A1a_add );
+  showline_wlabelnz( " SchedCA540_A1bc", sched540A1b_add );
+  showline_wlabelnz( " SchedCA540_A1cc", sched540A1c_add );
+  showline_wlabelnz( " SchedCA540_A1dc", sched540A1d_add );
+  showline_wlabelnz( " SchedCA540_A1ec", sched540A1e_add );
+  showline_wlabelnz( " SchedCA540_A1fc", sched540A1f_add );
+  showline_wlabelnz( " SchedCA540_A1gc", sched540A1g_add );
+  showline_wlabelnz( " SchedCA540_A1hc", sched540A1h_add );
+  showline_wlabelnz( " SchedCA540_A1ic", sched540A1i_add );
+  sched540A1z_add = sched540A1a_add + sched540A1b_add + sched540A1c_add + sched540A1d_add +
+		    sched540A1e_add + sched540A1f_add + sched540A1g_add + sched540A1h_add +
+		    sched540A1i_add;
+  showline_wlabelnz( " SchedCA540_A1zc", sched540A1z_add );
+
+
+  sched540A[1] = PrelimFedReturn.fed_L1z;
   sched540B[10] = sched540B[10] + sched540A[1];
-  showline_wlabelnz( " SchedCA540_A1", sched540A[1] );
 
-  sched540Bb[10] = sched540Bb[10] + sched540Ab[1];
-  showline_wlabelnz( " SchedCA540_A1b", sched540Ab[1] );
+  sched540Bb[10] = sched540Bb[10] + sched540A1z_sub;
 
-  sched540Bc[9] = sched540Bc[9] + sched540Ac[1];
-  showline_wlabelnz( " SchedCA540_A1c", sched540Ac[1] );
+  sched540Bc[10] = sched540Bc[10] + sched540A1z_add;
+
 
   showline_wlabelnz( " SchedCA540_A2a", PrelimFedReturn.fed_L2a );
 

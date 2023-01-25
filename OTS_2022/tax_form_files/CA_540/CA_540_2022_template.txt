@@ -21,8 +21,32 @@ L12                    { State Wages (List all W2's box 16). }
                    ;
 {--Part-I of California Adjustments--} 
  { - Section A - }
-CA540_Subtr_A1		; { Subtractions for Wages, salaries, tips, etc.  }
-CA540_Addit_A1		; { Additions for Wages, salaries, tips, etc. }
+CA540_Subtr_A1a		; { Subtractions for W-2 box 1 Wages }
+CA540_Addit_A1a		; { Additions for W-2 box 1 Wages }
+
+CA540_Subtr_A1b		; { Subtractions for household employee Wages, not on W-2 }
+CA540_Addit_A1b		; { Additions for household employee Wages, not on W-2 }
+
+CA540_Subtr_A1c		; { Subtractions for Tip income not reported on A1a above }
+CA540_Addit_A1c		; { Additions for Tip income not reported on A1a above }
+
+CA540_Subtr_A1d		; { Subtractions Medicaid waiver payments not on W-2 }
+CA540_Addit_A1d		; { Additions for Medicaid waiver payments not on W-2 }
+
+CA540_Subtr_A1e		; { Subtractions Taxable dependent care benefits }
+CA540_Addit_A1e		; { Additions for Taxable dependent care benefits }
+
+CA540_Subtr_A1f		; { Subtractions Employer-provided adoption benefits }
+CA540_Addit_A1f		; { Additions for Employer-provided adoption benefits }
+
+CA540_Subtr_A1g		; { Subtractions Wages from Fed Form 8919 line 6 }
+CA540_Addit_A1g		; { Additions for Wages from Fed Form 8919 line 6 }
+
+CA540_Subtr_A1h		; { Subtractions Other earned income }
+CA540_Addit_A1h		; { Additions for Other earned income }
+
+CA540_Addit_A1i		; { Additions for Nontaxable combat pay election }
+
 CA540_Subtr_A2		; { Subtractions for Taxable interest }
 CA540_Addit_A2		; { Additions for Taxable interest }
 CA540_Subtr_A3		; { Subtractions for Ordinary dividends. }
