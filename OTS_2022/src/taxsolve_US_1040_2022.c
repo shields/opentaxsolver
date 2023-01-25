@@ -60,7 +60,6 @@ double L3a=0.0;			/* Qualified dividends. */
 double L4a=0.0;			/* IRA distributions */
 double L5a=0.0;			/* Pensions, and annuities. */
 double L6a=0.0;			/* Social security benefits. */
-double L12a=0.0, L12b=0.0;
 double L25a=0.0, L25b=0.0, L25c=0.0;
 double L27a=0.0, L27b=0.0, L27c=0.0;
 double S4_60b=0.0;		/* First-time homebuyer credit repayment. Form 5405. */
@@ -1717,24 +1716,6 @@ int main( int argc, char *argv[] )						/* Updated for 2022. */
  GetLineF( "L5b", &L[5] );	/* Taxable pensions, and annuities. */
  GetLineF( "L6a", &L6a );	/* Social Security benefits.  Forms SSA-1099 box-5. */
 
-
- /* Previous to version 19.06, the charity-contributions were always read on line A11 of the Itemizations schedule-A.
-    This corresponded to all the IRS tax forms for the past several decades.
-    Around the 2020 tax-year, the IRS added an option, when not itemizing, of including charity-contribs on the main 1040 form.
-    Since the OTS program always decided automatically on itemizing or std-deduction based on the calculations, 
-    and since it was assumed this option was only for that year, it made sense to continue entering charity-contribs 
-    on A11 -- and then based on the results, OTS automatically placed the charity-contributions in the right line - on the 
-    main 1040 form if not itemizing.  This works fine, and avoids users needing to enter their charity-contributions
-    twice - in two different places - with the possible issue then of non-matching values, etc..
-    However, during the 2021 tax year, we began receiving questions from newer users about where to enter charity-contribs,
-    especially for those not expecting to itemize on Schedule-A.
-    Since the charity option on the main form no longer appears to be a one-time thing, it probably makes sense to
-    just have a single named-entry called "Charity_Contributions", irrespective of any line number(s).
-    And then let the OTS progam calculate which line to place the value on.
- */
- GetLine( "CharityCC", &charityCC );	/* Charity Contributions by Cash or Check. */
- GetLine( "CharityOT", &charityOT );	/* Charity Contributions Other Than cash or check. */
- GetLine( "CharityCO", &charityCO );	/* Charity Contributions Carried Over from last year. */
  GetLine( "L13", &L[13] );	/* Qualified business income deduction. */
  GetLine( "L19", &L[19] );	/* Child tax credit/credit for other dependents. */
 
@@ -1996,9 +1977,15 @@ int main( int argc, char *argv[] )						/* Updated for 2022. */
   }
  // GetLine( "A9", &SchedA[9] );	/* Investment interest. Attach Form 4952*/	/* Optionally read-in just above. */
 
+ GetLine( "A11", &charityCC );	/* Charity Contributions by Cash or Check. */
  SchedA[11] = charityCC;	/* Charity contributions by cash or check.*/
+
+ GetLine( "A12", &charityOT );	/* Charity Contributions Other Than cash or check. */
  SchedA[12] = charityOT;	/* Contributions other than cash or check.*/
+
+ GetLine( "A13", &charityCO );	/* Charity Contributions Carried Over from last year. */
  SchedA[13] = charityCO;	/* Carryover from prior year*/
+
 
  GetLine( "A15", &SchedA[15] );	/* Casualty or theft loss(es).*/
  GetLine( "A16", &SchedA[16] );	/* Other expenses*/
@@ -2038,41 +2025,32 @@ int main( int argc, char *argv[] )						/* Updated for 2022. */
  SchedA[14] = SchedA[11] + SchedA[12] + SchedA[13];
  SchedA[17] = SchedA[4] + SchedA[7] + SchedA[10] + SchedA[14] + SchedA[15] + SchedA[16];
 
- if (status == MARRIED_FILING_JOINTLY)		/* Now, Tentatively set 12b value, assuming NOT-itemizing. */
-  L12b = smallerof( SchedA[14], 600.0 );
- else
-  L12b = smallerof( SchedA[14], 300.0 );
-
- if ((L12b + std_deduc < SchedA[17]) || (ForceItemize))
+ if ((std_deduc < SchedA[17]) || (ForceItemize))
   { /*Select_to_Itemize*/
    itemize = Yes;
-   L12a = SchedA[17];	/* Use itemized value. */
-   L12b = 0.0;		/* Charity contribs are handled in Sched-A above. */
+   L[12] = SchedA[17];	/* Use itemized value. */
    if (ForceItemize)
     {
      printf(" You elected to itemize deductions, even though they may be less than your Standard Deduction.\n");
      fprintf(outfile," You elected to itemize deductions, even though they may be less than your Standard Deduction.\n");
-     printf("  (Itemizations = %6.2f, Std-Deduction = %6.2f)\n", L12a, std_deduc );
-     fprintf(outfile,"  (Itemizations = %6.2f, Std-Deduction = %6.2f)\n", L12a, std_deduc );
+     printf("  (Itemizations = %6.2f, Std-Deduction = %6.2f)\n", SchedA[17], std_deduc );
+     fprintf(outfile,"  (Itemizations = %6.2f, Std-Deduction = %6.2f)\n", SchedA[17], std_deduc );
     }
    else
     {
-     printf("  (Itemizations > Std-Deduction, %6.2f > %6.2f)\n", L12a, std_deduc );
-     fprintf(outfile,"	(Itemizations > Std-Deduction, %6.2f > %6.2f)\n", L12a, std_deduc );
+     printf("  (Itemizations > Std-Deduction, %6.2f > %6.2f)\n", SchedA[17], std_deduc );
+     fprintf(outfile,"	(Itemizations > Std-Deduction, %6.2f > %6.2f)\n", SchedA[17], std_deduc );
     }
    fprintf(outfile,"Itemizing.\n");
   } /*Select_to_Itemize*/
  else
   { /*Select_to_use_StdDeduction*/
    itemize = No;
-   L12a = std_deduc;		/* Take the Std.Deduction. */
-   /* Leave the above tentative L12b deduction of charity contribs here when not itemizing. */
-   printf("  (Itemizations < Std-Deduction + Charity-Deduction, %6.2f < %6.2f)\n", SchedA[17], std_deduc );
-   fprintf(outfile,"  (Itemizations < Std-Deduction + Charity-Deduction, %6.2f < %6.2f)\n", SchedA[17], std_deduc + L12b);
+   L[12] = std_deduc;		/* Take the Std.Deduction. */
+   printf("  (Itemizations < Std-Deduction, %6.2f < %6.2f)\n", SchedA[17], std_deduc );
+   fprintf(outfile,"  (Itemizations < Std-Deduction, %6.2f < %6.2f)\n", SchedA[17], std_deduc );
    fprintf(outfile,"Use standard deduction.\n");
   } /*Select_to_use_StdDeduction*/
-
- L[12] = L12a + L12b;
 
 
  /* -- Display Schedule A -- */

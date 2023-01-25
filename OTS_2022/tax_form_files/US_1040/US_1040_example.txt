@@ -68,10 +68,6 @@ L5b	43.00	;       { Taxable Pensions, Annuites. }
 
 L6a	  6	;       { Social Security benefits.  Forms SSA-1099 box-5. }
 
-CharityCC  111  ;       { Charity contributions by Cash or Check. }
-CharityOT  12   ;       { Charity contributions Other Than cash or check. }
-CharityCO  13   ;       { Charity contributions CarryOver from prior year. }
- 
 L13	 13	;	{ Qualified business income deduction. }
 L19	 19	; 	{ Child tax credit/credit for other dependents. }
 
@@ -238,7 +234,9 @@ S1_24z_Type:  Materials   { Type of Other adjustments. }
  A8d     1      ;       { Mortgage insurance premiums. }
  A9      9      ;       { Investment interest. Attach Form 4952}
 
- {A11 --- Note: Charity donations (A11-A13) are now entered on the "CharityXX" lines above (between L6 & L13). }
+ A11	111	;       { Charity contributions by Cash or Check. }
+ A12	 12	;       { Charity contributions Other Than cash or check. }
+ A13	 13	;       { Charity contributions CarryOver from prior year. }
 
  A15    15      ;       { Casualty or theft loss(es).}
  A16    16      ;       { Other expenses}

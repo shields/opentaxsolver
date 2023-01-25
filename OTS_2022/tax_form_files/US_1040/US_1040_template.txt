@@ -53,13 +53,8 @@ L4a		;       { IRA distributions. }
 L4b		;       { Taxable IRA distributions. }
 L5a		;       { Pensions, Annuites. }
 L5b		;       { Taxable Pensions, Annuites. }
-
 L6a		;       { Social Security benefits.  Forms SSA-1099 box-5. }
 
-CharityCC  	;       { Charity contributions by Cash or Check. }
-CharityOT  	;       { Charity contributions Other Than cash or check. }
-CharityCO  	;       { Charity contributions CarryOver from prior year. }
- 
 L13		;	{ Qualified business income deduction. }
 L19		; 	{ Child tax credit/credit for other dependents. }
 
@@ -178,8 +173,10 @@ S1_24z_Type:		 { Type of Other adjustments. }
  A8d            ;       { Mortgage insurance premiums. }
  A9             ;       { Investment interest. Attach Form 4952}
 
- {A11 --- Note: Charity donations (A11-A13) are now entered on the "CharityXX" lines above (between L6 & L13). }
-
+ A11		;       { Charity contributions by Cash or Check. }
+ A12		;       { Charity contributions Other Than cash or check. }
+ A13		;       { Charity contributions CarryOver from prior year. }
+ 
  A15            ;       { Casualty or theft loss(es).}
  A16            ;       { Other expenses}
  A18       N    ;       { Elect to itemize, even when less than standard deduction. (answer: Yes, No) }
