@@ -1,0 +1,36 @@
+Title: 2022	 Form 8995 Qualified Business Income Deduction Simplified Computation - EXAMPLE 1
+
+ {--- Your Identity --- }
+YourName:	Homer J Snodgrass	
+YourSocSec#:	XXX-XXXX-XXX	
+
+	 {-- Row "i" --}
+L1_i_a:	Tweeter	 { (a) Trade, business, or aggregation name }
+L1_i_b:	YYY-YYYY-YYY	 { (b) Taxpayer identification number }
+L1_i_c	130805		; { (c) Qualified business income or (loss) }
+
+ {-- Row "ii" --}
+L1_ii_a:	GetRichQuick LLC	 { (a) Trade, business, or aggregation name }
+L1_ii_b:	ZZZ-ZZZZ-ZZZ	 { (b) Taxpayer identification number }
+L1_ii_c	-10,456		; { (c) Qualified business income or (loss) }
+
+ {-- Row "iii" --}
+L1_iii_a:	LoseItAll	 { (a) Trade, business, or aggregation name }
+L1_iii_b:	111-1111-1111	 { (b) Taxpayer identification number }
+L1_iii_c	24566		; { (c) Qualified business income or (loss) }
+
+ {-- Row "iv" --}
+L1_iv_a:	AnotherDamnSocialMediaCompany	 { (a) Trade, business, or aggregation name }
+L1_iv_b:	222-2222-222	 { (b) Taxpayer identification number }
+L1_iv_c	4567		; { (c) Qualified business income or (loss) }
+
+ {-- Row "v" --}
+L1_v_a:	MyFolly	 { (a) Trade, business, or aggregation name }
+L1_v_b:	333-3333-333	 { (b) Taxpayer identification number }
+L1_v_c	-35000		; { (c) Qualified business income or (loss) }
+L3	-5		; { Qualified business net (loss) carryforward from the prior year. Enter negative value for loss. }
+L6	2222		; { Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) }
+L7	-3456		; { Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year. Enter negative value for loss. }
+L11	104356		; { Taxable income before qualified business income deduction }
+L12	2		; { Net capital gain }
+ {--------------------------------------------- }

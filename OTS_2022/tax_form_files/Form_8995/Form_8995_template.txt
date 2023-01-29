@@ -1,0 +1,39 @@
+Title: 2022 Form 8995 Qualified Business Income Deduction Simplified Computation
+
+{--- Your Identity --- }
+YourName:
+YourSocSec#:
+
+{-- Row "i" --}
+L1_i_a: 	{ (a) Trade, business, or aggregation name }
+L1_i_b: 	{ (b) Taxpayer identification number }
+L1_i_c  	; { (c) Qualified business income or (loss) }
+
+{-- Row "ii" --}
+L1_ii_a: 	{ (a) Trade, business, or aggregation name }
+L1_ii_b: 	{ (b) Taxpayer identification number }
+L1_ii_c  	; { (c) Qualified business income or (loss) }
+
+{-- Row "iii" --}
+L1_iii_a:	; { (a) Trade, business, or aggregation name }
+L1_iii_b: 	{ (b) Taxpayer identification number }
+L1_iii_c  	; { (c) Qualified business income or (loss) }
+
+{-- Row "iv" --}
+L1_iv_a: 	{ (a) Trade, business, or aggregation name }
+L1_iv_b: 	{ (b) Taxpayer identification number }
+L1_iv_c  	; { (c) Qualified business income or (loss) }
+
+{-- Row "v" --}
+L1_v_a: 	{ (a) Trade, business, or aggregation name }
+L1_v_b: 	{ (b) Taxpayer identification number }
+L1_v_c  	; { (c) Qualified business income or (loss) }
+
+{-- Calculations --}
+L3		; { Qualified business net (loss) carryforward from the prior year. Enter negative value for loss }
+L6		; { Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) }
+L7		; { Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year. Enter negative value for loss }
+L11 		; { Taxable income before qualified business income deduction }
+L12 		; { Net capital gain }
+
+{--------------------------------------------- }  

@@ -1,102 +1,82 @@
+#============================
+# Makefile for OpenTaxSolver
+#============================
 
+# Compiler options
 CC      =  cc
 CFLAGS  =
 COPTIM  = -O -Wall
 
-SRC     = taxsolve_routines.c
-LIBS    =
+# Note that under Windows, in an MSYS shell, the ".exe" suffix is implied
+# for the EXE_* file list macro values. This maintains compatiblity with
+# *nix platforms, which don't use the ".exe" suffix for programs.
 
-# It would be nice to create a taxsolve_routines.h so the routines.c source only needs to be compiled once. 
-# OBJS    =  taxsolve_routines.o
-OBJS    =
+#====================
+#====== Macros ======
+#====================
+
+#====== Taxsolver programs; in ../bin/ ======
+# Add new taxsolver modules to this list
+TAXSOLVE := \
+    taxsolve_US_1040_2022 \
+    taxsolve_US_1040_Sched_C_2022 \
+    taxsolve_PA_40_2022 \
+    taxsolve_NJ_1040_2022 \
+    taxsolve_VA_760_2022 \
+    taxsolve_NC_D400_2022 \
+    taxsolve_OH_IT1040_2022 \
+    taxsolve_NY_IT201_2022 \
+    taxsolve_MA_1_2022 \
+    taxsolve_CA_540_2022 \
+    taxsolve_HSA_f8889 \
+    taxsolve_f8606 \
+    taxsolve_US_1040_Sched_SE_2022 \
+    taxsolve_f8829_2022 \
+    taxsolve_f8995_2022 \
+    taxsolve_f8959_2022 \
+    taxsolve_f8960_2022 \
+    taxsolve_f2210_2022 \
+    taxsolve_CA_5805_2022
+
+# List of taxsolver programs in ../bin/
+EXE_TAXSOLVE := $(patsubst %,../bin/%, $(TAXSOLVE))
+
+#====== IO programs; in ../bin/ ======
+IO := \
+     universal_pdf_file_modifier \
+     convert_results2xfdf
+
+# List of ior programs in ../bin/
+EXE_IO := $(patsubst %,../bin/%, $(IO))
+
+#====== Top level programs ; in ../ ======
+TOP := \
+     Run_taxsolve_GUI 
+
+# List of top level programs
+EXE_TOP := $(patsubst %,../%, $(TOP))
 
 
-# Rule to compile objects from source
-#.c.o:
-#	$(CC)  -c  $(CFLAGS)  $*.c
+#===================
+#====== Rules ======
+#===================
 
+all: $(EXE_TAXSOLVE) $(EXE_IO) $(EXE_TOP)
 
-all: ../bin/taxsolve_US_1040_2022 \
-     ../bin/taxsolve_US_1040_Sched_C_2022 \
-     ../bin/taxsolve_PA_40_2022 \
-     ../bin/taxsolve_NJ_1040_2022 \
-     ../bin/taxsolve_VA_760_2022 \
-     ../bin/taxsolve_NC_D400_2022 \
-     ../bin/taxsolve_OH_IT1040_2022 \
-     ../bin/taxsolve_NY_IT201_2022 \
-     ../bin/taxsolve_MA_1_2022 \
-     ../bin/taxsolve_CA_540_2022 \
-     ../bin/taxsolve_HSA_f8889 \
-     ../bin/taxsolve_f8606 \
-     ../bin/taxsolve_US_1040_Sched_SE_2022 \
-     ../bin/taxsolve_f8959_2022 \
-     ../bin/taxsolve_f8960_2022 \
-     ../bin/taxsolve_f2210_2022 \
-     ../bin/taxsolve_CA_5805_2022 \
-     ../bin/universal_pdf_file_modifier \
-     ../bin/convert_results2xfdf \
-     ../Run_taxsolve_GUI 
+# Pattern rule for taxsolver programs in ../bin/
+# includes dependency on taxsolve_routines.c
+$(EXE_TAXSOLVE): ../bin/%: %.c taxsolve_routines.c
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
+# Pattern rule for io programs in ../bin/
+$(EXE_IO): ../bin/%: %.c
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
-../bin/taxsolve_US_1040_2022:         taxsolve_US_1040_2022.c          taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_US_1040_2022         taxsolve_US_1040_2022.c          $(SRCS) $(LIBS)
+# Pattern rule for top level programs in ../
+$(EXE_TOP): ../%: %.c
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
-../bin/taxsolve_US_1040_Sched_C_2022: taxsolve_US_1040_Sched_C_2022.c  taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_US_1040_Sched_C_2022 taxsolve_US_1040_Sched_C_2022.c  $(SRCS) $(LIBS)
-
-../bin/taxsolve_CA_540_2022:          taxsolve_CA_540_2022.c           taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_CA_540_2022          taxsolve_CA_540_2022.c           $(SRCS) $(LIBS)
-
-../bin/taxsolve_NC_D400_2022:            taxsolve_NC_D400_2022.c       taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_NC_D400_2022         taxsolve_NC_D400_2022.c	    $(SRCS) $(LIBS)
-
-../bin/taxsolve_PA_40_2022:          taxsolve_PA_40_2022.c            taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_PA_40_2022           taxsolve_PA_40_2022.c            $(SRCS) $(LIBS)
-
-../bin/taxsolve_NJ_1040_2022:         taxsolve_NJ_1040_2022.c          taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_NJ_1040_2022         taxsolve_NJ_1040_2022.c          $(SRCS) $(LIBS)
-
-../bin/taxsolve_OH_IT1040_2022:       taxsolve_OH_IT1040_2022.c        taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_OH_IT1040_2022       taxsolve_OH_IT1040_2022.c        $(SRCS) $(LIBS)
-
-../bin/taxsolve_VA_760_2022:          taxsolve_VA_760_2022.c           taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_VA_760_2022          taxsolve_VA_760_2022.c           $(SRCS) $(LIBS)
-
-../bin/taxsolve_NY_IT201_2022:       taxsolve_NY_IT201_2022.c          taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_NY_IT201_2022        taxsolve_NY_IT201_2022.c         $(SRCS) $(LIBS)
-
-../bin/taxsolve_MA_1_2022:            taxsolve_MA_1_2022.c             taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_MA_1_2022            taxsolve_MA_1_2022.c             $(SRCS) $(LIBS)
-
-../bin/taxsolve_HSA_f8889:            taxsolve_HSA_f8889.c             taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_HSA_f8889            taxsolve_HSA_f8889.c		     $(SRCS) $(LIBS)
-
-../bin/taxsolve_f8606:            taxsolve_f8606.c             taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_f8606		taxsolve_f8606.c		     $(SRCS) $(LIBS)
-
-../bin/taxsolve_US_1040_Sched_SE_2022: taxsolve_US_1040_Sched_SE_2022.c taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_US_1040_Sched_SE_2022 taxsolve_US_1040_Sched_SE_2022.c $(SRCS) $(LIBS)
-
-../bin/taxsolve_f8959_2022:            taxsolve_f8959_2022.c  taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_f8959_2022    taxsolve_f8959_2022.c	$(SRCS) $(LIBS)
-
-../bin/taxsolve_f8960_2022:            taxsolve_f8960_2022.c  taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_f8960_2022    taxsolve_f8960_2022.c	$(SRCS) $(LIBS)
-
-../bin/taxsolve_f2210_2022:            taxsolve_f2210_2022.c  taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_f2210_2022    taxsolve_f2210_2022.c	$(SRCS) $(LIBS)
-
-../bin/taxsolve_CA_5805_2022:            taxsolve_CA_5805_2022.c  taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/taxsolve_CA_5805_2022   taxsolve_CA_5805_2022.c  	$(SRCS) $(LIBS)	
-
-../bin/universal_pdf_file_modifier: 	      universal_pdf_file_modifier.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/universal_pdf_file_modifier  universal_pdf_file_modifier.c	$(SRCS) $(LIBS)
-
-../bin/convert_results2xfdf: 	      convert_results2xfdf.c
-	$(CC) $(CFLAGS) $(COPTIM) -o  ../bin/convert_results2xfdf  convert_results2xfdf.c	$(SRCS) $(LIBS)
-
-../Run_taxsolve_GUI:		      Run_taxsolve_GUI.c
-	$(CC) $(CFLAGS) $(COPTIM) Run_taxsolve_GUI.c -o ../Run_taxsolve_GUI
 
 clean:
-	/bin/rm -fv ../bin/taxsolve* ../Run_taxsolve_GUI ../bin/convert_results2xfdf
+	rm -fv $(EXE_TAXSOLVE) $(EXE_IO) $(EXE_TOP)
+

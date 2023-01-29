@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.56;
-char package_date[]="January 25, 2023";
-char ots_release_package[]="20.00";
+float version=2.57;
+char package_date[]="January 28, 2023";
+char ots_release_package[]="20.01";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -166,7 +166,7 @@ enum form_names { form_US_1040, form_US_1040_Sched_C, form_US_8829, form_CA_540,
 		  form_other,
 		  form_1040e, form_4562, form_8582
 		};
-int selected_form=form_other;
+int selected_form=form_other, other_form_selected=0;
 
 
 char *setform( int formnum )
@@ -823,9 +823,10 @@ void switch_form( GtkWidget *wdg, void *data )
    warn_about_save_needed_switch();
    return;
   }
- cmd = (char *)malloc( strlen(start_cmd) + 100 );
+ cmd = (char *)malloc( strlen(start_cmd) + 150 );
  #if (PLATFORM_KIND==Posix_Platform)
    strcpy( cmd, start_cmd );
+   if (verbose) strcat( cmd, " -v ");
    strcat( cmd, " &" );
  #else
    strcpy( cmd, "start " );
@@ -1013,6 +1014,12 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	 instructions_filename = strdup( "f1040sse_instructions.dat" );
 	else
+	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
+	 instructions_filename = strdup( "f8829_instructions.dat" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8995" ) != 0)
+	 instructions_filename = strdup( "f8995_instructions.dat" );
+	else
 	if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
 	 instructions_filename = strdup( "f8959_instructions.dat" );
 	else
@@ -1199,6 +1206,12 @@ printf("CHECKING: '%s'\n", title_line );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
+	  check_form_version( title_line, "Title: 2022 Form 8829" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8995" ) != 0)
+	  check_form_version( title_line, "Title: 2022 Form 8995" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
 	  check_form_version( title_line, "Title: 2022 Form 8959" );
@@ -2382,10 +2395,12 @@ void predict_output_filename(char *indatafile, char *outfname)
 
 void set_tax_solver( char *fname )
 {
- // printf("OTS_set_tax_solver RET: f='%s', dir='%s', wc='%s', fname='%s'\n", fname, toolpath, wildcards_fb, filename_fb );
+ if (verbose) printf("OTS_set_tax_solver RET: file='%s', dir='%s', wc='%s', fname='%s'\n", fname, toolpath, wildcards_fb, filename_fb );
  taxsolvecmd = strdup( fname );
  strcpy( taxsolvestrng, taxsolvecmd );
 
+ selected_form = form_other;
+ other_form_selected = 1;
  if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
   {
    supported_pdf_form = 1;
@@ -2405,6 +2420,20 @@ void set_tax_solver( char *fname )
    supported_pdf_form = 1;
    strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
    strcat( directory_dat, "US_1040_Sched_SE" );
+  }
+ else
+ if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "Form_8829" );
+  }
+ else
+ if (strstr( taxsolvestrng, "taxsolve_f8995" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "Form_8995" );
   }
  else
  if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
@@ -3312,257 +3341,93 @@ void execute_cmd( char *cmd )
 }
 
 
+
+typedef struct FORM_PDF_CONVERT_T
+{
+        int  sel_form;
+        char *other_form_name;
+        char *form_meta_data_name;
+        char *form_pdf_name;
+} FORM_PDF_CONVERT, *P_FORM_PDF_CONVERT;
+
+FORM_PDF_CONVERT form_pdfs[] =
+ {   /* Top-tier forms: */
+        { form_US_1040,         "",     	"f1040_meta.dat",         "f1040_pdf.dat" },
+        { form_US_1040_Sched_C, "",     	"f1040sc_meta.dat",       "f1040sc_pdf.dat" },
+        { form_PA_40,           "",     	"PA_40_meta.dat",         "PA_40_pdf.dat" },
+        { form_CA_540,          "",     	"CA_540_meta.dat",        "CA_540_pdf.dat" },
+        { form_OH_IT1040,       "",     	"OH_PIT_IT1040_meta.dat", "OH_PIT_IT1040_pdf.dat" },
+        { form_VA_760,          "",     	"VA_760_meta.dat",        "VA_760_pdf.dat" },
+        { form_NJ_1040,         "",     	"NJ_1040_meta.dat",       "NJ_1040_pdf.dat" },
+        { form_NY_IT201,        "",     	"NY_it201_meta.dat",      "NY_it201_pdf.dat" },
+        { form_MA_1,            "",     	"MA_1_meta.dat",          "MA_1_pdf.dat" },
+        { form_NC_D400,         "",     	"NC_meta.dat",            "NC_pdf.dat" },
+        { form_1040e,           "",     	"f1040e_meta.dat",        "f1040e_pdf.dat" },
+        { form_4562,            "",     	"f4562_meta.dat",         "f4562_pdf.dat" },
+        { form_8582,            "",     	"f8582_meta.dat",         "f8582_pdf.dat" },
+    /* Other added forms: */
+        { form_other, "taxsolve_HSA_f8889",        "f8889_meta.dat",    "f8889_pdf.dat" },
+        { form_other, "taxsolve_f8606",            "f8606_meta.dat",    "f8606_pdf.dat" },
+        { form_other, "taxsolve_US_1040_Sched_SE", "f1040sse_meta.dat", "f1040sse_pdf.dat" },
+        { form_other, "taxsolve_f8829",            "f8829_meta.dat",    "f8829_pdf.dat" },
+        { form_other, "taxsolve_f8995",            "f8995_meta.dat",    "f8995_pdf.dat" },
+        { form_other, "taxsolve_f8959",            "f8959_meta.dat",    "f8959_pdf.dat" },
+        { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
+        { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
+  };
+
+
 void do_pdf_conversion()
-{  char outputname[4096];
-   schedule_PDF_conversion = 0;
-   predict_output_filename( current_working_filename, wrkingfname );
-   if (strlen(fillout_pdf_tool) < 1) set_pdf_tool_path();
-   switch (selected_form)
-    {
-     case form_US_1040:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "f1040_meta.dat", wrkingfname, "f1040_pdf.dat", outputname );
-	printf("\nIssuing: %s\n", fillout_pdf_command );
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	pdf_conversion_step = 0;
-	update_status_label( "Completed Filling-out PDF Forms:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_US_1040_Sched_C:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "f1040sc_meta.dat", wrkingfname, "f1040sc_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_PA_40:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "PA_40_meta.dat", wrkingfname, "PA_40_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_CA_540:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "CA_540_meta.dat", wrkingfname, "CA_540_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	pdf_conversion_step = 0;
-	update_status_label( "Completed Filling-out PDF Forms:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );        statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_OH_IT1040:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "OH_PIT_IT1040_meta.dat", wrkingfname, "OH_PIT_IT1040_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_VA_760:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "VA_760_meta.dat", wrkingfname, "VA_760_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_NJ_1040:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "NJ_1040_meta.dat", wrkingfname, "NJ_1040_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_NY_IT201:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "NY_it201_meta.dat", wrkingfname, "NY_it201_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_MA_1:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "MA_1_meta.dat", wrkingfname, "MA_1_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_NC_D400:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "NC_meta.dat", wrkingfname, "NC_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_1040e:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "f1040e_meta.dat", wrkingfname, "f1040e_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_4562:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "f4562_meta.dat", wrkingfname, "f4562_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_8582:
-	statusw.nfiles = 0;
-	setpdfoutputname( wrkingfname, ".pdf", outputname );
-	prepare_universal_pdf_cmd( "", "f8582_meta.dat", wrkingfname, "f8582_pdf.dat", outputname );
-	printf("Issuing: %s\n", fillout_pdf_command );
-	add_status_line( outputname );
-	execute_cmd( fillout_pdf_command );
-	update_status_label( "Completed Filling-out PDF Form:" );
-	statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	add_view_pdf_button();
-	break;
-     case form_other:
-     default: 
-	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
+{  
+    char outputname[4096];
+    schedule_PDF_conversion = 0;
+    predict_output_filename( current_working_filename, wrkingfname );
+
+    // Found form_pdfs struct; NULL if no matching entry found
+    P_FORM_PDF_CONVERT ppdf = NULL;
+
+    if (strlen(fillout_pdf_tool) < 1) set_pdf_tool_path();
+    // Search through table for matching form type
+    for (int f = 0; f < sizeof(form_pdfs)/sizeof(FORM_PDF_CONVERT); ++f)
+     {
+        // Pointer to the current FORM_PDF_CONVERT struct for search
+        P_FORM_PDF_CONVERT psp = &form_pdfs[f];
+
+        // Check for matching main form type (not 'form_other')
+        if ((psp->sel_form != form_other) && (psp->sel_form == selected_form))
 	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f8889_meta.dat", wrkingfname, "f8889_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	 }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_f8606" ) != 0)
+            ppdf = psp;
+            break;
+         }
+        // Check for 'form_other', and matching name
+        if ((psp->sel_form == form_other) && (strstr( taxsolvestrng, psp->other_form_name ) != 0))
 	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f8606_meta.dat", wrkingfname, "f8606_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	 }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
-	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f1040sse_meta.dat", wrkingfname, "f1040sse_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	 }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
-	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f8959_meta.dat", wrkingfname, "f8959_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	  }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_f8960" ) != 0)
-	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f8960_meta.dat", wrkingfname, "f8960_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	  }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_f2210" ) != 0)
-	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "f2210_meta.dat", wrkingfname, "f2210_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	  }
-	else
-	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
-	 {
-	  statusw.nfiles = 0;
-	  setpdfoutputname( wrkingfname, ".pdf", outputname );
-	  prepare_universal_pdf_cmd( "", "CA_5805_meta.dat", wrkingfname, "CA_5805_pdf.dat", outputname );
-	  printf("Issuing: %s\n", fillout_pdf_command );
-	  add_status_line( outputname );
-	  execute_cmd( fillout_pdf_command );
-	  update_status_label( "Completed Filling-out PDF Form:" );
-	  statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
-	  add_view_pdf_button();
-	  }
-	else
-	 {
-	  printf("Form type not supported.\n");
-	  make_button( status_panel, 30, statusw.ht - 50, " Ok ", dismiss_status_win, &status_win );
-	 }
-    }
+            ppdf = psp;
+            printf("%s: Found form_pdf: %d, %s\n", taxsolvestrng, ppdf->sel_form, ppdf->other_form_name);
+            break;
+         }
+     }
+    
+    if (ppdf == NULL)
+     {
+        printf("Form type not supported.\n");
+        make_button( status_panel, 30, statusw.ht - 50, " Ok ", dismiss_status_win, &status_win );
+        return;
+     }
+    printf("Found form_pdf: %d, %s\n", ppdf->sel_form, ppdf->other_form_name);
+    // Found a matching entry, since ppdf is not NULL
+    statusw.nfiles = 0;
+    setpdfoutputname( wrkingfname, ".pdf", outputname );
+    prepare_universal_pdf_cmd( "", ppdf->form_meta_data_name, wrkingfname,  ppdf->form_pdf_name, outputname );
+    printf("Issuing: %s\n", fillout_pdf_command );
+    add_status_line( outputname );
+    execute_cmd( fillout_pdf_command );
+    update_status_label( "Completed Filling-out PDF Form:" );
+    statusw.fnames[ statusw.nfiles ] = strdup( outputname );	statusw.nfiles = statusw.nfiles + 1;
+    add_view_pdf_button();
 }
+
 
 
 void print_outfile_directly( GtkWidget *wdg, void *data )
@@ -3640,9 +3505,8 @@ void printout( GtkWidget *wdg, void *data )
 
 
 
-
 void slcttxprog( GtkWidget *wdg, void *data )
-{
+{ /* Come here when user selects one of the opening-screen radio-buttons. */
  char *sel=(char *)data;
  char strg[MaxFname], tmpstr[MaxFname];
  int k, prev;
@@ -3650,12 +3514,15 @@ void slcttxprog( GtkWidget *wdg, void *data )
  if (!ok_slcttxprog) return;
  prev = selected_form;
  if (sscanf(sel,"%d", &selected_form) != 1) printf("Internal error '%s'\n", sel );
+ if (verbose) printf("\n Selected form = %d. (prev=%d)\n", selected_form, prev );
  if (selected_form == prev) return;
  strcpy( strg, program_names[selected_form] );
+ if (verbose) printf("  Form Name = '%s'\n", strg );
  if (strcmp(strg,"Other")==0)
   {
    selected_other = 1;
    supported_pdf_form = 0;
+   other_form_selected = 0;
    if (verbose) printf("invocation_path = '%s'\n", invocation_path );
    set_invocation_path( toolpath );
    fb_clear_banned_files();
@@ -3863,6 +3730,12 @@ void pick_file( GtkWidget *wdg, void *data )
   GtkFileFilter *rule;
 
   printf("Selected_Form = %d\n", selected_form );
+  if ((selected_form == form_other) && (other_form_selected == 0))
+   {
+    GeneralWarning("You must first select which Form to work on.");
+    return; 
+   }
+
   rule = gtk_file_filter_new();
   gtk_file_filter_add_pattern( rule, "*.txt" );
   // gtk_file_filter_add_custom( rule, 15, filterfunc, 0, 0 );
@@ -3891,6 +3764,11 @@ void pick_template( GtkWidget *wdg, void *data )
   char *templatefile="", *fileanswer;
 
   printf("Selected_Form = %d\n", selected_form );
+  if ((selected_form == form_other) && (other_form_selected == 0))
+   {
+    GeneralWarning("You must first select which Form to work on.");
+    return; 
+   }
   rule = gtk_file_filter_new();
   gtk_file_filter_add_pattern( rule, "*.txt" );
   // gtk_file_filter_add_custom( rule, 15, filterfunc, 0, 0 );
@@ -4024,9 +3902,10 @@ int main(int argc, char *argv[] )
  argn = 1;  k=1;
  while (argn < argc)
  {
-  if (strcmp(argv[argn],"-verbose")==0)
+  if ((strcmp(argv[argn],"-verbose")==0) || (strcmp(argv[argn],"-v")==0))
    { 
     verbose = 1;
+    printf(" GUI Setting Verbose Mode = On.\n");
    }
   else
   if (strcmp(argv[argn],"-help")==0)
@@ -4059,6 +3938,7 @@ int main(int argc, char *argv[] )
     else  {sprintf(tmpstr,".%c", slashchr);}
     sprintf(directory_dat, "%stax_form_files%c", tmpstr, slashchr);
     selected_form = form_other;
+    other_form_selected = 1;
     ok_slcttxprog = 0;
    }
   else
@@ -4137,9 +4017,9 @@ int main(int argc, char *argv[] )
  y = 105;
  make_sized_label( mpanel, winwidth / 2 - 60, y, "2022 Tax Year", 11.0 );
 
-/* Place warning about this being a 'development version'. */
-// tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
-// set_widget_color( tmpwdg, "#ff0000" );
+ /* Place warning about this being a 'development version' when being revised. */
+  // tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
+  // set_widget_color( tmpwdg, "#ff0000" );
 
  y = y + 35;
  make_sized_label( mpanel, 10, 135, "Select Tax Program:", 12.0 );
