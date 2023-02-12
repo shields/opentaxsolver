@@ -1,8 +1,10 @@
 Title: 2022 Form 8829 Expenses for Business Use of Your Home
+  { Provide a Schedule C filename for autofill of YourName, YourSocSec#, and L8. }
+FileNameSchC	 { File-name of Federal Schedule C output file. Optional. }
 {--- Your Identity --- }
 
-YourName:
-YourSocSec#:
+YourName:       { Leave blank and provide a Schedule C filename for autofill }
+YourSocSec#:    { Leave blank and provide a Schedule C filename for autofill }
 
 {--- Part I   Part of Your Home Used for Business --- }
 
@@ -22,7 +24,8 @@ L5    8,760	; { If you started or stopped using your home for daycare during the
 {--- Part II   Figure Your Allowable Deduction ---}
 
 L8  		; { Enter the amount from Schedule C, line 29, plus any gain derived from the business use of your
- home, minus any loss from the trade or business no derived from the business use of your home. }
+ home, minus any loss from the trade or business no derived from the business use of your home.
+ Enter 0 and provide a Schedule C filename for autofill }
 
 {-- Direct expenses --}
 L9a 		; { Casualty losses }

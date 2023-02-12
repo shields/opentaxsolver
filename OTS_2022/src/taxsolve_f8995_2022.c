@@ -1,6 +1,23 @@
 /************************************************************************/
 /* taxsolve_f8995.c -                                                   */
 /* Contributed by Rylan Luke, 1/2023					*/
+/*                                                                      */
+/* GNU Public License - GPL:                                            */
+/* This program is free software; you can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License as       */
+/* published by the Free Software Foundation; either version 2 of the   */
+/* License, or (at your option) any later version.                      */
+/*                                                                      */
+/* This program is distributed in the hope that it will be useful,      */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of       */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU     */
+/* General Public License for more details.                             */
+/*                                                                      */
+/* You should have received a copy of the GNU General Public License    */
+/* along with this program; if not, write to the Free Software          */
+/* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA             */
+/* 02111-1307 USA.                                                      */
+/*                                                                      */
 /************************************************************************/
 
 float thisversion=1.00;
@@ -13,6 +30,53 @@ float thisversion=1.00;
 
 #include "taxsolve_routines.c"
 
+//====== Form 1040 Import ======
+// Imported form data; add elements as needed, using the same variable name as in the imported form label for clarity.
+// Also update 'f1040_imp_defs' to add mapping.
+typedef struct FED_1040_IMP_F8995_T {
+        double L11;
+        double L12;
+        double S1_3;
+        double S1_15;
+        double S1_16;
+        double S1_17;
+        char *Your1stName;
+        char *YourLastName;
+        char *YourSocSec;
+} FED_1040_IMP_F8995, P_FED_1040_IMP_F8995;
+
+FED_1040_IMP_F8995 f1040i;
+
+// Mapping from label name to address of local data struct element; either double or char*
+static FORM_IMPORT_DEF f1040_imp_defs[] = {
+        { "L11", &f1040i.L11, NULL },
+        { "L12", &f1040i.L12, NULL },
+        { "S1_3", &f1040i.S1_3, NULL },
+        { "S1_15", &f1040i.S1_15, NULL },
+        { "S1_16", &f1040i.S1_16, NULL },
+        { "S1_17", &f1040i.S1_17, NULL },
+        { "Your1stName:", NULL, &f1040i.Your1stName },
+        { "YourLastName:", NULL, &f1040i.YourLastName },
+        { "YourSocSec#:", NULL, &f1040i.YourSocSec }
+};
+
+int f1040_imp_defs_size = sizeof(f1040_imp_defs)/sizeof(FORM_IMPORT_DEF);
+
+//====== Schedule C Import ======
+typedef struct FED_SCH_C_IMP_F8995_T {
+        double L7;
+        double L31;
+} FED_SCH_C_IMP_F8995_T, *P_FED_SCH_C_IMP_F8995;
+
+FED_SCH_C_IMP_F8995_T f_sch_c;
+
+// Mapping from label name to address of local data struct element; either double or char*
+static FORM_IMPORT_DEF f_sch_c_imp_defs[] = {
+        { "L7", &f_sch_c.L7, NULL },
+        { "L31", &f_sch_c.L31, NULL },
+};
+
+int f_sch_c_imp_defs_size = sizeof(f_sch_c_imp_defs)/sizeof(FORM_IMPORT_DEF);
 
 /*----------------------------------------------------------------------------*/
 
@@ -72,15 +136,58 @@ int main( int argc, char *argv[] )
  /* ----- Accept form data and process the numbers.         ------ */
  /* ----- Place all your form-specific code below here .... ------ */
 
+
+ char *f1040_filename = GetTextLine( "FileName1040") ;
+
+ if (strlen(f1040_filename) != 0) {
+     ImportReturnData( f1040_filename, f1040_imp_defs, f1040_imp_defs_size);
+     fprintf( outfile, "INFO: --- Imported 1040 Data from file '%s' ---\n", f1040_filename);
+     fprintf( outfile, "INFO: f1040i.L11   -- %6.2f\n", f1040i.L11);
+     fprintf( outfile, "INFO: f1040i.L12  -- %6.2f\n", f1040i.L12);
+     fprintf( outfile, "INFO: f1040i.S1_15   -- %6.2f\n", f1040i.S1_15);
+     fprintf( outfile, "INFO: f1040i.S1_16   -- %6.2f\n", f1040i.S1_16);
+     fprintf( outfile, "INFO: f1040i.S1_17   -- %6.2f\n", f1040i.S1_17);
+     fprintf( outfile, "INFO: f1040i.S1_3  -- %6.2f\n", f1040i.S1_3);
+     fprintf( outfile, "INFO: f1040i.Your1stName: -- %s\n", f1040i.Your1stName);
+     fprintf( outfile, "INFO: f1040i.YourLastName: -- %s\n", f1040i.YourLastName);
+     fprintf( outfile, "INFO: f1040i.YourSocSec#: -- %s\n", f1040i.YourSocSec);
+ } else {
+     fprintf( outfile, "ERROR: --- No Imported 1040 Form Data : no filename provided ---\n");
+     exit(1);
+ }
+
+ char *f_sch_c_filename = GetTextLine( "FileNameSchC") ;
+ printf("f_sch_c_filename: '%s'\n", f_sch_c_filename);
+
+ if (strlen(f_sch_c_filename) != 0) {
+     ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+     fprintf( outfile, "INFO: --- Imported Schedule C Data from file '%s' ---\n", f_sch_c_filename);
+     fprintf( outfile, "INFO: f_sch_c.L7  --  %6.2f\n", f_sch_c.L7);
+     fprintf( outfile, "INFO: f_sch_c.L31 --  %6.2f\n", f_sch_c.L31);
+ } else {
+     fprintf( outfile, "INFO: --- No Imported Schedule C Form Data : no filename provided ---\n");
+ }
+
+ // Set autocalculate mode only if both filenames are provided.
+ int auto_calc = (strlen(f1040_filename) != 0) && (strlen(f_sch_c_filename) != 0);
+
+
+
  // Example:
  //  GetLineF( "L2", &L[2] );
  //  GetLineF( "L3", &L[3] );
  //  L[4] = L[2] - L[3];
  //  showline_wlabel( "L4", L[4] );
 
- GetTextLineF( "YourName:" );
- GetTextLineF( "YourSocSec#:" );
+ // GetTextLine( "YourName:" );
+ // GetTextLine( "YourSocSec#:" );
+ fprintf(outfile, "YourName: %s%s\n", f1040i.Your1stName, f1040i.YourLastName);
+ fprintf(outfile, "YourSocSec#: %s\n", f1040i.YourSocSec);
 
+ // showline_wlabel( "INFO: Net QBI Income (this form L1-<row>-c)", f1040i.S1_3 - f1040i.S1_26);
+ // showline_wlabel( "INFO: Form 1040 Line 11", f1040i.L11);
+ // showline_wlabel( "INFO: Form 1040 Line 12c", f1040i.L12);
+ // showline_wlabel( "INFO: Taxable Income Before QBI Deduction (this form L11)", f1040i.L11 - f1040i.L12);
 
  char * L1_row_names[] = { "i", "ii", "iii", "iv", "v" };
  char * L1_col_names[] = { "a", "b", "c" };
@@ -91,23 +198,57 @@ int main( int argc, char *argv[] )
  // Set total income value to 0
  L[2] = 0.0;
  for (int row = 0; row < sizeof(L1_row_names)/sizeof(char *); ++row) {
+    double row_val;
+    char *row_name;
     for (int col = 0; col < sizeof(L1_col_names)/sizeof(char *); ++col) {
         sprintf(L1_name[row][col], "L1_%s_%s%s", L1_row_names[row], L1_col_names[col], (col == 2) ? "" : ":");
-        printf("L1_name: %s\n", L1_name[row][col]);
-        if (col != 2)
+        if (col == 0) { // Name business
+            row_name = GetTextLineF(L1_name[row][col]) ;
+        } else if (col == 1) {
             GetTextLineF(L1_name[row][col]) ;
-        else
-            GetLineFnz(L1_name[row][col], &L1[row][col] );
+        } else if (col == 2) {  // qualified business income (loss)
+            GetLine(L1_name[row][col], &row_val );
+            // If zero value was entered, and this row has a non-blank name, 
+            // and both a 1040 and schedule C filename have been provided (auto_calc), calculate the total
+            if ((row_val == 0.0) && (strlen(row_name) > 0) && auto_calc) {
+                fprintf(outfile, "INFO: Auto calculating QBI profit/loss for L1_%s_%s\n", L1_row_names[row], L1_col_names[col]);
+                L1[row][2] =  f_sch_c.L31 - (f1040i.S1_15 + f1040i.S1_16 + f1040i.S1_17);
+                fprintf(outfile, "INFO: L1_%s_%s = %6.2f = f_sch_c.L31 - (f1040i.S1_15 + f1040i.S1_16 + f1040i.S1_17) = "
+                    "%6.2f - (%6.2f + %6.2f + %6.2f)\n",  
+                    L1_row_names[row], L1_col_names[col], 
+                    L1[row][2], f_sch_c.L31, f1040i.S1_15, f1040i.S1_16, f1040i.S1_17);
+            } else {
+                L1[row][2] =  row_val;
+            }
+            showline_wlabelnz( L1_name[row][col], L1[row][2] );
+        }
     }
     // Add to total income
     L[2] += L1[row][2];
  }
 
- GetLineFnz( "L3", &L[3] );
- GetLineFnz( "L6", &L[6] );
- GetLineFnz( "L7", &L[7] );
- GetLineFnz( "L11", &L[11] );
- GetLineFnz( "L12", &L[12] );
+ GetLine( "L3", &L[3] );
+ GetLine( "L6", &L[6] );
+ GetLine( "L7", &L[7] );
+
+
+ // double L11_prelim;
+ // GetLine( "L11", &L11_prelim );
+ // 
+ // if ((L11_prelim == 0.0) && auto_calc) {
+ //     fprintf(outfile, "INFO: Auto calculating QBI L11\n");
+ //     L[11] = f1040i.L11 - f1040i.L12;
+ //     fprintf(outfile, "INFO: %6.2f = f1040i.L11 - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11, f1040i.L12);
+ // } else {
+ //    L[11] = L11_prelim;
+ // }
+
+ // Calculate line 11 from 1040 line 11 and line 12 values
+ L[11] = f1040i.L11 - f1040i.L12;
+ fprintf(outfile, "INFO: Line 11 = %6.2f = f1040i.L11 - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11, f1040i.L12);
+
+ GetLine( "L12", &L[12] );
+
 
  double qbi_percentage = 0.20;
 

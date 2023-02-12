@@ -2,7 +2,7 @@
 /* OTS_GUI.c - OpenTaxSolver Graphical User Interface.	*/
 /* Based on GimpToolKit (Gtk) widgets.			*/
 /*							*/
-/* This version is based on Gtk widgets.		*/
+/* This version is based on Gtk-3 widgets.		*/
 /*							*/
 /* The OTS_GUI is designed to read-in standard OTS data	*/
 /* files, and present the tax information on your 	*/
@@ -39,12 +39,30 @@
 /* Gtk library.						*/
 /*							*/
 /* Compile:						*/
-/*  cc -O `pkg-config --cflags gtk+-2.0` ots_gui2.c  \
- 	`pkg-config --libs gtk+-2.0`  -o ots_gui2	*/
+/*  cc -O `pkg-config --cflags gtk+-3.0` ots_gui3.c  \
+ 	`pkg-config --libs gtk+-3.0`  -o ots_gui3	*/
 /*							*/
 /********************************************************/
 
-float version=2.58;
+/**********************************************************************/
+/* GNU Public License - GPL:                                          */
+/* This program is free software; you can redistribute it and/or      */
+/* modify it under the terms of the GNU General Public License as     */
+/* published by the Free Software Foundation; either version 2 of     */
+/* the License, or (at your option) any later version.                */
+/*                                                                    */
+/* This program is distributed in the hope that it will be useful,    */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of     */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU   */
+/* General Public License for more details.                           */
+/*                                                                    */
+/* You should have received a copy of the GNU General Public License  */
+/* along with this program; if not, write to the Free Software        */
+/* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA           */
+/* 02111-1307 USA.                                                    */
+/**********************************************************************/
+
+float version=3.00;
 char package_date[]="February 12, 2023";
 char ots_release_package[]="20.01";
 
@@ -84,8 +102,8 @@ char ots_release_package[]="20.01";
 #include <ctype.h>
 #include <sys/stat.h>
 // #include "backcompat.c"
-#include "gtk_utils.c"		/* Include the graphics library. */
-#include "gtk_file_browser.c"
+#include "gtk_utils3.c"		/* Include the graphics library. */
+#include "gtk_file_browser3.c"
 
  GtkWidget *mpanel, *mpanel2, *warnwin=0, *popupwin=0, *resultswindow=0, *scrolledpane, *title_label;
  int operating_mode=1, need_to_resize=0, debug=0;
@@ -220,7 +238,7 @@ void GeneralWarning( char *mesg )       /* Used for one-line warning messages. *
  GtkWidget *winframe;
  printf("%s\n", mesg);
  winwdth = 90 + strlen( mesg ) * 8;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  make_label( winframe, xpos, ypos, mesg );
  make_button( winframe, winwdth/2 - 30, winhght - 40, "  Ok  ", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
@@ -249,27 +267,31 @@ void GeneralPopup( char *title, char *mesg, int to_text_win )       /* Used for 
  winwdth = 50 + maxcols * 8;
  winhght = 70 + 18 * nlines + 5;
  orig_winhght = winhght;
+
+//winframe = make_window( winwdth, winhght, title, &warnwin );
+#if (1)
  if (winhght < 500) 
   {
    if (winwdth <= 600)
-    winframe = new_window( winwdth, winhght, title, &warnwin );
+    winframe = make_window( winwdth, winhght, title, &warnwin );
    else
     {
      winwdth = 600;
-     winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 0, dismiss_general_warning_ret0 );
+     winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 0, dismiss_general_warning_ret0 );
     }
   }
  else
   {
    winhght = 500;
    if (winwdth <= 600)
-    winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 0, 1, dismiss_general_warning_ret0 );
+    winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 0, 1, dismiss_general_warning_ret0 );
    else
     {
      winwdth = 600;
-     winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 1, dismiss_general_warning_ret0 );
+     winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 1, dismiss_general_warning_ret0 );
     }
   }
+#endif
  make_label( winframe, xpos, ypos, mesg );
  make_button( winframe, winwdth/2 - 30, orig_winhght - 38, "  Ok  ", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
@@ -563,18 +585,32 @@ int Update_box_info()	/* Capture entries from form-boxes. */
 }
 
 
-void refresh()
+void refresh( gdouble vpos )
 {
+ GtkAdjustment *adj;
+printf("Refreshing ...\n");
  gtk_widget_destroy( mpanel2 );		/* Clear out panel. */
  /* Set up new panel with scrollbars for tax form data. */
  mpanel2 = gtk_fixed_new();
  scrolledpane = gtk_scrolled_window_new( 0, 0 );
  gtk_scrolled_window_set_policy( (GtkScrolledWindow *)scrolledpane, GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS );
- gtk_scrolled_window_add_with_viewport( (GtkScrolledWindow *)scrolledpane, mpanel2 );
- //   gtk_container_add( GTK_CONTAINER( mpanel ), scrolledpane );
+ // gtk_scrolled_window_add_with_viewport( (GtkScrolledWindow *)scrolledpane, mpanel2 );
+ gtk_container_add( GTK_CONTAINER( scrolledpane ), mpanel2 );
  gtk_fixed_put( GTK_FIXED( mpanel ), scrolledpane, 0, 35 );
  gtk_widget_set_size_request( scrolledpane, winwidth, winht - 80 );
+
+ /* Restore the scrolling position. */
+ adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
+ gtk_adjustment_set_value( adj, vpos );
+ gtk_scrolled_window_set_vadjustment( (GtkScrolledWindow *)scrolledpane, adj );
+
  DisplayTaxInfo();
+
+ /* Restore the scrolling position. */
+ adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
+ gtk_adjustment_set_value( adj, vpos );
+ gtk_scrolled_window_set_vadjustment( (GtkScrolledWindow *)scrolledpane, adj );
+
  gtk_widget_show_all( outer_window );
 }
 
@@ -582,7 +618,7 @@ void refresh()
 
 void re_display_form()
 {
- double vpos;
+ gdouble vpos;
  GtkAdjustment *adj;
 
  Update_box_info();	/* Grab any new entries. */
@@ -591,11 +627,16 @@ void re_display_form()
  adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
  vpos = gtk_adjustment_get_value( adj );
 
- refresh();
+ refresh( vpos );
 
+#if (0)
  /* Restore the scrolling position. */
  adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
- adj->value = vpos;
+ // adj->value = vpos;
+ gtk_adjustment_set_value( adj, vpos );
+ gtk_scrolled_window_set_vadjustment( (GtkScrolledWindow *)scrolledpane, adj );
+ gtk_widget_show_all( outer_window );
+#endif
 }
 
 
@@ -673,16 +714,21 @@ void add_new_boxes( void *data, int num )
  /* Prestore the scrolling position. */
  adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
  // printf("Adj = (%x), %g, (%g, %g), (%g, %g), %g\n", adj, adj->value, adj->lower, adj->upper, adj->step_increment, adj->page_increment, adj->page_size );
- vpos = gtk_adjustment_get_value( adj );
  // vpos = adj->value;
+ vpos = gtk_adjustment_get_value( adj );
+ printf("\nVpos = %g\n", vpos );
 
- refresh();
+ refresh( vpos );
 
+#if (0)
  /* Restore the scrolling position. */
  adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
- // gtk_adjustment_set_value( adj, vpos );	/* Isn't working because at this time upper and lower are 0 and 1. */
- adj->value = vpos;
- // gtk_scrolled_window_set_vadjustment( (GtkScrolledWindow *)scrolledpane, adj );  	/* Not needed. */
+ gtk_adjustment_set_value( adj, vpos );	
+ // adj->value = vpos;
+ gtk_scrolled_window_set_vadjustment( (GtkScrolledWindow *)scrolledpane, adj );
+#endif
+
+gtk_widget_show_all( outer_window );
 }
 
 
@@ -735,11 +781,11 @@ void edit_line_comment( GtkWidget *wdg, void *data )	/* Edit_comment. */
 
  tmppt = (struct value_list *)data;
  if (popupwin) gtk_widget_destroy( popupwin );
- panel = new_window( winwidth, winht, "Edit Comment", &popupwin );
+ panel = make_window( winwidth, winht, "Edit Comment", &popupwin );
  make_label( panel, 2, 2, "Edit Line Comment:" );
- commentbox = new_formbox_bypix( panel, 10, 25, winwidth - 40, tmppt->comment, 500, acceptcomment, tmppt );
- make_button( panel, 20, winht - 30, " Ok ", acceptcomment, tmppt );
- make_button( panel, winwidth - 60, winht - 30, "Cancel", cancelpopup, 0 );
+ commentbox = make_formbox_bypix( panel, 10, 25, winwidth - 40, tmppt->comment, 500, acceptcomment, tmppt );
+ make_button( panel, 20, winht - 40, " Ok ", acceptcomment, tmppt );
+ make_button( panel, winwidth - 60, winht - 40, "Cancel", cancelpopup, 0 );
  gtk_widget_show_all( popupwin );
 }
 
@@ -788,10 +834,10 @@ void verify_capgain_reset(GtkWidget *wdg, void *data)  /* Code follows edit_line
 
  tmppt = (struct value_list *)data; 
  if (popupwin) gtk_widget_destroy( popupwin );
- panel = new_window( winwidth, winht, "Clear Gain/Loss values ?", &popupwin );
+ panel = make_window( winwidth, winht, "Clear Gain/Loss values ?", &popupwin );
  make_label( panel, 5, 1, "Clear gain/loss values ?" );
- make_button( panel, 20, winht - 35, " Ok ", accept_capgain_reset, tmppt );
- make_button( panel, winwidth - 60, winht - 35, "Cancel", cancelpopup, 0 );
+ make_button( panel, 20, winht - 40, " Ok ", accept_capgain_reset, tmppt );
+ make_button( panel, winwidth - 60, winht - 40, "Cancel", cancelpopup, 0 );
  gtk_widget_show_all( popupwin );
 }
 
@@ -849,9 +895,9 @@ void warn_about_save_needed_switch()
  int xpos=20, ypos=20, winwdth, winhght=100;
  GtkWidget *winframe, *label;
  winwdth = 300;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  label = make_sized_label( winframe, xpos, ypos, "<b>Change(s) not saved !!</b>", 12 );
- set_widget_color( label, "#ff0000" );
+ set_label_color( label, "#ff0000" );
  make_button( winframe, 10, winhght - 40, "Switch anyway, without saving", switch_anyway, &warnwin );
  make_button( winframe, winwdth - 60, winhght - 40, "Cancel", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
@@ -1158,7 +1204,7 @@ int whitespace_invariant_strstr( char *haystack, char *needle )	/* Return 1 if m
 int check_form_version( char *title_as_read_in, char *expected_title )
 { /* Check that Form input file matched intended Program.  Return 1 if good.  Or 0 if not-match. */
  char msg[4096];
-printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
+ printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
  if (whitespace_invariant_strstr( title_as_read_in, expected_title ) == 0)
   {
    // GeneralWarning( "Warning: Looks like wrong Form-file for selected tax-progam. ??" );
@@ -1177,7 +1223,7 @@ printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
 
 void check_form_type( char *title_line )
 {
-printf("CHECKING: '%s'\n", title_line );
+ printf("CHECKING: '%s'\n", title_line );
  switch (selected_form)
   {
    case form_US_1040: check_form_version( title_line, "Title:  US Federal 1040 Tax Form" );
@@ -1429,7 +1475,7 @@ void options_pdf_diaglog( GtkWidget *wdg, void *data )
 {
  GtkWidget *panel;
  int wd=400, ht=170, xpos=10, ypos=30;
- panel = new_window( wd, ht, "Options Menu", &options_window );
+ panel = make_window( wd, ht, "Options Menu", &options_window );
  make_sized_label( panel, 5, 1, "Options Menu:", 12 );
  winopentime = Report_Time();
  allforms_button = make_toggle_button( panel, xpos, ypos, "Force production of All PDF Form Pages", allforms_toggle, set_pdf_option, "allforms" );
@@ -1446,23 +1492,27 @@ void options_pdf_diaglog( GtkWidget *wdg, void *data )
 void Setup_Tax_Form_Page( int init )	/* This is called whenever the form window needs to be redisplayed for any reason. */
 {
  GtkWidget *button;
- GtkRequisition actual;
+ GtkRequisition actual1, actual2;
  int x1=1, xpos;
  char *twrd;
  float fontsz;
  double T1;
 
+ printf("Setting up Form Page ...\n");
  gtk_widget_destroy( mpanel );	/* Clear out panel. */
  mpanel = gtk_fixed_new();
  gtk_container_add( GTK_CONTAINER( outer_window ), mpanel );
+
  /* Set up new panel with scrollbars for tax form data. */
  mpanel2 = gtk_fixed_new();
  scrolledpane = gtk_scrolled_window_new( 0, 0 );
  gtk_scrolled_window_set_policy( (GtkScrolledWindow *)scrolledpane, GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS );
- gtk_scrolled_window_add_with_viewport( (GtkScrolledWindow *)scrolledpane, mpanel2 );
- //   gtk_container_add( GTK_CONTAINER( mpanel ), scrolledpane );
+ // gtk_scrolled_window_add_with_viewport( (GtkScrolledWindow *)scrolledpane, mpanel2 );
+ gtk_container_add( GTK_CONTAINER( scrolledpane ), mpanel2 );
+
  gtk_fixed_put( GTK_FIXED( mpanel ), scrolledpane, 0, 35 );
  gtk_widget_set_size_request( scrolledpane, winwidth, winht - 80 );
+
  operating_mode = 2;
 
  xpos = (int)(0.037 * (float)winwidth + 0.5);
@@ -1501,15 +1551,19 @@ void Setup_Tax_Form_Page( int init )	/* This is called whenever the form window 
  strcat( twrd, "</b>" );
  fontsz = 12.0;
  title_label = make_sized_label( mpanel, x1, 10, twrd, fontsz );   /* Temporarily make label to get its size. */
- gtk_widget_size_request( (GtkWidget *)title_label, &actual );
- if (actual.width > winwidth)
-  fontsz = fontsz * (float)winwidth / (float)actual.width;
+
+ //gtk_widget_size_request( (GtkWidget *)title_label, &actual );
+ gtk_widget_show_all( title_label );
+ gtk_widget_get_preferred_size( title_label, &actual1, &actual2 );
+
+ if (actual2.width > winwidth)
+  fontsz = fontsz * (float)winwidth / (float)actual2.width;
  else
-  x1 = (winwidth - (actual.width + 20)) / 2;
+  x1 = (winwidth - (actual2.width + 20)) / 2;
  if (x1 < 0) x1 = 0;
  gtk_widget_destroy( title_label );
  title_label = make_sized_label( mpanel, x1, 10, twrd, fontsz );    /* Remake label in centered position. */
- set_widget_color( title_label, "#0000ff" );
+ set_label_color( title_label, "#0000ff" );
  free( twrd );
 
  if (init)
@@ -1774,7 +1828,7 @@ void DisplayTaxInfo()
  struct taxline_record *txline;
  struct value_list *entry, *previous_entry=0;
  GtkWidget *label, *button, *cbutton, *menu;
- GtkRequisition req;
+ GtkRequisition req1, req2;
  GtkEntry *lastbox=0;
  char messg[4096];
  int linenum, iscapgains, noplus=0;
@@ -1787,7 +1841,7 @@ void DisplayTaxInfo()
  int horzpad=10;
 
  check_comments();
- y1 = 5;  y1a = y1 + yoffset;  dy = 50;
+ y1 = 5;  y1a = y1 + yoffset;  dy = 75;
  if (debug) dump_taxinfo();
 
  /* Now place the form-data onto the pages. */
@@ -1801,15 +1855,19 @@ void DisplayTaxInfo()
      // printf("\nAdding LineLabel %d (%3d, %d): '%s'\n", txline->linenum, 2, y1a, txline->linename );
      label = make_label( mpanel2, 2, y1a, txline->linename );
      txline->vpos = y1a;
-     gtk_widget_size_request( label, &req );	/* First find the label's size. */
+
+     // gtk_widget_size_request( label, &req );	/* First find the label's size. */
+     gtk_widget_show_all( label );
+     gtk_widget_get_preferred_size( label, &req1, &req2 );	/* First find the label's size. */
+
      gtk_widget_destroy( label );			/* Remove it, then re-place it at best position. */
-     label_width = req.width;
+     label_width = req2.width;
      label_x0 = norm_label_x1 - label_width - 4;
      if (label_x0 < 0) label_x0 = 0;
      if (debug) printf("%d: LineLabel '%s' at (%d, %d)\n",txline->linenum, txline->linename, label_x0, y1a );
      label = make_label( mpanel2, label_x0, y1a, txline->linename );
      if (txline->instructions)
-      set_widget_color( label, "#0000a0" );
+      set_label_color( label, "#0000a0" );
      label_x1 = label_x0 + label_width;
      box_x0 = label_x1 + horzpad;
      if (box_x0 < min_box_x0) box_x0 = min_box_x0;
@@ -1842,16 +1900,20 @@ void DisplayTaxInfo()
         {
          case VKIND_FLOAT:	/* This kind is presently not used at all. (or anymore?) */
 		sprintf(messg, "%12.2f", entry->value ); 
-		entry->box = new_formbox( mpanel2, box_x0, y1, 12, messg, 500, 0, 0 );
+		entry->box = make_formbox( mpanel2, box_x0, y1, 12, messg, 500, 0, 0 );
 		lastbox = entry->box;
-		gtk_widget_size_request( (GtkWidget *)(entry->box), &req );
-		box_width = req.width;
-		entry_box_height = req.height;
+
+		// gtk_widget_size_request( (GtkWidget *)(entry->box), &req );
+		gtk_widget_show_all( (GtkWidget *)(entry->box) );
+		gtk_widget_get_preferred_size( (GtkWidget *)entry->box, &req1, &req2 );
+
+		box_width = req2.width;
+		entry_box_height = req2.height;
 		box_x1 = box_x0 + box_width;
 		comment_x0 = box_x1 + horzpad;
 		if (debug) printf("\tFloat-FormBox(%d-%d, %d) = '%s'\n", box_x0, box_x1, y1, messg );
 		y2 = y1 + entry_box_height - 1;
-		button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 6.0, "#000000", add_new_box_item, entry );   /* Add another box - button */
+		button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 8.0, "#000000", add_new_box_item, entry );   /* Add another box - button *///		button = make_button( mpanel2, box_x1 - 15, y2, "+", add_new_box_item, entry );   /* Add another box - button */
 		add_tool_tip( button, "Add another entry box\nfor this line." );
 		break;
 
@@ -1864,34 +1926,38 @@ void DisplayTaxInfo()
 
 		if (entry->formtype == 0)
 		 { /*normal*/
-		  entry->box = new_formbox( mpanel2, box_x0, y1, 12, entry->text, 500, 0, 0 );
+		  entry->box = make_formbox( mpanel2, box_x0, y1, 12, entry->text, 500, 0, 0 );
 		  if (debug) printf("\t\tPlaced type0 at (%d, %d) 12-wide\n", box_x0, y1 );
 		 }
 		else
 		 {
 		  if (entry->formtype == ID_INFO)
 		   {
-		    entry->box = new_formbox( mpanel2, box_x0, y1, 24, entry->text, 500, 0, 0 );
+		    entry->box = make_formbox( mpanel2, box_x0, y1, 24, entry->text, 500, 0, 0 );
 		    if (debug) printf("\t\tPlaced type2 at (%d, %d) 24-wide\n", box_x0 + 20, y1 );
 		   }
 		  else
 		   { /*Literal_Info*/
-		    entry->box = new_formbox( mpanel2, box_x0, y1, 10, entry->text, 500, 0, 0 );
+		    entry->box = make_formbox( mpanel2, box_x0, y1, 10, entry->text, 500, 0, 0 );
 		    if (debug) printf("\t\tPlaced type1 at (%d, %d) 10-wide\n", box_x0 + 20, y1 );
 		   }
 		  noplus = 1;
 		 }
 		lastbox = entry->box;
-		gtk_widget_size_request( (GtkWidget *)(entry->box), &req );
-		box_width = req.width;
-		entry_box_height = req.height;
+
+		// gtk_widget_size_request( (GtkWidget *)(entry->box), &req );
+		gtk_widget_show_all( (GtkWidget *)(entry->box) );
+		gtk_widget_get_preferred_size( (GtkWidget *)(entry->box), &req1, &req2 );
+
+		box_width = req2.width;
+		entry_box_height = req2.height;
 		box_x1 = box_x0 + box_width;
 		comment_x0 = box_x1 + horzpad;
 
 		previous_entry = entry;
 		if (strcmp(txline->linename,"Status") == 0)
 		 {
-		  menu = make_menu_button( mpanel2, box_x1 + 3, y1a-2, "*" );
+		  menu = make_menu_button( mpanel2, box_x1 + 3, y1a-2, "^" );
 		  add_tool_tip( most_recent_menu, "Click to select filing status\nfrom available choices." );
 		  add_menu_item( menu, "Single", status_choice_S, entry );
 		  add_menu_item( menu, "Married/Joint", status_choice_MJ, entry );
@@ -1951,7 +2017,7 @@ void DisplayTaxInfo()
 			make_label( mpanel2, box_x0 + 15, y1 - 16, "Adj Amnt" );
 			capgtoggle = 0;
 		        y2 = y1 + entry_box_height - 1;
-		        button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 6.0, "#000000", add_new_capgain_boxes, entry );   /* Add more boxes - button */
+		        button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 8.0, "#000000", add_new_capgain_boxes, entry );   /* Add more boxes - button */
 		        add_tool_tip( button, "Add another set of entry\nboxes for another\ncap-gains entry." );
 		        extra_dy = 23;
 			box_x0 = firstbox_on_line_x;
@@ -1963,7 +2029,7 @@ void DisplayTaxInfo()
 		if (!noplus)
 		 {
 		   y2 = y1 + entry_box_height - 1;
-		   button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 6.0, "#000000", add_new_box_item, entry );   /* Add another box - button */
+		   button = make_button_wsizedcolor_text( mpanel2, box_x1 - 15, y2, "+", 8.0, "#000000", add_new_box_item, entry );   /* Add another box - button */
 		   add_tool_tip( button, "Add another entry box\nfor this line." );
 		 }
 		break;
@@ -1992,7 +2058,7 @@ void DisplayTaxInfo()
 		  if (tmpline[j] == ')') tmpline[j] = '\0';
 		  fb_next_word( tmpline, tmpword, " \t," );
 		  fb_next_word( tmpline, tmpword, " \t," );
-		  menu = make_menu_button( mpanel2, box_x1 + 3, y1a-2, "*" );
+		  menu = make_menu_button( mpanel2, box_x1 + 3, y1a-2, "^" );
 		  add_tool_tip( most_recent_menu, "Click to select available choices." );
 		  while (tmpword[0] != '\0')
 		   {
@@ -2017,15 +2083,18 @@ void DisplayTaxInfo()
 
 		/* Add edit_line_comment button */
 		if ((!sectionheader) && (entry_box_height != 0))
-		 { GtkRequisition sz;
-		   gtk_widget_size_request( entry->comment_label, &sz );
+		 { GtkRequisition req1, req2;
+		   // gtk_widget_size_request( entry->comment_label, &sz );
+		   gtk_widget_show_all( (GtkWidget *)(entry->comment_label) );
+		   gtk_widget_get_preferred_size( (GtkWidget *)(entry->comment_label), &req1, &req2 );
+
 		   y3 = y1 + entry_box_height - 1;
-		   if (comment_x0 + sz.width < winwidth - 65)
+		   if (comment_x0 + req2.width < winwidth - 65)
 		    y2 = y1 + 0.25 * entry_box_height - 1;
 		   else
 		    y2 = y1 + entry_box_height - 1;
 
-		   cbutton = make_button_wsizedcolor_text( mpanel2, winwidth - 40, y2 - 4, "*", 7.0, "#000000", edit_line_comment, entry );
+		   cbutton = make_button_wsizedcolor_text( mpanel2, winwidth - 40, y2 - 4, "#", 7.0, "#000000", edit_line_comment, entry );
 		   add_tool_tip( cbutton, "Edit the comment for\nthis line." );
 		   if ((strstr( entry->comment, "File-name") != 0) && (previous_entry != 0))
 		    {
@@ -2623,10 +2692,10 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
  /* Make a popup window telling where the results are, and showing them. */
  predict_output_filename( current_working_filename, outfname );
  wd = 620;  ht = 550;
- panel = new_window( wd, ht, "Results", &resultswindow );
+ panel = make_window( wd, ht, "Results", &resultswindow );
  make_sized_label( panel, 1, 1, "Results written to file:", 12 );
  label = make_sized_label( panel, 30, 25, outfname, 8 );
- set_widget_color( label, "#0000ff" );
+ set_label_color( label, "#0000ff" );
  // make_button( panel, wd/2 - 15, ht - 35, "  OK  ", canceltxslvr, 0 ); 
  make_button( panel, 40, ht - 35, "Print Result File", print_outfile_directly, 0 ); 
  make_button( panel, wd - 85, ht - 35, " Close ", canceltxslvr, 0 ); 
@@ -2635,7 +2704,7 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
  Sleep_seconds( 0.25 );
  UpdateCheck();
  Sleep_seconds( 0.25 );
- mylist = new_selection_list( panel, 5, 50, wd - 10, ht - 50 - 50, "Results Preview:", 0, 0, 0 );
+ mylist = make_selection_list( panel, 5, 50, wd - 10, ht - 50 - 50, "Results Preview:", 0, 0, 0 );
  viewfile = fopen( outfname, "rb" );
  if (viewfile == 0)
   {
@@ -2796,7 +2865,7 @@ void update_status_label( char *msg )
 
 void create_status_popup_window( int width, int height )
 {
- status_panel = new_scrolled_window_wkill( width, height, "Filling-out PDF Form(s) ...", &status_win, 1, 0, killed_status_win );
+ status_panel = make_scrolled_window_wkill( width, height, "Filling-out PDF Form(s) ...", &status_win, 1, 0, killed_status_win );
  status_label = make_label( status_panel, 1, 1, "Filling-out PDF Form(s):" );
  gtk_window_set_keep_above( (GtkWindow *)status_win, 1 );
  statusw.y_val = 28;
@@ -3093,11 +3162,11 @@ void set_pdfviewer( GtkWidget *wdg, void *data )
  GtkWidget *panel;
 
  window_position_policy = GTK_WIN_POS_NONE;
- panel = new_window( wd, ht, "Select Your PDF-Viewer", &spdfpopup );
+ panel = make_window( wd, ht, "Select Your PDF-Viewer", &spdfpopup );
  place_window_center();
  make_sized_label( panel, 15, 15, "Pick and Set PDF Viewer to Use:", 12 );
  { GtkTreeStore *spdfvlist;  GtkTreeIter iter;
-   spdfvlist = new_selection_list( panel, 40, 40, 333, 119, "Some popular viewers ...", catch_pdfviewer_selection, 0, 0 );
+   spdfvlist = make_selection_list( panel, 40, 40, 333, 119, "Some popular viewers ...", catch_pdfviewer_selection, 0, 0 );
    append_selection_list( spdfvlist, &iter, "" );
    #if (PLATFORM_KIND==Posix_Platform)
     /* --- For Apple's and Linux --- */
@@ -3135,9 +3204,9 @@ void set_pdfviewer( GtkWidget *wdg, void *data )
  if (pdfviewer == 0)
    get_pdf_viewer();
  if (pdfviewer == 0)
-  spdffrmbx = new_formbox( panel, 35, 200, 42, "", 500, accept_pdfviewer, 0 );
+  spdffrmbx = make_formbox( panel, 35, 200, 42, "", 500, accept_pdfviewer, 0 );
  else
-  spdffrmbx = new_formbox( panel, 35, 200, 42, pdfviewer, 500, accept_pdfviewer, 0 );
+  spdffrmbx = make_formbox( panel, 35, 200, 42, pdfviewer, 500, accept_pdfviewer, 0 );
 
  make_button( panel, 30, 260, "      OK      ", accept_pdfviewer, 0 );
  make_button( panel, 180, 260, "Save", saveconfig, 0 );
@@ -3464,7 +3533,7 @@ void printout( GtkWidget *wdg, void *data )
   }
  dismiss_status_win( 0, 0 );
  print_mode = 0;
- panel = new_window( wd, ht, "Print Return Data", &printpopup );
+ panel = make_window( wd, ht, "Print Return Data", &printpopup );
  make_sized_label( panel, 1, 1, "Print Return Data:", 12 );
  rad = make_radio_button( panel, 0, x1, y1, "Print Input Data", togprntcmd_in, 0 );
 
@@ -3494,7 +3563,7 @@ void printout( GtkWidget *wdg, void *data )
  else
   strcat( printer_command, current_working_filename );
  x1 = 20;
- printerformbox = new_formbox_bypix( panel, x1, y1, wd - x1 - 10, printer_command, MaxFname, acceptprinter_command, 0 ); 
+ printerformbox = make_formbox_bypix( panel, x1, y1, wd - x1 - 10, printer_command, MaxFname, acceptprinter_command, 0 ); 
  printht = ht - 35;
  print_button = make_button( panel, 50, printht, "  Print It  ", acceptprinter_command, 0 );
  make_button( panel, wd - 95, printht, "Cancel", cancelprintpopup, 0 );
@@ -3608,9 +3677,9 @@ void warn_about_save_needed()
  int xpos=20, ypos=20, winwdth, winhght=100;
  GtkWidget *winframe, *label;
  winwdth = 300;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  label = make_sized_label( winframe, xpos, ypos, "<b>Change(s) not saved !!</b>", 12 );
- set_widget_color( label, "#ff0000" );
+ set_label_color( label, "#ff0000" );
  make_button( winframe, 10, winhght - 40, "Exit anyway, without saving", quit, &warnwin );
  make_button( winframe, winwdth - 60, winhght - 40, "Cancel", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
@@ -3631,7 +3700,7 @@ void quit_wcheck( GtkWidget *wdg, void *x )
 
 
 
-static gboolean on_expose_event( GtkWidget *widget, GdkEventExpose *event, gpointer data )
+static gboolean handle_draw_event( GtkWidget *wdg, cairo_t *cr, void *data )
 {
  unsigned char *logodata;
  int imgwd, imght, x1, y1, x2, y2, new_width, new_height;
@@ -3643,34 +3712,12 @@ static gboolean on_expose_event( GtkWidget *widget, GdkEventExpose *event, gpoin
    y1 = 10;
    x2 = x1 + imgwd;
    y2 = y1 + imght;
-   place_image( mpanel, imgwd, imght, x1, y1, logodata );
-   free( logodata );
-   // make_rectangular_separator( mpanel, x1 - 2, y1 - 2, x2 - 2, y2 + 2 );
-   { /* Place a border around the logo image. */
-    cairo_t *canvas=0;
-    canvas = gdk_cairo_create( mpanel->window );
-    cairo_set_line_width( canvas, 2.0 );
-    cairo_set_source_rgb( canvas, 0.1, 0.1, 0.2 );
-    x1 = x1 - 2;  y1 = y1 - 2;
-    x2 = x2 + 2;  y2 = y2 + 2;
-    cairo_move_to( canvas, x1, y1 );
-    cairo_line_to( canvas, x2, y1 );
-    cairo_line_to( canvas, x2, y2 );
-    cairo_line_to( canvas, x1, y2 );
-    cairo_line_to( canvas, x1, y1 );
-    cairo_stroke( canvas );
-    x1 = 20;   	   	x2 = winwidth - 20;
-    y1 = fronty1 - 5;	y2 = fronty2;
-    cairo_set_line_width( canvas, 1.0 );
-    cairo_set_source_rgb( canvas, 0.1, 0.1, 0.5 );
-    cairo_move_to( canvas, x1, y1 );
-    cairo_line_to( canvas, x2, y1 );
-    cairo_line_to( canvas, x2, y2 );
-    cairo_line_to( canvas, x1, y2 );
-    cairo_line_to( canvas, x1, y1 );
-    cairo_stroke( canvas );
-    cairo_destroy(canvas);
-   }
+   attach_image_from_pixbuf( mpanel, logodata, x1, y1, imgwd, imght, 1 );
+   make_rectangular_separator( mpanel, x1 - 2, y1 - 2, x2 - 2, y2 + 2 );
+   gtk_widget_show_all( outer_window );
+   x1 = 20;   	   	x2 = winwidth - 20;
+   y1 = fronty1 - 8;	y2 = fronty2;
+   make_rectangular_separator( mpanel, x1, y1, x2, y2 );
   } /*mode1*/
  else
   { /*mode2*/
@@ -3984,15 +4031,19 @@ int main(int argc, char *argv[] )
 
  mpanel = init_top_outer_window( &argc, &argv, winwidth, winht, "OpenTaxSolver-GUI", 0, 0 );
  if (!setwinsz)
-  {
+  { /* Check for super-hi-res monitor screen. */
    int swd, sht;
-   GdkScreen *scrn;
-   scrn = gtk_window_get_screen( (GtkWindow *)outer_window );
-   swd = gdk_screen_get_width( scrn );
+   GdkRectangle workarea = {0};
+   gdk_monitor_get_workarea(
+			     gdk_display_get_primary_monitor( gdk_display_get_default() ),
+       			     &workarea
+ 			   );
+   swd = workarea.width;
+   sht = workarea.height;
+   if (verbose) printf ("ScreenWidth=%d x ScreenHeight=%d\n", swd, sht );
    if (swd > 2500)
     { /*Hi-DPI Screen*/
-     sht = gdk_screen_get_height( scrn );
-     printf("Screen size = %d x %d\n", swd, sht);
+     printf("Screen size = %d x %d\n", swd, sht );
      if (swd > 3840) swd = 3840;	/* Limit reported screen size to realistic values. */
      if (sht > 2160) sht = 2160;
      winwidth = (int)((float)winwidth * (float)swd / 1920.0);
@@ -4000,17 +4051,19 @@ int main(int argc, char *argv[] )
      printf("Detected HiDPI Screen.  Setting window size = %d x %d\n", winwidth, winht );
      gtk_widget_set_size_request( outer_window, winwidth, winht );
     }
+   setwinsz = 1;
   }
 
  gtk_window_set_resizable( GTK_WINDOW( outer_window ), 0 );
  // make_sized_label( mpanel, 180, 10, "Open-Tax-Solver", 20.0 );
 
  /* When the window is given the "delete_event" signal by the window manager, exit the program. */
- gtk_signal_connect( GTK_OBJECT(outer_window), "delete_event", GTK_SIGNAL_FUNC(quit), NULL );
- // g_signal_connect( GTK_WINDOW(outer_window), "destroy", quit, NULL);
+ g_signal_connect( outer_window, "delete_event", G_CALLBACK(quit), NULL );
 
- gtk_widget_set_app_paintable( outer_window, TRUE );
- g_signal_connect( outer_window, "expose-event", G_CALLBACK(on_expose_event), NULL);
+// gtk_widget_set_app_paintable( outer_window, TRUE );
+// g_signal_connect( outer_window, "expose-event", G_CALLBACK(on_expose_event), NULL);
+ g_signal_connect( outer_window, "draw", G_CALLBACK( handle_draw_event ), NULL );  
+
 
  make_rectangular_separator( mpanel, 59, 6, 387, 102 );
 
@@ -4019,7 +4072,7 @@ int main(int argc, char *argv[] )
 
  /* Place warning about this being a 'development version' when being revised. */
   // tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
-  // set_widget_color( tmpwdg, "#ff0000" );
+  // set_label_color( tmpwdg, "#ff0000" );
 
  y = y + 35;
  make_sized_label( mpanel, 10, 135, "Select Tax Program:", 12.0 );

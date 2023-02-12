@@ -1,6 +1,23 @@
 /************************************************************************/
 /* taxsolve_f8829.c -                                                   */
 /* Contributed by Rylan Luke, 1/2023					*/
+/*                                                                      */
+/* GNU Public License - GPL:                                            */
+/* This program is free software; you can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License as       */
+/* published by the Free Software Foundation; either version 2 of the   */
+/* License, or (at your option) any later version.                      */
+/*                                                                      */
+/* This program is distributed in the hope that it will be useful,      */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of       */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU     */
+/* General Public License for more details.                             */
+/*                                                                      */
+/* You should have received a copy of the GNU General Public License    */
+/* along with this program; if not, write to the Free Software          */
+/* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA             */
+/* 02111-1307 USA.                                                      */
+/*                                                                      */
 /************************************************************************/
 
 float thisversion=1.00;
@@ -17,6 +34,24 @@ float thisversion=1.00;
 #define LAST_DIRECT_INDIRECT_LINE  23
 
 /*----------------------------------------------------------------------------*/
+
+//====== Schedule C Import ======
+typedef struct FED_SCH_C_IMP_F8995_T {
+        double L29;
+        char *YourName;
+        char *YourSocSec;
+} FED_SCH_C_IMP_F8995_T, *P_FED_SCH_C_IMP_F8995;
+
+FED_SCH_C_IMP_F8995_T f_sch_c;
+
+// Mapping from label name to address of local data struct element; either double or char*
+static FORM_IMPORT_DEF f_sch_c_imp_defs[] = {
+        { "L29", &f_sch_c.L29, NULL },
+        { "YourName:", NULL, &f_sch_c.YourName },
+        { "YourSocSec#:", NULL, &f_sch_c.YourSocSec }
+};
+
+int f_sch_c_imp_defs_size = sizeof(f_sch_c_imp_defs)/sizeof(FORM_IMPORT_DEF);
 
 int main( int argc, char *argv[] )
 {
@@ -82,8 +117,38 @@ int main( int argc, char *argv[] )
  //  L[4] = L[2] - L[3];
  //  showline_wlabel( "L4", L[4] );
 
- GetTextLineF( "YourName:" );
- GetTextLineF( "YourSocSec#:" );
+ char *f_sch_c_filename = GetTextLine( "FileNameSchC") ;
+ printf("f_sch_c_filename: '%s'\n", f_sch_c_filename);
+
+ int autocalc = 0;
+
+ if (strlen(f_sch_c_filename) != 0) {
+     ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+     fprintf( outfile, "INFO: --- Imported Sch C Data from file '%s' ---\n", f_sch_c_filename);
+     fprintf( outfile, "INFO: Sch C L29 --  %6.2f\n", f_sch_c.L29);
+     fprintf( outfile, "INFO: Sch C YourName: -- %s\n", f_sch_c.YourName);
+     fprintf( outfile, "INFO: Sch C YourSocSec#: -- %s\n", f_sch_c.YourSocSec);
+     autocalc = 1;
+ } else {
+     fprintf( outfile, "INFO: --- No Imported Schedule C Form Data : no filename provided ---\n");
+     autocalc = 0;
+ }
+
+
+ char *info;
+ info = GetTextLine( "YourName:" );
+ if ((strlen(info) == 0) && autocalc) {
+    info = f_sch_c.YourName;
+ }
+ fprintf( outfile, "YourName: %s\n", info);
+
+ // If blank, fill in from schedule C
+ info = GetTextLine( "YourSocSec#:" );
+ if ((strlen(info) == 0) && autocalc) {
+    info = f_sch_c.YourSocSec;
+ }
+ fprintf( outfile, "YourSocSec#: %s\n", info);
+
 
  GetLineFnz( "L1", &L[1] );
  GetLineFnz( "L2", &L[2] );
@@ -111,7 +176,13 @@ int main( int argc, char *argv[] )
  
  ShowLineNonZero( 7 );
 
- GetLineFnz( "L8", &L[8] );
+ GetLine( "L8", &L[8] );
+ // If L8 == 0, and autocalc is set, fill in value directly
+ // from Schedule C.
+ if (L[8] == 0.0 && autocalc) {
+    L[8] = f_sch_c.L29;
+ }
+ showline( 8 );
 
  // NOTE: "La" and "Lb" are local line arrays, used for the
  // direct and indirect expense categories in lines 9 through 23.

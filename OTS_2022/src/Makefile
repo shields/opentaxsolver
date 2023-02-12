@@ -7,9 +7,25 @@ CC      =  cc
 CFLAGS  =
 COPTIM  = -O -Wall
 
-# Note that under Windows, in an MSYS shell, the ".exe" suffix is implied
-# for the EXE_* file list macro values. This maintains compatiblity with
-# *nix platforms, which don't use the ".exe" suffix for programs.
+# For MSYS1.0, define "CFLAGS = -std=c99"
+# in your build env.
+
+# Note that under Windows, in an MSYS2 shell, the ".exe" suffix is implied for
+# the EXE_* file list macro values. This maintains compatiblity with *nix
+# platforms, which don't use the ".exe" suffix for programs.  However, in
+# MSYS1, this handling is not automatic; currently, MSYS1 is being used to
+# build standalone Windows versions of OTS, since MSYS 2.0 produces exe files
+# which fault at startup. TODO: Resolve the MSYS2 build issue, and provide
+# instructions for setting up a Windows MINGW build environment.
+
+# EFS = Executable File Suffix; not-defined (empty) for Linux. Includes the "."
+# separator.  To detect whether a ".exe" suffix should be added to executable
+# file names, The "MSYSTEM" environment variable is detected. If detected,
+# regardless of value, a ".exe" file extension is used.
+
+ifneq ($(strip $(MSYSTEM)),)
+    EFS := .exe
+endif
 
 #====================
 #====== Macros ======
@@ -39,7 +55,7 @@ TAXSOLVE := \
     taxsolve_CA_5805_2022
 
 # List of taxsolver programs in ../bin/
-EXE_TAXSOLVE := $(patsubst %,../bin/%, $(TAXSOLVE))
+EXE_TAXSOLVE := $(patsubst %,../bin/%$(EFS), $(TAXSOLVE))
 
 #====== IO programs; in ../bin/ ======
 IO := \
@@ -47,14 +63,14 @@ IO := \
      convert_results2xfdf
 
 # List of ior programs in ../bin/
-EXE_IO := $(patsubst %,../bin/%, $(IO))
+EXE_IO := $(patsubst %,../bin/%$(EFS), $(IO))
 
 #====== Top level programs ; in ../ ======
 TOP := \
      Run_taxsolve_GUI 
 
 # List of top level programs
-EXE_TOP := $(patsubst %,../%, $(TOP))
+EXE_TOP := $(patsubst %,../%$(EFS), $(TOP))
 
 
 #===================
@@ -65,15 +81,15 @@ all: $(EXE_TAXSOLVE) $(EXE_IO) $(EXE_TOP)
 
 # Pattern rule for taxsolver programs in ../bin/
 # includes dependency on taxsolve_routines.c
-$(EXE_TAXSOLVE): ../bin/%: %.c taxsolve_routines.c
+$(EXE_TAXSOLVE): ../bin/%$(EFS): %.c taxsolve_routines.c
 	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
 # Pattern rule for io programs in ../bin/
-$(EXE_IO): ../bin/%: %.c
+$(EXE_IO): ../bin/%$(EFS): %.c
 	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
 # Pattern rule for top level programs in ../
-$(EXE_TOP): ../%: %.c
+$(EXE_TOP): ../%$(EFS): %.c
 	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
 
 

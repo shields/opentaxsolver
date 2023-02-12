@@ -4,7 +4,7 @@
 /*  tax form or country.  This file is usually compiled-with, linked-	*/
 /*  with, or included-in a form-specific program.			*/
 /* 									*/
-/* Copyright (C) 2003, 2004 - Aston Roberts				*/
+/* Copyright (C) 2003-2023 - Aston Roberts				*/
 /* 									*/
 /* GNU Public License - GPL:						*/
 /* This program is free software; you can redistribute it and/or	*/
@@ -22,7 +22,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-1-2004	aston_roberts@yahoo.com			*/
+/* Aston Roberts 1-1-2023	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -133,7 +133,7 @@ void get_word( FILE *infile, char *word )	/* Absorb comments. */
 	 }
 	if (word[j]==',') word[j] = getc(infile);
       } 
-   while ((!feof(infile)) && ((word[j]!=spc) && (word[j]!='\t') && (word[j]!='\n') && (word[j]!=';')));
+   while ((!feof(infile)) && ((word[j]!=spc) && (word[j]!='\t') && (word[j]!='\n') && (word[j] !='\r') && (word[j]!=';')));
    if (word[j]==';') ungetc(word[j],infile);
   }
  word[j] = '\0';	/* Add termination character. */
@@ -1038,6 +1038,118 @@ int check_form_version( char *title_as_read_in, char *expected_title )
   return 1;
 }
 
+//==================================================
+//====== Import Return Data Support Functions ======
+//==================================================
+
+void GrabLineValue( char *label, char *fline, double *value )
+{
+ char twrd[2048];
+ next_word(fline, twrd, " \t=;");
+ if ((twrd[0] != '\0') && (sscanf(twrd,"%lf", value) != 1))
+  {
+   printf("Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
+   fprintf(outfile,"Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
+  }
+}
+
+
+void GrabLineString( char *fline, char *strng )
+{ /* Grab a string and copy it into pre-allocated character array. */
+ char twrd[2048];
+ strng[0] = '\0';
+ do
+  {
+   next_word(fline, twrd, " \t=" );
+   if (twrd[0] != ';')
+    { strcat( strng, twrd );  strcat( strng, " " ); }
+  }
+ while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
+}
+
+
+void GrabLineAlloc( char *fline, char **strng )
+{ /* Grab a string and allocate space for it. */
+ char twrd[4096];
+ GrabLineString( fline, twrd );
+ if (twrd[0] != '\0')
+  *strng = strdup( twrd );
+}
+
+void ConvertSlashes( char *fname )
+{ /* Convert slashes in file name based on machine type. */
+  char *ptr;
+ #ifdef __MINGW32__
+  char slash_sreach='/', slash_replace='\\';
+ #else
+  char slash_sreach='\\', slash_replace='/';
+ #endif
+  ptr = strchr( fname, slash_sreach );
+  while (ptr)
+   {
+    ptr[0] = slash_replace;
+    ptr = strchr( fname, slash_sreach );
+   }
+}
+
+//==================================================
+//====== Import Return Data Definition Struct ======
+//==================================================
+
+typedef struct FORM_IMPORT_DEF_T {
+    char *field_name;
+    double *p_field_val;    // Pointer to location for numeric value found in return
+    char **p_field_string;  // Pointer to string value pointer
+} FORM_IMPORT_DEF, *P_FORM_IMPORT_DEF;
+
+
+//================================
+//====== Import Return Data ======
+//================================
+
+// Returns 0 for success, 1 for error
+int ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, int num_imp_defs) {
+    char word[6000], fline[2000];
+    FILE *infile;
+    // Zero all values, and set all strings to "". This ensures reasonable
+    // values, whether or not the file exists, and whether or not the fields exist.
+    for (int d = 0; d < num_imp_defs; ++d) {
+        if ( (p_form_imp_def + d)->p_field_val != NULL )
+            *(p_form_imp_def + d)->p_field_val = 0.0;
+        if ( (p_form_imp_def + d)->p_field_string != NULL )
+            *(p_form_imp_def + d)->p_field_string = "";
+    }
+
+    ConvertSlashes( return_filename );
+    infile = fopen(return_filename, "r");
+    if (infile==0) {
+        printf("Error: Could not open return '%s'\n", return_filename);
+        fprintf(outfile,"Error: Could not open return '%s'\n", return_filename);
+        return( 1 ); 
+    }
+    read_line(infile,fline);
+    while (!feof(infile)) {
+        next_word(fline, word, " \t=");
+        // Search through the table for field name
+        for (int d = 0; d < num_imp_defs; ++d) {
+            if (strcmp(word, (p_form_imp_def + d)->field_name) == 0) {
+                // Found a matching field; run the call the correct function
+                P_FORM_IMPORT_DEF pd = p_form_imp_def + d;
+                if (pd->p_field_val != NULL) 
+                    GrabLineValue( word, fline, pd->p_field_val);
+                if (pd->p_field_string != NULL)
+                    GrabLineAlloc( fline, pd->p_field_string) ;
+                // Match was found; stop searching and go to next line
+                break;
+            }
+        }
+        read_line(infile,fline);
+    }
+
+    fclose( infile );
+    return( 0 ); 
+
+}
 
 
 /* --- PDF Markup Support --- */

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-January 24, 2023 v20.00 - For tax-year 2022.
+February 12, 2023 v20.01 - For tax-year 2022.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,7 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v20.01 (2/12/2023) - Added user contributed forms 8829 + 8995.
     * v20.00 (1/24/2023) - Preliminary release for Tax-Year 2022.
 		Please check back for updates.
 
