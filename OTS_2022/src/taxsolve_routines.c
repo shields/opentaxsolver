@@ -1108,12 +1108,14 @@ typedef struct FORM_IMPORT_DEF_T {
 //================================
 
 // Returns 0 for success, 1 for error
-int ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, int num_imp_defs) {
+int ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, int num_imp_defs)
+{
     char word[6000], fline[2000];
+    int d;
     FILE *infile;
     // Zero all values, and set all strings to "". This ensures reasonable
     // values, whether or not the file exists, and whether or not the fields exist.
-    for (int d = 0; d < num_imp_defs; ++d) {
+    for (d = 0; d < num_imp_defs; ++d) {
         if ( (p_form_imp_def + d)->p_field_val != NULL )
             *(p_form_imp_def + d)->p_field_val = 0.0;
         if ( (p_form_imp_def + d)->p_field_string != NULL )
@@ -1131,7 +1133,7 @@ int ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, in
     while (!feof(infile)) {
         next_word(fline, word, " \t=");
         // Search through the table for field name
-        for (int d = 0; d < num_imp_defs; ++d) {
+        for (d = 0; d < num_imp_defs; ++d) {
             if (strcmp(word, (p_form_imp_def + d)->field_name) == 0) {
                 // Found a matching field; run the call the correct function
                 P_FORM_IMPORT_DEF pd = p_form_imp_def + d;

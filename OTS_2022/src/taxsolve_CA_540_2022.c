@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2023	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=20.00;
+float thisversion=20.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -62,7 +62,7 @@ double TaxRateFormula( double income, int status )
    if (income <  66295.00)  tax =  1811.71 +  0.08 * (income -  52455.00);  else
    if (income < 338639.00)  tax =  2918.91 + 0.093 * (income -  66295.00);  else
    if (income < 406364.00)  tax = 28246.90 + 0.103 * (income - 338639.00);  else
-   if (income < 677275.00)  tax = 32222.58 + 0.113 * (income - 406364.00);
+   if (income < 677275.00)  tax = 35222.58 + 0.113 * (income - 406364.00);
    else                     tax = 65835.52 + 0.123 * (income - 677275.00);
   }
  else

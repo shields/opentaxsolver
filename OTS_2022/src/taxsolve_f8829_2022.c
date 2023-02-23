@@ -59,8 +59,8 @@ int main( int argc, char *argv[] )
  char word[6000], outfname[6000], *infname=0;
  time_t now;
  // Local line number variables for direct/indirect lines
- double La[LAST_DIRECT_INDIRECT_LINE];
- double Lb[LAST_DIRECT_INDIRECT_LINE];
+ double La[LAST_DIRECT_INDIRECT_LINE+2]={0};
+ double Lb[LAST_DIRECT_INDIRECT_LINE+2]={0};
 
  printf("Form 8829, 2022 - v%3.2f\n", thisversion);
 

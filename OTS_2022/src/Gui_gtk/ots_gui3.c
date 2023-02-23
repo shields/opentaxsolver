@@ -63,8 +63,8 @@
 /**********************************************************************/
 
 float version=3.00;
-char package_date[]="February 12, 2023";
-char ots_release_package[]="20.01";
+char package_date[]="February 22, 2023";
+char ots_release_package[]="20.02";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -3450,6 +3450,7 @@ FORM_PDF_CONVERT form_pdfs[] =
 void do_pdf_conversion()
 {  
     char outputname[4096];
+    int f;
     schedule_PDF_conversion = 0;
     predict_output_filename( current_working_filename, wrkingfname );
 
@@ -3458,7 +3459,7 @@ void do_pdf_conversion()
 
     if (strlen(fillout_pdf_tool) < 1) set_pdf_tool_path();
     // Search through table for matching form type
-    for (int f = 0; f < sizeof(form_pdfs)/sizeof(FORM_PDF_CONVERT); ++f)
+    for (f = 0; f < sizeof(form_pdfs)/sizeof(FORM_PDF_CONVERT); ++f)
      {
         // Pointer to the current FORM_PDF_CONVERT struct for search
         P_FORM_PDF_CONVERT psp = &form_pdfs[f];

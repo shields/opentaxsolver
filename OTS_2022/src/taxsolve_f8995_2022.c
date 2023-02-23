@@ -194,13 +194,14 @@ int main( int argc, char *argv[] )
 
  double L1[sizeof(L1_row_names)/sizeof(char *)][sizeof(L1_col_names)/sizeof(char *)];
  char   L1_name[sizeof(L1_row_names)/sizeof(char *)][sizeof(L1_col_names)/sizeof(char *)][100];
+ int row, col;
 
  // Set total income value to 0
  L[2] = 0.0;
- for (int row = 0; row < sizeof(L1_row_names)/sizeof(char *); ++row) {
+ for (row = 0; row < sizeof(L1_row_names)/sizeof(char *); ++row) {
     double row_val;
-    char *row_name;
-    for (int col = 0; col < sizeof(L1_col_names)/sizeof(char *); ++col) {
+    char *row_name="";
+    for (col = 0; col < sizeof(L1_col_names)/sizeof(char *); ++col) {
         sprintf(L1_name[row][col], "L1_%s_%s%s", L1_row_names[row], L1_col_names[col], (col == 2) ? "" : ":");
         if (col == 0) { // Name business
             row_name = GetTextLineF(L1_name[row][col]) ;

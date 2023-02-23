@@ -12,7 +12,7 @@ Spouse_Blind?	N	{ Is Spouse blind ? (answer: Yes, No) }
 Dependents      1       { Number of Dependents, (answer: 1, 2, 3, 4, 5, 6, 7, 8, 9, ...)
 				self=1, spouse, etc. }
 
-VirtCurr?	N	{ During 2022, did you buy/sell/exchange/trade any Virtual Currency ? (answer: Yes, No) }
+VirtCurr?	N	{ During 2022, did you receive/exchange/sell any Digital Asset? (answer: Yes, No) }
 
 
 { ---- Income ---- }
@@ -49,10 +49,10 @@ L3b
 		;
 
  { --- Other Income & Credits --- }
-L4a		;       { IRA distributions. }
-L4b		;       { Taxable IRA distributions. }
-L5a		;       { Pensions, Annuites. }
-L5b		;       { Taxable Pensions, Annuites. }
+L4a		;       { IRA distributions. (1099-R) }
+L4b		;       { Taxable IRA distributions. (1099-R) }
+L5a		;       { Pensions, Annuites. (1099-R) }
+L5b		;       { Taxable Pensions, Annuites. (1099-R) }
 L6a		;       { Social Security benefits.  Forms SSA-1099 box-5. }
 
 L13		;	{ Qualified business income deduction. }
