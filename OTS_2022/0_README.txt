@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-February 12, 2023 v20.01 - For tax-year 2022.
+February 25, 2023 v20.02 - For tax-year 2022.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,10 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v20.02 (2/25/2023) - Fixed California State tax-formula calculation
+	for Single-Status.  Improved prompts for 1099-R forms of
+	Pensions, Annuities, abd IRA distributions on Federal 1040 forms.
+	Fix to NJ State program for line 38 sumation.
     * v20.01 (2/12/2023) - Added user contributed forms 8829 + 8995.
     * v20.00 (1/24/2023) - Preliminary release for Tax-Year 2022.
 		Please check back for updates.

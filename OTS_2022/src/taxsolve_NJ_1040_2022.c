@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=20.00;
+float thisversion=20.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -398,7 +398,7 @@ int main( int argc, char *argv[] )
  GetLineF( "L37c", &L37c );	/* NJ Higher Ed Tuition Deduction */
 
  for (j=30; j <= 36; j++)
-  L[38] = L[38] + L[8];
+  L[38] = L[38] + L[j];
  L[38] = L[38] + L37a + L37b + L37c;
  showline_wmsg( 38, "Total Exemptions and Deductions" );
 
@@ -631,7 +631,7 @@ int main( int argc, char *argv[] )
  else
   {
    L[68] = L[66] - L[54];
-   fprintf(outfile, "L66 = %6.2f	Overpayment\n", L[66] );
+   fprintf(outfile, "L68 = %6.2f	Overpayment\n", L[68] );
 
    showline_wmsg( 78, "( Total Adjustments to overpayment )");
    L[80] = L[68] - L[78];
