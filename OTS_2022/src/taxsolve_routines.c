@@ -503,7 +503,6 @@ void get_parameters( FILE *infile, char kind, void *x, char *emssg )
   . returns everthing that was cut away in the second parameter.	.
   . Parameters:								.
   .   line - input character string, on output shortened by word.	.
-  .   pre_trash - white-space or delimiters skipped before word.	.
   .   word - output of this routine, single word, without delimiters.   .
   .   delim - list of delimiters, whitepace chars, etc..		.
   .......................................................................*/
@@ -534,6 +533,48 @@ void next_word( char *line, char *word, char *delim )
  while (line[i]!='\0') { line[j++] = line[i++]; }
  /* Terminate the char-strings. */
  line[j] = '\0';
+ word[m] = '\0';
+}
+
+
+/***************************************************************************/
+/* Next_CSV - 								   */
+/* Parse a line of text which is either comma-delimited, or tab-delimited. */
+/* Return the next item, and remove the item to shorten the string. 	   */
+/***************************************************************************/
+void next_csv( char *line, char *word, char delim )
+{ /* Expect delim to be either ',' (comma) for CSV, or '\t' (tab) for Tab-Delimited. */
+ int j=0, k=0, m=0;
+
+ /* Consume any preceding white-space */
+ while ((line[j] !='\0') && ((line[j] == ' ') || (line[j] == '\t') || (line[j] == '\n') || (line[j] == '\r')))
+  j++;
+ /* Grab the next item until delimiter. */
+ while ((line[j] != '\0') && (line[j] != delim))
+  {
+   if (line[j] == '"')	/* Accept a double-quoted phrase. */
+    {
+     do { j++;  word[m++] = line[j]; }
+     while ((line[j] != '\0') && (line[j] != '"'));
+     if (line[j] == '"') { j++;  m--; }
+    }
+   else
+   if (line[j] == '\'')	/* Accept a single-quoted phrase. */
+    {
+     do { j++;  word[m++] = line[j]; }
+     while ((line[j] != '\0') && (line[j] != '\''));
+     if (line[j] == '\'') { j++;  m--; }
+    }
+   else
+    word[m++] = line[j++];
+  }
+ if (line[j] == delim)
+  j++;	/* Advance past next delimiter. */
+ /* Shorten line. */
+ k = 0;
+ while (line[j] != '\0') { line[k++] = line[j++]; }
+ /* Terminate the char-strings. */
+ line[k] = '\0';
  word[m] = '\0';
 }
 
@@ -647,6 +688,23 @@ void read_line( FILE *infile, char *line )
 {
  int j=0;
  do  line[j++] = getc(infile);  while ((!feof(infile)) && (line[j-1] != '\n'));
+ if ((j > 1) && (line[j-2] == '\r')) j--;
+ line[j-1] = '\0';
+}
+
+
+void read_line_safe( FILE *infile, char *line, int maxlen )
+{
+ char ch;
+ int j=0;
+ do  
+  {
+   ch = getc(infile);
+   if (j < maxlen - 1)
+    line[j++] = ch;
+  }
+ while ((!feof(infile)) && (ch != '\n'));
+ if ((j > 1) && (line[j-2] == '\r')) j--;
  line[j-1] = '\0';
 }
 

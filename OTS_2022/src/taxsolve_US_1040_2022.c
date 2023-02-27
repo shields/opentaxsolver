@@ -29,7 +29,7 @@
 /* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=20.00;
+float thisversion=20.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -815,6 +815,180 @@ void Display_adj_code_err()
  }
 
 
+/* Grab Spreadsheet for Capital Sales (Gain/Loss) of Form-8949 from a CSV or Tab-delimited file. */
+void get_CSV_8949( char *spreadsheet_name )
+{
+ char sline[4096], word[4096], delim=',';
+ char descrip[512], date_bought[512], date_sold[512], adj_code[512], adjcodeerrmsg[4096];
+ double proceeds, cost, adj_amnt;
+ struct date_rec buydate, selldate, annivdate;
+ enum {none, short_term, long_term} term_flg=none;
+ int err=0;
+ FILE *sfile;	/* Spreadsheet-File. */
+
+ sfile = fopen( spreadsheet_name, "r" );
+ if (sfile == 0)
+  {
+   printf("ERROR: Could not open f8949 spreadsheet file '%s' for reading.\n", spreadsheet_name );
+   fprintf(outfile,"ERROR: Could not open f8949 spreadsheet file '%s' for reading.\n", spreadsheet_name );
+   return;
+  }
+
+ /* Expect f8949 spreadsheet file name extension to be ".csv", ".tsv", or ".txt". */
+ strcpy( word, spreadsheet_name );
+ capitalize( word );
+ if (strstr( word, ".CSV" ))
+  delim = ',';
+ else
+ if (strstr( word, ".TSV" ))
+  delim = '\t';
+ else
+ if (strstr( word, ".TXT" ))
+  { /* Try to determine if file is CSV or TSV. */
+    read_line_safe( sfile, sline, 4096 );
+    if (strstr( sline, "\t" ))
+     delim = '\t';
+    fclose( sfile );	/* Reload file. */
+    sfile = fopen( spreadsheet_name, "r" );
+  }
+ else
+  {
+   printf("ERROR: f8949 Spreadsheet file '%s' is not '.csv', '.tsv', or '.txt'.\n", spreadsheet_name );
+   fprintf(outfile,"ERROR: f8949 Spreadsheet file '%s' is not '.csv', '.tsv', or '.txt'.\n", spreadsheet_name );
+   fclose( sfile );
+   return;
+  }
+ if (delim == ',')
+   fprintf(outfile," Reading Comma-delimited spreadsheet file.\n");
+ else
+   fprintf(outfile," Reading Tab-delimited spreadsheet file.\n");
+
+ /* Expect 1st line of spreadsheet file to be:
+       Description, Date_Acquired, Date_Sold, Proceeds, Cost, Code, Adjustment
+ */
+ read_line_safe( sfile, sline, 4096 );
+ next_csv( sline, word, delim );	capitalize( word );
+ if (!strstr( word, "DESCRIP" ))  err++;
+ next_csv( sline, word, delim );	capitalize( word );
+ if (!strstr( word, "ACQUIRED" )) err++;
+ next_csv( sline, word, delim );	capitalize( word );
+ if (!strstr( word, "SOLD" ))	  err++;
+ next_csv( sline, word, delim );	capitalize( word );
+ if (!strstr( word, "PROCEED" ))  err++;
+ next_csv( sline, word, delim );	capitalize( word );
+ if (!strstr( word, "COST" ))	  err++;
+ if (err)
+  {
+   printf("ERROR: f8949 Spreadsheet file '%s' does not have expected header-line.\n", spreadsheet_name );
+   fprintf(outfile,"ERROR: f8949 Spreadsheet file '%s' does not have expected header-line.\n", spreadsheet_name );
+   fclose( sfile );
+   return;
+  }
+  
+ read_line_safe( sfile, sline, 4096 );
+ while (!feof( sfile ))
+  {
+   consume_leading_trailing_whitespace( sline );
+   if (strlen( sline ) > 1)
+    { /*valid_line*/
+      if (verbose) fprintf(outfile,"ReadLine: '%s'\n", sline );
+      term_flg = none;  /* Initialize */
+      next_csv( sline, descrip, delim );
+      if (verbose) fprintf(outfile,"Descript = '%s', Line = '%s'\n", descrip, sline ); 
+      next_csv( sline, date_bought, delim );
+      if (verbose) fprintf(outfile,"BuyDate = '%s', Line = '%s'\n", date_bought, sline ); 
+      if (mystrcasestr( date_bought, "various-short" ) != 0)
+       term_flg = short_term;
+      else
+      if (mystrcasestr( date_bought, "various-long" ) != 0)
+       term_flg = long_term;
+      else
+       gen_date_rec( date_bought, descrip, &buydate );
+
+      next_csv( sline, date_sold, delim );
+      if (verbose) fprintf(outfile,"SoldDate = '%s', Line = '%s'\n", date_sold, sline ); 
+      if (term_flg == none)		/* Executes if term_flg Not otherwise set in case: 1 */
+       { /*term_flg*/
+        gen_date_rec( date_sold, descrip, &selldate );
+        if (is_date1_beyond_date2( buydate, selldate ))
+         {
+	  printf("DATA ERROR: Buy-date after sell-date in f8949 spreadsheet.   '%s'\n Buy-date '%s'  Sell-date '%s'\n", 
+		descrip, date_bought, date_sold );
+	  fprintf(outfile,"DATA ERROR: Buy-date after sell-date in f8949 spreadsheet.   '%s'\n Buy-date '%s'  Sell-date '%s'\n", 
+		descrip, date_bought, date_sold );
+	  exit(1);
+         }
+        /* "annivdate" will be the date of the one year holding period relative to the Buy-date */
+        annivdate.year = buydate.year + 1;
+        annivdate.month = buydate.month;
+        annivdate.day = buydate.day;
+        if ((annivdate.month == 2) && (annivdate.day == 28) && (isleapyear(annivdate.year)))
+         annivdate.day=29;
+        else
+        if ((annivdate.month == 2) && (annivdate.day == 29) && !(isleapyear(annivdate.year)))
+         annivdate.day=28;
+        if (is_date1_beyond_date2(selldate, annivdate))
+         term_flg = long_term;	/* Holding Period Test */
+        else
+         term_flg = short_term;
+       } /*term_flg*/
+
+      next_csv( sline, word, delim );
+      if (verbose) fprintf(outfile,"Proceeds = '%s', Line = '%s'\n", word, sline ); 
+      if (sscanf(word,"%lf",&proceeds)!=1)
+       { printf("ERROR: Bad float '%s', in Proceeds column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name ); 
+         fprintf(outfile,"ERROR: Bad float '%s', in Proceeds column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name );
+         exit(1);
+       }
+
+      next_csv( sline, word, delim );
+      if (verbose) fprintf(outfile,"Cost = '%s', Line = '%s'\n", word, sline ); 
+      if (sscanf(word,"%lf",&cost)!=1)
+       { printf("ERROR: Bad float '%s', in Cost column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name ); 
+         fprintf(outfile,"ERROR: Bad float '%s', in Cost column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name );
+         exit(1);
+       }
+      if (cost > 0.0) cost = -cost;   /* Cost/Buy amounts must be negative. (It is a cost.) */
+
+      next_csv( sline, adj_code, delim );
+      if (verbose) fprintf(outfile,"AdjCode = '%s', Line = '%s'\n", adj_code, sline ); 
+      strcpy( adjcodeerrmsg, adj_code ); /* Assemble Error Msg for later use if needed */
+      strcat( adjcodeerrmsg, "   " );
+      strcat( adjcodeerrmsg, descrip );
+      strcat( adjcodeerrmsg, "  " );
+      strcat( adjcodeerrmsg, date_bought );
+      strcat( adjcodeerrmsg, "  ");
+      strcat( adjcodeerrmsg, date_sold );
+      adj_code_validity_check( adj_code, adjcodeerrmsg );
+
+      next_csv( sline, word, delim );
+      if (verbose) fprintf(outfile,"AdjAmnt= '%s', Line = '%s'\n", word, sline );
+      consume_leading_trailing_whitespace( word );
+      if (word[0] == '\0')
+	adj_amnt = 0.0;
+      else
+      if (sscanf(word,"%lf",&adj_amnt)!=1)
+       { printf("ERROR: Bad float '%s', in Ajdustment column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name ); 
+         fprintf(outfile,"ERROR: Bad float '%s', in Proceeds column of f8949 Spreadsheet file '%s'.\n", word, spreadsheet_name );
+         exit(1);
+       }
+
+      if (term_flg == long_term)
+       { /*long-gain/loss*/
+         new_capgain( &long_trades, descrip, cost, date_bought, proceeds, date_sold, adj_code, adj_amnt );
+       } /*long-gain/loss*/
+      else
+       { /*short-gain/loss*/
+         new_capgain( &short_trades, descrip, cost, date_bought, proceeds, date_sold, adj_code, adj_amnt );
+       } /*short-gain/loss*/
+
+    } /*valid_line*/
+   read_line_safe( sfile, sline, 4096 );
+  }
+ fclose( sfile );
+}
+
+
 void get_gain_and_losses( char *label )
 {
  char word[4096], date_str1[512], date_str2[512], adj_code[512]; 
@@ -824,7 +998,15 @@ void get_gain_and_losses( char *label )
  struct date_rec buydate, selldate, annivdate;
  enum {none, short_term, long_term} term_flg=none;
 
- get_parameter( infile, 's', word, label );     /* Capital gains. */
+ get_parameter( infile, 'l', word, label );     /* CapGains or f8949_spreadsheet_file. */
+ if (strstr( word, "f8949_spreadsheet"))
+  {
+   read_comment_filtered_line( infile, word, 4096 );
+   if (strlen(word) > 1)
+    get_CSV_8949( word );
+   get_parameter( infile, 's', word, label );
+  }
+
  get_word(infile, word);
  while (word[0]!=';')
  { /*while_not_end*/
@@ -856,7 +1038,7 @@ void get_gain_and_losses( char *label )
 	 if (mystrcasestr( date_str1, "various-long" ) != 0)
 	  term_flg = long_term;
 	 else
-	  gen_date_rec ( word, labelcommentmsg, &buydate );
+	  gen_date_rec( word, labelcommentmsg, &buydate );
 	 break;
     case 2:	toggle++;
 	 if (sscanf(word,"%lf",&amnt2)!=1)
@@ -936,7 +1118,6 @@ void get_gain_and_losses( char *label )
    exit(1);
   }
 }
-
 
 
 /************************************************************************/
@@ -1026,7 +1207,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2022. */
  GetLine( "D5", &SchedD[5] );       /* Net short-term gain or loss from partnerships, S corps, estates, trusts from K-1. */
 
  get_parameter( infile, 's', word, "D6" );	/* Carryover short-term loss from last year.  Or, LastYear's Return Output File-name. */
- get_word(infile,word);
+ get_word(infile, word);
  if (strcmp(word,";") != 0)
   {
    if (sscanf(word,"%lf",&SchedD[6]) != 1) LastYearsOutFile = strdup(word);

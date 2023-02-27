@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.58;
-char package_date[]="February 22, 2023";
-char ots_release_package[]="20.02";
+float version=2.59;
+char package_date[]="February 27, 2023";
+char ots_release_package[]="20.03";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -99,6 +99,7 @@ int ots_column=0, ots_line=0;	/* Input file position. */
 char wildcards_bin[MaxFname]="", filename_exe[MaxFname]="", *ots_path;
 char directory_dat[MaxFname+512]=".", wildcards_dat[MaxFname]="*.txt", filename_incl[MaxFname]="";
 char directory_incl[MaxFname]="tax_form_files", wildcards_incl[MaxFname]="*_out.txt";
+char wildcards_spreadsheet[MaxFname]="*.csv *.tsv";
 char directory_fb[MaxFname]="", wildcards_fb[MaxFname]="", filename_fb[MaxFname]="";
 char *title_line="Tax File", *current_working_filename=0, *invocation_path, *include_file_name=0;
 char wildcards_out[MaxFname]="*_out.txt";
@@ -1684,6 +1685,20 @@ void open_include_file( GtkWidget *wdg, gpointer data )
 }
 
 
+void open_f8949_spreadsheet( GtkWidget *wdg, gpointer data )
+{ char *filename;
+  struct value_list *eb=(struct value_list *)data;
+  active_entry = eb->box;
+  filename = get_formbox( active_entry );
+  if (filename[0] == '?') filename[0] = '\0';  /* Erase place-holder. */
+  fb_clear_banned_files();
+  strcpy( wildcards_incl, "_out.txt" );
+  fb_extract_path_fname( filename, directory_incl, filename_incl );
+  // printf("OTS_open_include_file: dir='%s', wc='%s', fname='%s'\n", directory_incl, wildcards_fb, filename_fb );
+  Browse_Files( "Spreadsheet:", 2048, directory_incl, wildcards_spreadsheet, filename_incl, set_included_file );
+}
+
+
 void escape_special_symbols( char *phrase, int maxlen )
 { /* Replace any ampersand (&), quotes ("), or brackets (<,>), with XML escapes. */
   int j=0, k, m, n;
@@ -2030,8 +2045,16 @@ void DisplayTaxInfo()
 		   if ((strstr( entry->comment, "File-name") != 0) && (previous_entry != 0))
 		    {
 		     if (button != 0) { gtk_widget_destroy( button );  button = 0; }
-		     cbutton = make_button_wsizedcolor_text( mpanel2, comment_x0 + 40, y3 - 4, "Browse", 7.0, "#0000ff", open_include_file, previous_entry );
-		     add_tool_tip( cbutton, "Browse for tax return\noutput file to reference." );
+		     if (strstr( entry->comment, "spread-sheet") == 0)
+		      {
+		       cbutton = make_button_wsizedcolor_text( mpanel2, comment_x0 + 40, y3 - 4, "Browse", 7.0, "#0000ff", open_include_file, previous_entry );
+		       add_tool_tip( cbutton, "Browse for tax return\noutput file to reference." );
+		      }
+		     else
+		      {
+		       cbutton = make_button_wsizedcolor_text( mpanel2, comment_x0 + 40, y3 - 4, "Browse", 7.0, "#0000ff", open_f8949_spreadsheet, previous_entry );
+		       add_tool_tip( cbutton, "Browse for optional f8949 SpreadSheet\nCSV file for cap-gains+losses." );
+		      }
 		    }
 		 }
 
@@ -2656,7 +2679,7 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
 
      if (my_strcasestr( vline, "Error" ) != 0) 
       {
-       if ((errmsg == 0) && (strncasecmp( vline, "Error", 5 ) == 0))
+       if ((errmsg == 0) && ((strncasecmp( vline, "Error", 5 ) == 0) || (strncasecmp( vline, "DATA Error", 10 ) == 0)))
 	{ /* Any line starting with "Error" is considered to indicate an error-problem. */
 	 valid_results = 0;
 	 errmsg = strdup( vline );

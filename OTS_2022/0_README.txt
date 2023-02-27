@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-February 25, 2023 v20.02 - For tax-year 2022.
+February 27, 2023 v20.03 - For tax-year 2022.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,12 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v20.03 (2/27/2023) - Added feature to optionally import
+	Capital Gain/Loss data for Federal Form 8949 from a Spreadsheet
+	in Comma-Separated-Value (CSV) or Tab-Separated-Value (TSV)
+	formats.  Just name the file name after the "f8949_spreadsheet:"
+	tag in the "Schedule D: Capital Gains/Loses" section of your
+	tax input file.
     * v20.02 (2/25/2023) - Fixed California State tax-formula calculation
 	for Single-Status.  Improved prompts for 1099-R forms of
 	Pensions, Annuities, abd IRA distributions on Federal 1040 forms.

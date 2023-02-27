@@ -92,14 +92,14 @@ L29	 29	;	{ American Opportunity Credit, Form 8863, line 8 }
 L38		;	{ Estimated Tax Under-payment Penalty }
 
 { --- Schedule D: Capital Gains/Loses --- }
-
- f8949_spreadsheet:   	   { Optional CSV spread-sheet File-name for Cap-Gain/loss trades. }
-
   { When there are multiple buy-dates, specify "various-short" or "various-long", instead of a specific date. }
  {Text Editor Note: When adding a security, All values must be present. "~" is a necessary place holder for No Adjustment. }
 
-CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (Form 8949 marks A or D) }
+f8949_spreadsheet:   tax_form_files/US_1040/example_f8949_spreadsheet.csv	{ Optional CSV spread-sheet File-name for Cap-Gains trades. }
+
+CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (Form 8949 check A or D) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
+
          -800.99        6-20-21         { 40 Shares WMT }
           950.99        10-12-21
 	~		~
@@ -120,7 +120,7 @@ CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (
          6009.01        12-27-2022
 	~		~
                 ;
-CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to IRS (Form 8949 marks B/E) }
+CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to IRS (Form 8949 check B/E) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
 
 	100 	1-1-1980    { IBM }
@@ -131,7 +131,7 @@ CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to I
         1000 	12-28-21
 	~	~
                 ;
-CapGains-C/F	        { Capital Gains/Losses, 1099-B. For when Form 8949 (A,B,D,E) CANNOT be checked. (marks C/F) }
+CapGains-C/F	        { Capital Gains/Losses, 1099-B. For when Form 8949 (A,B,D,E) CANNOT be checked. (check C/F) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
         900 1-1-1980    { MSFT }
         9000 2-2-2022
