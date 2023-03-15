@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=4.00;
+float thisversion=4.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -480,10 +480,10 @@ else
 	
 		/* Schedule AI - Part II - Annualized Self-Employment Tax */
 	
-		a[29] = 35700;
-		b[29] = 59500;
-		c[29] = 95200;
-		d[29] = 142800;
+		a[29] = 36750;			/* Updated for 2022 */
+		b[29] = 61250;
+		c[29] = 98000;
+		d[29] = 147000;
 	
 		a[31] = NotLessThanZero(a[29] - a[30]);
 		b[31] = NotLessThanZero(b[29] - b[30]);	

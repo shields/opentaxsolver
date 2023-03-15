@@ -21,10 +21,10 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
+/* Aston Roberts 3-12-2023	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=20.01;
+float thisversion=20.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -34,8 +34,8 @@ float thisversion=20.01;
 double COJ[MAX_LINES], S[MAX_LINES], F[MAX_LINES];
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 
@@ -424,7 +424,7 @@ int main( int argc, char *argv[] )
  GetLine( "COJ9a",&COJ_9a );	/* Tax paid to other jurisdictions on that income, if any. */
 
  fprintf(outfile,"\n");  /* Property Tax Deduction Worksheet H (pg 30). */
- H[1] = L[39];
+ H[1] = L[40];
  showline_wrksht('H',1,H);
  if (status != MARRIED_FILING_SEPARAT)
   H[2] = smallerof( H[1], 15000.0 );

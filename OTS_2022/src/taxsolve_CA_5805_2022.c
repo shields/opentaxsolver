@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=4.00;
+float thisversion=4.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -110,11 +110,14 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
 }
 
 
-double		/* Reoccuring threshold values. */	/* Not updated for 2022. */
-	thresh_sep_single =	212288.0,
-	thresh_mfj =		424581.0,
-	thresh_HoH =		318437.0;
+double		/* Reoccuring threshold values. */	/* Updated for 2022. */
+	thresh_sep_single =	229908.0,
+	thresh_mfj =		459821.0,
+	thresh_HoH =		344867.0;
 
+double		/* Other recurring values */		/* Updated for 2022 */
+	line_11_multiplier = 0.02672055,
+	line_12_multiplier = 0.00014;
 
 double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status){
 
@@ -263,8 +266,8 @@ for(i = 0; i <= 13; i++){
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
  check_form_version( word, "Title:  Form 5805 for Tax Year 2022" );
 
-add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2022.\"" );
-fprintf(outfile, "This program is NOT ready for 2022.\n\n");
+// add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2022.\"" );
+// fprintf(outfile, "This program is NOT ready for 2022.\n\n");
 
  fprintf(outfile, "%s\n", "==================================================");
  fprintf(outfile, "%s\n", "                                                            CAUTION\nThis program fills out Form 5805 to determine WHETHER OR NOT you owe a penalty\nfor underpayment of estimated tax.  It calculates the AMOUNT of any penalty you\nmay owe for the MOST LIKELY CASE in which up to four estimated tax payments have\n been made.  You should carefully review the instructions for Form 5805 to see if the\ncalculations are correct for your particular tax situation.  DO NOT INTERPRET a\ndefault zero value for the penalty on the filled PDF to indicate that you do not owe\na penalty, especially if you have not input all required information, including the\nactual dates on which you made your payments. Scroll down to the end of this\nresults file to see if you had an underpayment for any period.  If so, you may owe\na penalty.\n\nItemized deductions are limited for high-income taxpayers.  When you are\nchecking calculations, values on line 6 of Part III may appear to be in error due to\nthese limitations.  See this results file and the last page of the output PDF for the\nlimitation calculations.  Also note that the annualization factor values on lines 4\nof the last page of the output PDF round by default to the nearest integer.  Use\nthe values in this results file for lines L6WS_4a, L6WS_4b, L6WS_4c, and L6WS_4d,\n which for most individual taxpayers will be 4.0, 2.4, 1.5, and 1.0, respectively.\n\nThis program does not calculate the phase-out of exemption credits for high-income\ntaxpayers as collection of the necessary information for each period would\nunnecessarily complicate this program for most users and the impact of exemption\nlimitations on the tax estimates would be negligible.  See instructions for line 11.");
@@ -434,11 +437,11 @@ showline( 6 );
 			exit(0);
 		}
 
-		L[11] = L[10] * 0.02121370;
+		L[11] = L[10] * line_11_multiplier;
 
 		if(Num_Days > -1){
 
-			L[12] = L[10] * Num_Days * 0.00008;
+			L[12] = L[10] * Num_Days * line_12_multiplier;
 			L[13] = L[11] - L[12];
 	
 			showline( 11 );
@@ -497,7 +500,7 @@ showline( 6 );
 	   GetLine( "SchdAI_10a_add", &a10add );
 	   GetLine( "SchdAI_10b_add", &b10add );
 	   GetLine( "SchdAI_10c_add", &c10add );
-	   GetLine( "SchdAI_10d_add", &d10add ); 
+	   GetLine( "SchdAI_10d_add", &d10add );
 
 	   GetLine( "SchdAI_11a", &a[11] );
 	   GetLine( "SchdAI_11b", &b[11] );
@@ -537,7 +540,11 @@ showline( 6 );
 	GetLine( "WSII_10a", &A[10]);
 	GetLine( "WSII_10b", &B[10]);
 	GetLine( "WSII_10c", &C[10]);
-	GetLine( "WSII_10d", &D[10]);	   
+
+	GetLine( "WSII_12a", &A[12]);
+	GetLine( "WSII_12b", &B[12]);
+	GetLine( "WSII_12c", &C[12]);
+	GetLine( "WSII_12d", &D[12]);
 
 	a[3] = a[1] * a[2];
 	b[3] = b[1] * b[2];
@@ -714,7 +721,8 @@ showline( 6 );
 		A[9] = A[6] - A[1];
 
 	A[11] = A[8] * A[10]/365 * 0.03;
-		
+	A[13] = A[8] * A[12]/365 * 0.05;
+
 	B[3] = A[9];
 	B[4] = B[2] + B[3];
 	B[5] = A[7] + A[8];
@@ -729,6 +737,7 @@ showline( 6 );
 		B[9] = B[6] - B[1];
 
 	B[11] = B[8] * B[10]/365 * 0.03;
+	B[13] = B[8] * B[12]/365 * 0.05;
 
 	C[3] = B[9];
 	C[4] = C[2] + C[3];
@@ -744,6 +753,7 @@ showline( 6 );
 		C[9] = C[6] - C[1];
 
 	C[11] = C[8] * C[10]/365 * 0.03;
+	C[13] = C[8] * C[12]/365 * 0.05;
 
 	D[3] = C[9];
 	D[4] = D[2] + D[3];
@@ -755,9 +765,9 @@ showline( 6 );
 	else
 		D[9] = D[6] - D[1];
 
-	D[11] = D[8] * D[10]/365 * 0.03;
+	D[13] = D[8] * D[12]/365 * 0.05;
 
-	A[0] = A[11] + B[11] + C[11] + D[11];	/* line 12 of WSII */
+	A[0] = A[11] + B[11] + C[11] + A[13] + B[13] + C[13] + D[13];	/* line 14 of WSII */
 
 	if(Quest2 == Yes){
 	
@@ -828,7 +838,7 @@ showline( 6 );
 			fprintf(outfile, "SchdAI_%d%s %0.2lf\n", i, "d", d[i]);
 		}
 
-		for(i = 1; i <= 11; i++){
+		for(i = 1; i <= 13; i++){
 			if((i != 3) && (i != 4) && (i != 5) && (i != 7))
 				fprintf(outfile, "WSII_%d%s %0.2lf\n", i, "a", A[i]);
 			fprintf(outfile, "WSII_%d%s %0.2lf\n", i, "b", B[i]);
@@ -836,7 +846,7 @@ showline( 6 );
 			if((i != 7) && (i != 9))
 				fprintf(outfile, "WSII_%d%s %0.2lf\n", i, "d", D[i]);
 		}
-		fprintf(outfile, "WSII_%d %0.2lf     %s\n", 12, A[0], "PENALTY");
+		fprintf(outfile, "WSII_%d %0.2lf     %s\n", 14, A[0], "PENALTY");
 	
 		if((A[8] == 0) && (B[8] == 0) && (C[8] == 0) && (D[8] == 0))
 			fprintf(outfile, "As line 8 on WSII is zero for all payment periods, you don't owe a penalty.\n");

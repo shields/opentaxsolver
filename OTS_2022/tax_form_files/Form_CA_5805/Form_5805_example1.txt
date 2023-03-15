@@ -5,7 +5,7 @@ YourName:	Thomas Paine
 YourSocSec#:	111-11-1111	
 	 {--- Filing Status ---}
 Entity	Individual	 { Filing For?  (answer: Individual, Estate/Trust) }
-Status Single	{ Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
+Status	Single	 { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er)
      Estates/Trusts MUST choose \"Single\" }
  {Are you requesting a waiver of the penalty? }
 Quest1	No	 {  (answer: Yes, No) }
@@ -140,16 +140,16 @@ SchdAI_10d_add			; { For individuals, and for estates/trusts, this program will 
  line 14b.  Estates or Trusts, see form 541 instructions for information
  about additional taxes you may need to add here. 
 }
-SchdAI_11a	212		; { Enter the total amount of exemption credits from your
+SchdAI_11a	280		; { Enter the total amount of exemption credits from your
  2022 Form 540, line 32 or Form 541, line 22.  See
  instructions.  If you filed a Form 540NR, see instructions.}
-SchdAI_11b	212		; { Enter the total amount of exemption credits from your
+SchdAI_11b	280		; { Enter the total amount of exemption credits from your
  2022 Form 540, line 32 or Form 541, line 22. See
  instructions.  If you filed a Form 540NR, see instructions.}
-SchdAI_11c	212		; { Enter the total amount of exemption credits from your
+SchdAI_11c	280		; { Enter the total amount of exemption credits from your
  2022 Form 540, line 32 or Form 541, line 22. See
  instructions.  If you filed a Form 540NR, see instructions.}
-SchdAI_11d	212		; { Enter the total amount of exemption credits from your
+SchdAI_11d	280		; { Enter the total amount of exemption credits from your
  2022 Form 540, line 32 or Form 541, line 22. See
  instructions.  If you filed a Form 540NR, see instructions.}
 SchdAI_13a	3000		; { Enter the total credit amount from your 2022 Form 540,
@@ -241,7 +241,7 @@ WSII_2b			; { Enter the estimated tax payments for the period
  1/1/21-5/31/21 that were made by 6/15/21.}
 WSII_2c			; { Enter the estimated tax payments for the period
  1/1/21-8/31/21 that were made by 9/15/21.}
-WSII_2d	25000		; { Enter the estimated tax payments for the period
+WSII_2d	20000		; { Enter the estimated tax payments for the period
  1/1/21-12/31/21 that were made by 1/15/22}
  {After you make the above entries, click "Save" and then click "Calculate
  Tex" to see if you have an underpayment for any period.  If so, you may owe
@@ -249,17 +249,26 @@ WSII_2d	25000		; { Enter the estimated tax payments for the period
  the following entires, and again click "Save" and "Calculate Tax".  Because
  calculating the penalty can be complex, carefully check the results to
  ensure that they are correct for your particular tax situation.}
-WSII_10a	30		; { Number of days from 4/15/21 to the date the amount on
- line 8 was paid or 4/15/22, whichever is earlier  (see
+WSII_10a	261		; { Number of days from 4/15/22 to the date the amount on
+ line 8 was paid or 12/31/22, whichever is earlier  (see
  instructions).}
-WSII_10b	90		; { Number of days from 4/15/21 to the date the amount on
- line 8 was paid or 4/15/22, whichever is earlier  (see
+WSII_10b	200		; { Number of days from 6/15/22 to the date the amount on
+ line 8 was paid or 12/31/22, whichever is earlier  (see
  instructions).}
-WSII_10c	60		; { Number of days from 4/15/21 to the date the amount on
- line 8 was paid or 4/15/22, whichever is earlier  (see
+WSII_10c	108		; { Number of days from 9/15/22 to the date the amount on
+ line 8 was paid or 12/31/22, whichever is earlier  (see
  instructions).}
-WSII_10d	40		; { Number of days from 4/15/21 to the date the amount on
- line 8 was paid or 4/15/22, whichever is earlier  (see
+WSII_12a	105		; { Number of days from 1/1/23 to the date the amount on
+ line 8 was paid or 4/15/23, whichever is earlier  (see
+ instructions).}
+WSII_12b	105		; { Number of days from 1/1/23 to the date the amount on
+ line 8 was paid or 4/15/23, whichever is earlier  (see
+ instructions).}
+WSII_12c	105		; { Number of days from 1/1/23 to the date the amount on
+ line 8 was paid or 4/15/23, whichever is earlier  (see
+ instructions).}
+WSII_12d	90		; { Number of days from 1/15/23 to the date the amount on
+ line 8 was paid or 4/15/23, whichever is earlier  (see
  instructions).}
  {After you have filled out all of the applicable fields above, click
  "Save" to save this form and  then click "Compute Tax" to see if you owe a

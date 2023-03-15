@@ -342,7 +342,7 @@ double form6251_AlternativeMinimumTax( int itemized )						/* Updated for 2022. 
        switch (status)
         {
            case MARRIED_FILING_JOINTLY:  case WIDOW: 
-	     amtws[19] = 833500.0;
+	     amtws[19] = 83350.0;
 	   break;
            case SINGLE:  case MARRIED_FILING_SEPARAT: 
    	     amtws[19] = 41675.0;
