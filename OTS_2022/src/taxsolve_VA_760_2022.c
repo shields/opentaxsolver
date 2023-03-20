@@ -21,7 +21,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
+/* Aston Roberts 3-20-2023	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=20.00;
+float thisversion=20.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -288,10 +288,10 @@ int main( int argc, char *argv[] )
  GetLineF( "L10", &L[10] );	/* Deductions - Std or Itemized minus income taxes */
 
  switch (status)
-  {
-   case SINGLE:  		  std_ded = 4500.0;  min2file = 11950.0;  break;
-   case MARRIED_FILING_JOINTLY:  std_ded = 9000.0;  min2file = 23900.0;  break;
-   case MARRIED_FILING_SEPARAT:  std_ded = 4500.0;  min2file = 11950.0;  break;
+  {							/* Updated for 2022. */
+   case SINGLE:  		  std_ded = 8000.0;  min2file = 11950.0;  break;
+   case MARRIED_FILING_JOINTLY:  std_ded = 16000.0;  min2file = 23900.0;  break;
+   case MARRIED_FILING_SEPARAT:  std_ded = 8000.0;  min2file = 11950.0;  break;
    default:  printf("Unexpected status.\n");
 	     fprintf(outfile,"Unexpected status.\n");
 	     exit(1);  
