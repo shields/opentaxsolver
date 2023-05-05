@@ -63,8 +63,8 @@
 /**********************************************************************/
 
 float version=3.00;
-char package_date[]="February 22, 2023";
-char ots_release_package[]="20.02";
+char package_date[]="May 1, 2023";
+char ots_release_package[]="20.05";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -268,7 +268,6 @@ void GeneralPopup( char *title, char *mesg, int to_text_win )       /* Used for 
  winwdth = 50 + maxcols * 8;
  winhght = 70 + 18 * nlines + 5;
  orig_winhght = winhght;
-
  if (winhght < 500) 
   {
    if (winwdth <= 600)
@@ -550,6 +549,7 @@ void get_line_entry( char *word, int maxn, int *linenum, FILE *infile )
 
 void DisplayTaxInfo();		/* This is a prototype statement only. */
 void warn_about_save_needed_switch();
+void quote_MS_file_name( char *fname );
 int save_needed=0;
 int compute_needed=0;
 
@@ -745,6 +745,33 @@ void add_new_box_item( GtkWidget *wdg, void *data )
 }
 
 
+
+
+
+
+void filter_reserved_characters( char *word, char *reserved, char *replacement_char )
+{
+ int j=0, k;
+ while (word[j] != '\0')
+  {
+   k = 0;
+   while ((reserved[k] != '\0') && (word[j] != reserved[k]))
+    k++;
+   if (reserved[k] != '\0')
+    { /* Replace reserved character. */
+      if (k < strlen(replacement_char))
+	word[j] = replacement_char[k];
+      else
+	word[j] = replacement_char[0];
+    }
+   j++;
+  }
+}
+
+
+
+
+
 GtkEntry *commentbox;
 
 void cancelpopup( GtkWidget *wdg, void *data )
@@ -758,6 +785,7 @@ void acceptcomment( GtkWidget *wdg, void *data )
 
  tmppt = (struct value_list *)data;
  comment = get_formbox( commentbox );
+ filter_reserved_characters( comment, "{}", "()" );
  // printf("Prior comment was '%s', new comment is '%s'\n", tmppt->comment, comment );
  if (tmppt->comment != 0) 
   {
@@ -867,14 +895,22 @@ void switch_form( GtkWidget *wdg, void *data )
    warn_about_save_needed_switch();
    return;
   }
- cmd = (char *)malloc( strlen(start_cmd) + 150 );
+ cmd = (char *)malloc( strlen(start_cmd) + 250 );
  #if (PLATFORM_KIND==Posix_Platform)
    strcpy( cmd, start_cmd );
    if (verbose) strcat( cmd, " -v ");
    strcat( cmd, " &" );
- #else
+ #else	/* For MS-win platforms. */
+  {
+   char *tmpfname;
    strcpy( cmd, "start " );
-   strcat( cmd, start_cmd  );
+   tmpfname = (char *)malloc( strlen( start_cmd ) + 256 );
+   strcpy( tmpfname, start_cmd );
+   if ((strstr( tmpfname, "\"" ) == 0) && (strstr( tmpfname, " " ) != 0))	/* If has spaces but no quotes, */
+    quote_MS_file_name( tmpfname );						/* Then quote the spaces. */
+   strcat( cmd, tmpfname );
+   free( tmpfname );
+  }
  #endif
   printf("Issuing: '%s'\n", cmd );
   system( cmd );
@@ -2642,6 +2678,46 @@ void quote_file_name( char *fname )	/* Place quotes around a file name.  With sp
 }
 
 
+void quote_MS_file_name( char *fname )	/* Place quotes around a file name.  With special care on Microsoft systems. */
+{	/* Enables proper operation of Edge Viewer when files or pathnames have spaces in them. */
+ #if (PLATFORM_KIND != Posix_Platform)
+   char *tmpstr;
+   int j=0, k=0;
+   if ((fname[0] == '\0') || (strstr( fname, "\"" ) != 0))
+    return;
+   tmpstr = (char *)malloc( strlen(fname) + 512 );
+   if (fname[1] == ':')
+    { /* Leading quote must be inserted after drive letter for Microsoft OS's. */
+     int j;
+     tmpstr[0] = fname[0];
+     tmpstr[1] = fname[1];
+     tmpstr[2] = '"';
+     j = 2;
+     do { tmpstr[j+1] = fname[j];  j++; } while (tmpstr[j] != '\0');
+     strcpy( fname, tmpstr );
+     strcat( fname, "\"" );
+    }
+   else
+    {
+     while (fname[j] != '\0')
+      {
+       if (fname[j] == ' ')
+	{
+	 tmpstr[k++] = '"';
+	 tmpstr[k++] = fname[j];
+	 tmpstr[k++] = '"';
+	}
+       else
+	tmpstr[k++] = fname[j];
+       j++;
+      }
+     tmpstr[k] = '\0';
+     strcpy( fname, tmpstr );
+    }
+   free(tmpstr);
+ #endif
+}
+
 
 void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
 {
@@ -2958,6 +3034,7 @@ void call_pdfviewer( char *pdfname )
   else
    { /* Default PDF-Viewer. */
     strcat( cmd, " ");  
+    quote_MS_file_name( tmppdfname );
     strcat( cmd, tmppdfname );
    }
  #endif

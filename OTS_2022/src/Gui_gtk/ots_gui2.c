@@ -2,7 +2,7 @@
 /* OTS_GUI.c - OpenTaxSolver Graphical User Interface.	*/
 /* Based on GimpToolKit (Gtk) widgets.			*/
 /*							*/
-/* This version is based on Gtk widgets.		*/
+/* This version is based on Gtk-2 widgets.		*/
 /*							*/
 /* The OTS_GUI is designed to read-in standard OTS data	*/
 /* files, and present the tax information on your 	*/
@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.59;
-char package_date[]="March 14, 2023";
-char ots_release_package[]="20.03";
+float version=2.61;
+char package_date[]="May 1, 2023";
+char ots_release_package[]="20.05";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -221,7 +221,7 @@ void GeneralWarning( char *mesg )       /* Used for one-line warning messages. *
  GtkWidget *winframe;
  printf("%s\n", mesg);
  winwdth = 90 + strlen( mesg ) * 8;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  make_label( winframe, xpos, ypos, mesg );
  make_button( winframe, winwdth/2 - 30, winhght - 40, "  Ok  ", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
@@ -253,22 +253,22 @@ void GeneralPopup( char *title, char *mesg, int to_text_win )       /* Used for 
  if (winhght < 500) 
   {
    if (winwdth <= 600)
-    winframe = new_window( winwdth, winhght, title, &warnwin );
+    winframe = make_window( winwdth, winhght, title, &warnwin );
    else
     {
      winwdth = 600;
-     winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 0, dismiss_general_warning_ret0 );
+     winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 0, dismiss_general_warning_ret0 );
     }
   }
  else
   {
    winhght = 500;
    if (winwdth <= 600)
-    winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 0, 1, dismiss_general_warning_ret0 );
+    winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 0, 1, dismiss_general_warning_ret0 );
    else
     {
      winwdth = 600;
-     winframe = new_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 1, dismiss_general_warning_ret0 );
+     winframe = make_scrolled_window_wkill( winwdth, winhght, title, &warnwin, 1, 1, dismiss_general_warning_ret0 );
     }
   }
  make_label( winframe, xpos, ypos, mesg );
@@ -531,6 +531,7 @@ void get_line_entry( char *word, int maxn, int *linenum, FILE *infile )
 
 void DisplayTaxInfo();		/* This is a prototype statement only. */
 void warn_about_save_needed_switch();
+void quote_MS_file_name( char *fname );
 int save_needed=0;
 int compute_needed=0;
 
@@ -702,6 +703,33 @@ void add_new_box_item( GtkWidget *wdg, void *data )
 }
 
 
+
+
+
+
+void filter_reserved_characters( char *word, char *reserved, char *replacement_char )
+{
+ int j=0, k;
+ while (word[j] != '\0')
+  {
+   k = 0;
+   while ((reserved[k] != '\0') && (word[j] != reserved[k]))
+    k++;
+   if (reserved[k] != '\0')
+    { /* Replace reserved character. */
+      if (k < strlen(replacement_char))
+	word[j] = replacement_char[k];
+      else
+	word[j] = replacement_char[0];
+    }
+   j++;
+  }
+}
+
+
+
+
+
 GtkEntry *commentbox;
 
 void cancelpopup( GtkWidget *wdg, void *data )
@@ -715,6 +743,7 @@ void acceptcomment( GtkWidget *wdg, void *data )
 
  tmppt = (struct value_list *)data;
  comment = get_formbox( commentbox );
+ filter_reserved_characters( comment, "{}", "()" );
  // printf("Prior comment was '%s', new comment is '%s'\n", tmppt->comment, comment );
  if (tmppt->comment != 0) 
   {
@@ -736,9 +765,9 @@ void edit_line_comment( GtkWidget *wdg, void *data )	/* Edit_comment. */
 
  tmppt = (struct value_list *)data;
  if (popupwin) gtk_widget_destroy( popupwin );
- panel = new_window( winwidth, winht, "Edit Comment", &popupwin );
+ panel = make_window( winwidth, winht, "Edit Comment", &popupwin );
  make_label( panel, 2, 2, "Edit Line Comment:" );
- commentbox = new_formbox_bypix( panel, 10, 25, winwidth - 40, tmppt->comment, 500, acceptcomment, tmppt );
+ commentbox = make_formbox_bypix( panel, 10, 25, winwidth - 40, tmppt->comment, 500, acceptcomment, tmppt );
  make_button( panel, 20, winht - 30, " Ok ", acceptcomment, tmppt );
  make_button( panel, winwidth - 60, winht - 30, "Cancel", cancelpopup, 0 );
  gtk_widget_show_all( popupwin );
@@ -789,7 +818,7 @@ void verify_capgain_reset(GtkWidget *wdg, void *data)  /* Code follows edit_line
 
  tmppt = (struct value_list *)data; 
  if (popupwin) gtk_widget_destroy( popupwin );
- panel = new_window( winwidth, winht, "Clear Gain/Loss values ?", &popupwin );
+ panel = make_window( winwidth, winht, "Clear Gain/Loss values ?", &popupwin );
  make_label( panel, 5, 1, "Clear gain/loss values ?" );
  make_button( panel, 20, winht - 35, " Ok ", accept_capgain_reset, tmppt );
  make_button( panel, winwidth - 60, winht - 35, "Cancel", cancelpopup, 0 );
@@ -817,21 +846,26 @@ void verify_capgain_reset(GtkWidget *wdg, void *data)  /* Code follows edit_line
 
 
 void switch_form( GtkWidget *wdg, void *data )
-{ char *cmd;
+{ char *cmd, *tmpfname;
  Update_box_info();
  if (save_needed)
   {
    warn_about_save_needed_switch();
    return;
   }
- cmd = (char *)malloc( strlen(start_cmd) + 150 );
+ cmd = (char *)malloc( strlen(start_cmd) + 250 );
  #if (PLATFORM_KIND==Posix_Platform)
    strcpy( cmd, start_cmd );
    if (verbose) strcat( cmd, " -v ");
    strcat( cmd, " &" );
- #else
+ #else	/* For MS-win platforms. */
    strcpy( cmd, "start " );
-   strcat( cmd, start_cmd  );
+   tmpfname = (char *)malloc( strlen( start_cmd ) + 256 );
+   strcpy( tmpfname, start_cmd );
+   if ((strstr( tmpfname, "\"" ) == 0) && (strstr( tmpfname, " " ) != 0))	/* If spaces but no quotes, */
+    quote_MS_file_name( tmpfname );						/* Then quote the spaces. */
+   strcat( cmd, tmpfname );
+   free( tmpfname );
  #endif
   printf("Issuing: '%s'\n", cmd );
   system( cmd );
@@ -850,7 +884,7 @@ void warn_about_save_needed_switch()
  int xpos=20, ypos=20, winwdth, winhght=100;
  GtkWidget *winframe, *label;
  winwdth = 300;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  label = make_sized_label( winframe, xpos, ypos, "<b>Change(s) not saved !!</b>", 12 );
  set_widget_color( label, "#ff0000" );
  make_button( winframe, 10, winhght - 40, "Switch anyway, without saving", switch_anyway, &warnwin );
@@ -1159,7 +1193,7 @@ int whitespace_invariant_strstr( char *haystack, char *needle )	/* Return 1 if m
 int check_form_version( char *title_as_read_in, char *expected_title )
 { /* Check that Form input file matched intended Program.  Return 1 if good.  Or 0 if not-match. */
  char msg[4096];
-printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
+ printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
  if (whitespace_invariant_strstr( title_as_read_in, expected_title ) == 0)
   {
    // GeneralWarning( "Warning: Looks like wrong Form-file for selected tax-progam. ??" );
@@ -1178,7 +1212,7 @@ printf(" Comparing '%s' to '%s'\n", title_as_read_in, expected_title );
 
 void check_form_type( char *title_line )
 {
-printf("CHECKING: '%s'\n", title_line );
+ printf("CHECKING: '%s'\n", title_line );
  switch (selected_form)
   {
    case form_US_1040: check_form_version( title_line, "Title:  US Federal 1040 Tax Form" );
@@ -1430,7 +1464,7 @@ void options_pdf_diaglog( GtkWidget *wdg, void *data )
 {
  GtkWidget *panel;
  int wd=400, ht=170, xpos=10, ypos=30;
- panel = new_window( wd, ht, "Options Menu", &options_window );
+ panel = make_window( wd, ht, "Options Menu", &options_window );
  make_sized_label( panel, 5, 1, "Options Menu:", 12 );
  winopentime = Report_Time();
  allforms_button = make_toggle_button( panel, xpos, ypos, "Force production of All PDF Form Pages", allforms_toggle, set_pdf_option, "allforms" );
@@ -1857,7 +1891,7 @@ void DisplayTaxInfo()
         {
          case VKIND_FLOAT:	/* This kind is presently not used at all. (or anymore?) */
 		sprintf(messg, "%12.2f", entry->value ); 
-		entry->box = new_formbox( mpanel2, box_x0, y1, 12, messg, 500, 0, 0 );
+		entry->box = make_formbox( mpanel2, box_x0, y1, 12, messg, 500, 0, 0 );
 		lastbox = entry->box;
 		gtk_widget_size_request( (GtkWidget *)(entry->box), &req );
 		box_width = req.width;
@@ -1879,19 +1913,19 @@ void DisplayTaxInfo()
 
 		if (entry->formtype == 0)
 		 { /*normal*/
-		  entry->box = new_formbox( mpanel2, box_x0, y1, 12, entry->text, 500, 0, 0 );
+		  entry->box = make_formbox( mpanel2, box_x0, y1, 12, entry->text, 500, 0, 0 );
 		  if (debug) printf("\t\tPlaced type0 at (%d, %d) 12-wide\n", box_x0, y1 );
 		 }
 		else
 		 {
 		  if (entry->formtype == ID_INFO)
 		   {
-		    entry->box = new_formbox( mpanel2, box_x0, y1, 24, entry->text, 500, 0, 0 );
+		    entry->box = make_formbox( mpanel2, box_x0, y1, 24, entry->text, 500, 0, 0 );
 		    if (debug) printf("\t\tPlaced type2 at (%d, %d) 24-wide\n", box_x0 + 20, y1 );
 		   }
 		  else
 		   { /*Literal_Info*/
-		    entry->box = new_formbox( mpanel2, box_x0, y1, 10, entry->text, 500, 0, 0 );
+		    entry->box = make_formbox( mpanel2, box_x0, y1, 10, entry->text, 500, 0, 0 );
 		    if (debug) printf("\t\tPlaced type1 at (%d, %d) 10-wide\n", box_x0 + 20, y1 );
 		   }
 		  noplus = 1;
@@ -2577,6 +2611,48 @@ void quote_file_name( char *fname )	/* Place quotes around a file name.  With sp
 
 
 
+void quote_MS_file_name( char *fname )	/* Place quotes around a file name.  With special care on Microsoft systems. */
+{	/* Enables proper operation of Edge Viewer when files or pathnames have spaces in them. */
+ char *tmpstr;
+ int j=0, k=0;
+ if ((fname[0] == '\0') || (strstr( fname, "\"" ) != 0))
+  return;
+ #if (PLATFORM_KIND != Posix_Platform)
+   tmpstr = (char *)malloc( strlen(fname) + 512 );
+   if (fname[1] == ':')
+    { /* Leading quote must be inserted after drive letter for Microsoft OS's. */
+     int j;
+     tmpstr[0] = fname[0];
+     tmpstr[1] = fname[1];
+     tmpstr[2] = '"';
+     j = 2;
+     do { tmpstr[j+1] = fname[j];  j++; } while (tmpstr[j] != '\0');
+     strcpy( fname, tmpstr );
+     strcat( fname, "\"" );
+    }
+   else
+    {
+     while (fname[j] != '\0')
+      {
+       if (fname[j] == ' ')
+	{
+	 tmpstr[k++] = '"';
+	 tmpstr[k++] = fname[j];
+	 tmpstr[k++] = '"';
+	}
+       else
+	tmpstr[k++] = fname[j];
+       j++;
+      }
+     tmpstr[k] = '\0';
+     strcpy( fname, tmpstr );
+    }
+   free(tmpstr);
+ #endif
+}
+
+
+
 void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
 {
  char cmd[MaxFname+512], outfname[MaxFname];
@@ -2646,7 +2722,7 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
  /* Make a popup window telling where the results are, and showing them. */
  predict_output_filename( current_working_filename, outfname );
  wd = 620;  ht = 550;
- panel = new_window( wd, ht, "Results", &resultswindow );
+ panel = make_window( wd, ht, "Results", &resultswindow );
  make_sized_label( panel, 1, 1, "Results written to file:", 12 );
  label = make_sized_label( panel, 30, 25, outfname, 8 );
  set_widget_color( label, "#0000ff" );
@@ -2658,7 +2734,7 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
  Sleep_seconds( 0.25 );
  UpdateCheck();
  Sleep_seconds( 0.25 );
- mylist = new_selection_list( panel, 5, 50, wd - 10, ht - 50 - 50, "Results Preview:", 0, 0, 0 );
+ mylist = make_selection_list( panel, 5, 50, wd - 10, ht - 50 - 50, "Results Preview:", 0, 0, 0 );
  viewfile = fopen( outfname, "rb" );
  if (viewfile == 0)
   {
@@ -2819,7 +2895,7 @@ void update_status_label( char *msg )
 
 void create_status_popup_window( int width, int height )
 {
- status_panel = new_scrolled_window_wkill( width, height, "Filling-out PDF Form(s) ...", &status_win, 1, 0, killed_status_win );
+ status_panel = make_scrolled_window_wkill( width, height, "Filling-out PDF Form(s) ...", &status_win, 1, 0, killed_status_win );
  status_label = make_label( status_panel, 1, 1, "Filling-out PDF Form(s):" );
  gtk_window_set_keep_above( (GtkWindow *)status_win, 1 );
  statusw.y_val = 28;
@@ -2892,6 +2968,7 @@ void call_pdfviewer( char *pdfname )
   else
    { /* Default PDF-Viewer. */
     strcat( cmd, " ");  
+    quote_MS_file_name( tmppdfname );
     strcat( cmd, tmppdfname );
    }
  #endif
@@ -3116,11 +3193,11 @@ void set_pdfviewer( GtkWidget *wdg, void *data )
  GtkWidget *panel;
 
  window_position_policy = GTK_WIN_POS_NONE;
- panel = new_window( wd, ht, "Select Your PDF-Viewer", &spdfpopup );
+ panel = make_window( wd, ht, "Select Your PDF-Viewer", &spdfpopup );
  place_window_center();
  make_sized_label( panel, 15, 15, "Pick and Set PDF Viewer to Use:", 12 );
  { GtkTreeStore *spdfvlist;  GtkTreeIter iter;
-   spdfvlist = new_selection_list( panel, 40, 40, 333, 119, "Some popular viewers ...", catch_pdfviewer_selection, 0, 0 );
+   spdfvlist = make_selection_list( panel, 40, 40, 333, 119, "Some popular viewers ...", catch_pdfviewer_selection, 0, 0 );
    append_selection_list( spdfvlist, &iter, "" );
    #if (PLATFORM_KIND==Posix_Platform)
     /* --- For Apple's and Linux --- */
@@ -3158,9 +3235,9 @@ void set_pdfviewer( GtkWidget *wdg, void *data )
  if (pdfviewer == 0)
    get_pdf_viewer();
  if (pdfviewer == 0)
-  spdffrmbx = new_formbox( panel, 35, 200, 42, "", 500, accept_pdfviewer, 0 );
+  spdffrmbx = make_formbox( panel, 35, 200, 42, "", 500, accept_pdfviewer, 0 );
  else
-  spdffrmbx = new_formbox( panel, 35, 200, 42, pdfviewer, 500, accept_pdfviewer, 0 );
+  spdffrmbx = make_formbox( panel, 35, 200, 42, pdfviewer, 500, accept_pdfviewer, 0 );
 
  make_button( panel, 30, 260, "      OK      ", accept_pdfviewer, 0 );
  make_button( panel, 180, 260, "Save", saveconfig, 0 );
@@ -3488,7 +3565,7 @@ void printout( GtkWidget *wdg, void *data )
   }
  dismiss_status_win( 0, 0 );
  print_mode = 0;
- panel = new_window( wd, ht, "Print Return Data", &printpopup );
+ panel = make_window( wd, ht, "Print Return Data", &printpopup );
  make_sized_label( panel, 1, 1, "Print Return Data:", 12 );
  rad = make_radio_button( panel, 0, x1, y1, "Print Input Data", togprntcmd_in, 0 );
 
@@ -3518,7 +3595,7 @@ void printout( GtkWidget *wdg, void *data )
  else
   strcat( printer_command, current_working_filename );
  x1 = 20;
- printerformbox = new_formbox_bypix( panel, x1, y1, wd - x1 - 10, printer_command, MaxFname, acceptprinter_command, 0 ); 
+ printerformbox = make_formbox_bypix( panel, x1, y1, wd - x1 - 10, printer_command, MaxFname, acceptprinter_command, 0 ); 
  printht = ht - 35;
  print_button = make_button( panel, 50, printht, "  Print It  ", acceptprinter_command, 0 );
  make_button( panel, wd - 95, printht, "Cancel", cancelprintpopup, 0 );
@@ -3632,7 +3709,7 @@ void warn_about_save_needed()
  int xpos=20, ypos=20, winwdth, winhght=100;
  GtkWidget *winframe, *label;
  winwdth = 300;
- winframe = new_window( winwdth, winhght, "Warning Message", &warnwin );
+ winframe = make_window( winwdth, winhght, "Warning Message", &warnwin );
  label = make_sized_label( winframe, xpos, ypos, "<b>Change(s) not saved !!</b>", 12 );
  set_widget_color( label, "#ff0000" );
  make_button( winframe, 10, winhght - 40, "Exit anyway, without saving", quit, &warnwin );

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 14, 2023 v20.03 - For tax-year 2022.
+May 1, 2023 v20.05 - For tax-year 2022.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,15 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v20.05 (5/1/2023) - For Fed-1040 Cap-Gains, added option to specify
+	"inheried" instead of buy-date or "various-long".
+	In the GUI, for MS-Windows, improved ability to display PDF files
+	and to switch forms, when file names or paths have unusual
+	characters in their names, such as spaces, etc..
+	If Fed-1040 program reads a Cap-Gain spreadsheet, even without
+	any normal Cap-gains entries, it now forces Schedule-D printing. 
+    * v20.04 (3/25/2023) - Fixed VA (Virginia) State tax program's Standard
+	Deduction to the updated value for the 2022 tax year.
     * v20.03 (3/14/2023) - Added feature to optionally import
 	Capital Gain/Loss data for Federal Form 8949 from a Spreadsheet
 	in Comma-Separated-Value (CSV) or Tab-Separated-Value (TSV)

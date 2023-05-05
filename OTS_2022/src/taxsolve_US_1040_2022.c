@@ -26,10 +26,10 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2022	aston_roberts@yahoo.com			*/
+/* Aston Roberts 1-2-2023	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=20.01;
+float thisversion=20.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -43,8 +43,8 @@ float thisversion=20.01;
 #define MAXADJERRCNT 25     /* Max number of adj_code errors to print to terminal */ 
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 #define Yes 1
@@ -508,6 +508,7 @@ void ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
  for (linenum=0; linenum<MAX_LINES; linenum++) 
   { fed_data->fedline[linenum] = 0.0;  fed_data->schedD[linenum] = 0.0; }
  convert_slashes( fedlogfile );
+ printf("Opening LastYearsFedReturn: '%s'\n", fedlogfile );
  infile = fopen(fedlogfile, "r");
  if (infile==0)
   {
@@ -826,6 +827,8 @@ void get_CSV_8949( char *spreadsheet_name )
  int err=0;
  FILE *sfile;	/* Spreadsheet-File. */
 
+ remove_certain_chars( spreadsheet_name, "\"" );	/* Allow spaces in file-paths. */
+ printf("Opening Form-849 Spreadsheet: '%s'\n", spreadsheet_name );
  sfile = fopen( spreadsheet_name, "r" );
  if (sfile == 0)
   {
@@ -833,6 +836,7 @@ void get_CSV_8949( char *spreadsheet_name )
    fprintf(outfile,"ERROR: Could not open f8949 spreadsheet file '%s' for reading.\n", spreadsheet_name );
    return;
   }
+ Do_SchedD = Yes;
 
  /* Expect f8949 spreadsheet file name extension to be ".csv", ".tsv", or ".txt". */
  strcpy( word, spreadsheet_name );
@@ -900,7 +904,7 @@ void get_CSV_8949( char *spreadsheet_name )
       if (mystrcasestr( date_bought, "various-short" ) != 0)
        term_flg = short_term;
       else
-      if (mystrcasestr( date_bought, "various-long" ) != 0)
+      if ((mystrcasestr( date_bought, "various-long" ) != 0) || (mystrcasestr( date_bought, "inherited" ) != 0))
        term_flg = long_term;
       else
        gen_date_rec( date_bought, descrip, &buydate );
@@ -1035,7 +1039,7 @@ void get_gain_and_losses( char *label )
 	 if (mystrcasestr( date_str1, "various-short" ) != 0)
 	  term_flg = short_term;
 	 else
-	 if (mystrcasestr( date_str1, "various-long" ) != 0)
+	 if ((mystrcasestr( date_str1, "various-long" ) != 0) || (mystrcasestr( date_str1, "inherited" ) != 0))
 	  term_flg = long_term;
 	 else
 	  gen_date_rec( word, labelcommentmsg, &buydate );

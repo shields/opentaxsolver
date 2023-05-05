@@ -37,10 +37,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define MaxPages 100
+#define MaxPages 400
 #define MAXLINE 2048
 
-float version=1.11;
+float version=1.12;
 int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
@@ -525,6 +525,11 @@ void new_metadata_item( int pg, char *label, int xpos, int ypos, int FontSz, int
 {
  struct metadata_rec *newitem;
  newitem = (struct metadata_rec *)calloc( 1, sizeof(struct metadata_rec) );
+ if (pg >= MaxPages)
+  {
+   printf("Error: Page %d is greater than maximum pages (%d).\n", pg + 1, MaxPages );
+   return;
+  }
  newitem->nxt = metadata[pg]->fields;
  metadata[pg]->fields = newitem;
  newitem->label = strdup( label );
