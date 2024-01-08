@@ -1,0 +1,41 @@
+#
+# Make file for the newer Gtk-3 version of OTS GUI.
+# To compile:    make -f make_gtk3
+#
+# Produces:   bin/ots_gui3
+#
+
+#====================
+#====== Macros ======
+#====================
+
+#====== OpenTaxSolver GUI programs; in ../../bin/ ======
+OTS_GUI := \
+	ots_gui3 \
+	notify_popup3
+
+# List of OTS GUI programs in ../../bin/
+EXE_OTS_GUI := $(patsubst %,../../bin/%, $(OTS_GUI))
+
+#===================
+#====== Rules ======
+#===================
+
+all: $(EXE_OTS_GUI)
+
+# Pattern rule for GUI programs in ../../bin/
+# includes dependency on any (all) gtk modules
+$(EXE_OTS_GUI): ../../bin/%: %.c    gtk_utils3.c gtk_utils3.h  gtk_file_browser3.c
+	gcc -O -Wall -fmax-errors=1 `pkg-config --cflags gtk+-3.0` $< `pkg-config --libs gtk+-3.0`  -o $@
+
+clean:
+	rm -f $(EXE_OTS_GUI)
+
+
+
+# Notes:
+#  On some versions of Linux, it may be necessary to execute the following command
+#  before compiling this make-file, so that pkg-config finds the gtk3+ libs.
+#      export PKG_CONFIG_PATH=/usr/lib/pkgconfig
+#  Also, be sure to install "gtk3-devel".
+
