@@ -21,7 +21,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2023	aston_roberts@yahoo.com			*/
+/* Aston Roberts 1-2-2024	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -37,23 +37,21 @@ double thisversion=21.00;
 #define HEAD_OF_HOUSEHOLD       1
 
 double TaxRateFunction( double x, int status )
-{							/* Not updated for 2023. */
- if (x <= 26050.0) return    0.0; else
- if (x <  46100.0) return  360.69 + (x-26050.0)  * 0.02765; else
- if (x <  92150.0) return  915.07 + (x-46100.0)  * 0.03226; else
- if (x < 115300.0) return 2400.64 + (x-92150.0)  * 0.03688; else
- 		   return 3254.41 + (x-115300.0) * 0.03990;
+{							/* Updated for 2023. */
+ if (x <=  26050.0) return    0.0; else
+ if (x <= 100000.0) return  360.69 + (x-26050.0)  * 0.02750; else
+ if (x <= 115300.0) return 2394.32 + (x-100000.0) * 0.03688; else
+ 		    return 2958.58 + (x-115300.0) * 0.03750;
 }
 
 
 void Report_bracket_info( double income, double tx, int status )
-{							/* Not updated for 2023. */
+{							/* Updated for 2023. */
  double rate;
  if (income <= 26050.0) rate = 0.0; else
- if (income <  46100.0) rate = 0.02765; else
- if (income <  92150.0) rate = 0.03226; else
+ if (income < 100000.0) rate = 0.02750; else
  if (income < 115300.0) rate = 0.03688;
- else 		   	rate = 0.03990;
+ else 		   	rate = 0.03750;
  printf(" You are in the %2.1f%% marginal tax bracket,\n and you are paying an effective %2.1f%% tax on your total income.\n",
 	  100.0 * rate, 100.0 * tx / income );
  fprintf(outfile," You are in the %2.1f%% marginal tax bracket,\n and you are paying an effective %2.1f%% tax on your total income.\n",
@@ -97,15 +95,6 @@ int main( int argc, char *argv[] )
 
  /* Intercept any command-line arguments. */
  printf("OH IT1040 2023 - v%3.1f\n", thisversion);
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
-
  mm = 1;  k=1;
  while (mm < argc)
  {
@@ -288,7 +277,7 @@ int main( int argc, char *argv[] )
  L2b = SchedA[39];
  L[3] = L[1] + L2a - L2b;
 
- if (L[3] <= 40000.0)			/* Not updated for 2023. */
+ if (L[3] <= 40000.0)			/* Updated for 2023. */
   exemption_amnt = 2400.0;
  else
  if (L[3] <= 80000.0)

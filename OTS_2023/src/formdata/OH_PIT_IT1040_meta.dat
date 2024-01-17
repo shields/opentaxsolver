@@ -88,25 +88,26 @@ CoordReference:  40, 750  61, 64
  SchedA1	696 211  9 13.8
  SchedA2     	696 250  9 13.8
  SchedA3     	696 286  9 13.8
- SchedA4     	696 323  9 13.8
+ SchedA4     	696 322  9 13.8
  SchedA5     	696 358  9 13.8
  SchedA6	696 395  9 13.8
- SchedA7	696 451  9 13.8
+ SchedA7	696 436  9 13.8
  SchedA8     	696 488  9 13.8
  SchedA9     	696 523  9 13.8
  SchedA10	696 561  9 13.8
- SchedA11	696 636  9 13.8
+ SchedA11	696 598  9 13.8
  SchedA12    	696 671  9 13.8
  SchedA13    	696 708  9 13.8
  SchedA14	696 746	 9 13.8
  SchedA15	696 782	 9 13.8
- SchedA16	696 818  9 13.8
+ SchedA16	696 819  9 13.8
  SchedA17	696 855	 9 13.8
  SchedA18	696 892  9 13.8
  SchedA19    	696 929  9 13.8
- SchedA20    	696 985  9 13.8
- SchedA21    	696 1021  9 13.8
- SchedA22    	696 1058  9 13.8
+ SchedA20    	696 966  9 13.8
+ SchedA21    	696 1002  9 13.8
+ SchedA22    	696 1038  9 13.8
+ SchedA23    	696 1093  9 13.8
 
 
 Page 4
@@ -115,23 +116,33 @@ CoordReference:  40, 750  61, 64
                 550, 50  841, 1134    110-dpi
 
   YourSocSec#:	379 126 9 10.9
-  SchedA23	703 138	9 13.2
-  SchedA24	703 174	9 13.2
-  SchedA25    	703 211  9 13.2
-  SchedA26    	703 266  9 13.2
-  SchedA27    	703 303  9 13.2
-  SchedA28	703 340  9 13.2
-  SchedA29	703 376  9 13.2
-  SchedA30	703 413  9 13.2
-  SchedA31	703 469  9 13.2
-  SchedA32    	703 504  9 13.2
-  SchedA33    	703 546  9 13.2
-  SchedA34    	703 597  9 13.2
-  SchedA35	703 633  9 13.2
-  SchedA36	703 670  9 13.2
-  SchedA37	703 707  9 13.2
-  SchedA38	703 744  9 13.2
-  SchedA39	703 782  9 13.2
+  SchedA24	703 158	9 13.2
+  SchedA25    	703 195  9 13.2
+  SchedA26    	703 230  9 13.2
+  SchedA27    	703 266  9 13.2
+  SchedA28    	703 303  9 13.2
+
+  SchedA29	703 358  9 13.2
+  SchedA30	703 394  9 13.2
+  SchedA31	703 430  9 13.2
+
+  SchedA32	703 469  9 13.2
+  SchedA33    	703 505  9 13.2
+
+  SchedA34    	703 560  9 13.2
+
+  SchedA35    	703 597  9 13.2
+  SchedA36	703 638  9 13.2
+  SchedA37	703 671  9 13.2
+  SchedA38	703 708  9 13.2
+
+  SchedA39	703 763  9 13.2
+  SchedA40	703 800  9 13.2
+
+  SchedA41	703 835  9 13.2
+  SchedA42	703 874  9 13.2
+  SchedA43	703 909  9 13.2
+  SchedA44	703 946  9 13.2
 
 Page 5
 
@@ -143,27 +154,26 @@ CoordReference:  40, 750  61, 64
  Credits2	703 250  9 13.2
  Credits3	703 285  9 13.2
  Credits4	703 322  9 13.2
- Credits5	703 356  9 13.2
- Credits6	703 400  9 13.2
+ Credits5	703 358  9 13.2
+ Credits6	703 399  9 13.2
  Credits7	703 433  9 13.2
- Credits8	703 468  9 13.2
- Credits9	703 506  9 13.2
+ Credits8	703 470  9 13.2
+ Credits9	703 507  9 13.2
  Credits10	703 543  9 13.2
  Credits11	703 578  9 13.2
  JFC		312 618  2 13.2
  Credits12	703 616  9 13.2
  Credits13	703 651  9 13.2
- Credits14	703 686  9 13.2
- Credits15	703 722  9 13.2
+ Credits14	703 689  9 13.2
+ Credits15	703 725  9 13.2
  Credits16	703 762  9 13.2
- Credits17	703 798  9 13.2
- Credits18	703 834  9 13.2
- Credits19	703 870  9 13.2
- Credits20	703 909  9 13.2
+ Credits17	703 799  9 13.2
+ Credits18	703 835  9 13.2
+ Credits19	703 873  9 13.2
+ Credits20	703 910  9 13.2
  Credits21	703 945  9 13.2
  Credits22	703 983  9 13.2
- Credits23	703 1020 9 13.2
- Credits24	703 1055 9 13.2
+ Credits23	703 1021 9 13.2
 
 
 Page 6
@@ -173,27 +183,32 @@ CoordReference:  40, 750  61, 64
 
  YourSocSec#:   381 109 9 10.9
 
- Credits25	703 138  9 13.2
- Credits26	703 177 9 13.2
- Credits27      703 214  9 13.2
- Credits28      703 250  9 13.2
- Credits29      703 288  9 13.2
- Credits30      703 322  9 13.2
- DateBeganResidence: 205 376 0 10.3
- DateEndResidence:   372 376 0 10.5
- OtherState: 	     668 376 0 13.2
- Credits31      462 430  9 13.2
- Credits32      462 468  9 13.2
- Credits32a	538 504  0 11
- Credits33      703 544  9 13.2
- Credits34      703 596  9 13.2
- Credits35      703 634  9 13.2
- Credits36      703 712  9 13.2
- Credits37    	703 744  9 13.2
- Credits38    	703 782  9 13.2
- Credits39    	703 819  9 13.2
- Credits40    	703 856  9 13.2
- Credits41    	703 890  9 13.2
+ Credits24	703 138  9 13.2
+ Credits25	703 177 9 13.2
+ Credits26      703 214  9 13.2
+ Credits27      703 250  9 13.2
+ Credits28      703 287  9 13.2
+ Credits29      703 323  9 13.2
+
+! DateBeganResidence: 205 376 0 10.3
+! DateEndResidence:   372 376 0 10.5
+! OtherState: 	     668 376 0 13.2
+
+ Credits30      703 360  9 13.2
+ Credits31      703 396  9 13.2
+ Credits32      703 432  9 13.2
+ Credits33      703 468  9 13.2
+ Credits34	703 504  9 13.2
+ Credits35      703 544  9 13.2
+ Credits36      703 597  9 13.2
+ Credits37      703 635  9 13.2
+ Credits38      703 670  9 13.2
+ Credits39    	703 744  9 13.2
+ Credits40    	703 782  9 13.2
+ Credits41    	703 818  9 13.2
+ Credits42    	703 853  9 13.2
+ Credits43    	703 890  9 13.2
+ Credits44	703 928  9 13.2
 
 
 END_OF_INPUT

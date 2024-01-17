@@ -278,6 +278,7 @@ int main( int argc, char *argv[] )
 
 
  answ = GetTextLine( "L43:" );
+ // TODO this may not always be a date; could be a string like "See Additional Vehicle Information"
  next_word( answ, veh_mm, " \t-/.,;" );
  next_word( answ, veh_dd, " \t-/.,;" );
  next_word( answ, veh_yy, " \t-/.,;" );

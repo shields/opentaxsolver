@@ -95,10 +95,12 @@ ApplyTo2024	33 ;	{ Percent (%) of OverPayment to apply to your 2024 estimated ta
 L38		;	{ Estimated Tax Under-payment Penalty }
 
 { --- Schedule D: Capital Gains/Loses --- }
-  { When there are multiple buy-dates, specify "various-short" or "various-long", instead of a specific date. }
- {Text Editor Note: When adding a security, All values must be present. "~" is a necessary place holder for No Adjustment. }
 
-f8949_spreadsheet:   tax_form_files/US_1040/example_f8949_spreadsheet.csv	{ Optional CSV spread-sheet File-name for Cap-Gains trades. }
+ { When there are multiple buy-dates, specify "various-short" or "various-long", instead of a specific date. }
+ { If acquired by inheritance, then specify "inherited" instead of a specific date. }
+ { Text Editor Note: When adding a security, All values must be present. "~" is a necessary place holder for No Adjustment. }
+
+f8949_spreadsheet-A/D:  tax_form_files/US_1040/example_f8949_spreadsheet.csv       { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Reported to IRS, A/D) }
 
 CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (Form 8949 check A or D) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
@@ -123,6 +125,10 @@ CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (
          6009.01        12-27-2023
 	~		~
                 ;
+
+
+f8949_spreadsheet-B/E:        { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Unreported to IRS, B/E) }
+
 CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to IRS (Form 8949 check B/E) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
 
@@ -134,6 +140,10 @@ CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to I
         1000 	12-28-21
 	~	~
                 ;
+
+
+f8949_spreadsheet-C/F:        { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Not above, C/F) }
+
 CapGains-C/F	        { Capital Gains/Losses, 1099-B. For when Form 8949 (A,B,D,E) CANNOT be checked. (check C/F) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
         900 1-1-1980    { MSFT }
@@ -305,8 +315,9 @@ S3_1   14.15    ;       { Foreign tax credit, form 1116 }
 S3_2             ;       { Child/dependent care expense credits. Form 2441, Line 11. }
 S3_3             ;       { Education credits. Form 8863, line 19. }
 S3_4    31.31    ;       { Retirement savings contributions credit. Form 8880. }
-S3_5             ;       { Residential energy credits. Form 5695. }
-        { Other nonrefundable credits. }
+S3_5a   51.00    ;       { Residential clean energy credits. Form 5695, line 16. }
+S3_5b   52.00    ;       { Energy efficient home improvement credit. Form 5695, line 32. }
+         { Other nonrefundable credits. }
 S3_6a    6       ;       { General business credit. Form 3800. }
 S3_6b            ;       { Credit for prior year minimum tax. Form 8801. }
 S3_6c   26.01    ;       { Adoption credit. Attach Form 8839 }
@@ -319,6 +330,7 @@ S3_6i    2.02    ;       { Qualified electric vehicle credit. Attach Form 8834 }
 S3_6j            ;       { Alternative fuel vehicle refueling property credit. Attach Form 8911 }
 S3_6k            ;       { Credit to holders of tax credit bonds. Attach Form 8912 }
 S3_6l            ;       { Amount on Form 8978, line 14. }
+S3_6m    6.60    ;       { Credit for previously owned clean vehicles. Attach Form 8936. }
 S3_6z            ;       { Other nonrefundable credits. }
 S3_6z_Type:               { Type of Other nonrefundable credits. }
 
@@ -328,11 +340,10 @@ S3_10    8.10   ;       { Amnt paid in filing extension req. }
 S3_11           ;       { Excess Soc. Sec. + tier 1 RRTA tax withheld. }
 S3_12           ;       { Credits for federal tax on fuels. Attach form 4136. }
 S3_13a  13      ;       { Credits from Form 2439. }
-S3_13b  13      ;       { Credits from Form 7202, qualified sick leave. }
-S3_13d          ;       { Credit for repayment of amounts included in income from prior years. }
-S3_13f          ;       { Deferred amount of net 965 tax liability }
-S3_13h          ;       { Qualified sick and family leave credits from Schedule(s) H and Form 7202 }
-S3_13z          ;       { Credits from Other. }
+S3_13b	14	;	{ Credit for repayment of amounts included in income from prior years. }
+S3_13c	15	;	{ Elective payment amount. Form 3800, Part III, line 6, column (i). }
+S3_13d	16	;	{ Deferred amount of net 965 tax liability }
+S3_13z  17      ;       { Credits from Other. }
  S3_13z_Type:            { Type of other payments or refundable credits. }
 
 

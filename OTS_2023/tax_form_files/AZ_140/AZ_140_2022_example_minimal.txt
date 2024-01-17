@@ -1,0 +1,290 @@
+Title:  AZ State Tax Form 140 - 2022
+
+FileName1040:	tax_form_files/US_1040/US_1040_example_out.txt	 { File-name of Federal Return output file. }
+ { Data is collected by scanning Federal return to avoid re-entering it. }
+ { - - - - - - - - -- - - - - - - - - }
+DaytimePhone#:	928-123-4567	 { Daytime Phone Number. }
+PriorLastNames:	Nee	 { Last Names used in last 4 prior years, if different. }
+ { --- Filing Status --- }
+L4a_InjuredSpouse:	No	 {Injured Spouse Protection of Joint Overpayment? -- married joint filers only (answer: Yes, No) }
+ { --- Exemptions --- }
+L8		 { Number of filers age 65+ - you and/or spouse }
+		;
+L9		 { Number of filers blind - you and/or spouse }
+		;
+L10a		 { Number of Dependents under age of 17 - NOTE: some info must be added manually to form for dependents, if any}
+		;
+L10b		 { Number of Dependents age 17 and over  - NOTE: some info must be added manually to form for dependents, if any}
+		;
+L11a		 { Number of Qualifying parents and grandparents }
+		;
+ { --- Qualifying Parent/Grandparent Exemption Information --- }
+L11_NeedMoreSpace:	No    	{ Need more space to list? Complete page 4 part 2. (answer: Yes, No) }
+  { --- }
+L11b_PG1_FirstName:		 { First Parent/Grandparent Exemption's first-name. }
+L11b_PG1_LastName:		 { First Parent/Grandparent Exemption's last-name. }
+L11b_PG1_SocSec#:		 { First Parent/Grandparent Exemption's Social Security number. }
+L11b_PG1_Relation:		 { First Parent/Grandparent Exemption's relationship. }
+L11b_PG1_Months:		 { First Parent/Grandparent Exemption's Months lived in home in tax year. }
+L11b_PG1_65Over:	No	 { Age 65 or over? (answer: Yes, No) }
+L11b_PG1_DiedTaxYr:	No	 { Died during tax year? (answer: Yes, No) }
+ { --- }
+L11c_PG2_FirstName:		 { Second Parent/Grandparent Exemption's first-name. }
+L11c_PG2_LastName:		 { Second Parent/Grandparent Exemption's last-name. }
+L11c_PG2_SocSec#:		 { Second Parent/Grandparent Exemption's Social Security number. }
+L11c_PG2_Relation:		 { Second Parent/Grandparent Exemption's relationship. }
+L11c_PG2_Months:		 { Second Parent/Grandparent Exemption's Months lived in home in tax year. }
+L11c_PG2_65Over:	No	 { Age 65 or over? (answer: Yes, No) }
+L11c_PG2_DiedTaxYr:	No	 { Died during tax year? (answer: Yes, No) }
+ { --- Additions --- }
+L13_Filing140SBI:	No	 { Are you filing AZ Form 140-SBI? (answer: Yes, No) }
+L13		 {Small Business Income}
+		;
+L15		 {Non-Arizona municipal interest}
+		;
+L16		 {Partnership Income adjustment}
+		;
+L17      {Total amount of depreciation deducted on your federal return. } ;		
+ { L18:      Other Additions to Income: Review Other Additions to AZ Gross Income schedule, below }
+ {
+ -------------------------- Other Additions to Arizona Gross Income  -------------------------- 
+ 											Schedule
+ Complete and include with your AZ tax return ONLY if you are making any adjustments INCREASING
+ your AZ Gross Income.	See instructions for more information.											
+ 		
+}
+OA_A		 {Married Persons Filing Separate Returns}
+		;
+OA_B		 {Arizona Form 141AZ Sched K-1 Fiduciary Adjustment}
+		;
+OA_C		 {Ordinary Income Portion of Lump-Sum Distributions Excluded on Your Federal Return}
+		;
+OA_D		 {Items Previously Deducted for Arizona Purposes}
+		;
+OA_E		 {Claim of Right Adjustment for Amounts Repaid in Tax Year}
+		;
+OA_Fa		 {Claim of Right Adjustment for Amounts Repaid in Prior Taxable years}
+		;
+OA_Fb		 {Adjustment for Net Operating Loss due to Claim of Right}
+		;
+OA_Ga		 {Addition for Expenses Due to Claiming Credit 312.  See instructions.}
+		;
+OA_Gb		 {Addition to S Corp Income for Expenses Due to Claiming Pass-Through 
+				Credit on Form 312. See Instructions.}
+		;
+OA_Ha		 {Adjusted Basis in Property for Which You Have Claimed a Credit for Investment 
+				in Qualified Small Businesses (Form 338) that was sold or otherwise disposed 
+				of during the tax year.  See instructions.}
+		;
+OA_Hb		 {Adjusted Basis in Property for Which You Have Claimed a Credit for Agricultural 
+				Pollution Control Equipment (Form 325) that was sold or otherwise disposed 
+				of during the tax year.  See instructions.}
+		;
+OA_Hc		 {Adjusted Basis in Property for Which You Claimed a Credit for Pollution Control 
+				Equipment (Form 315) Before this Taxable Year that was sold or otherwise disposed 
+				of during the tax year.  See Instructions.}
+		;
+OA_I		 {Nonqualified Withdrawals from 529 College Savings Plans.}
+		;
+OA_J		 {Sole Proprietorship Loss of an Arizona Nonprofit Medical Marijuana Dispensary 
+				Included in Federal Adjusted Gross Income.  Sole Proprietorship loss of an AZ 
+				dual licensee that has not elected to operate on a for-profit basis must also add 
+				back the portion of their loss that is from the medical marijuana portion of the 
+				business that is included in their federal adjusted gross income.}
+		;
+OA_K		 {Federal Net Operating Loss (NOL) Carryforward from Non-AZ Sources Accrued While
+				a Nonresident.}
+		;
+OA_L		 {Federal Capital Loss Carryforward Deduction Incurred from Non-AZ Sources prior to 
+				AZ Residency.}
+		;
+OA_M		 {Americans with Disabilities Act - Access Expenditures.}
+		;
+OA_N		 {Amortization or Depreciation for Child Care Facility before 1990.}
+		;
+OA_O		 {Net Capital Loss Derived From the Exchange of One Kind of Legal Tender for Another 
+				Kind of Legal Tender:  See instructions.}
+		;
+OA_P		 {Entity-level Income Tax Payment.  See instructions.}
+		;
+OA_Q		 {Other Adjustments Related to Tax Credits.  See instructions.}
+		;
+OA_R		 {Other Adjustments.  See instructions.}
+		;
+{ --- Subtractions --- 
+	See instructions for more information.	
+}
+L20 0        {Total Net Capital Gain/Loss from federal return} ;
+L21 0        {Total Net Short-Term Capital Gain/Loss from federal Schedule D} ;
+L22 0        {Total Net Long-Term Capital Gain/Loss from federal Schedule D} ;
+L23	0	 {Net Long-Term Capital Gain from Assets Acquired After Dec. 31, 2011 (acq. date must be verifiable)}
+		;
+L25		 {Net Capital Gain from Investment in an Arizona Qualified Small Business}
+		;
+L26		 {Recalculated Arizona Depreciation}
+		;
+L27		 {Partnership Income Adjustment.  See instructions.}
+		;
+L28		 {Interest on U.S. Obligations}
+		;
+L29a		 {Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions}
+		;
+L29b		 {Exclusion for Ret'd or Retainer Pay of the Uniformed Services of the U.S.}
+		;
+L30		 {U.S. Social Security Benefits or Railroad Retirement Benefits (federally taxable amt only)}
+		;
+L31		 {Certain Wages of American Indians}
+		;
+L32		 {Pay Rec'd for Active Service as a Mbr. of the Reserves, Nat'l Guard or the U.S. Armed Forces}
+		;
+L33		 {Net Operating Loss Adjustment.  See instructions.}
+		;
+L34a		 {Contributions to 529 College Savings Plans}
+		;
+L34b		 {Contributions to 529A (ABLE Accounts)}
+		;
+ { --- Exemptions --- }
+ {L36:        Other Subtractions from Income: Review Other Subtraction from AZ Gross Income schedule, below }
+ {
+ -------------------------- Other Subtractions to Arizona Gross Income  -------------------------- 
+ 											Schedule
+ Complete and include with your AZ tax return ONLY if you are making any adjustments DECREASING
+ your AZ Gross Income.	See instructions for more information.											
+ 		
+}
+OS_A		 {Married Persons Filing Separate Returns}
+		;
+OS_B		 {Arizona Form 141AZ Sched K-1 Fiduciary Adjustment}
+		;
+OS_C		 {Federally Taxable Arizona Municipal Interest as Evidenced by Bonds.}
+		;
+OS_D		 {Adoption Expense.}
+		;
+OS_E		 {Qualified Wood Stove, Wood Fireplace or Gas-Fired Fireplace.}
+		;
+OS_F		 {Claim of Right Adjustment for Amounts Repaid in Taxable Years}
+		;
+OS_G		 {Certain Expenses Not Allowed for Federal Purposes (due to claiming federal tax credits).}
+		;
+OS_H		 {Qualified State Tuition Distributions.}
+		;
+OS_I		 {Installment Sale Income from Another State Taxed by the Other State in a Prior Taxable Year.}
+		;
+OS_J		 {Agricultural Crops Given to Arizona Charitable Organizations.}
+		;
+OS_K		 {Basis Adjustment for Property Sold or Otherwise Displosed of During the Taxable Year.}
+		;
+OS_L		 {Sole Proprietorship Income of an Arizona Nonprofit Medical Marijuana Dispensary Included in 
+				Federal Adjusted Gross Income.  In addition, Sole Proprietorship income of an Arizona 
+				dual licensee that has NOT ELECTED to operate on a for-profit basis may subtract the 
+				portion of their federal taxable income that is from the medical marijuana portion of 
+				the business.}
+		;
+OS_M		 {Long-Term Care Insurance Premiums.}
+		;
+OS_N		 {Americans with Disabilities Act - Access Expenditures.}
+		;
+OS_O		 {Exploration Expensis Deferred before January 1, 1990.}
+		;
+OS_P		 {Sole Proprietorship of an Arizona Marijuana Establishment, Marijuana Testing Facilities and 
+				dual licensees that operate on a for-profit basis: enter the total amount of ordinary and 
+				necessary expenses related to the sales of recreational use products reported on Schedule DFE 
+				(line 16).  An LLC that has elected to be treated as a disregarded entity for federal purposes, 
+				and also elected to operate on a for-profit basis may subtract the total amount of ordinary 
+				and necessary expenses related to the sales of recreational use products reported on Schedule 
+				DFE (line 16).}
+		;
+OS_Q		 {S Corporation shareholders of an Arizona Marijuana Establishment, Marijuana Testing Facilities and 
+				dual licensees that operate on a for-profit basis: enter the amount of your pro-rata share of 
+				ordinary and necessary expenses related to the sales of recreational use products as shown on 
+				your 120S Schedule K-1, line 7.}
+		;
+OS_R		 {Net Capital Gain Derived From the Exchange of One Kind of Legal Tender for Another Kind of Legal 
+				Tender: See instructions.}
+		;
+OS_S		 {Other Adjustments - see instructions.}
+		;
+ { --- Other Exemptions: Complete Dependent and Other Exemption Information, Part 3 ---}
+L40e		 {Total number of qualifying individuals}
+		;
+ { --- Balance of Tax }
+L43_Deductions:	Standard	 {Deductions to use? (answer: Itemized, Standard) }
+L43		 {Deductions Amount - this will be calculated if 'Standard' is selected}
+		;
+ {
+ -------------- Standard Deductions Increase for Charitable Contributions   -------------- 
+ 												Worksheet
+ Complete and include with return, to determine your allowable increased standard deduction 
+ for charitable contributions.	This worksheet may be skipped if itemizing deductions.												
+}
+SD1C		 {Tax Year gifts by cash or check}
+		;
+SD2C		 {Tax Year gifts other than by cash or check}
+		;
+SD3C		 {Carryover from prior year}
+		;
+SD5C		 {Total charitable contributions made in Tax Year for which you 
+				are claiming a credit under AZ law for the current or prior
+				tax year}
+		;
+ { --- end of Charitable Contributions Worksheet for Standard Deductions --- }
+L47		 {Tax from Recapture of Credits (from Arizona Form 301, Part 2, line 32)}
+		;
+L49		 {Dependent Tax Credit -- see instructions}
+		;
+L50		 {Family income tax credit -- see instructions}
+		;
+L51		 {Nonrefundable Credits (from Arizona Form 301, Part 2, line 64)}
+		;
+ { --- Total Payments and Refundable Credits --- }
+L53		 {Tax Year AZ Income Tax Withheld}
+		;
+L54a		 {Tax Year AZ estimated tax payments}
+		;
+L54b		 {Tax Year AZ Claim of Right: Complete & include AZ Claim of Right-Individual form(s)}
+		;
+L55		 {Tax Year AZ extension payment (AZ Form 204) }
+		;
+L56		 {Increased Excise Tax Credit.  See instructions.}
+		;
+L57		 {Property Tax Credit (from AZ Form 140PTC, Page 1, line 15)}
+		;
+L58_Filing308I:	No	 { Are you filing AZ Form 308-I? (answer: Yes, No) }
+L58_Filing349:	No	 { Are you filing AZ Form 349? (answer: Yes, No) }
+L58		 {Other Refundable Credits (from AZ forms 308-I and/or 349)}
+		;
+ { --- Tax Due or Overpayment --- }
+L62		 {Amount of overpayment (if any) to be applied to next year's estimated taxes}
+		;
+ { --- Voluntary Gifts --- }
+L64		 {Solutions Teams Assigned to Schools Fund}
+		;
+L65		 {Arizona Wildlife Fund}
+		;
+L66		 {Child Abuse Prevention Fund}
+		;
+L67		 {Domestic Violence Services Fund}
+		;
+L68		 {Political Gift (Democratic/Libertarian/Republican only)}
+		;
+L69		 {Neighbors Helping Neighbors Fund}
+		;
+L70		 {Special Olympics Fund}
+		;
+L71		 {Veterans' Donations Fund}
+		;
+L72		 {I Didn't Pay Enough Fund}
+		;
+L73		 {Sustainable State Parks and Roads Fund}
+		;
+L74		 {Spaying and Neutering of Animals Fund}
+		;
+L75_PoliticalParty	none	 {Political Party receiving gift? (answer: none, Democratic, Libertarian, Republican) }
+ { --- Penalty --- }
+L76		 {Estimated Payment Penalty}
+		;
+L77_1AnnualizedOther:	No	 { Annualized/Other? (answer: Yes, No) }
+L77_2FarmerFisherman:	No	 { Farmer or Fisherman? (answer: Yes, No) }
+L77_Filing221:	No	 { Are you filing AZ Form 221? (answer: Yes, No) }
+ { --- Refund or Amount Owed ---}
+L79_ForeignAcct:	No	 { Will your deposit be ultimately placed in a foreign account? (answer: Yes, No) }

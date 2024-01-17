@@ -22,7 +22,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* 1-2-2023	http://opentaxsolver.sourceforge.com/			*/
+/* 1-2-2024	http://opentaxsolver.sourceforge.com/			*/
 /*	Earlier versions - Lincoln Baxter (lab@lincolnbaxter.com)	*/
 /*									*/
 /************************************************************************/
@@ -46,7 +46,7 @@ float thisversion=21.00;
 #define Yes 1
 #define No  0
 
-double flat_tax_rate = 0.0499;		/* Not updated for 2023. */
+double flat_tax_rate = 0.0475;		/* Updated for 2023. */
 
 
 struct FedReturnData
@@ -152,15 +152,6 @@ int main( int argc, char *argv[] )
  /* --- Decode any command line options. -- */
  /*-----------------------------------------*/
  printf("NC D400 2023 - v%3.2f\n", thisversion);
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
-
  jj = 1;  k=1;
  while (jj < argc)
  {
@@ -278,7 +269,7 @@ int main( int argc, char *argv[] )
  L[6] = Conditional_Round( L[6] );
 
  switch (status)
-  {				/* Not updated for 2023. */
+  {									/* Updated for 2023. */
    case SINGLE: 		 stdded   = 12750.0; 	/* NC std single deduction. */
 				 min2file = 12750.0;
 	break;
@@ -305,7 +296,7 @@ int main( int argc, char *argv[] )
  L[8] = L[6] + L[7];
 
  switch (status)
-  {					/* Not updated for 2023. */
+  {									/* Updated for 2023. */
    case MARRIED_FILING_JOINTLY: 
    case WIDOW: 
 		if (L[6] <= 40000.0)	ChildDeduction = 3000.0;	else

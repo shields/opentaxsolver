@@ -96,11 +96,11 @@ L38		;	{ Estimated Tax Under-payment Penalty }
 
 { --- Schedule D: Capital Gains/Loses --- }
 
- f8949_spreadsheet:   	   { Optional CSV spread-sheet File-name for Cap-Gain/loss trades. }
-
  { When there are multiple buy-dates, specify "various-short" or "various-long", instead of a specific date. }
  { If acquired by inheritance, then specify "inherited" instead of a specific date. }
  {Text Editor Note: When adding a security, All values must be present. "~" is a necessary place holder for No Adjustment. }
+
+f8949_spreadsheet-A/D:        { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Reported to IRS, A/D) }
 
 CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (Form 8949 marks A or D) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
@@ -124,6 +124,10 @@ CapGains-A/D	        { Capital Gains/Losses, 1099-B. For Basis Reported to IRS (
          6009.01        12-27-2023
 	~		~
                 ;
+
+
+f8949_spreadsheet-B/E:        { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Unreported to IRS, B/E) }
+
 CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to IRS (Form 8949 marks B/E) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
 
@@ -135,6 +139,10 @@ CapGains-B/E	        { Capital Gains/Losses, 1099-B. For Basis NOT Reported to I
         1000 	12-28-21
 	~	~
                 ;
+
+
+f8949_spreadsheet-C/F:        { Optional CSV spreadsheet File-name for Cap-Gain/Losses. (Not above, C/F) }
+
 CapGains-C/F	        { Capital Gains/Losses, 1099-B. For when Form 8949 (A,B,D,E) CANNOT be checked. (marks C/F) }
 			{  Enter for each:  $BuyAmnt Date, $SellAmnt Date, AdjCode $AdjAmnt }
         900 1-1-1980    { MSFT }

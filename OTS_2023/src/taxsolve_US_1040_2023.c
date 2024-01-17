@@ -50,7 +50,7 @@ float thisversion=21.0;
 #define Yes 1
 #define No  0
 
-double SchedA[MAX_LINES], SchedD[MAX_LINES], amtws[MAX_LINES];
+double SchedA[MAX_LINES], SchedB[MAX_LINES], SchedD[MAX_LINES], amtws[MAX_LINES];
 double Sched1[MAX_LINES], Sched2[MAX_LINES], Sched3[MAX_LINES];
 double Sched3_13a=0.0, Sched3_13b=0.0, Sched3_13c=0.0, Sched3_13d=0.0,
 	Sched3_13z=0.0;
@@ -1794,6 +1794,7 @@ int main( int argc, char *argv[] )						/* Updated for 2023. */
   { 
    L[j] = 0.0;
    SchedA[j] = 0.0; 
+   SchedB[j] = 0.0; 
    SchedD[j] = 0.0;
    Sched1[j] = 0.0;
    Sched2[j] = 0.0;
