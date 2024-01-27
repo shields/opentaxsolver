@@ -158,12 +158,13 @@ char program_names[30][100] =
 	 "taxsolve_NY_IT201_2023",		/* 9 */
 	 "taxsolve_MA_1_2023",			/* 10 */
 	 "taxsolve_GA_500",			/* 11 */
+	 "taxsolve_AZ_140_2023",		/* 12 */
 	 "Other",				/* xx */
 	};
 
 enum form_names { form_US_1040, form_US_1040_Sched_C, form_US_8829, form_CA_540, 
 		  form_NC_D400, form_NJ_1040, form_OH_IT1040, form_PA_40,
-		  form_VA_760, form_NY_IT201, form_MA_1, form_GA_500, 
+		  form_VA_760, form_NY_IT201, form_MA_1, form_GA_500, form_AZ_140,
 		  form_other,
 		  form_1040e, form_4562, form_8582
 		};
@@ -3520,6 +3521,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_1040e,           "",     	"f1040e_meta.dat",        "f1040e_pdf.dat" },
         { form_4562,            "",     	"f4562_meta.dat",         "f4562_pdf.dat" },
         { form_8582,            "",     	"f8582_meta.dat",         "f8582_pdf.dat" },
+        { form_AZ_140,          "",     	"AZ_140_meta.dat",        "AZ_140_pdf.dat" },
     /* Other added forms: */
         { form_other, "taxsolve_HSA_f8889",        "f8889_meta.dat",    "f8889_pdf.dat" },
         { form_other, "taxsolve_f8606",            "f8606_meta.dat",    "f8606_pdf.dat" },
@@ -3701,6 +3703,7 @@ void slcttxprog( GtkWidget *wdg, void *data )
    fb_ban_files( "taxsolve_US_1040_2023");
    fb_ban_files( "taxsolve_US_1040_Sched_C_" );
    fb_ban_files( "taxsolve_VA_760_" );
+   fb_ban_files( "taxsolve_AZ_140_" );
 
    strcpy( wildcards_fb, "" );
    strcpy( filename_fb, "" );
@@ -4204,9 +4207,9 @@ int main(int argc, char *argv[] )
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "NJ State 1040", slcttxprog, formid );
  // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
- formid = setform( form_GA_500 );
- tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "GA State 500", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ formid = setform( form_AZ_140 );
+ tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "AZ State 140", slcttxprog, formid );
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
 
  y = y1;
  x = winwidth/2 + 40;
@@ -4228,7 +4231,7 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_other );
  txprogstog = make_radio_button( mpanel, txprogstog, x, y, "Other", slcttxprog, formid );

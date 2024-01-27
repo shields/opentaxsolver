@@ -1,6 +1,6 @@
 /************************************************************************/
 /* taxsolve_ma_1_2023.c - OpenTaxSolver for Mass Form 1 		*/
-/* Copyright (C) 2023 							*/
+/* Copyright (C) 2024 							*/
 /* 									*/
 /* OTS Project Home Page and Updates:  					*/
 /*		http://opentaxsolver.sourceforge.com/			*/
@@ -27,7 +27,7 @@
 /* Robert Heller 2-10-2004	heller@deepsoft.com			*/
 /* Updated 1-26-05	Aston Roberts & Robert Heller			*/
 /*  ...									*/
-/* Updated 1-2-2023	Aston Roberts 					*/
+/* Updated 1-2-2024	Aston Roberts 					*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -38,8 +38,8 @@ float thisversion=21.00;
 #include "taxsolve_routines.c"
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 #define Yes 1
@@ -56,7 +56,7 @@ double Sum( double *v, int start_slot, int end_slot )
 
 
 double ComputeTax(double taxableIncome)
-{ double taxrate=0.05;					/* Not updated for 2023. */
+{ double taxrate=0.05;					/* Updated for 2023. */
  if (taxableIncome < 24000.0)
   return (int)(taxrate * (taxableIncome + 25.0) + 0.5);
  else
@@ -89,19 +89,12 @@ int main( int argc, char *argv[] )
  double MassBankInterest, Iexempt, AGI;
  double Unemployment, Lottery;
  double MassRetirement[2];
- double L23a=0.0, L33[6], L35a=0.0, L35b=0.0, L38a=0.0, L38b=0.0, L38c=0.0;
+ double L23a_inc=0.0, L23a=0.0, L23b_inc=0.0, L23b=0.0, L28a=0.0, L28b=0.0,
+	L33[6], L35a=0.0, L35b=0.0, L38a=0.0, L38b=0.0, L38c=0.0;
  double L43a=0.0, L43b=0.0;
  
  printf("Massachusetts Form-1 2023 - v%3.2f\n", thisversion);
  
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
-
  /* Decode any command-line arguments. */
  i = 1;  k=1;
  while (i < argc)
@@ -343,13 +336,24 @@ int main( int argc, char *argv[] )
  L[22] = ComputeTax( L[21] );
  showline_wmsg(22,"5.0% Tax");
 
- GetLineF( "L23a", &L23a ); 	/* 12% income */
- L[23] = NotLessThanZero( L23a * 0.12 );
- if (L23a > 0.0)
+ GetLineF( "L23a", &L23a_inc ); 	/* 8.5% income */
+ if (L23a_inc > 0.0)
   {
-   sprintf(word,"12%% Income tax: a. %6.2f x 0.12", L23a);
-   showline_wmsg(23, word);
+   L23a = NotLessThanZero( L23a_inc * 0.085 );
+   showline_wlabel( "L23a_inc", L23a_inc );
+   showline_wlabel( "L23a", L23a );
   }
+
+ GetLineF( "L23b", &L23b_inc ); 	/* 12% income */
+ if (L23b_inc > 0.0)
+  {
+   L23b = NotLessThanZero( L23b_inc * 0.12 );
+   showline_wlabel( "L23b_inc", L23b_inc );
+   showline_wlabel( "L23b", L23b );
+  }
+
+ L[23] = L23a + L23b;
+ showline(23);
 
  GetLine( "L24", &L[24] ); 	/* Tax on long-term capital gains, sched D */
  ShowLineNonZero(24);
@@ -360,7 +364,15 @@ int main( int argc, char *argv[] )
  GetLine( "L26", &L[26] ); 	/* Additional tax on installment sale */
  ShowLineNonZero(26);
 
- L[28] = Sum( L, 22, 26 );
+ L28a = Sum( L, 22, 26 );
+ showline_wlabel( "L28a", L28a );
+
+ if (L[19] > 1000000.0)
+  {
+   L28b = 0.04 * (L[19] - 1000000.0);
+   showline_wlabel( "L28b", L28b );
+  }
+ L[28] = L28a + L28b;
 
  if ((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == MARRIED_FILING_JOINTLY))
  { /* AGI Worksheet pg 13. */
@@ -479,15 +491,16 @@ int main( int argc, char *argv[] )
  GetLineF( "L43a", &L43a );	/* Earned income credit (EIC): Number of dependent children.  */
 
  GetLineF( "L43b", &L43b );	/* Earned income credit (EIC): amount from US Return */
- if (L43b != 0.0) fprintf(outfile, " L43b = %6.2f\n", L43b );
- L[43] = L43b * 0.30;
+ if (L43b != 0.0)
+  {
+   // fprintf(outfile, " L43b = %6.2f\n", L43b );
+   fprintf(outfile, " L43c = \"0.40\"\n");
+  }
+ L[43] = L43b * 0.40;
  ShowLineNonZero(43);
 
  GetLine( "L44", &L[44] );	/* Senior Circuit Breaker Credit, sched CB */
  ShowLineNonZero(44);
-
- GetLine( "L45", &L[45] );	/* Child under 13, or disabled dep/spouse credit, from worksheet. */
- ShowLineNonZero(45);
 
  get_parameter( infile, 's', word, "L46num" );	/* Number of dependent household members under 13 or over 65. */
  get_parameters( infile, 'i', &ndep12, "L46num"); 

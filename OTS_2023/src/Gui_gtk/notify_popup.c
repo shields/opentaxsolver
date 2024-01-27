@@ -18,7 +18,7 @@
 	notify_popup "Please re-run the program." "Because of bad data." " -bye"
 
    Options:
-	-delay n	- Delays popping for n-seconds.
+	-delay n	- Delays popping-up for n-seconds.
 	-expire nn	- Automatically close after nn seconds.
 
    Planned future features:
@@ -47,6 +47,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gtk_utils.c"
+
+char *my_version="1.0";
 
 
 void OK_Button( GtkWidget *win, void *data )
@@ -84,6 +86,14 @@ int main( int argc, char *argv[] )
      if (sscanf(argv[k], "%d", &expire ) != 1)
       { printf("Bad integer after option '%s'\n", argv[k-1] );  exit(1); }
      endtime = Report_Time() + (double)expire;
+    }
+   else
+   if (strcmp( argv[k], "-help" ) == 0)
+    {
+     printf("Notify Popup version %s:\n  Options:\n", my_version );
+     printf("     -delay n        - Delays popping up for n-seconds.\n");
+     printf("     -expire nn      - Automatically close after nn seconds.\n\n");
+     exit(0);
     }
    else
     text_in[num_in++] = strdup( argv[k] );	/* Accept text to display. */
