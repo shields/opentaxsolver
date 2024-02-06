@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=4.01;
+float thisversion=5.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -47,44 +47,44 @@ float thisversion=4.01;
 /* 2023 tax rates are used in California for calculating estimated taxes */
 
 double TaxRateFormula( double income, int status )
-{											/* Not updated for 2023. */
+{									/* Updated for 2023. */
  double tax;
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income <  10099.00)  tax =             0.01 * income;                else
-   if (income <  23942.00)  tax =   100.99 +  0.02 * (income -  10099.00);  else
-   if (income <  37788.00)  tax =   377.85 +  0.04 * (income -  23942.00);  else
-   if (income <  52455.00)  tax =   931.69 +  0.06 * (income -  37788.00);  else
-   if (income <  66295.00)  tax =  1811.71 +  0.08 * (income -  52455.00);  else
-   if (income < 338639.00)  tax =  2918.91 + 0.093 * (income -  66295.00);  else
-   if (income < 406364.00)  tax = 28246.90 + 0.103 * (income - 338639.00);  else
-   if (income < 677275.00)  tax = 32222.58 + 0.113 * (income - 406364.00);
-   else                     tax = 65835.52 + 0.123 * (income - 677275.00);
+   if (income <  10412.00)  tax =             0.01 * income;                else
+   if (income <  24684.00)  tax =   104.12 +  0.02 * (income -  10412.00);  else
+   if (income <  38959.00)  tax =   389.56 +  0.04 * (income -  24684.00);  else
+   if (income <  54081.00)  tax =   960.56 +  0.06 * (income -  38959.00);  else
+   if (income <  68350.00)  tax =  1867.88 +  0.08 * (income -  54081.00);  else
+   if (income < 349137.00)  tax =  3009.40 + 0.093 * (income -  68350.00);  else
+   if (income < 418961.00)  tax = 29122.59 + 0.103 * (income - 349137.00);  else
+   if (income < 698271.00)  tax = 36314.46 + 0.113 * (income - 418961.00);
+   else                     tax = 67876.49 + 0.123 * (income - 698271.00);
   }
  else
  if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))
   {
-   if (income <   20208.00)  tax =              0.01 * income;                 else
-   if (income <   47884.00)  tax =    201.98 +  0.02 * (income -   20208.00);  else
-   if (income <   75576.00)  tax =    755.70 +  0.04 * (income -   47884.00);  else
-   if (income <  104910.00)  tax =   1863.38 +  0.06 * (income -   75576.00);  else
-   if (income <  132590.00)  tax =   3623.42 +  0.08 * (income -  104910.00);  else
-   if (income <  677278.00)  tax =   5837.82 + 0.093 * (income -  132590.00);  else
-   if (income <  812728.00)  tax =  56493.80 + 0.103 * (income -  677278.00);  else
-   if (income < 1354550.00)  tax =  70445.15 + 0.113 * (income -  812728.00);
-   else                      tax = 131671.04 + 0.123 * (income - 1354550.00);
+   if (income <   20824.00)  tax =              0.01 * income;                 else
+   if (income <   49368.00)  tax =    208.24 +  0.02 * (income -   20824.00);  else
+   if (income <   77918.00)  tax =    779.12 +  0.04 * (income -   49368.00);  else
+   if (income <  108162.00)  tax =   1921.12 +  0.06 * (income -   77918.00);  else
+   if (income <  136700.00)  tax =   3735.76 +  0.08 * (income -  108162.00);  else
+   if (income <  698274.00)  tax =   6018.80 + 0.093 * (income -  136700.00);  else
+   if (income <  837922.00)  tax =  58245.18 + 0.103 * (income -  698274.00);  else
+   if (income < 1396542.00)  tax =  72628.92 + 0.113 * (income -  837922.00);
+   else                      tax = 135752.98 + 0.123 * (income - 1396542.00);
   }
  else
   { /* Head of Household. */
-   if (income <  20222.00)  tax =             0.01 * income;                else
-   if (income <  47887.00)  tax =   202.12 +  0.02 * (income -  20222.00);  else
-   if (income <  61730.00)  tax =   755.62 +  0.04 * (income -  47887.00);  else
-   if (income <  76397.00)  tax =  1309.34 +  0.06 * (income -  61730.00);  else
-   if (income <  90240.00)  tax =  2189.36 +  0.08 * (income -  76397.00);  else
-   if (income < 460547.00)  tax =  3296.80 + 0.093 * (income -  90240.00);  else
-   if (income < 552658.00)  tax = 37735.35 + 0.103 * (income - 460547.00);  else
-   if (income < 921095.00)  tax = 47222.78 + 0.113 * (income - 552658.00); 
-   else                     tax = 88856.16 + 0.123 * (income - 921095.00);
+   if (income <  20839.00)  tax =             0.01 * income;                else
+   if (income <  49371.00)  tax =   208.39 +  0.02 * (income -  20839.00);  else
+   if (income <  63644.00)  tax =   779.03 +  0.04 * (income -  49371.00);  else
+   if (income <  78765.00)  tax =  1349.95 +  0.06 * (income -  63644.00);  else
+   if (income <  93037.00)  tax =  2257.21 +  0.08 * (income -  78765.00);  else
+   if (income < 474824.00)  tax =  3398.97 + 0.093 * (income -  93037.00);  else
+   if (income < 569790.00)  tax = 38905.16 + 0.103 * (income - 474824.00);  else
+   if (income < 949649.00)  tax = 48686.66 + 0.113 * (income - 569790.00); 
+   else                     tax = 91610.73 + 0.123 * (income - 949649.00);
   }
  return (int)(tax+0.5);
 }
@@ -188,14 +188,6 @@ int main( int argc, char *argv[] )
 					/* e.g., cell 1(a) will be in variable A[1] */
 
   printf("Form 5805, 2023 - v%3.2f\n", thisversion);
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
 
  /* Decode any command-line arguments. */
  i = 1;  k=1;

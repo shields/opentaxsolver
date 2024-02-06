@@ -1,6 +1,6 @@
 /************************************************************************/
 /* TaxSolve_HSA_f8889.c - 						*/
-/* Copyright (C)  2023 - A. Roberts					*/
+/* Copyright (C)  2024 - A. Roberts					*/
 /* 									*/
 /* Compile:								*/
 /*  cc taxsolve_HSA_f8889.c -o ../bin/taxsolve_HSA_f8889		*/
@@ -24,10 +24,10 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Not updated for 2023 tax year:						*/
+/* Updated for 2023 tax year:						*/
 /************************************************************************/
 
-float thisversion=20.00;
+float thisversion=21.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -49,14 +49,6 @@ int main( int argc, char *argv[] )
  double L14a=0.0, L14b=0.0, L14c=0.0, L17b=0.0;
 
  printf("Form 8889 HSA, 2023 - v%3.2f\n", thisversion );
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
 
  /* Decode any command-line arguments. */
  i = 1;  k=1;

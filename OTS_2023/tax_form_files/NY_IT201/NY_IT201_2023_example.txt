@@ -61,6 +61,13 @@ NYC_Resident  no ;      { City of New York Resident (answer: yes, no) }
   L50           ;       { Part-year New York City resident tax }
   L51           ;       { Other NYC taxes (from IT-201-ATT part III, line 4) }
   L53           ;       { NYC nonrefundable credits (from IT-201-ATT part IV, line 6-7) }
+  L54a          ;       { MCTMT net earnings base for Zone 1 }
+  L54b          ;       { MCTMT net earnings base for Zone 2 }
+  L54c          ;       { MCTMT for Zone 1 }
+  L54d          ;       { MCTMT for Zone 2 }
+  L55           ;       { Yonkers resident income tax surcharge }
+  L56           ;       { Yonkers non-resident earnings tax (Form &-203) }
+  L57           ;       { Part-year Yonkers resident income tax surcharge }
  { -- }
 
 L59	    59	;	{ Sales or use tax, pg 27. }

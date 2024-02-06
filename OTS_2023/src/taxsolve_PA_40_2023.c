@@ -21,7 +21,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2023	aston_roberts@yahoo.com			*/
+/* Aston Roberts 2-2-2024	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
 #define thisversion 21.00
@@ -35,7 +35,7 @@
 #define Yes 1
 #define No  0
 
-double Tax_Rate = 0.0307;		/* Not updated for 2023 tax-year. */
+double Tax_Rate = 0.0307;		/* Updated for 2023 tax-year. */
 
 
 double pos( double x )
@@ -57,15 +57,6 @@ int main( int argc, char *argv[] )
 
  /* Decode any command-line arguments. */
  printf("PA40 - 2023 - v%3.1f\n", thisversion);
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
-
  i = 1;  k=1;
  while (i < argc)
  {

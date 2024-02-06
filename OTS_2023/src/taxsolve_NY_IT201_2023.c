@@ -510,38 +510,38 @@ double TaxRateFunction( double income, int status )
  double tax;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:					/* Not updated for 2023. */
-	if (income <=    17150.0) tax =             0.04 * income; else		/* Data from pg 43. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				  /* Updated for 2023. */
+	if (income <=    17150.0) tax =             0.04 * income; else	  /* Data from Instructions pg 45. */
 	if (income <=    23600.0) tax =     686.0 + 0.045  * (income - 17150.0); else
 	if (income <=    27900.0) tax =     976.0 + 0.0525 * (income - 23600.0); else
-	if (income <=   161550.0) tax =    1202.0 + 0.0585 * (income - 27900.0); else
-	if (income <=   323200.0) tax =    9021.0 + 0.0625 * (income - 161550.0); else
-	if (income <=  2155350.0) tax =   19124.0 + 0.0685 * (income - 323200.0); else
-	if (income <=  5000000.0) tax =  144626.0 + 0.0965 * (income - 2155350.0); else
-	if (income <= 25000000.0) tax =  419135.0 + 0.103 * (income - 5000000.0); else
-				  tax = 2479135.0 + 0.109 * (income - 25000000.0);
+	if (income <=   161550.0) tax =    1202.0 + 0.0550 * (income - 27900.0); else
+	if (income <=   323200.0) tax =    8553.0 + 0.0600 * (income - 161550.0); else
+	if (income <=  2155350.0) tax =   18252.0 + 0.0685 * (income - 323200.0); else
+	if (income <=  5000000.0) tax =  143754.0 + 0.0965 * (income - 2155350.0); else
+	if (income <= 25000000.0) tax =  418263.0 + 0.103 * (income - 5000000.0); else
+				  tax = 2478203.0 + 0.109 * (income - 25000000.0);
       break;
    case SINGLE: case MARRIED_FILING_SEPARAT:
 	if (income <=     8500.0) tax =  	    0.04   * income; else
 	if (income <=    11700.0) tax =     340.0 + 0.045  * (income - 8500.0); else
 	if (income <=    13900.0) tax =     484.0 + 0.0525 * (income - 11700.0); else
-	if (income <=    80650.0) tax =     600.0 + 0.0585 * (income - 13900.0); else
-	if (income <=   215400.0) tax =    4504.0 + 0.0625 * (income - 80650.0); else
-	if (income <=  1077550.0) tax =   12926.0 + 0.0685 * (income - 215400.0); else
-	if (income <=  5000000.0) tax =   71984.0 + 0.0965 * (income - 1077550.0); else
-	if (income <= 25000000.0) tax =  450500.0 + 0.103 * (income - 5000000.0); else
-			 	  tax = 2510500.0 + 0.109 * (income - 25000000.0);
+	if (income <=    80650.0) tax =     600.0 + 0.0550 * (income - 13900.0); else
+	if (income <=   215400.0) tax =    4271.0 + 0.0600 * (income - 80650.0); else
+	if (income <=  1077550.0) tax =   12356.0 + 0.0685 * (income - 215400.0); else
+	if (income <=  5000000.0) tax =   71413.0 + 0.0965 * (income - 1077550.0); else
+	if (income <= 25000000.0) tax =  449929.0 + 0.103 * (income - 5000000.0); else
+			 	  tax = 2509929.0 + 0.109 * (income - 25000000.0);
       break;
    case HEAD_OF_HOUSEHOLD:
 	if (income <=    12080.0) tax =             0.04 * income; else
 	if (income <=    17650.0) tax =     512.0 + 0.045  * (income - 12800.0); else
 	if (income <=    20900.0) tax =     730.0 + 0.0525 * (income - 17650.0); else
-	if (income <=   107650.0) tax =     901.0 + 0.0585 * (income - 20900.0); else
-	if (income <=   269300.0) tax =    5976.0 + 0.0625 * (income - 107650.0); else
-	if (income <=  1616450.0) tax =   16079.0 + 0.0685 * (income - 269300.0); else
-	if (income <=  5000000.0) tax =  108359.0 + 0.0965 * (income - 1616450.0); else
-	if (income <= 25000000.0) tax =  434871.0 + 0.103 * (income - 5000000.0); else
-				  tax = 2494871.0 + 0.109 * (income - 25000000.0);
+	if (income <=   107650.0) tax =     901.0 + 0.0550 * (income - 20900.0); else
+	if (income <=   269300.0) tax =    5672.0 + 0.0600 * (income - 107650.0); else
+	if (income <=  1616450.0) tax =   15371.0 + 0.0685 * (income - 269300.0); else
+	if (income <=  5000000.0) tax =  107651.0 + 0.0965 * (income - 1616450.0); else
+	if (income <= 25000000.0) tax =  434163.0 + 0.103 * (income - 5000000.0); else
+				  tax = 2494163.0 + 0.109 * (income - 25000000.0);
       break;
    default: printf("Error: Unhandled status\n"); exit(0); break;
   }
@@ -554,12 +554,12 @@ void Report_bracket_info( double income, double tx, int status )
  double rate;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Not updated for 2023. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Updated for 2023. */
 	if (income <=    17150.0) rate = 0.04;  else
 	if (income <=    23600.0) rate = 0.045;  else
 	if (income <=    27900.0) rate = 0.0525;  else
-	if (income <=   161550.0) rate = 0.0585;  else
-	if (income <=   323200.0) rate = 0.0625;  else
+	if (income <=   161550.0) rate = 0.0550;  else
+	if (income <=   323200.0) rate = 0.0600;  else
 	if (income <=  2155350.0) rate = 0.0685;  else  
 	if (income <=  5000000.0) rate = 0.0965; else
 	if (income <= 25000000.0) rate = 0.103; else rate = 0.109;
@@ -568,8 +568,8 @@ void Report_bracket_info( double income, double tx, int status )
 	if (income <=     8500.0) rate = 0.04;  else
 	if (income <=    11700.0) rate = 0.045;  else
 	if (income <=    13900.0) rate = 0.0525;  else
-	if (income <=    80650.0) rate = 0.0585;  else
-	if (income <=   215400.0) rate = 0.0625;  else
+	if (income <=    80650.0) rate = 0.0550;  else
+	if (income <=   215400.0) rate = 0.0600;  else
 	if (income <=  1077550.0) rate = 0.0685;  else
 	if (income <=  5000000.0) rate = 0.0965;  else
 	if (income <= 25000000.0) rate = 0.103;  else rate = 0.109;
@@ -578,8 +578,8 @@ void Report_bracket_info( double income, double tx, int status )
 	if (income <=    12800.0) rate = 0.04;  else
 	if (income <=    17650.0) rate = 0.045;  else
 	if (income <=    20900.0) rate = 0.0525;  else
-	if (income <=   107650.0) rate = 0.0585;  else
-	if (income <=   269300.0) rate = 0.0625;  else
+	if (income <=   107650.0) rate = 0.0550;  else
+	if (income <=   269300.0) rate = 0.0600;  else
 	if (income <=  1616450.0) rate = 0.0685;  else
 	if (income <=  5000000.0) rate = 0.0965;  else
 	if (income <= 25000000.0) rate = 0.103;  else rate = 0.109;
@@ -612,7 +612,7 @@ double TaxRateLookup( double income, int status )
 }
 
 
-double NYcityTaxRateFunction( double income, int status )	/* From page 51. */
+double NYcityTaxRateFunction( double income, int status )	/* From Instructions page 52. */
 {
  double tax, dx;
  int m;
@@ -620,32 +620,32 @@ double NYcityTaxRateFunction( double income, int status )	/* From page 51. */
  if (income < 25.0) dx = 12.5; else
  if (income < 50.0) dx = 25.0; else dx = 50.0;
 
- m = income / dx;             /* Round income to nearest $50. */
+ m = income / dx;             	   /* Round income to nearest $50. */
  if (income < 65000.0)
   income = m * dx + 0.5 * dx;      /* Place into center of a $50 bracket. */
 
- if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Not updated for 2023. */
+ if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Updated for 2023. */
   {
-   if (income < 21600.0)  tax = income * 0.0308; else
-   if (income < 45000.0)  tax = (income - 21600.00) * 0.0376 + 665.00; else
-   if (income < 90000.0)  tax = (income - 45000.00) * 0.0382 + 1545.0; else
-			  tax = (income - 90000.00) * 0.0388 + 3264.0;
+   if (income < 21600.0)  tax = income * 0.03078; else
+   if (income < 45000.0)  tax = (income - 21600.00) * 0.03762 + 665.00; else
+   if (income < 90000.0)  tax = (income - 45000.00) * 0.03819 + 1545.0; else
+			  tax = (income - 90000.00) * 0.03876 + 3264.0;
   }
  else
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income < 12000.0)  tax = income * 0.0308; else
-   if (income < 25000.0)  tax = (income - 12000.00) * 0.0376 + 369.0;  else
-   if (income < 50000.0)  tax = (income - 25000.00) * 0.0382 + 858.0;  else
-			  tax = (income - 50000.00) * 0.0388 + 1813.00;
+   if (income < 12000.0)  tax = income * 0.03078; else
+   if (income < 25000.0)  tax = (income - 12000.00) * 0.03762 + 369.0;  else
+   if (income < 50000.0)  tax = (income - 25000.00) * 0.03819 + 858.0;  else
+			  tax = (income - 50000.00) * 0.03876 + 1813.00;
   }
  else
  if (status==HEAD_OF_HOUSEHOLD)
   {
-   if (income < 14400.00) tax = income * 0.0308; else
-   if (income < 30000.00) tax = (income - 14400.00) * 0.0376 +  443.0;  else
-   if (income < 60000.00) tax = (income - 30000.00) * 0.0382 + 1030.0;  else
-			  tax = (income - 60000.00) * 0.0388 + 2176.0;
+   if (income < 14400.00) tax = income * 0.03078; else
+   if (income < 30000.00) tax = (income - 14400.00) * 0.03762 +  443.0;  else
+   if (income < 60000.00) tax = (income - 30000.00) * 0.03819 + 1030.0;  else
+			  tax = (income - 60000.00) * 0.03876 + 2176.0;
  }
  else {printf("Status not covered.\n");  exit(1);}
 
@@ -654,12 +654,12 @@ double NYcityTaxRateFunction( double income, int status )	/* From page 51. */
 }
 
 
-void worksheet1()	/*Tax Computation Worksheet 1 (pg 45) */		/* Not updated for 2023. */
+void worksheet1()	/*Tax Computation Worksheet 1 (pg 46) */		/* Updated for 2023. */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 1.\n");
   ws[1] = L[33];
   ws[2] = L[38];
-  ws[3] = 0.0585 * ws[2];
+  ws[3] = 0.055 * ws[2];
   if (ws[1] >= 157650.0)
     ws[9] = ws[3];
   else
@@ -676,14 +676,14 @@ void worksheet1()	/*Tax Computation Worksheet 1 (pg 45) */		/* Not updated for 2
 }
 
 
-void worksheet2()	/*Tax Computation Worksheet 2 (pg 46) */
+void worksheet2()	/*Tax Computation Worksheet 2 (pg 47) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 2.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 430.0;
-  ws[5] = 646.0;
+  ws[4] = 333.0;
+  ws[5] = 807.0;
   ws[6] = ws[1] - 161550.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -694,14 +694,14 @@ void worksheet2()	/*Tax Computation Worksheet 2 (pg 46) */
 }
 
 
-void worksheet3()	/*Tax Computation Worksheet 3 (pg 46) */
+void worksheet3()	/*Tax Computation Worksheet 3 (pg 47) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 3.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 1076.0;
-  ws[5] = 1940.0;
+  ws[4] = 1140.0;
+  ws[5] = 2747.0;
   ws[6] = ws[1] - 323200.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -712,14 +712,14 @@ void worksheet3()	/*Tax Computation Worksheet 3 (pg 46) */
 }
 
 
-void worksheet4()	/*Tax Computation Worksheet 4 (pg 46) */
+void worksheet4()	/*Tax Computation Worksheet 4 (pg 47) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 4.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 3016.0;
-  ws[5] = 60349.0;
+  ws[4] = 3887.0;
+  ws[5] = 60350.0;
   ws[6] = ws[1] - 2155350.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -730,13 +730,13 @@ void worksheet4()	/*Tax Computation Worksheet 4 (pg 46) */
 }
 
 
-void worksheet5()	/*Tax Computation Worksheet 5 (pg 47) */
+void worksheet5()	/*Tax Computation Worksheet 5 (pg 48) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 5.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 63365.0;
+  ws[4] = 64237.0;
   ws[5] = 32500.0;
   ws[6] = ws[1] - 5000000.0;
   ws[7] = smallerof( ws[6], 50000.0 );
@@ -748,7 +748,7 @@ void worksheet5()	/*Tax Computation Worksheet 5 (pg 47) */
 }
 
 
-void worksheet6()	/*Tax Computation Worksheet 6 (pg 47) */
+void worksheet6()	/*Tax Computation Worksheet 6 (pg 48) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 6.\n");
   ws[1] = L[38];
@@ -757,12 +757,12 @@ void worksheet6()	/*Tax Computation Worksheet 6 (pg 47) */
 }
 
 
-void worksheet7()	/*Tax Computation Worksheet 7 (pg 47) */
+void worksheet7()	/*Tax Computation Worksheet 7 (pg 48) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 7.\n");
   ws[1] = L[33];
   ws[2] = L[38];
-  ws[3] = 0.0625 * ws[2];
+  ws[3] = 0.06 * ws[2];
   if (ws[1] < 157650.0)
    {
     ws[4] = TaxRateFunction( ws[2], status );
@@ -779,14 +779,14 @@ void worksheet7()	/*Tax Computation Worksheet 7 (pg 47) */
 }
 
 
-void worksheet8()	/*Tax Computation Worksheet 8 (pg 48) */
+void worksheet8()	/*Tax Computation Worksheet 8 (pg 49) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 8.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 536.0;
-  ws[5] = 1293.0;
+  ws[4] = 568.0;
+  ws[5] = 1831.0;
   ws[6] = ws[1] - 215400.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -797,14 +797,14 @@ void worksheet8()	/*Tax Computation Worksheet 8 (pg 48) */
 }
 
 
-void worksheet9()	/*Tax Computation Worksheet 9 (pg 48) */
+void worksheet9()	/*Tax Computation Worksheet 9 (pg 49) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 9.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 1829.0;
-  ws[5] = 30171.0;
+  ws[4] = 2399.0;
+  ws[5] = 30172.0;
   ws[6] = ws[1] - 1077550.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -815,13 +815,13 @@ void worksheet9()	/*Tax Computation Worksheet 9 (pg 48) */
 }
 
 
-void worksheet10()	/*Tax Computation Worksheet 10 (pg 48) */
+void worksheet10()	/*Tax Computation Worksheet 10 (pg 49) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 10.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 32000.0;
+  ws[4] = 32571.0;
   ws[5] = 32500.0;
   ws[6] = ws[1] - 5000000.0;
   ws[7] = smallerof( ws[6], 50000.0 );
@@ -833,7 +833,7 @@ void worksheet10()	/*Tax Computation Worksheet 10 (pg 48) */
 }
 
 
-void worksheet11()	/*Tax Computation Worksheet 11 (pg 49) */
+void worksheet11()	/*Tax Computation Worksheet 11 (pg 50) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 11.\n");
   ws[1] = L[38];
@@ -842,12 +842,12 @@ void worksheet11()	/*Tax Computation Worksheet 11 (pg 49) */
 }
 
 
-void worksheet12()	/*Tax Computation Worksheet 12 (pg 49) */
+void worksheet12()	/*Tax Computation Worksheet 12 (pg 50) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 12.\n");
   ws[1] = L[33];
   ws[2] = L[38];
-  ws[3] = 0.0625 * ws[2];
+  ws[3] = 0.06 * ws[2];
   if (ws[1] >= 157650.0)
    ws[9] = ws[3];
   else
@@ -864,14 +864,14 @@ void worksheet12()	/*Tax Computation Worksheet 12 (pg 49) */
   }
 
 
-void worksheet13()	/*Tax Computation Worksheet 13 (pg 49) */
+void worksheet13()	/*Tax Computation Worksheet 13 (pg 50) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 13.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 752.0;
-  ws[5] = 1616.0;
+  ws[4] = 787.0;
+  ws[5] = 2289.0;
   ws[6] = ws[1] - 269300.0;
   ws[7] = smallerof( ws[6], 50000.0 );
   /* Divide by 50k and round to forth decimal place. */
@@ -882,13 +882,13 @@ void worksheet13()	/*Tax Computation Worksheet 13 (pg 49) */
 }
 
 
-void worksheet14()	/*Tax Computation Worksheet 14 (pg 50) */
+void worksheet14()	/*Tax Computation Worksheet 14 (pg 51) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 14.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 2368.0;
+  ws[4] = 3076.0;
   ws[5] = 45261.0;
   ws[6] = ws[1] - 1616450.0;
   ws[7] = smallerof( ws[6], 50000.0 );
@@ -900,13 +900,13 @@ void worksheet14()	/*Tax Computation Worksheet 14 (pg 50) */
 }
 
 
-void worksheet15()	/*Tax Computation Worksheet 15 (pg 50) */
+void worksheet15()	/*Tax Computation Worksheet 15 (pg 51) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 15.\n");
   ws[1] = L[33];
   ws[2] = L[38];
   ws[3] = TaxRateFunction( ws[2], status );
-  ws[4] = 47629.0;
+  ws[4] = 48337.0;
   ws[5] = 32500.0;
   ws[6] = ws[1] - 5000000.0;
   ws[7] = smallerof( ws[6], 50000.0 );
@@ -929,7 +929,7 @@ void worksheet16()	/*Tax Computation Worksheet 16 (pg 50) */
 
 void tax_computation_worksheet( int status )	/* Called for Line-39 when Line-33 > $107,650. */
 { /* Worksheets from pages 45-50. Come here when AGI L[33] > $107,650. */
- switch (status)								/* Not updated for 2023. */
+ switch (status)								/* Updated for 2023. */
   {
      case MARRIED_FILING_JOINTLY:  case WIDOW:			// 1-6
 	if (L[33] <= 25000000.0)
@@ -1019,23 +1019,15 @@ int main( int argc, char *argv[] )
  int j, k, argk, day, month, yyyy, itemize=0, all_forms=0;
  char word[1000], *infname=0, outfname[1000], *answ;
  time_t now;
- int Dependent, Exemptions, nyc_resident, IT588=0, L36=0;
- double itemized_ded, std_ded=0.0, LTC=0, AddAdj=0.0, CollegeDed=0.0, L19a=0.0;
- double form_IT196[MAX_LINES], form_IT196_16a=0.0, dedthresh, IT588_L9=0.0, IT588_L18=0.0;
+ int Dependent, Exemptions, nyc_resident, L36=0;
+ double itemized_ded, std_ded=0.0, LTC=0, AddAdj=0.0, CollegeDed=0.0;
+ double form_IT196[MAX_LINES], form_IT196_16a=0.0, dedthresh;
+ double L54a=0.0, L54b=0.0, L54c=0.0, L54d=0.0, L54e=0.0;
  char prelim_1040_outfilename[5000];
  char YourNames[2048]="";
 
  /* Intercept any command-line arguments. */
  printf("NY-IT201 - 2011 - v%3.1f\n", thisversion);
-
- MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
- #ifdef microsoft
-  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
- #else
-  system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
- #endif
-
  argk = 1;  k=1;
  while (argk < argc)
  {
@@ -1254,24 +1246,6 @@ int main( int argc, char *argv[] )
 
  L[19] = L[17] - L[18];
  showline_wmsg( 19, "Federal adjusted gross income" );
- if (absolutev(L[19] - PrelimFedReturn.fedline[11]) > 0.1)
-  {
-   printf(" Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
-   fprintf(outfile," Warning: L[19] = %6.2f, while Fed-line[11] = %6.2f\n", L[19], PrelimFedReturn.fedline[11] );
-  }
- // L19a recomputed federal agi. (IT201-instructions page 14, 19a worksheet)
- if (IT588)
-  { double wrksht[10];
-    wrksht[1] = L[19];
-    wrksht[2] = IT588_L9;
-    wrksht[3] = wrksht[1] + wrksht[2];
-    wrksht[4] = IT588_L18;
-    wrksht[5] = wrksht[3] - wrksht[4]; 
-    L19a = wrksht[5];
-  }
- else
-  L19a = L[19];
- showline_wlabel( "L19a", L19a );
 
  GetLineF( "L20", &L[20] );	/* Interest income from non-NY state or local bonds */
 
@@ -1325,7 +1299,7 @@ int main( int argc, char *argv[] )
  GetLine( "CollegeDed", &CollegeDed );
 
  form_IT196[1] = PrelimFedReturn.schedA[1];
- form_IT196[2] = L19a;
+ form_IT196[2] = L[19];
  form_IT196[3] = 0.10 * form_IT196[2];
  form_IT196[4] = NotLessThanZero( form_IT196[1] - form_IT196[3] );
  form_IT196[5] = PrelimFedReturn.schedA5a;
@@ -1359,7 +1333,7 @@ int main( int argc, char *argv[] )
    default:			dedthresh = 169400.0;	break;
   }
 
- if (L19a <= dedthresh)
+ if (L[19] <= dedthresh)
   {
    form_IT196[40] = form_IT196[4] + form_IT196[9] + form_IT196[15] + form_IT196[19] + form_IT196[20] 
 		 + form_IT196[28] + form_IT196[39];	
@@ -1377,7 +1351,7 @@ int main( int argc, char *argv[] )
     {
      dedwksht[3] = dedwksht[1] - dedwksht[2];
      dedwksht[4] = 0.80 * dedwksht[3];
-     dedwksht[5] = L19a;
+     dedwksht[5] = L[19];
      dedwksht[6] = dedthresh;
      if (dedwksht[6] < dedwksht[5])
       {
@@ -1481,10 +1455,10 @@ int main( int argc, char *argv[] )
 
 
 
- switch (status)	/* Determine the Std. Deduction. Pg. 13. */
+ switch (status)	/* Determine the Std. Deduction. Instructions Pg. 15. */
   {
    case SINGLE: if (Dependent)   std_ded = 3100.0; 
-		else 		 std_ded = 8000.0;			/* Not updated for 2023. */
+		else 		 std_ded = 8000.0;			/* Updated for 2023. */
 	break;
    case MARRIED_FILING_JOINTLY:  std_ded = 16050.0; break;
    case MARRIED_FILING_SEPARAT:  std_ded =  8000.0; break;
@@ -1523,10 +1497,10 @@ int main( int argc, char *argv[] )
 
  // get_parameter( infile, 's', word, "L36" );	/* Number of Dependent Exemptions (Pg 76, line e) */
  get_parameters( infile, 'i', &L36, "L36" );
+ if (L36 > 0)
+  fprintf(outfile, "L36_entry %d\n", L36 );
  L[36] = 1000.0 * (double)L36;
  showline(36);
- if (L36 > 0)
-  fprintf(outfile, "L36_enter %d\n", L36 ); 
 
  L[37] = L[35] - L[36];
  if (L[37] < 0.0)
@@ -1543,7 +1517,7 @@ int main( int argc, char *argv[] )
  Report_bracket_info( L[38], L[39], status );
 
  /* Household credit. */
- get_parameter( infile, 's', word, "Exemptions" );	/* NY dependent exemptions, Pg 19. */
+ get_parameter( infile, 's', word, "Exemptions" );	/* NY dependent exemptions, Pgs 15-16. */
  get_parameter( infile, 'i', &Exemptions, "Exemptions" );
  if (Dependent)
   L[40] = 0.0;
@@ -1605,6 +1579,14 @@ int main( int argc, char *argv[] )
  GetLine( "L51", &L[51] );	/* Other New York City taxes */
  GetLine( "L53", &L[53] );	/* NY City nonrefundable credits */
 
+ GetLine( "L54a", &L54a );	/* MCTMT net earnings base for Zone 1 */
+ GetLine( "L54b", &L54b );	/* MCTMT net earnings base for Zone 2 */
+ GetLine( "L54c", &L54c );	/* MCTMT for Zone 1 */
+ GetLine( "L54d", &L54d );	/* MCTMT for Zone 2 */
+ GetLine( "L55", &L[55] );	/* Yonkers resident income tax surcharge */
+ GetLine( "L56", &L[56] );	/* Yonkers non-resident earnings tax (Form &-203) */
+ GetLine( "L57", &L[57] );	/* Part-year Yonkers resident income tax surcharge */
+
  if (nyc_resident)
   { /*NYC*/
 
@@ -1654,11 +1636,24 @@ int main( int argc, char *argv[] )
    showline(53);
 
    L[54] = L[52] - L[53];
-   if (L[54] > 0.0) showline(54);  else  L[54] = 0.0;
+   if (L[54] > 0.0)
+    showline(54);
+   else
+     L[54] = 0.0;
 
-   /* Yonkers case not added. */
+   showline_wlabelnz( "L54a", L54a );	/* MCTMT net earnings base for Zone 1 */
+   showline_wlabelnz( "L54b", L54b );	/* MCTMT net earnings base for Zone 2 */
+   showline_wlabelnz( "L54c", L54c );	/* MCTMT for Zone 1 */
+   showline_wlabelnz( "L54d", L54d );	/* MCTMT for Zone 2 */
+   L54e = L54a + L54b + L54c + L54d;
+   showline_wlabelnz( "L54e", L54e );
 
-   L[58] = L[54] + L[55] + L[56] + L[57];
+   /* Yonkers case. */
+   ShowLineNonZero( 55 );		/* Yonkers resident income tax surcharge */
+   ShowLineNonZero( 56 );		/* Yonkers non-resident earnings tax (Form &-203) */
+   ShowLineNonZero( 57 );		/* Part-year Yonkers resident income tax surcharge */
+
+   L[58] = L[54] + L54e + L[55] + L[56] + L[57];
    showline_wmsg(58,"NYC taxes");
   } /*NYC*/
 

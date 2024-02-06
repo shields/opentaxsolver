@@ -102,10 +102,11 @@ int main(int argc, char *argv[]) {
 	double OA_A = 0.0, OA_B = 0.0, OA_C = 0.0, OA_D = 0.0, OA_E = 0.0, OA_Fa = 0.0, OA_Fb = 0.0;
 	double OA_Ga = 0.0, OA_Gb = 0.0, OA_Ha = 0.0, OA_Hb = 0.0, OA_Hc = 0.0, OA_I = 0.0;
 	double OA_J = 0.0, OA_K = 0.0, OA_L = 0.0, OA_M = 0.0, OA_N = 0.0, OA_O = 0.0, OA_P = 0.0,
-		   OA_Q = 0.0, OA_R = 0.0, OA_S = 0.0;
+		   OA_Q = 0.0, OA_R = 0.0, OA_S = 0.0, OA_T = 0.0;
 	double OS_A = 0.0, OS_B = 0.0, OS_C = 0.0, OS_D = 0.0, OS_E = 0.0, OS_F = 0.0, OS_G = 0.0,
 			OS_H = 0.0, OS_I = 0.0, OS_J = 0.0, OS_K = 0.0, OS_L = 0.0, OS_M = 0.0, OS_N = 0.0,
-			OS_O = 0.0, OS_P = 0.0, OS_Q = 0.0, OS_R = 0.0, OS_S = 0.0, OS_T = 0.0;
+			OS_O = 0.0, OS_P = 0.0, OS_Q = 0.0, OS_R = 0.0, OS_S = 0.0, OS_T = 0.0,
+			OS_U = 0.0, OS_V = 0.0, OS_W = 0.0;
 
 	printf("Arizona Form 140, 2022 - v%3.2f\n", thisversion);
 
@@ -330,11 +331,12 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	GetLine("OA_P", &OA_P);
 	GetLine("OA_Q", &OA_Q);
 	GetLine("OA_R", &OA_R);
+	GetLine("OA_S", &OA_S);
 
 	// Add lines OA_A thru OA_R for OA_S and L18
-	OA_S = OA_A + OA_B + OA_C + OA_D + OA_E + OA_Fa + OA_Fb + OA_Ga + OA_Gb + OA_Ha + OA_Hb + OA_Hc + OA_I
-			+ OA_J + OA_K + OA_L + OA_M + OA_N + OA_O + OA_P + OA_Q + OA_R;
-	L[18] = OA_S;
+	OA_T = OA_A + OA_B + OA_C + OA_D + OA_E + OA_Fa + OA_Fb + OA_Ga + OA_Gb + OA_Ha + OA_Hb + OA_Hc + OA_I
+			+ OA_J + OA_K + OA_L + OA_M + OA_N + OA_O + OA_P + OA_Q + OA_R + OA_T;
+	L[18] = OA_T;
 
 	showline(18);
 
@@ -412,11 +414,14 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	GetLine("OS_Q", &OS_Q);
 	GetLine("OS_R", &OS_R);
 	GetLine("OS_S", &OS_S);
+	GetLine("OS_T", &OS_T);
+	GetLine("OS_U", &OS_U);
+	GetLine("OS_V", &OS_V);
 
 	// Add lines OS_A thru OS_S for OS_T and L36
-	OS_T = OS_A + OS_B + OS_C + OS_D + OS_E + OS_F + OS_G + OS_H + OS_I + OS_J + OS_K + OS_L + OS_M + OS_N
-			+ OS_O + OS_P + OS_Q + OS_R + OS_S;
-	L[36] = OS_T;
+	OS_W = OS_A + OS_B + OS_C + OS_D + OS_E + OS_F + OS_G + OS_H + OS_I + OS_J + OS_K + OS_L + OS_M + OS_N
+			+ OS_O + OS_P + OS_Q + OS_R + OS_S + OS_T + OS_U + OS_V;
+	L[36] = OS_W;
 	showline(36);
 
 	// whole name for subsequent page
@@ -742,6 +747,7 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 		showline_wlabel("OA_P", OA_P);
 		showline_wlabel("OA_Q", OA_Q);
 		showline_wlabel("OA_R", OA_R);
+		showline_wlabel("OA_S", OA_S);
 		showline(18);
 		fprintf(outfile,"EndPDFpage.\n");	/* Optional PDF Page. */
 	}
@@ -770,6 +776,9 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 		showline_wlabel("OS_Q", OS_Q);
 		showline_wlabel("OS_R", OS_R);
 		showline_wlabel("OS_S", OS_S);
+		showline_wlabel("OS_T", OS_T);
+		showline_wlabel("OS_U", OS_U);
+		showline_wlabel("OS_V", OS_V);
 		showline(36);
 		fprintf(outfile,"EndPDFpage.\n");	/* Optional PDF Page. */
 

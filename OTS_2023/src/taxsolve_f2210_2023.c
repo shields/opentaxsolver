@@ -47,12 +47,12 @@ int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 
 /*-----------Tax Routines Copied From taxsolve_US_1040_2023.c----------------*/
 
-			/* Following values taken from 1040-Instructions pg 109. */	/* Not updated for 2023. */
-  double brkpt[4][9]={
-		{ 0.0,  10275.0,  41775.0,  89075.0, 170050.0, 215950.0, 539900.0, 9e19 },  /* Single */
-		{ 0.0,  20550.0,  83550.0, 178150.0, 340100.0, 431900.0, 647850.0, 9e19 },  /* Married, filing jointly. */
-		{ 0.0,  10275.0,  41775.0,  89075.0, 170050.0, 215950.0, 323925.0, 9e19 },  /* Married, filing separate. */
-		{ 0.0,  14650.0,  55900.0,  89050.0, 170050.0, 215950.0, 539900.0, 9e19 },  /* Head of Household. */
+			/* Following values taken from 1040-Instructions pg 110. */	/* Updated for 2023. */
+double brkpt[4][9]={
+		{ 0.0,  11000.0,  44725.0,  95375.0, 182100.0, 231250.0, 578125.0, 9e19 },  /* Single */
+		{ 0.0,  22000.0,  89450.0, 190750.0, 364200.0, 462500.0, 693750.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  11000.0,  44725.0,  95375.0, 182100.0, 231250.0, 346875.0, 9e19 },  /* Married, filing separate. */
+		{ 0.0,  15700.0,  59850.0,  95350.0, 182100.0, 231250.0, 578100.0, 9e19 },  /* Head of Household. */
 		     };
   double txrt[4][9] ={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Single */
@@ -480,10 +480,10 @@ else
 	
 		/* Schedule AI - Part II - Annualized Self-Employment Tax */
 	
-		a[29] = 36750;			/* Not updated for 2023 */
-		b[29] = 61250;
-		c[29] = 98000;
-		d[29] = 147000;
+		a[29] = 4050;			/* Updated for 2023 */
+		b[29] = 66750;
+		c[29] = 106800;
+		d[29] = 160200;
 	
 		a[31] = NotLessThanZero(a[29] - a[30]);
 		b[31] = NotLessThanZero(b[29] - b[30]);	

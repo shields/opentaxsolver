@@ -107,9 +107,11 @@ OA_O		 {Net Capital Loss Derived From the Exchange of One Kind of Legal Tender f
 		;
 OA_P		 {Entity-level Income Tax Payment.  See instructions.}
 		;
-OA_Q		 {Other Adjustments Related to Tax Credits.  See instructions.}
+OA_Q            {Motion Picture Production Costs.  See instructions.}
+                ;
+OA_R		 {Other Adjustments Related to Tax Credits.  See instructions.}
 		;
-OA_R		 {Other Adjustments.  See instructions.}
+OA_S		 {Other Adjustments.  See instructions.}
 		;
 { --- Subtractions --- 
 	See instructions for more information.	
@@ -202,8 +204,11 @@ OS_Q		 {S Corporation shareholders of an Arizona Marijuana Establishment, Mariju
 OS_R		 {Net Capital Gain Derived From the Exchange of One Kind of Legal Tender for Another Kind of Legal 
 				Tender: See instructions.}
 		;
-OS_S		 {Other Adjustments - see instructions.}
-		;
+OS_S    	 {Value of Virtual Currency and Non-Fingible Tokens Receieved at Time of Airdrop.} ;
+OS_T             {Gas Fees not included in Virtual Currency and Non-Fingible Tokens Basis.} ;
+OS_U             {Arizona Families Tax Rebate.} ;
+OS_V             {Other Adjustments - see instructions.} ;
+
  { --- Other Exemptions: Complete Dependent and Other Exemption Information, Part 3 ---}
 L40e		 {Total number of qualifying individuals}
 		;
