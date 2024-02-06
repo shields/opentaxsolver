@@ -35,7 +35,6 @@ int main( int argc, char *argv[] )
  printf("Schedule E, 2023 - v%3.2f\n", thisversion);
 
 
-MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
 add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
 #ifdef microsoft
  system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );

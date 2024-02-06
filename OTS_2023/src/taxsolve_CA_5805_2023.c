@@ -31,12 +31,12 @@ float thisversion=5.00;
 #include "taxsolve_routines.c"
 
 #define SINGLE 		        1
-#define MARRIED_FILING_JOINTLY 2
-#define MARRIED_FILING_SEPARAT 3
+#define MARRIED_FILING_JOINTLY  2
+#define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
-#define INDIVIDUAL	1
-#define ESTATE	2
+#define INDIVIDUAL 1
+#define ESTATE	   2
 #define Yes 1
 #define No  0
 #define NotApplicable 3
@@ -110,14 +110,14 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
 }
 
 
-double		/* Reoccuring threshold values. */	/* Not updated for 2023. */
-	thresh_sep_single =	229908.0,
-	thresh_mfj =		459821.0,
-	thresh_HoH =		344867.0;
+double		/* Reoccuring threshold values. */	/* Updated for 2023. */
+	thresh_sep_single =	237035.0,
+	thresh_mfj =		474075.0,
+	thresh_HoH =		355558.0;
 
-double		/* Other recurring values */		/* Not updated for 2023 */
-	line_11_multiplier = 0.02672055,
-	line_12_multiplier = 0.00014;
+double		/* Other recurring values */		/* Updated for 2023 */
+	line_11_multiplier = 0.04799165,
+	line_12_multiplier = 0.00019;
 
 double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status){
 

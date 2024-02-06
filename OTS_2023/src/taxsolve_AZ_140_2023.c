@@ -25,71 +25,29 @@ float thisversion = 2.00;
 #define OTHER_EXEMPTION_AMOUNT 2300
 
 
-	/* Not updated for 2023. */
-
-
-// ~~~~~~~~~~~~~~~This routine is based on 2022 Tax Year ~~~~~~~~~~~~~~~~
-
 /*----------------------------------------------------------------------------*/
 
-double getAZStdDedAmt() {
-	double azStdDedAmt[5][1]={
+double getAZStdDedAmt() 
+{
+	double azStdDedAmt[5][1]={				/* Updated for 2023. */
 			{0.0},
-			{ 12950.0 },  /* Single */
-			{ 25900.0 },  /* Married, filing jointly. */
-			{ 12950.0 },  /* Married, filing separate. */
-			{ 19400.0}  /* Head of Household. */
+			{ 13850.0 },  /* Single */
+			{ 27700.0 },  /* Married, filing jointly. */
+			{ 13850.0 },  /* Married, filing separate. */
+			{ 20800.0 }   /* Head of Household. */
 			     };
 	return azStdDedAmt[status][0];
 }
 
-double getAZTaxAmt(double azTaxableIncome) {
+double getAZTaxAmt( double azTaxableIncome ) 
+{
 	double taxAmt = 0.0;
-
-	// these values will probably change from year to year; maybe even tiers will be added?
-	double tieredTaxRates[] = {2.55, 2.98};
-	double tableXTxblIncomeTiers[] = {0.0, 28653.0};
-	double tableYTxblIncomeTiers[] = {0.0, 57305.0};
-	double tableXTiersTax[] = {0.0, 731.0};
-	double tableYTiersTax[] = {0.0, 1461.0};
-
-	// calculate number of tiers based on arrays above
-	int tiers = sizeof(tieredTaxRates) / sizeof(tieredTaxRates[0]);
-
-	// index of the top tier
-	int tier = tiers - 1;
-
-	// tables start at taxable income over zero.
-	if (azTaxableIncome > 0.0) {
-		if (status == SINGLE || status == MARRIED_FILING_SEPARAT) {
-			// "Table X"
-			printf("Using Tax Table X");
-			// starting at the highest tier, see if taxable income is in lower tier
-			while (azTaxableIncome < tableXTxblIncomeTiers[tier]) {
-				tier--;
-				if (tier <= 0)
-					break;
-			}
-			printf("Tax tier: %i for taxable income over %9.2f plus %9.2f from prior tier; rate is %9.2f percent.", tier, tableXTxblIncomeTiers[tier], tableXTiersTax[tier],  tieredTaxRates[tier]);
-			taxAmt = ((azTaxableIncome - tableXTxblIncomeTiers[tier]) * (tieredTaxRates[tier]/100)) + tableXTiersTax[tier];
-
-		} else if (status == MARRIED_FILING_JOINTLY || status == HEAD_OF_HOUSEHOLD) {
-			// "Table Y"
-			printf("Using Tax Table Y");
-			// starting at the highest tier, see if taxable income is in lower tier
-			while (azTaxableIncome < tableYTxblIncomeTiers[tier]) {
-				tier--;
-				if (tier <= 0)
-					break;
-			}
-			printf("Tax tier: %i for taxable income over %9.2f plus %9.2f from prior tier; rate is %9.2f percent.", tier, tableYTxblIncomeTiers[tier], tableYTiersTax[tier],  tieredTaxRates[tier]);
-			taxAmt = ((azTaxableIncome - tableYTxblIncomeTiers[tier]) * (tieredTaxRates[tier]/100)) + tableYTiersTax[tier];
-		}
-	}
+	taxAmt = 0.025 * azTaxableIncome;			/* Updated for 2023. */
 	return taxAmt;
 }
 
-int main(int argc, char *argv[]) {
+int main( int argc, char *argv[] )
+{
 	int i, j, k, deduction = 0, includePage4 = 0;
 	char word[4000], outfname[4000], prelim_1040_outfilename[5000], *infname = 0;
 	time_t now;
@@ -110,18 +68,14 @@ int main(int argc, char *argv[]) {
 
 	printf("Arizona Form 140, 2022 - v%3.2f\n", thisversion);
 
-
-
-
-// MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2023."
-add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
-#ifdef microsoft
- system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
-#else
- system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
-#endif
-
-
+	#if (0)
+		add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2023.\"" );
+		#ifdef microsoft
+		 system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\"" );
+		#else
+		 system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2023.\" &" );
+		#endif
+	#endif
 
 	/* Decode any command-line arguments. */
 	i = 1;
@@ -360,7 +314,7 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	GetLineF("L22", &L[22]);
 	GetLineF("L23", &L[23]);
 
-	L[24] = L[23] * .25;
+	L[24] = L[23] * 0.25;					/* Updated for 2023. */
 	showline(24);
 
 	GetLineF("L25", &L[25]);
@@ -371,9 +325,9 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 
 	// validate 29a - no greater than $2500 per taxpayer
 	if (L29a > 2500.0) {
-        printf("Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500 . Exiting.\n", L29a);
-        fprintf(outfile,"Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500 . Exiting.\n", L29a);
-        exit(1);
+         printf("Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500. Exiting.\n", L29a);
+         fprintf(outfile,"Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500. Exiting.\n", L29a);
+         exit(1);
 	}
 
 	GetLineF("L29b", &L29b);
@@ -466,10 +420,7 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	showline(41);
 
 	// subtract lines 38 through 41 from L37 and place greater of 0 or result in L42
-	L[42] = L[37] - L[38] - L[39] - L[40] - L[41];
-	if (L[42] < 0.0) {
-		L[42] = 0.0;
-	}
+	L[42] = NotLessThanZero( L[37] - L[38] - L[39] - L[40] - L[41] );
 	showline(42);
 
 	// Balance of Tax
@@ -522,22 +473,19 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	}
 
 
-	// multiply 6C by .27 for 7C and place result in L44
-	L[44] = SD6C * .27;
+	// multiply 6C by 31% for 7C and place result in L44
+	L[44] = SD6C * 0.31;							/* Updated for 2023. */
 	showline(44);
 
 	// subtract L43 and L44 from L42 and place greater of 0 or result in L45 (taxable income)
-	L[45] = L[42] - L[44] - L[43];
-	if (L[45] < 0) {
-		L[45] = 0;
-	}
+	L[45] = NotLessThanZero( L[42] - L[44] - L[43] );
 	showline(45);
 
 	// calculate tax amount and place in L46
-	L[46] = getAZTaxAmt(L[45]);
+	L[46] = getAZTaxAmt( L[45] );
 	showline(46);
 
-	GetLineF("L47", &L[47]);
+	GetLineF( "L47", &L[47] );
 
 	// Add L46 and L47 and place total in L48 (tax subtotal)
 	L[48] = L[46] + L[47];
@@ -807,8 +755,7 @@ add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT
 	 showline_wlabel( "label", value ) - For custom line names and variables not in the default L[] array.
 	 showline_wlabelnz( "label", value ) - Like showline_wlabel, but only writes non-zero values.
 	 showline_wlabelmsg( "label", value, "msg" ) - Like showline_wlabel,but adds the provided message to the output line.
-
-	 ***/
+	***/
 
 	fclose(infile);
 	grab_any_pdf_markups(infname, outfile);
