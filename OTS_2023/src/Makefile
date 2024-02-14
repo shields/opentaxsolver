@@ -5,7 +5,8 @@
 # Compiler options
 CC      =  cc
 CFLAGS  =
-COPTIM  = -O -Wall -lm
+COPTIM  = -O -Wall 
+LDFLAGS = -lm
 
 # For MSYS1.0, define "CFLAGS = -std=c99"
 # in your build env.
@@ -47,6 +48,7 @@ TAXSOLVE := \
     taxsolve_HSA_f8889 \
     taxsolve_f8606 \
     taxsolve_US_1040_Sched_SE_2023 \
+    taxsolve_f8812_2023 \
     taxsolve_f8829_2023 \
     taxsolve_f8995_2023 \
     taxsolve_f8959_2023 \
@@ -83,16 +85,22 @@ all: $(EXE_TAXSOLVE) $(EXE_IO) $(EXE_TOP)
 # Pattern rule for taxsolver programs in ../bin/
 # includes dependency on taxsolve_routines.c
 $(EXE_TAXSOLVE): ../bin/%$(EFS): %.c taxsolve_routines.c
-	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< $(LDFLAGS)
 
 # Pattern rule for io programs in ../bin/
 $(EXE_IO): ../bin/%$(EFS): %.c
-	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< $(LDFLAGS)
 
 # Pattern rule for top level programs in ../
 $(EXE_TOP): ../%$(EFS): %.c
-	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< 
+	$(CC) $(CFLAGS) $(COPTIM) -o $@ $< $(LDFLAGS)
 
 
 clean:
 	rm -fv $(EXE_TAXSOLVE) $(EXE_IO) $(EXE_TOP)
+
+#
+#
+#
+#
+

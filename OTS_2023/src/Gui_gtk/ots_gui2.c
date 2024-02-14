@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.62;
-char package_date[]="Jan 2, 2024";
-char ots_release_package[]="21.00";
+float version=2.63;
+char package_date[]="Feb 14, 2024";
+char ots_release_package[]="21.02";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1070,6 +1070,9 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_f2210" ) != 0)
 	 instructions_filename = strdup( "f2210_instructions.dat" );
 	else
+	if (strstr( taxsolvestrng, "taxsolve_f8812" ) != 0)
+	 instructions_filename = strdup( "f8812_instructions.dat" );
+	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	 instructions_filename = strdup( "CA_5805_instructions.dat" );	 
 	else
@@ -1262,6 +1265,9 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f2210" ) != 0)
 	  check_form_version( title_line, "Title:  Form 2210 for Tax Year 2023" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_f8812" ) != 0)
+	  check_form_version( title_line, "Title:  Form 8812 - 2023" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	  check_form_version( title_line, "Title:  Form 5805" );
@@ -2572,6 +2578,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, "Form_2210" );
   }
  else
+ if (strstr( taxsolvestrng, "taxsolve_f8812" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "Form_8812" );
+  }
+ else
  if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
   {
    supported_pdf_form = 1;
@@ -3531,6 +3544,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8959",            "f8959_meta.dat",    "f8959_pdf.dat" },
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
+        { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
         { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
   };
 

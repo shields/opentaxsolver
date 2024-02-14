@@ -93,7 +93,7 @@ CA540_Subtr_C13	  21	; { Subtractions for Health savings account }
 CA540_Addit_C14	  23	; { Additions for Moving Expenses }
 CA540_Subtr_C15	   3.33	; { Subtractions for Deductible part of self-employment tax. }
 CA540_Subtr_C17	   2.22	; { Subtractions for Self-employed health insurance deduction.  }
-CA540_Addit_C19	 24	; { Additions for Alimony paid }
+CA540_Addit_C19	  24	; { Additions for Alimony paid }
 CA540_AlimonyRecipName: Morgan	{ Alimony Receipient's Last name }
 CA540_Subtr_C20   25     ; { Subtractions for IRA deduction }
 CA540_Addit_C20   25     ; { Additions for IRA deduction }
@@ -121,7 +121,6 @@ CA540_P2_Add_6	29	; { Additions for Other taxes }
 CA540_P2_Add_8a	30	; { Additions for home mortgage interest & points reported on Form 1098 }
 CA540_P2_Add_8b	31	; { Additions for home mortgage interest not reported on Form 1098 }
 CA540_P2_Add_8c	32	; { Additions for points not reported on Form 1098 }
-CA540_P2_Sub_8d	33	; { Subtractions for mortgage insurance premiums }
 CA540_P2_Sub_9	34	; { Subtractions for investment interest }
 CA540_P2_Add_9	35	; { Additions for investment interest }
 CA540_P2_Sub_11	36	; { Subtractions for Gifts by cash or check }
