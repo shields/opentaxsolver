@@ -27,7 +27,7 @@
 
  ************************************************************************/
 
-float thisversion=4.00;
+float thisversion=4.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -106,7 +106,7 @@ int main( int argc, char *argv[] )
 
  GetLine( "L2", &L[2] );	/* Net Profit/Loss */	
  GetLine( "L5a", &L5a );	/* Church employee income from Form W-2 */	
- L[7] = 147000.0;           	/* Fixed value for tax year 2023 */			/* Not updated for 2023. */
+ L[7] = 160200.0;           	/* Fixed value for tax year 2023 */			/* Not updated for 2023. */
  GetLine( "L8a", &L8a );	/* Wages & Tips */
  GetLine( "L8b", &L8b );	/* Unreported tips from Form 4137, line 10 */
  GetLine( "L8c", &L8c );	/* Wages from Form 8919, line 10 */
@@ -138,7 +138,7 @@ int main( int argc, char *argv[] )
  L[13] = L[12] * 0.5;
  showline_wmsg( 13, "Also enter this number on Schedule-1, line 15." );
 
- L[14] = 6040.0;									/* Not updated for 2023. */
+ // L[14] = 6040.0;									/* Not updated for 2023. */
 
  /* ----- .... Until here.  ----- */
 

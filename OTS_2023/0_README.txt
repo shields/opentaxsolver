@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-Feb. 14, 2024 v21.04 - For tax-year 2023.
+Feb. 14, 2024 v21.02 - For tax-year 2023.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,7 +32,7 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-    * v21.04 (2/14/2024) - Fixes to CA Form-5808 for 2023 updates
+    * v21.02 (2/14/2024) - Fixes to CA Form-5808 for 2023 updates
 		with added WorkSheets in PDF output.
 		Adjusted Makefile for compilation on RaspberryPi.
 		Added initial version of Sched-8, Form-8812 for

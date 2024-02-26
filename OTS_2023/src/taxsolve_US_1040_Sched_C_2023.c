@@ -457,7 +457,7 @@ int main( int argc, char *argv[] )
  showline_wlabelnz( "L48g_amnt", L48g_amnt );
  if (strlen( L48h_descr ) > 0)
   fprintf(outfile,"L48h_descr: %s\n", L48h_descr );
- showline_wlabelnz( "L48ha_amnt", L48h_amnt );
+ showline_wlabelnz( "L48h_amnt", L48h_amnt );
  if (strlen( L48i_descr ) > 0)
   fprintf(outfile,"L48i_descr: %s\n", L48i_descr );
  showline_wlabelnz( "L48i_amnt", L48i_amnt );
