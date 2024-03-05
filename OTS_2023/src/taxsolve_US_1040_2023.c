@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2024	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=21.0;
+float thisversion=21.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -2154,6 +2154,7 @@ int main( int argc, char *argv[] )						/* Updated for 2023. */
  GetLine( "A8a", &homemort[0] );	/* Home mortgage interest and points reported to you on Form 1098.*/
  GetLine( "A8b", &homemort[1] );	/* Home mortgage interest not reported to you on Form 1098.*/
  GetLine( "A8c", &homemort[2] );	/* Points not reported to you on Form 1098.*/
+ homemort[3] = 0;
  // GetLine( "A8d", &homemort[3] );	/* Mortgage insurance premiums. */
  GetOptionalLine( "A8d or A9", labelx, &tmpval );
  if (strcmp( labelx, "A9" ) == 0)

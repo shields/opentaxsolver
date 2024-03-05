@@ -247,7 +247,6 @@ S1_24z_Type:  Materials   { Type of Other adjustments. }
  A8a     7      ;       { Home mortgage interest and points reported to you on Form 1098.}
  A8b            ;       { Home mortgage interest not reported to you on Form 1098.}
  A8c            ;       { Points not reported to you on Form 1098.}
- A8d     1      ;       { Mortgage insurance premiums. }
  A9      9      ;       { Investment interest. Attach Form 4952}
 
  A11	111	;       { Charity contributions by Cash or Check. }
