@@ -32,6 +32,8 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v21.04 (3/14/2024) - Updated Massachusetts State Taxes 
+		Line 14 maximum rental deduction for 2023.
     * v21.03 (3/3/2024) - Small fixes to output Form files for 
 		US_1040, CA_540, and US_1040_Sched_C.
 		Fixed placement of US_1040_Sched_C Line 27a in the

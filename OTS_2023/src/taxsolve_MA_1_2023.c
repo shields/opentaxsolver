@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include <time.h>
 
-float thisversion=21.00;
+float thisversion=21.01;
 
 #include "taxsolve_routines.c"
 
@@ -306,9 +306,9 @@ int main( int argc, char *argv[] )
  showline_wlabel( "L14a", L[14] );
  L[14] = L[14] / 2.0;
  if (status == MARRIED_FILING_SEPARAT)
-  L[14] = smallerof( L[14] , 1500.0 );
+  L[14] = smallerof( L[14] , 2000.0 );			/* Updated for 2023. */
  else
-  L[14] = smallerof( L[14] , 3000.0 );
+  L[14] = smallerof( L[14] , 4000.0 );
  ShowLineNonZero(14);
 
  GetLine( "L15", &L[15] );	/* Other Deductions (sched Y, L19) */
