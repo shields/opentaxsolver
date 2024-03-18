@@ -22,51 +22,55 @@ L19		;	{ Amended return only - overpayment previously received on original }
 { --- Additions --- (Items not included in line L1 above.) }
 SchedA_1	;	{ Non-Ohio state or local government interest and dividends }
 SchedA_2	;	{ Ohio pass-through entity and financial institutions taxes paid }
-SchedA_3	;	{ Reimbursed college tuit. fees deducted prev yrs. }
-SchedA_4	;	{ Losses from sale or disposition of Ohio public obligations }
-SchedA_5	;	{ Nonmedical withdrawals from medical savings account }
-SchedA_6	;	{ Reimbursement of expenses previously deducted for Ohio income tax ... }
-SchedA_7	;	{ Adjustment for Internal Revenue Code sections 168(k) and 179 }
-SchedA_8	;	{ Federal interest and dividends subject to state taxation }
-SchedA_9	;	{ Federal conformity additions }
+SchedA_3	;	{ Taxes paid to another state or District of Columbia related to IRS notice 2020-75 }
+SchedA_4	;	{ 529 plan funds used for non-qualified expenses }
+SchedA_5	;	{ Losses from sale or disposition of Ohio public obligations }
+SchedA_6	;	{ Nonmedical withdrawals from medical savings account }
+SchedA_7	;	{ Reimbursement of expenses previously deducted for Ohio income tax return }
+{ - Federal - }
+SchedA_8	;	{ Internal Revenue Code sections 168(k) and 179 depreciation expense add-back }
+SchedA_9	;	{ Exempt federal interest and dividends subject to state taxation }
+SchedA_10	;	{ Federal conformity additions }
 
 { --- Deductions --- }
-SchedA_11	;	{ Business income deduction (Ohio Schedule IT BUS, line 11) }
-SchedA_12	;	{ Compensation earned in Ohio by residents of neighboring states }
-SchedA_13	;	{ State/municipal tax overpayments (IRS form 1040, Sched 1, line 10) }
-SchedA_14	;	{ Taxable Social Security benefits }
-SchedA_15	;	{ Certain railroad retirement benefits }
-SchedA_16	;	{ Interest income from Ohio public obligations ... }
-SchedA_17	;	{ Amounts contributed to an individual development account }
-SchedA_18	;	{ Amounts contributed to a STABLE account }
-SchedA_19	;	{ Income from out-of-state business }
+SchedA_12	;	{ Business income deduction (Ohio Schedule IT BUS, line 13) }
+SchedA_13	;	{ Compensation earned in Ohio by residents of neighboring states }
+SchedA_14	;	{ Taxable refunds, credits, or offsets of state * local income taxes (Fed1040 Sched-1 L1)}
+SchedA_15	;	{ Taxable Social Security benefits (Fed1040 L6b) }
+SchedA_16	;	{ Certain railroad retirement benefits }
+SchedA_17	;	{ Interest income from Ohio public obligations ... }
+SchedA_18	;	{ Amounts contributed to Ohio county's individual development account }
+SchedA_19	;	{ Amounts contributed to a STABLE account: Ohio's ABLE plan. }
+SchedA_20	;	{ Income earned in Ohio by a qualifying out-of-state business }
+SchedA_21	;	{ Certain payments related to the East Palestine train derailment. }
+SchedA_22	;	{ Ohio adoption grant payments received from Ohio Dept of Job & Family Services }
 
 { - Federal - } 
-SchedA_20	;	{ Federal interest and dividends exempt from state taxation }
-SchedA_21	;	{ Deduction of prior year 168(k) and 179 depreciation addbacks }
-SchedA_22	;	{ Refund or reimbursements shown on IRS 1040, Sched 1, line 21 }
-SchedA_23	;	{ Repayment of income reported in a prior year }
-SchedA_24	;	{ Wage expense not deducted ... }
-SchedA_25	;	{ Federal conformity deductions }
+SchedA_23	;	{ Federal interest and dividends exempt from state taxation }
+SchedA_24	;	{ Deduction of prior year 168(k) and 179 depreciation add-backs }
+SchedA_25	;	{ Refund or reimbursements shown on IRS 1040, Sched 1, line 21 }
+SchedA_26	;	{ Repayment of income reported in a prior year }
+SchedA_27	;	{ Wage expense not deducted based on Federal work opportunity tax credit }
+SchedA_28	;	{ Federal conformity deductions }
 
 { - Uniformed Services - } 
-SchedA_26	;	{ Military pay for Ohio residents received while stationed outside Ohio }
-SchedA_27	;	{ Income earned by military nonresidents ... }
-SchedA_28	;	{ Uniformed services retirement income }
-SchedA_29	;	{ Military injury relief fund }
-SchedA_30	;	{ Certain Ohio National Guard reimbursements and benefits }
+SchedA_29	;	{ Military pay for Ohio residents received while stationed outside Ohio }
+SchedA_30	;	{ Income earned by military nonresidents ... }
+SchedA_31	;	{ Uniformed services retirement income }
+SchedA_32	;	{ Military injury relief fund }
+SchedA_33	;	{ Certain Ohio National Guard reimbursements and benefits }
 
 { - Education - } 
-SchedA_31	;	{ Ohio 529 contributions, tuition credit purchases }
-SchedA_32	;	{ Pell College Opportunity taxable grant amounts used for room and board }
-SchedA_33	;	{ Ohio educator expenses in excess of federal deduction }
+SchedA_34	;	{ Amounts contributed to 529 Plan. }
+SchedA_35	;	{ Pell College Opportunity taxable grant amounts used for room and board }
+SchedA_36	;	{ Ohio educator expenses in excess of federal deduction }
 
-{ Medical } 
-SchedA_34	;	{ Disability benefits }
-SchedA_35	;	{ Survivorship benefits }
-SchedA_36	;	{ Unreimbursed long-term care insurance premiums ...  }
-SchedA_37	;	{ Funds deposited into, and earnings of, a medical savings account }
-SchedA_38	;	{ Qualified organ donor expenses }
+{ - Medical - } 
+SchedA_39	;	{ Disability benefits }
+SchedA_40	;	{ Survivorship benefits }
+SchedA_41	;	{ Unreimbursed medical and health care expenses }
+SchedA_42	;	{ Medical savings account contributions/earnings }
+SchedA_43	;	{ Qualified organ donor expenses }
 
 { --- Schedule of Credits --- }
 Credits_2	;	{ Retirement income credit.  (include 1099-R forms) }
@@ -76,38 +80,39 @@ Credits_5	;	{ Lump sum distribution credit }
 Credits_6	;	{ Child care and dependent care credit }
 Credits_7	;	{ Displaced worker training credit }
 Credits_8	;	{ Campaign contribution credit for Ohio General Assembly }
+
 Credits_13	;	{ Earned income credit. }
 Credits_14	;	{ Home school expenses credit. }
 Credits_15	;	{ Scholarship donation credit. }
 Credits_16	;	{ Nonchartered, nonpublic school tuition credit. }
-Credits_17	;	{ Vocational job credit. }
+Credits_17	;	{ Credit for work-based learning experiences }
 Credits_18	;	{ Ohio adoption credit  }
 Credits_19	;	{ Job retention credit, nonrefundable portion }
 Credits_20	;	{ Credit for eligible new employees in enterprise zones }
-Credits_21	;	{ Credit for purchases of grape production property }
-Credits_22	;	{ InvestOhio credit }
-Credits_23	;	{ Lead abatement credit }
-Credits_24	;	{ Opportunity zone investment credit }
-Credits_25	;	{ Tech investment credit }
-Credits_26	;	{ Enterprise zone day care and training credits }
-Credits_27	;	{ Research and development credit }
-Credits_28	;	{ Nonrefundable Ohio historic preservation credit }
+Credits_21	;	{ Credit for the beginning farmers financial management program }
+Credits_22	;	{ Welcome Home Ohio credit }
+Credits_23	;	{ Credit for sale/rental of agricultural assets to beginning farmers }
+Credits_24	;	{ Grape production credit }
+Credits_25	;	{ InvestOhio credit (include a copy of the credit certificate) }
+Credits_26	;	{ Lead abatement credit }
+Credits_27	;	{ Opportunity zone investment credit }
+Credits_28	;	{ Tech investment credit }
+Credits_29	;	{ Enterprise zone day care and training credits }
+Credits_30	;	{ Research and development credit }
+Credits_31	;	{ Nonrefundable Ohio historic preservation credit }
+Credits_32	;	{ Ohio low-income housing credit (include a copy of the credit certificate) }
+Credits_33	;	{ Affordable single-family housing credit (include a copy of the credit certificate) }
 
-{ - Nonresident Credit - }
-DateBeganResidence:     { Date you began Ohio residence. (mm dd yy) }
-DateEndResidence:       { Date you ended Ohio residence. (mm dd yy) }
-OtherState:             { Other state of residency. (2-letter abrev.) }
-Credits_31	;	{ Portion Line-3 (L3) that was not earned in Ohio }
-
-{ - Resident Credit - }
-Credits_34	;	{  Resident credit - OH IT RC, line 7 }
+{ - Residency Credits - }
+Credits_36	;	{  Nonresident credit - Ohio IT NRC, line 20 (include a copy) }
+Credits_37	;	{  Resident credit - OH IT RC, line 7(include a copy)  }
 
 { - Refundable Credits - }
-Credits_36	;	{ Refundable Historic preservation credit }
-Credits_37	;	{ Refundable Business jobs credit }
-Credits_38	;	{ Pass-through entity credit }
-Credits_39	;	{ Motion picture production credit }
-Credits_40	;	{ Venture capital credit }
+Credits_39	;	{ Refundable Historic preservation credit }
+Credits_40	;	{ Refundable Business jobs credit }
+Credits_41	;	{ Pass-through entity credit }
+Credits_42	;	{ Motion picture production credit }
+Credits_43	;	{ Venture capital credit }
 
 { ------------------------------------------- } 
 { --- Optional info for Auto-PDF-Fillout. --- }
