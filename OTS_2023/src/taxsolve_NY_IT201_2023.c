@@ -26,7 +26,7 @@
 /* Corrections 2022 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=21.00;
+float thisversion=21.01;
 
 #include "taxsolve_routines.c"
 
@@ -1194,6 +1194,7 @@ int main( int argc, char *argv[] )
 
  // GetLineF( "L7", &L[7] );	/* Capital gains/losses (fed sched D) */
  L[7] = PrelimFedReturn.schedD[16];
+ if ( L[7] < 0.0) L[7] = PrelimFedReturn.schedD[21];
  showline(7);
 
  // GetLineF( "L8", &L[8] );	/* Other gains/losses (fed form 4794) */

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 3, 2024 v21.03 - For tax-year 2023.
+April 5, 2024 v21.05a - For Tax Year 2023.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,8 +32,16 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-    * v21.04 (3/14/2024) - Updated Massachusetts State Taxes 
-		Line 14 maximum rental deduction for 2023.
+    * v21.05a (4/5/2024) - Fix to NY State line 7 for the case
+		when there are net Capital Losses. 
+    * v21.05 (4/2/2024) - Fix to Fed 1040 Qualifed Dividends and 
+		Capital Gain Tax Worksheet line 3, for when not
+		filing Schedule-D.
+    * v21.04 (3/14/2024) - Completed updating Ohio State Form line
+		changes for 2023 tax year.
+		Updated Massachusetts State Taxes Line 14 maximum 
+		rental deduction for 2023.  Some other small
+		form clean-ups.
     * v21.03 (3/3/2024) - Small fixes to output Form files for 
 		US_1040, CA_540, and US_1040_Sched_C.
 		Fixed placement of US_1040_Sched_C Line 27a in the

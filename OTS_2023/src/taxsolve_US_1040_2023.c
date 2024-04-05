@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2024	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=21.01;
+float thisversion=21.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -164,7 +164,7 @@ void capgains_qualdividends_worksheets( int status )			/* Updated for 2023. */
  if (Do_SchedD)
   qcgws[3] = NotLessThanZero(smallerof( SchedD[15], SchedD[16] ));
  else
-  qcgws[3] = Sched1[13];
+  qcgws[3] = L[7];
  qcgws[4] = qcgws[2] + qcgws[3];
  qcgws[5] = NotLessThanZero( qcgws[1] - qcgws[4] );
  switch (status)
@@ -2349,7 +2349,7 @@ int main( int argc, char *argv[] )						/* Updated for 2023. */
     Do_QDCGTW = Yes;
    if (Do_QDCGTW)
     {
-     fprintf(outfile,"Doing 'Qualified Dividends and Capital Gain tax Worksheet', page 36.\n");
+     fprintf(outfile,"Doing 'Qualified Dividends and Capital Gain tax Worksheet', page 37.\n");
      capgains_qualdividends_worksheets( status );
     }
    else
