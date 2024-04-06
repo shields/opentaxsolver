@@ -4,7 +4,7 @@
  E. Strnod 9/12/2023
  ***********************************************************************/
 
-float thisversion = 2.00;
+float thisversion = 2.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -169,13 +169,12 @@ int main( int argc, char *argv[] )
 	 // get prior last names
 	 GetTextLineF("PriorLastNames:" );
 
+	 get_parameter(infile, 's', word, "L4a_InjuredSpouse:");
+	 get_parameter(infile, 'b', &j, "L4a_InjuredSpouse:");
 
 	 // filing status checkboxes
 	 if (status == MARRIED_FILING_JOINTLY) {
-	 		fprintf(outfile, "L4Chk X\n");
-
-		get_parameter(infile, 's', word, "L4a_InjuredSpouse:");
-		get_parameter(infile, 'b', &j, "L4a_InjuredSpouse:");
+	 	fprintf(outfile, "L4Chk X\n");
 		if (j != 0)
 			fprintf(outfile, "L4a_InjuredSpouseChk X\n");
 	 } else if (status == HEAD_OF_HOUSEHOLD) {
