@@ -40,7 +40,8 @@ L6		;	{ State Income Tax refund or overpayment credit }
 L7		;	{ Subtractions from Schedule ADJ, line 7 }
 L10		;	{ Itemized Deductions - Otherwise enter 0.0 for Std. Ded. }
 L13		;	{ Deductions from VAGI Schedule ADJ, Line 9. }
-L17		;	{ Spouse Tax Adjustment. }
+STA_VAGI	;	{ Spouse VAGI for Line 17 STA. }
+L17		;	{ Spouse Tax Adjustment (STA). }
 L19a    	;	{ Virginia tax withheld for 2023. }
 L19b		;	{ Spouse's Virginia tax withheld. }
 L20		;	{ Estimated tax paid for 2023. (form 760ES) }

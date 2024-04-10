@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=21.00;
+float thisversion=21.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -70,7 +70,7 @@ int main( int argc, char *argv[] )
  char word[1000], outfname[4000], *lnameptr, lastname[1024], *socsec, *datestr, *twrd, *infname=0;
  int status=0, exemptionsA=0, exemptionsB=0, youBlind=0, spouseBlind=0;
  time_t now;
- double L19b=0.0, std_ded=0.0, min2file;
+ double L19b=0.0, std_ded=0.0, min2file, STA_VAGI=0.0;
 
  /* Intercept any command-line arguments. */
  printf("VA-760 2023 - v%3.1f\n", thisversion);
@@ -317,7 +317,15 @@ int main( int argc, char *argv[] )
  showline(16);
  Report_bracket_info( L[15], L[16], status );
 
- GetLine( "L17", &L[17] );	/* Spouse Tax Adjustment. */
+ get_parameter( infile, 'l', word, "L17" );
+ if (strcmp( word, "STA_VAGI" ) == 0)
+  {
+   get_parameters( infile, 'f', &STA_VAGI, "STA_VAGI" );
+   showline_wlabelnz( "STA_VAGI", STA_VAGI );
+   get_parameter( infile, 's', word, "L17" );
+  }
+ get_parameters( infile, 'f', &L[17], "L17" );
+ // GetLine( "L17", &L[17] );	/* Spouse Tax Adjustment. */		// Update in 2024.
  showline(17);
 
  L[18] = L[16] - L[17];

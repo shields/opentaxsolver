@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-April 6, 2024 v21.05b - For Tax Year 2023.
+April 9, 2024 v21.05c - For Tax Year 2023.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,8 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v21.05c (4/9/2024) - Added to Virginia State the ability to
+		enter Spouse VAGI so that it shows up on PDF form.
     * v21.05b (4/6/2024) - Fix to AZ State for filing Single to
 		accept line 4a by default.
     * v21.05a (4/5/2024) - Fix to NY State line 7 for the case
