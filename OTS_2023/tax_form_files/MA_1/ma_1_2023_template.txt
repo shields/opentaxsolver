@@ -29,7 +29,8 @@ L3			{Wages, salaries, tips (W-2). }
 		;
 L4		;	{Taxable pensions.}
 L5a		;	{Mass Bank Interest}
-L6		;	{ Business income/loss. (Sched C) }
+L6a		;	{ Business income/loss. (Sched C) }
+L6b		;	{ Farm income/loss. (Enclose US Sched F) }
 L7		;	{ Rental, royality, REMIC., etc. }
 L8a		;	{ Unemployment }
 L8b		;	{ Lottery }

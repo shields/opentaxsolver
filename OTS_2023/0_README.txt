@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-April 9, 2024 v21.05c - For Tax Year 2023.
+April 18, 2024 v21.06 - For Tax Year 2023.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,13 +32,18 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v21.06 (4/18/2024) - To Massachusetts State Form, added 
+		Line-6b for Farm income, and made Business income
+		Line-6a show up on PDF form.
+		Clean re-compile of all the intervening updates
+		since the prior full release.
     * v21.05c (4/9/2024) - Added to Virginia State the ability to
 		enter Spouse VAGI so that it shows up on PDF form.
     * v21.05b (4/6/2024) - Fix to AZ State for filing Single to
 		accept line 4a by default.
     * v21.05a (4/5/2024) - Fix to NY State line 7 for the case
 		when there are net Capital Losses. 
-    * v21.05 (4/2/2024) - Fix to Fed 1040 Qualifed Dividends and 
+    * v21.05 (4/2/2024) - Fix to Fed 1040 Qualified Dividends and 
 		Capital Gain Tax Worksheet line 3, for when not
 		filing Schedule-D.
     * v21.04 (3/14/2024) - Completed updating Ohio State Form line
@@ -52,7 +57,7 @@ History:
 		PDF output.
     * v21.02 (2/14/2024) - Fixes to CA Form-5808 for 2023 updates
 		with added WorkSheets in PDF output.
-		Adjusted Makefile for compilation on RaspberryPi.
+		Adjusted Makefile for compilation on Raspberry-Pi.
 		Added initial version of Sched-8, Form-8812 for
 		"Credits for Qualifying Children and Dependents",
 		for preliminary testing.

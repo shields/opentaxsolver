@@ -31,7 +31,8 @@ L3	60,000.00	{Wages, salaries, tips (W-2). }
 		;
 L4		;	{Taxable pensions.}
 L5a	   180.00;	{Mass Bank Interest}
-L6		;	{ Business income/loss. (Sched C) }
+L6a	   660	;	{ Business income/loss. (Sched C) }
+L6b	    66	;	{ Farm income/loss. (Enclose US Sched F) }
 L7	45,000.00;	{ Rental, royality, REMIC., etc. }
 L8a		;	{ Unemployment }
 L8b		;	{ Lottery }
@@ -71,7 +72,7 @@ L36             0       { AMENDED RETURN ONLY. Overpayment from original return.
 
 {---- Taxes Paid ----}
 
-L38a 	     30 ;	{ Mass income tax withheld, Forms W-2 }
+L38a 	  3,530 ;	{ Mass income tax withheld, Forms W-2 }
 L38b	     34 ;	{ Mass income tax withheld, Forms 1099 }
 L38c 	     38 ;	{ Mass income tax withheld, Other forms. }
 L39		;	{ 2022 overpayment applied to 2023 estimated tax }
@@ -84,7 +85,7 @@ L44		;	{ Senior Circuit Breaker Credit, sched CB }
 L46num		;	{ Number of dependent household members under 13 or over 65. }
 L47		;	{ Other refundable credits, Sched CMS. }
 L49             ;       { Excess Paid Family Leave withholding. }
-L52	1,000	;	{ Overpayment you want applied to next year's estimated tax. }
+L52	 1,000	;	{ Overpayment you want applied to next year's estimated tax. }
 
 
 { -------------------------------------------- } 

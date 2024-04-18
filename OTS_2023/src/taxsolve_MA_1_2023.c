@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include <time.h>
 
-float thisversion=21.01;
+float thisversion=21.02;
 
 #include "taxsolve_routines.c"
 
@@ -89,6 +89,7 @@ int main( int argc, char *argv[] )
  double MassBankInterest, Iexempt, AGI;
  double Unemployment, Lottery;
  double MassRetirement[2];
+ double L6a=0.0, L6b=0.0;
  double L23a_inc=0.0, L23a=0.0, L23b_inc=0.0, L23b=0.0, L28a=0.0, L28b=0.0,
 	L33[6], L35a=0.0, L35b=0.0, L38a=0.0, L38b=0.0, L38c=0.0;
  double L43a=0.0, L43b=0.0;
@@ -265,8 +266,20 @@ int main( int argc, char *argv[] )
    showline_wmsg( 5, word );
   }
 
- GetLine( "L6", &L[6] );	/* Business income/loss. */
- ShowLineNonZero(6);
+ get_parameter( infile, 'l', word, "L6" );			// Update in 2024.
+ if (strcmp( word, "L6a" ) == 0)
+  { /*NewForm*/
+   get_parameters( infile, 'f', &L6a, "L6a" );
+   showline_wlabelnz( "L6a", L6a );	/* Business income/loss. */
+   GetLine( "L6b", &L6b );
+   showline_wlabelnz( "L6b", L6b );	/* Farm income/loss. */
+  } /*NewForm*/
+ else
+  { /*OldForm*/
+   get_parameters( infile, 'f', &L6a, "L6a" );
+   showline_wlabelnz( "L6a", L6a );	/* Business income/loss. */
+  } /*OldForm*/
+ L[6] = L6a + L6b;
 
  GetLine( "L7", &L[7] );	/* Rental, royality, REMIC. */
  ShowLineNonZero(7);
