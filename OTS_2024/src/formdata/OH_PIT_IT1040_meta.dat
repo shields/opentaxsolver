@@ -1,0 +1,218 @@
+Page 1
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+MediaBox 594 770
+FontSz 11
+no_zero_entries
+round_to_whole_numbers
+
+YourSocSec#:	 60 206 9 12.3
+Your1stName:     60 261 0 13.7
+YourMidInit:    386 261 
+YourLastName:	420 261 0 13.7
+Spouse1stName:   60 310 0 13.7
+SpouseMidInit:	386 310
+SpouseLastName: 420 310 0 13.7
+SpouseSocSec#: 	403 206 9 13.3
+Number&Street:   60 367 0 13.7
+Town:     	 60 474 0 13.7
+State:		497 474 0 13.7
+Zipcode: 	553 474 0 13.7
+OhioCounty:	671 474 0 13.7
+
+CkFYrRes:   	 59 585
+CkPYrRes:	164 585
+CkFYrResSp:	 59 639
+CkPYrResSp:	164 639
+
+FontSz 12
+ Check_single	505 582
+ Check_mfj	505 622
+ Check_sep	505 658
+ Check_hh	505 582
+ Check_widow	505 582
+FontSz 11
+SpouseSocSec#Sep:  670 655 9 13.3
+
+L1 	696 802 9 13.8
+L2a 	696 838 9 13.8
+L2b	696 875 9 13.8
+L3	696 912 9 13.8
+L4	780 948 5 13.8
+Exemptions 500 972 2 13.8
+L5	696 984 9 13.8
+L6	696 1022 9 13.8
+L7	696 1058 9 13.8
+
+
+Page 2
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+
+ YourSocSec#:	107 92 9 10.9
+ L7a	696 121  9 13.8
+ L8a    696 158  9 13.8
+ L8b    696 194  9 13.8
+ L8c    696 231  9 13.8
+ L9     696 267  9 13.8
+ L10    696 304  9 13.8
+ L11    696 342  9 13.8
+ L12    696 377  9 13.8
+ L13    696 413  9 13.8
+ L14    696 451  9 13.8
+ L15    696 488  9 13.8
+ L16    696 525  9 13.8
+ L17    696 562  9 13.8
+ L18    696 600  9 13.8
+ L19    696 636  9 13.8
+ L20	696 671  9 13.8
+ L21	696 710  9 13.8
+ L22	696 747  9 13.8 
+
+ L23	696 782  9 13.8 
+ L24	696 818  9 13.8 
+ L25	696 857  9 13.8 
+
+ L26g	696 931  9 13.8 
+ L27	696 984  9 13.8 
+
+
+Page 3
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+
+ YourSocSec#:	379 147 9 10.9
+ SchedA1	696 211  9 13.8
+ SchedA2     	696 250  9 13.8
+ SchedA3     	696 286  9 13.8
+ SchedA4     	696 322  9 13.8
+ SchedA5     	696 357  9 13.8
+ SchedA6	696 395  9 13.8
+ SchedA7	696 433  9 13.8
+ SchedA8     	696 474  9 13.8
+ SchedA9     	696 525  9 13.8
+ SchedA10	696 561  9 13.8
+ SchedA11	696 598  9 13.8
+ SchedA12    	696 635  9 13.8
+ SchedA13    	696 708  9 13.8
+ SchedA14	696 746	 9 13.8
+ SchedA15	696 782	 9 13.8
+ SchedA16	696 820  9 13.8
+ SchedA17	696 855	 9 13.8
+ SchedA18	696 892  9 13.8
+ SchedA19    	696 929  9 13.8
+ SchedA20    	696 966  9 13.8
+ SchedA21    	696 1002  9 13.8
+ SchedA22    	696 1038  9 13.8
+ SchedA23    	696 1076  9 13.8
+  SchedA24	696 1113  9 13.2
+
+
+Page 4
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+
+  YourSocSec#:	110 88 9 10.9
+  SchedA25    	703 142  9 13.2
+  SchedA26    	703 180  9 13.2
+  SchedA27    	703 215  9 13.2
+  SchedA28    	703 253  9 13.2
+
+  SchedA29	703 288  9 13.2
+  SchedA30	703 322  9 13.2
+  SchedA31	703 376  9 13.2
+
+  SchedA32	703 415  9 13.2
+  SchedA33    	703 452  9 13.2
+
+  SchedA34    	703 488  9 13.2
+
+  SchedA35    	703 527  9 13.2
+  SchedA36	703 579  9 13.2
+  SchedA37	703 616  9 13.2
+  SchedA38	703 653  9 13.2
+
+  SchedA39	703 690  9 13.2
+  SchedA40	703 728  9 13.2
+
+  SchedA41	703 781  9 13.2
+  SchedA42	703 817  9 13.2
+  SchedA43	703 853  9 13.2
+  SchedA44	703 890  9 13.2
+  SchedA45	703 927  9 13.2
+  SchedA46	703 966  9 13.2
+
+Page 5
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+
+ YourSocSec#:	381 112 9 10.9
+ Credits1	703 211 9 13.2
+ Credits2	703 250  9 13.2
+ Credits3	703 285  9 13.2
+ Credits4	703 322  9 13.2
+ Credits5	703 358  9 13.2
+ Credits6	703 399  9 13.2
+ Credits7	703 433  9 13.2
+ Credits8	703 470  9 13.2
+ Credits9	703 507  9 13.2
+ Credits10	703 543  9 13.2
+ Credits11	703 578  9 13.2
+ JFC		312 618  2 13.2
+ Credits12	703 616  9 13.2
+ Credits13	703 651  9 13.2
+ Credits14	703 689  9 13.2
+ Credits15	703 725  9 13.2
+ Credits16	703 762  9 13.2
+ Credits17	703 799  9 13.2
+ Credits18	703 835  9 13.2
+ Credits19	703 873  9 13.2
+ Credits20	703 910  9 13.2
+ Credits21	703 945  9 13.2
+ Credits22	703 983  9 13.2
+ Credits23	703 1021 9 13.2
+ Credits24	703 1059 9 13.2
+
+
+Page 6
+
+CoordReference:  40, 750  61, 64
+                550, 50  841, 1134    110-dpi
+
+ YourSocSec#:   381 109 9 10.9
+
+ Credits25	703 137 9 13.2
+ Credits26	703 177 9 13.2
+ Credits27      703 214  9 13.2
+ Credits28      703 250  9 13.2
+ Credits29      703 287  9 13.2
+ Credits30      703 323  9 13.2
+
+! DateBeganResidence: 205 376 0 10.3
+! DateEndResidence:   372 376 0 10.5
+! OtherState: 	     668 376 0 13.2
+
+ Credits31      703 360  9 13.2
+ Credits32      703 396  9 13.2
+ Credits33      703 432  9 13.2
+ Credits34      703 468  9 13.2
+ Credits35	703 504  9 13.2
+ Credits36      703 544  9 13.2
+ Credits37      703 597  9 13.2
+ Credits38      703 635  9 13.2
+ Credits39      703 670  9 13.2
+ Credits40    	703 744  9 13.2
+ Credits41    	703 782  9 13.2
+ Credits42    	703 818  9 13.2
+ Credits43    	703 853  9 13.2
+ Credits44    	703 890  9 13.2
+ Credits45	703 928  9 13.2
+ Credits46	703 965  9 13.2
+
+
+END_OF_INPUT

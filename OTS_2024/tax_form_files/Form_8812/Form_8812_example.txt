@@ -1,0 +1,36 @@
+Title:  Form 8812 - 2024
+
+{ --- Your Filing Status & Exemptions --- }
+
+Status  Single   { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er) }
+
+L1  240,100	; { Amount from line 11 of your Form 1040 }
+
+L2a 		; { Income from Puerto Rico that you excluded }
+L2b  754	; { Amounts from lines 45 and 50 of your Form 2555 }
+L2c  200	; { Amount from line 15 of your Form 4563 }
+
+L4   	2	; { Number of qualifying children under age 17, who have Soc.Sec. numbers. }
+
+L6 	1	; { Number of other dependents, including any qualifying children who are not under age
+	    		17 or who do not have the required social security number }
+		{ Caution: Do not include yourself, your spouse, or anyone not U.S. citizen }
+		{ Also, do not include anyone you included on L4.}
+
+L13 	100	; { Amount from Credit Limit Worksheet A }
+
+
+Amnt19	3456 ; { Amount on Form 1040, line 19. }
+
+L18a    64,650	; { Earned income (see instructions) }
+L18b 	5018 	; { Nontaxable combat pay (see instructions) } 
+
+L21 	80	; { Withheld Soc.Sec., Medicare, & Additional Medicare taxes from Forms W-2, boxes 4 and 6 }
+
+L22 	22	; { Total of amounts from Sched-1 (Form 1040), line 15; Sched-2  lines 5+6, 13+22 }
+
+L24 	24	; { Total of amounts from Form 1040, line 27, and Sched-3 line 11. }
+
+YourName:	Ronald, Smith
+
+SocSec:		123-45-6789

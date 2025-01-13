@@ -1,0 +1,53 @@
+Title: 2024 Form 8829 Expenses for Business Use of Your Home - EXAMPLE 2
+
+ { Provide a Schedule C filename for autofill of YourName, YourSocSec#, and L8. }
+FileNameSchC		 { File-name of Federal Schedule C output file. Optional. }
+ {--- Your Identity --- }
+YourName:	Mary Mary	 { Leave blank and provide a Schedule C filename for autofill }
+YourSocSec#:	333-2222-111	 { Leave blank and provide a Schedule C filename for autofill }
+ {--- Part I   Part of Your Home Used for Business --- }
+L1	1000		; { Area used regularly and exclusively for business, regularly for daycare, or for storage of inventory
+or product samples (see instructions)}
+L2	3000		; { Total area of home}
+ {-- For daycare facilities not used exclusively for business, go to line 4. All others, go to line 7 --}
+L4	4000		; { Multiply days used for daycare during year by hours used per day.
+ Leave blank or 0.00 for non-daycare business, or daycare area used exclusively for business }
+L5	8760		; { If you started or stopped using your home for daycare during the year
+ see instructions; otherwise, enter 8,760 }
+ {--- Part II   Figure Your Allowable Deduction ---}
+L8	75000		; { Enter the amount from Schedule C, line 29, plus any gain derived from the business use of your
+ home, minus any loss from the trade or business no derived from the business use of your home.
+ Enter 0 and provide a Schedule C filename for autofill }
+ {-- Direct expenses --}
+L9a	10		; { Casualty losses }
+L10a	20		; { Deductible mortgage interest }
+L11a	30		; { Real Estate Taxes }
+L16a	40		; { Excess mortgage interest }
+L17a	50		; { Excess real estate taxes }
+L18a	60		; { Insurance }
+L19a	70		; { Rent }
+L20a	80		; { Repairs and maintenance }
+L21a	90		; { Utilities }
+L22a	100		; { Other expenses }
+ {-- Indirect expenses --}
+L9b	500		; { Casualty losses }
+L10b	510		; { Deductible mortgage interest }
+L11b	520		; { Real Estate Taxes }
+L16b	530		; { Excess mortgage interest }
+L17b	540		; { Excess real estate taxes }
+L18b	550		; { Insurance }
+L19b	560		; { Rent }
+L20b	570		; { Repairs and maintenance }
+L21b	580		; { Utilities }
+L22b	590		; { Other expenses }
+ {-- Allowable Deductions --}
+L25	37		; { Carryover of prior year operating expenses }
+L29	175		; { Excess casualty losses }
+L31	300		; {Carryover of prior year excess casualty loss and depreciation }
+L35	87		; {Casualty loss portion, if any, from lines 14 and 33. Carry amount to Form 4684 }
+ {--- Part III   Depreciation of Your Home --- }
+L37	250000		; {Enter the smaller of your home's adjusted basis or its fair market value.}
+L38	100000		; {Value of land included on line 37}
+L41	2.461		; {Depreciation percentage (see instructions) }
+ {--- Part IV   Carryover of Unallowed Expenses to Next Year --- }
+ {--------------------------------------------- }

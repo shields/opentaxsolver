@@ -1,0 +1,137 @@
+Title:  Ohio IT1040 State 2024 Tax Form -- EXAMPLE
+
+{ -- EXAMPLE -- }
+
+Status      Single      { Single, Married/joint, Married/separate, Head_of_household }
+
+Exemptions  1	;       { Exemptions, self=1/depend=2,3,... (answer: 1, 2, 3, 4, 5, ...) }
+
+JointCredit  No		{ Yes if Married-Filing-Jointly & both have AGI >= $500. (answer: Yes, No)}
+
+L1    33,456.00	;	{ Federal Adjusted Gross Income (IRS form 1040, line 11) }
+L4	 823.45	;	{ Personal and dependent exemption deduction, Sched-J }
+L6     3,456	;	{ Taxable business income (Ohio Schedule IT BUS, line 13) }
+L8b	 500	;	{ Business income tax liability (Schedule IT BUS, line 14) }
+L11		;	{ Interest penalty on underpayment of estimated tax (Ohio IT/SD 2210) }
+L12	  78.90	;	{ Sales and use tax due }
+L14      865.67	;	{ Ohio Tax Withheld (box 17 on your W-2) }
+L15		;	{ Estimated & extension payments made, & credit carryforward from last year }
+L17		;	{ Amended return only - amount previously paid with original }
+L19		;	{ Amended return only - overpayment previously received on original }
+
+{ --- Additions --- (Items not included in line L1 above.) }
+SchedA_1  120	;	{ Non-Ohio state or local government interest and dividends }
+SchedA_2	;	{ Ohio pass-through entity and financial institutions taxes paid }
+SchedA_3   45	;	{ Taxes paid to another state or District of Columbia related to IRS notice 2021-75 }
+SchedA_4	;	{ 529 plan funds used for non-qualified expenses }
+SchedA_5	;	{ Losses from sale or disposition of Ohio public obligations }
+SchedA_6	;	{ Nonmedical withdrawals from medical savings account }
+SchedA_7	;	{ Reimbursement of expenses previously deducted for Ohio income tax return }
+SchedA_8  	;	{ Ineligible withdrawals from an Ohio Homebuyer Plus account. }
+{ - Federal - }
+SchedA_9  321.7	;	{ Internal Revenue Code sections 168(k) and 179 depreciation expense add-back }
+SchedA_10	;	{ Exempt federal interest and dividends subject to state taxation }
+SchedA_11	;	{ Federal conformity additions }
+
+{ --- Deductions --- }
+SchedA_13  99.0	;	{ Business income deduction (Ohio Schedule IT BUS, line 13) }
+SchedA_14 3,333 ;	{ Compensation earned in Ohio by residents of neighboring states }
+SchedA_15	;	{ Taxable refunds, credits, or offsets of state * local income taxes (Fed1040 Sched-1 L1)}
+SchedA_16	;	{ Taxable Social Security benefits (Fed1040 L6b) }
+SchedA_17	;	{ Certain railroad retirement benefits }
+SchedA_18   78.11 ;	{ Interest income from Ohio public obligations ... }
+SchedA_19	;	{ Amounts contributed to Ohio county's individual development account }
+SchedA_20	;	{ Amounts contributed to a STABLE account: Ohio's ABLE plan. }
+SchedA_21	;	{ Income earned in Ohio by a qualifying out-of-state business }
+SchedA_22	;	{ Certain payments related to the East Palestine train derailment. }
+SchedA_23	;	{ Ohio adoption grant payments received from Ohio Dept of Job & Family Services }
+SchedA_24	;	{ Amounts contributed to and interest earned on an Ohio Homebuyer Plus account }
+
+{ - Federal - } 
+SchedA_25  22.10 ;	{ Federal interest and dividends exempt from state taxation }
+SchedA_26	;	{ Deduction of prior year 168(k) and 179 depreciation add-backs }
+SchedA_27	;	{ Refund or reimbursements shown on IRS 1040, Sched 1, line 21 }
+SchedA_28	;	{ Repayment of income reported in a prior year }
+SchedA_29  88.02 ;	{ Wage expense not deducted based on Federal work opportunity tax credit }
+SchedA_30	;	{ Federal conformity deductions }
+
+{ - Uniformed Services - } 
+SchedA_31 6,000.0 ;	{ Military pay for Ohio residents received while stationed outside Ohio }
+SchedA_32	;	{ Income earned by military nonresidents ... }
+SchedA_33	;	{ Uniformed services retirement income }
+SchedA_34	;	{ Military injury relief fund }
+SchedA_35	;	{ Certain Ohio National Guard reimbursements and benefits }
+
+{ - Education - } 
+SchedA_36   500.0 ;	{ Amounts contributed to 529 Plan. }
+SchedA_37	;	{ Pell College Opportunity taxable grant amounts used for room and board }
+SchedA_38	;	{ Ohio educator expenses in excess of federal deduction }
+SchedA_39	;	{ Income from loan repayments by Ohio DOHE under rural incentive program. }
+SchedA_40	;	{ Grant payments made by Ohio DOHE on behalf of adopted students. }
+
+{ - Medical - } 
+SchedA_41	;	{ Disability benefits }
+SchedA_42	;	{ Survivorship benefits }
+SchedA_43	;	{ Unreimbursed medical and health care expenses }
+SchedA_44	;	{ Medical savings account contributions/earnings }
+SchedA_45   230.00 ;	{ Qualified organ donor expenses }
+
+{ --- Schedule of Credits --- }
+Credits_2	;	{ Retirement income credit.  (include 1099-R forms) }
+Credits_3	;	{ Lump sum retirement credit (Ohio LS WKS, line 6) }
+Credits_4	;	{ Senior citizen credit }
+Credits_5	;	{ Lump sum distribution credit }
+Credits_6   	;	{ Child care and dependent care credit }
+Credits_7  20.00 ;	{ Displaced worker training credit }
+Credits_8   4.44 ;	{ Campaign contribution credit for Ohio General Assembly }
+
+Credits_13	;	{ Earned income credit. }
+Credits_14	;	{ Home school expenses credit. }
+Credits_15	;	{ Scholarship donation credit. }
+Credits_16	;	{ Nonchartered, nonpublic school tuition credit. }
+Credits_17  10.00 ;	{ Credit for work-based learning experiences }
+Credits_18  50.00 ;	{ Ohio adoption credit  }
+Credits_19	;	{ Job retention credit, nonrefundable portion }
+Credits_20	;	{ Credit for eligible new employees in enterprise zones }
+Credits_21  32.31 ;	{ Credit for the beginning farmers financial management program }
+Credits_22	;	{ Credit for commercial vehicle operator training expenses }
+Credits_23	;	{ Welcome Home Ohio credit }
+Credits_24	;	{ Credit for sale/rental of agricultural assets to beginning farmers }
+Credits_25	;	{ Grape production credit }
+Credits_26   10.00 ;	{ InvestOhio credit (include a copy of the credit certificate) }
+Credits_27    3.50 ;	{ Lead abatement credit }
+Credits_28   22.00 ;	{ Opportunity zone investment credit }
+Credits_29   75.00 ;	{ Tech investment credit }
+Credits_30	;	{ Enterprise zone day care and training credits }
+Credits_31   50.14 ;	{ Research and development credit }
+Credits_32	;	{ Nonrefundable Ohio historic preservation credit }
+Credits_33	;	{ Ohio low-income housing credit (include a copy of the credit certificate) }
+Credits_34	;	{ Affordable single-family housing credit (include a copy of the credit certificate) }
+
+{ - Residency Credits - }
+Credits_37	;	{  Nonresident credit - Ohio IT NRC, line 20 (include a copy) }
+Credits_38  94,242.42 ;	{  Resident credit - OH IT RC, line 7(include a copy)  }
+
+{ - Refundable Credits - }
+Credits_40   9.0 ;	{ Refundable Historic preservation credit }
+Credits_41	;	{ Refundable Business jobs credit }
+Credits_42	;	{ Pass-through entity credit }
+Credits_43  20.0 ;	{ Motion picture production credit }
+Credits_44	;	{ Film and theater capital improvements credit }
+Credits_45  10.0 ;	{ Venture capital credit }
+
+{ ------------------------------------------- } 
+{ --- Optional info for Auto-Fillout only. --- }
+ Your1stName:	Fred, P		{ First name, Middle Initial }
+ YourLastName:	Symthe
+ YourSocSec#:	123-45-6789
+ Spouse1stName:                 { First name, Middle Initial (Leave blank if Single, etc.) }
+ SpouseLastName:  
+ SpouseSocSec#:	
+ Number&Street:	432 Ormo St
+ Town:		Halo Ville
+ Zipcode:   	43004
+
+{
+ --------------------------------------------  
+}

@@ -1,0 +1,30 @@
+Title: 2024 Form 8995 Qualified Business Income Deduction Simplified Computation - EXAMPLE 2
+  { For filers with a single schedule C, entering '0' in L1_i_c, and
+ providing both a 1040 and Schedule C filename, will cause auto calculation. }
+FileName1040	tax_form_files/US_1040/US_1040_example_out.txt	 { File-name of Federal Return output file. Required. }
+FileNameSchC	tax_form_files/US_1040_Sched_C/US_1040Sched_C_2024_example_out.txt	 { File-name of Federal Schedule C output file. Optional. }
+ {-- Row "i" --}
+L1_i_a:	Flutter	 { (a) Trade, business, or aggregation name }
+L1_i_b:	YYY-YYYY-YYY	 { (b) Taxpayer identification number }
+L1_i_c	0		; { (c) Qualified business income or (loss) }
+ {-- Row "ii" --}
+L1_ii_a:	Havaparty LLC	 { (a) Trade, business, or aggregation name }
+L1_ii_b:	ZZZ-ZZZZ-ZZZ	 { (b) Taxpayer identification number }
+L1_ii_c	10,456		; { (c) Qualified business income or (loss) }
+ {-- Row "iii" --}
+L1_iii_a:	WinitAll Inc	 { (a) Trade, business, or aggregation name }
+L1_iii_b:	111-1111-1111	 { (b) Taxpayer identification number }
+L1_iii_c	32768		; { (c) Qualified business income or (loss) }
+ {-- Row "iv" --}
+L1_iv_a:	CryptoScammers Co	 { (a) Trade, business, or aggregation name }
+L1_iv_b:	222-2222-222	 { (b) Taxpayer identification number }
+L1_iv_c	7895		; { (c) Qualified business income or (loss) }
+ {-- Row "v" --}
+L1_v_a:	ThisOneIsASureThing LLC	 { (a) Trade, business, or aggregation name }
+L1_v_b:	444-4444-444	 { (b) Taxpayer identification number }
+L1_v_c	-65356		; { (c) Qualified business income or (loss) }
+L3	-350000		; { Qualified business net (loss) carryforward from the prior year. Enter negative value for loss }
+L6	4444		; { Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) }
+L7	-3456		; { Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year. Enter negative value for loss }
+L12	2		; { Net capital gain }
+ {--------------------------------------------- }
