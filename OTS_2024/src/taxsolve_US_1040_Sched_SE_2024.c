@@ -23,7 +23,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
  02111-1307 USA
  
- Provided by Steve Wiswell, March 16, 2023.
+ Originally Provided by Steve Wiswell, March 16, 2023.
+ Updated 1/2024.
 
  ************************************************************************/
 
@@ -106,14 +107,14 @@ int main( int argc, char *argv[] )
 
  GetLine( "L2", &L[2] );	/* Net Profit/Loss */	
  GetLine( "L5a", &L5a );	/* Church employee income from Form W-2 */	
- L[7] = 160200.0;           	/* Fixed value for tax year 2024 */			/* Not updated for 2024. */
+ L[7] = 168600.0;           	/* Constant value for tax year 2024 */			/* Updated for 2024. */
  GetLine( "L8a", &L8a );	/* Wages & Tips */
  GetLine( "L8b", &L8b );	/* Unreported tips from Form 4137, line 10 */
  GetLine( "L8c", &L8c );	/* Wages from Form 8919, line 10 */
 
  /* -- Compute the tax form  -- */
  showline(2);
- L4a = L[2] * 0.9235;									/* Not updated for 2024. */
+ L4a = L[2] * 0.9235;									/* Updated for 2024. */
  showline_wlabel( "L4a", L4a );
  L4c = NotLessThanZero( L4a );
  showline_wlabel( "L4c", L4c );
@@ -131,17 +132,14 @@ int main( int argc, char *argv[] )
  showline(9);
  L[10] = 0.124 * SmallerOf( L[6], L[9]);
  showline(10);
- L[11] = L[6] * 0.029;									/* Not updated for 2024. */
+ L[11] = L[6] * 0.029;									/* Updated for 2024. */
  showline(11);
  L[12] = L[10] + L[11];
  showline_wmsg( 12, "Also enter this number on Schedule-2, line 4." );
  L[13] = L[12] * 0.5;
  showline_wmsg( 13, "Also enter this number on Schedule-1, line 15." );
 
- // L[14] = 6040.0;									/* Not updated for 2024. */
-
  /* ----- .... Until here.  ----- */
-
 
  /***
     Summary of useful functions:

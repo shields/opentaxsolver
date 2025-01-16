@@ -41,7 +41,17 @@ TAXSOLVE := \
     taxsolve_VA_760_2024 \
     taxsolve_NC_D400_2024 \
     taxsolve_OH_IT1040_2024 \
+    taxsolve_MA_1_2024 \
     taxsolve_CA_540_2024 \
+    taxsolve_HSA_f8889 \
+    taxsolve_f8606 \
+    taxsolve_US_1040_Sched_SE_2024 \
+    taxsolve_f8812_2024 \
+    taxsolve_f8829_2024 \
+    taxsolve_f8995_2024 \
+    taxsolve_f8959_2024 \
+    taxsolve_f8960_2024 \
+    taxsolve_f2210_2024 \
     taxsolve_AZ_140_2024 
 
 # List of taxsolver programs in ../bin/

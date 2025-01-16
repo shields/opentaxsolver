@@ -251,7 +251,7 @@ int main( int argc, char *argv[] )
  GetLine( "L12", &L[12] );
 
 
- double qbi_percentage = 0.20;
+ double qbi_percentage = 0.20;	// 20%		/* Updated/checked for tax-year 2024. */
 
  // Total qualified business income
  L[4] = NotLessThanZero(L[2] + L[3]);

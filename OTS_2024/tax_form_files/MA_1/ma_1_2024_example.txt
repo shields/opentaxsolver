@@ -22,15 +22,15 @@ BlindYou    True 	{You blind? (answer: True, False)}
 BlindSpouse False 	{Spouse blind? (answer: True, False, n/a) }
 
 {---- Other Exemptions ----}
-Med/Dental	; 	{Medical/Dental}
-Adoption 	;	{Adoption}
+Med/Dental	; 	{ Medical/Dental }
+Adoption 	;	{ Adoption }
 
 {---- Income ----}
 
-L3	60,000.00	{Wages, salaries, tips (W-2). }
+L3	60,000.00	{ Wages, salaries, tips (W-2). }
 		;
-L4		;	{Taxable pensions.}
-L5a	   180.00;	{Mass Bank Interest}
+L4		;	{ Taxable pensions. }
+L5	   180.00;	{ Mass Bank Interest }
 L6a	   660	;	{ Business income/loss. (Sched C) }
 L6b	    66	;	{ Farm income/loss. (Enclose US Sched F) }
 L7	45,000.00;	{ Rental, royality, REMIC., etc. }
@@ -45,7 +45,7 @@ L11b	 1,200.00;	{ Amount spouse paid to SS, Medicare, RR, US, or Mass retirement
 L14a	    14	;	{ Rental Paid }
 L15		;	{ Other - Sched Y, L19 }
   
-L20             0       {Interest and Dividends -- Sched B, line 38}
+L20             0       { Interest and Dividends -- Sched B, line 38 }
                 ;
 L23a       123  ;       { 8.5% income, from sched B Line 39 }
 L23b        23  ;       { 12% income, from Certain Capital Gains }

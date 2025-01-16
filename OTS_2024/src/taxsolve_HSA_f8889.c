@@ -24,7 +24,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Not updated for 2024 tax year:						*/
+/* Updated/checked for 2024 tax year.					*/
 /************************************************************************/
 
 float thisversion=22.00;

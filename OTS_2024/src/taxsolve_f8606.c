@@ -18,10 +18,10 @@
 /* 02111-1307 USA                                                       */
 /*									*/
 /* Provided by Fred Robinson - 2024-7-8.				*/	
-/* Updated 2-6-2024.							*/
+/* Updated 1-15-2025.							*/
 /************************************************************************/
 
-float thisversion = 2.00;
+float thisversion = 3.00;
 
 #include <math.h>
 #include <stdio.h>
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
         showline_wlabelmsg(
             "L15c", L15c,
             "Taxable Amount: include this amount on 2024 Form 1040 or 1040-SR, "
-            "line 4b; or 2023 Form 1040-NR, line 16b");
+            "line 4b; or 2024 Form 1040-NR, line 16b" );
       } else {
         showline_wlabel("L15c", L15c);
       }

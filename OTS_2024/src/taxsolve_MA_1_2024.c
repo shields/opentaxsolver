@@ -27,7 +27,7 @@
 /* Robert Heller 2-10-2004	heller@deepsoft.com			*/
 /* Updated 1-26-05	Aston Roberts & Robert Heller			*/
 /*  ...									*/
-/* Updated 1-2-2025	Aston Roberts 					*/
+/* Updated 1-16-2025	Aston Roberts 					*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -56,7 +56,7 @@ double Sum( double *v, int start_slot, int end_slot )
 
 
 double ComputeTax(double taxableIncome)
-{ double taxrate=0.05;					/* Not updated for 2024. */
+{ double taxrate=0.05;					/* Updated for 2024. */
  if (taxableIncome < 24000.0)
   return (int)(taxrate * (taxableIncome + 25.0) + 0.5);
  else
@@ -86,7 +86,7 @@ int main( int argc, char *argv[] )
  char word[4000], *infname=0, outfname[4000], *answ;
  time_t now;
  double Exemptions[10], L_a=0.0, L_b=0.0;
- double MassBankInterest, Iexempt, AGI;
+ double AGI;
  double Unemployment, Lottery;
  double MassRetirement[2];
  double L6a=0.0, L6b=0.0;
@@ -251,34 +251,10 @@ int main( int argc, char *argv[] )
  GetLine( "L4", &L[4] );	/* Taxable pensions. */
  ShowLineNonZero(4);
 
- GetLineF( "L5a", &MassBankInterest );
- if (status == MARRIED_FILING_JOINTLY)
-  Iexempt = 200;
- else
-  Iexempt = 100;
- fprintf(outfile,"L5b = %6.2f\n", Iexempt );
- L[5] = MassBankInterest - Iexempt;
- if (L[5] < 0.0) L[5] = 0.0;
- if (L[5] > 0.0)
-  {
-   sprintf(word,"Mass. Bank Interest: a. %6.2f - b. exemption %6.2f",
-	MassBankInterest,Iexempt);
-   showline_wmsg( 5, word );
-  }
+ GetLineF( "L5", &L[5] );
 
- get_parameter( infile, 'l', word, "L6" );			// Update in 2024.
- if (strcmp( word, "L6a" ) == 0)
-  { /*NewForm*/
-   get_parameters( infile, 'f', &L6a, "L6a" );
-   showline_wlabelnz( "L6a", L6a );	/* Business income/loss. */
-   GetLine( "L6b", &L6b );
-   showline_wlabelnz( "L6b", L6b );	/* Farm income/loss. */
-  } /*NewForm*/
- else
-  { /*OldForm*/
-   get_parameters( infile, 'f', &L6a, "L6a" );
-   showline_wlabelnz( "L6a", L6a );	/* Business income/loss. */
-  } /*OldForm*/
+ GetLineF( "L6a", &L6a );
+ GetLineF( "L6b", &L6b );
  L[6] = L6a + L6b;
 
  GetLine( "L7", &L[7] );	/* Rental, royality, REMIC. */
@@ -319,7 +295,7 @@ int main( int argc, char *argv[] )
  showline_wlabel( "L14a", L[14] );
  L[14] = L[14] / 2.0;
  if (status == MARRIED_FILING_SEPARAT)
-  L[14] = smallerof( L[14] , 2000.0 );			/* Not updated for 2024. */
+  L[14] = smallerof( L[14] , 2000.0 );			/* Updated for 2024. */
  else
   L[14] = smallerof( L[14] , 4000.0 );
  ShowLineNonZero(14);
@@ -380,23 +356,20 @@ int main( int argc, char *argv[] )
  L28a = Sum( L, 22, 26 );
  showline_wlabel( "L28a", L28a );
 
- if (L[19] > 1000000.0)
+ if (L[19] > 1053750.0)					/* Updated for 2024. */
   {
-   L28b = 0.04 * (L[19] - 1000000.0);
+   L28b = 0.04 * (L[19] - 1053750.0);
    showline_wlabel( "L28b", L28b );
   }
  L[28] = L28a + L28b;
 
  if ((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == MARRIED_FILING_JOINTLY))
- { /* AGI Worksheet pg 13. */
+ { /* AGI Worksheet pg 12. */
    double ws[20], threshA, threshB;
    for (j=0; j<20; j++) ws[j] = 0.0;
    ws[1] = NotLessThanZero( L[10] );
    ws[2] = 0.0;		/* Sched Y lines 1-10.  Assumed zero, adjust otherwise. */
    ws[3] = NotLessThanZero( ws[1] - ws[2] );
-   ws[4] = smallerof( MassBankInterest, Iexempt );
-   if (L[10] < 0.0)
-    ws[4] = NotLessThanZero( ws[4] + L[10] );
    ws[5] = L[20];
    ws[6] = 0.0;   /* Assumed zero. */
    ws[7] = ws[3] + ws[4] + ws[5] + ws[6];
@@ -409,7 +382,7 @@ int main( int argc, char *argv[] )
      switch (status)
       {
        case SINGLE:  
-		threshA = 8000.0;
+		threshA = 8000.0;			/* Updated for 2024. */
 		threshB = 14000.0;
 		break;
        case HEAD_OF_HOUSEHOLD:

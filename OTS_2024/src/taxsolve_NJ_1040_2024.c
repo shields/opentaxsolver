@@ -40,7 +40,7 @@ double COJ[MAX_LINES], S[MAX_LINES], F[MAX_LINES];
 #define WIDOW		        5
 
 
-double TaxRateFormula( double x, int status )
+double TaxRateFormula( double x, int status )				/* Checked/Updated for 2024. */
 {
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))	/* Single, Married/sep */
   {

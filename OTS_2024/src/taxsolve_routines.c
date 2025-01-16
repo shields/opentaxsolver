@@ -612,7 +612,7 @@ int interpret_date( char *datestr, int *month, int *day, int *year, char *emssg 
  char word1[500], *owrd;
  int monthdays;
  int std_days[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};  /* Array of Days in each month */
-  /* Expect month-day-year as in: 3-3-01, Feb 3, 2024, or 3/3/2008, etc. */
+  /* Expect month-day-year as in: 3-3-01, Feb 3, 2024, or 3/3/2024, etc. */
  owrd = strdup( datestr);
  next_word( owrd, word1, " /,-\t\n\r" );
  if (strncasecmp( word1, "Jan", 3 ) == 0)  *month = 1;  else

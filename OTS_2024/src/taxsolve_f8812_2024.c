@@ -19,7 +19,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=1.00;
+float thisversion=2.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -134,34 +134,34 @@ int main( int argc, char *argv[] )
  printf("L4 = %d\n", (int)L[4] );
  fprintf(outfile,"L4 = %d\n", (int)L[4] );
 
- L[5] = L[4] * 2000.0;	
+ L[5] = L[4] * 2000.0;		// Checked for tax-year 2024.
  showline( 5 );
 
  GetLine( "L6", &L[6] );	// Number of other dependents, including any qualifying children
  printf("L6 = %d\n", (int)L[6] );
  fprintf(outfile,"L6 = %d\n", (int)L[6] );
 
- L[7] = L[6] * 500.0;
+ L[7] = L[6] * 500.0;		// Checked for tax-year 2024.
  showline( 7 );
 
  L[8] = L[5] + L[7];
  showline( 8 );
 
  switch (status)
-  {
+  {				// Checked for tax-year 2024.
    case MARRIED_FILING_JOINTLY: 	L[9] = 400000.0;  break;
    default:  				L[9] = 200000.0;
   }
  showline( 9 );
 
  L[10] = NotLessThanZero( L[3] - L[9] );
-fprintf(outfile,"L[10] = %g\n", L[10] );
+ fprintf(outfile,"L[10] = %g\n", L[10] );
 
  if (L[10] > 0.0)
    L[10] = (double)((int)((L[10]-0.01) / 1000.0) + 1) * 1000.0;
  showline( 10 );
 
- L[11] = L[10] * 0.05;
+ L[11] = L[10] * 0.05;		// Checked for tax-year 2024.
  showline( 11 );
 
  GetLine( "L13", &L[13] );	// Amount from Credit Limit Worksheet A 
@@ -212,7 +212,7 @@ fprintf(outfile,"L[10] = %g\n", L[10] );
     } /*B*/
    else
     { /*C*/
-     L16b = 1600.0 * L[4];
+     L16b = 1700.0 * L[4];		// Checked/updated for tax-year 2024.
      showline_wlabel( "L16b", L16b );
 
      if (L16b > 0.0)
@@ -225,12 +225,12 @@ fprintf(outfile,"L[10] = %g\n", L[10] );
 
        if (L18a > 2500.0)
         { /*E*/
-	 L[19] = L18a - 2500.0;
+	 L[19] = L18a - 2500.0;		// Checked/updated for tax-year 2024.
 	 showline( 19 );
 	 L[20] = L[19] * 0.15;
 	 showline( 20 );
 
-	 if (L16b <= 4800.0)
+	 if (L16b <= 5100.0)		// Checked/updated for tax-year 2024.
 	  { /*F*/
 	   L[27] = SmallerOf( L[17], L[20] );
 	  } /*F*/
@@ -267,7 +267,7 @@ fprintf(outfile,"L[10] = %g\n", L[10] );
 
 
  // Part II-C Additional Child Tax Credit
- if (L[27] > 0.0)
+ if (L[27] > 0.0)								// Checked for tax-year 2024.
   showline_wmsg( 27, "This is your additional child tax credit. Enter this amount on Form 1040, line 28." );
 
 

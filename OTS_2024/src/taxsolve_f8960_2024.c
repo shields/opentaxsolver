@@ -183,7 +183,7 @@ int main( int argc, char *argv[] )
  if(individual == Yes){
    GetLineF( "L13", &L[13] );
    if( status == MARRIED_FILING_JOINTLY)
-	  L[14] = 250000.00;
+	  L[14] = 250000.00;			// Updated/checked for tax-year 2024.
    else if(status == WIDOW)
 	  L[14] = 250000.00;
    else if(status == MARRIED_FILING_SEPARAT)

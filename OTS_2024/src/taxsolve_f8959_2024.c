@@ -135,7 +135,7 @@ int main( int argc, char *argv[] )
  L[4] = L[1] + L[2] + L[3];
  showline( 4 );
  if(status == MARRIED_FILING_JOINTLY)
-	L[5] = 250000.00;
+	L[5] = 250000.00;			// Checked for tax-year 2024.
  else if(status == MARRIED_FILING_SEPARAT)
 	L[5] = 125000.00;
  else if((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == WIDOW))
@@ -147,7 +147,7 @@ int main( int argc, char *argv[] )
  showline( 7 );
  GetLineF( "L8", &L[8] );
  if(status == MARRIED_FILING_JOINTLY)
-	L[9] = 250000.00;
+	L[9] = 250000.00;			// Checked for tax-year 2024.
  else if(status == MARRIED_FILING_SEPARAT)
 	L[9] = 125000.00;
  else if((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == WIDOW))
@@ -163,7 +163,7 @@ int main( int argc, char *argv[] )
  showline( 13 );
  GetLineF( "L14", &L[14] );
  if(status == MARRIED_FILING_JOINTLY)
-	L[15] = 250000.00;
+	L[15] = 250000.00;			// Checked for tax-year 2024.
  else if(status == MARRIED_FILING_SEPARAT)
 	L[15] = 125000.00;
  else if((status == SINGLE) || (status == HEAD_OF_HOUSEHOLD) || (status == WIDOW))
@@ -171,7 +171,7 @@ int main( int argc, char *argv[] )
  showline( 15 );
  L[16] = NotLessThanZero( L[14] - L[15]);
  showline( 16 );
- L[17] = L[16] * 0.009;
+ L[17] = L[16] * 0.009;				// Checked for tax-year 2024.
  showline( 17 );
  L[18] = L[7] + L[13] + L[17];
  showline_wmsg( 18, "include this amount on Schedule 2 (Form 1040), line 11 \
