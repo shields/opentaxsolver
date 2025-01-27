@@ -46,7 +46,7 @@
 
 float version=2.68;
 char package_date[]="Jan 12, 2025";
-char ots_release_package[]="22.00-alpha";
+char ots_release_package[]="22.00-beta";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -3739,6 +3739,10 @@ void slcttxprog( GtkWidget *wdg, void *data )
   {
    selected_other = 0;
    supported_pdf_form = 1;
+
+if (strstr( strg, "NY_IT201" ) != 0)	/* As on Jan. 27, NY has NOT posted their PDF Form. */
+ supported_pdf_form = 0;
+
    sprintf(tmpstr,"%s%s", invocation_path, strg);
    printf("Setting Tax Program to be: '%s'\n", tmpstr);
    taxsolvecmd = strdup(tmpstr);
@@ -4233,7 +4237,7 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_PA_40 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "PA State 40", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_VA_760 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "VA State 760", slcttxprog, formid );
@@ -4241,7 +4245,7 @@ gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - 
  y = y + dy;
  formid = setform( form_NY_IT201 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "NY State IT201", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );

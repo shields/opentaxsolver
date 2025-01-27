@@ -35,7 +35,7 @@
 #define Yes 1
 #define No  0
 
-double Tax_Rate = 0.0307;		/* Not updated for 2024 tax-year. */
+double Tax_Rate = 0.0307;		/* Updated for 2024 tax-year. */
 
 
 double pos( double x )

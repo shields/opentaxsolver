@@ -64,7 +64,7 @@
 
 float version=3.07;
 char package_date[]="Jan 12, 2025";
-char ots_release_package[]="22.00-alpha";
+char ots_release_package[]="22.00-beta";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -164,19 +164,19 @@ char *taxsolvecmd=0, taxsolvestrng[MaxFname]="";
 
 char program_names[30][100] = 
 	{
-	 "taxsolve_US_1040_2023",		/* 0 */
-	 "taxsolve_US_1040_Sched_C_2023",	/* 1 */
+	 "taxsolve_US_1040_2024",		/* 0 */
+	 "taxsolve_US_1040_Sched_C_2024",	/* 1 */
 	 "taxsolve_US_8829",			/* 2 */
-	 "taxsolve_CA_540_2023",		/* 3 */
-	 "taxsolve_NC_D400_2023",		/* 4 */
-	 "taxsolve_NJ_1040_2023",		/* 5 */
-	 "taxsolve_OH_IT1040_2023",		/* 6 */
-	 "taxsolve_PA_40_2023",			/* 7 */
-	 "taxsolve_VA_760_2023",		/* 8 */
-	 "taxsolve_NY_IT201_2023",		/* 9 */
-	 "taxsolve_MA_1_2023",			/* 10 */
+	 "taxsolve_CA_540_2024",		/* 3 */
+	 "taxsolve_NC_D400_2024",		/* 4 */
+	 "taxsolve_NJ_1040_2024",		/* 5 */
+	 "taxsolve_OH_IT1040_2024",		/* 6 */
+	 "taxsolve_PA_40_2024",			/* 7 */
+	 "taxsolve_VA_760_2024",		/* 8 */
+	 "taxsolve_NY_IT201_2024",		/* 9 */
+	 "taxsolve_MA_1_2024",			/* 10 */
 	 "taxsolve_GA_500",			/* 11 */
-	 "taxsolve_AZ_140_2023",		/* 12 */
+	 "taxsolve_AZ_140_2024",		/* 12 */
 	 "Other",				/* xx */
 	};
 
@@ -1276,15 +1276,15 @@ void check_form_type( char *title_line )
 	break;
    case form_OH_IT1040: check_form_version( title_line, "Title:  Ohio IT1040 State" );
 	break;
-   case form_VA_760: check_form_version( title_line, "Title:  VA-760 State 2023" );
+   case form_VA_760: check_form_version( title_line, "Title:  VA-760 State 2024" );
 	break;
-   case form_NJ_1040: check_form_version( title_line, "Title:  NJ-1040 State 2023" );
+   case form_NJ_1040: check_form_version( title_line, "Title:  NJ-1040 State 2024" );
 	break;
-   case form_NY_IT201: check_form_version( title_line, "Title:  NY State 2023" );
+   case form_NY_IT201: check_form_version( title_line, "Title:  NY State 2024" );
 	break;
    case form_MA_1: check_form_version( title_line, "Title:  Massachusetts Form 1 Tax Form" );
 	break;
-   case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2023" );
+   case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2024" );
 	break;
    default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
@@ -1294,22 +1294,22 @@ void check_form_type( char *title_line )
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
-	  check_form_version( title_line, "Title: 2023 Form 8829" );
+	  check_form_version( title_line, "Title: 2024 Form 8829" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8995" ) != 0)
-	  check_form_version( title_line, "Title: 2023 Form 8995" );
+	  check_form_version( title_line, "Title: 2024 Form 8995" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8959" ) != 0)
-	  check_form_version( title_line, "Title: 2023 Form 8959" );
+	  check_form_version( title_line, "Title: 2024 Form 8959" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8960" ) != 0)
-	  check_form_version( title_line, "Title: 2023 Form 8960" );
+	  check_form_version( title_line, "Title: 2024 Form 8960" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f2210" ) != 0)
-	  check_form_version( title_line, "Title:  Form 2210 for Tax Year 2023" );
+	  check_form_version( title_line, "Title:  Form 2210 for Tax Year 2024" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8812" ) != 0)
-	  check_form_version( title_line, "Title:  Form 8812 - 2023" );
+	  check_form_version( title_line, "Title:  Form 8812 - " );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	  check_form_version( title_line, "Title:  Form 5805" );
@@ -3776,7 +3776,7 @@ void slcttxprog( GtkWidget *wdg, void *data )
    fb_ban_files( "taxsolve_NY_IT201" );
    fb_ban_files( "taxsolve_OH_IT1040" );
    fb_ban_files( "taxsolve_PA_40_" );
-   fb_ban_files( "taxsolve_US_1040_2023");
+   fb_ban_files( "taxsolve_US_1040_2024");
    fb_ban_files( "taxsolve_US_1040_Sched_C_" );
    fb_ban_files( "taxsolve_VA_760_" );
    fb_ban_files( "taxsolve_AZ_140_" );
@@ -3801,6 +3801,10 @@ void slcttxprog( GtkWidget *wdg, void *data )
   {
    selected_other = 0;
    supported_pdf_form = 1;
+
+if (strstr( strg, "NY_IT201" ) != 0)	/* As on Jan. 27, NY has NOT posted their PDF Form. */
+ supported_pdf_form = 0;
+
    sprintf(tmpstr,"%s%s", invocation_path, strg);
    printf("Setting Tax Program to be: '%s'\n", tmpstr);
    taxsolvecmd = strdup(tmpstr);
@@ -3815,7 +3819,7 @@ void slcttxprog( GtkWidget *wdg, void *data )
    else  {sprintf(tmpstr,".%c", slashchr);}
    sprintf(directory_dat, "%stax_form_files%c", tmpstr, slashchr);
 
-   sel = strstr( strg, "_2023" );
+   sel = strstr( strg, "_2024" );
    if (sel != 0)
      sel[0] = '\0';
    strcpy( tmpstr, strg );
@@ -4048,7 +4052,7 @@ void helpabout1( GtkWidget *wdg, void *data )
 {
  char msg[4096];
  sprintf( msg, "OpenTaxSolver (OTS) GUI - Version %1.2f,  %s\n", version, package_date );
- strcat( msg, "                For the 2023 Tax Year.    OTS release ");
+ strcat( msg, "                For the 2024 Tax Year.    OTS release ");
  strcat( msg, ots_release_package );   strcat( msg, "\n\n" );
  strcat( msg, "Use this GUI to open tax-forms and calculate taxes.\n");
  strcat( msg, " 1. First select a tax-form to do from the available programs listed.\n" ); 
@@ -4071,7 +4075,7 @@ void helpabout2( GtkWidget *wdg, void *data )
 {
  char msg[4096];
  sprintf( msg, "OpenTaxSolver (OTS) GUI - Version %1.2f, %s\n", version, package_date );
- strcat( msg, "                For the 2023 Tax Year.    OTS release ");
+ strcat( msg, "                For the 2024 Tax Year.    OTS release ");
  strcat( msg, ots_release_package );   strcat( msg, "\n\n" );
  strcat( msg, "Use this GUI to fill-out tax forms and calculate taxes.\n");
  strcat( msg, "  1. Fill-out the line entries that apply to you.\n");
@@ -4234,7 +4238,7 @@ int main(int argc, char *argv[] )
  make_rectangular_separator( mpanel, 59, 6, 387, 102 );
 
  y = 105;
- make_sized_label( mpanel, winwidth / 2 - 60, y, "2023 Tax Year", 11.0 );
+ make_sized_label( mpanel, winwidth / 2 - 60, y, "2024 Tax Year", 11.0 );
 
  /* Place warning about this being a 'development version' when being revised. */
   // tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
@@ -4278,7 +4282,7 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_PA_40 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "PA State 40", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_VA_760 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "VA State 760", slcttxprog, formid );
@@ -4286,7 +4290,7 @@ gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - 
  y = y + dy;
  formid = setform( form_NY_IT201 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "NY State IT201", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );

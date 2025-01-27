@@ -21,8 +21,8 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2025	aston_roberts@yahoo.com			*/
-/* Modified for NY 2005-2025 taxes - Skeet Monker			*/
+/* Aston Roberts - aston_roberts@yahoo.com				*/
+/* Modified for NY taxes 2005-2025 - Skeet Monker			*/
 /* Corrections 2023 taxes - Jason Striegel				*/
 /************************************************************************/
 
@@ -510,7 +510,7 @@ double TaxRateFunction( double income, int status )
  double tax;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:				  /* Not updated for 2024. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				  /* Updated for 2024. */
 	if (income <=    17150.0) tax =             0.04 * income; else	  /* Data from Instructions pg 45. */
 	if (income <=    23600.0) tax =     686.0 + 0.045  * (income - 17150.0); else
 	if (income <=    27900.0) tax =     976.0 + 0.0525 * (income - 23600.0); else
@@ -519,7 +519,7 @@ double TaxRateFunction( double income, int status )
 	if (income <=  2155350.0) tax =   18252.0 + 0.0685 * (income - 323200.0); else
 	if (income <=  5000000.0) tax =  143754.0 + 0.0965 * (income - 2155350.0); else
 	if (income <= 25000000.0) tax =  418263.0 + 0.103 * (income - 5000000.0); else
-				  tax = 2478203.0 + 0.109 * (income - 25000000.0);
+				  tax = 2478263.0 + 0.109 * (income - 25000000.0);
       break;
    case SINGLE: case MARRIED_FILING_SEPARAT:
 	if (income <=     8500.0) tax =  	    0.04   * income; else
@@ -554,7 +554,7 @@ void Report_bracket_info( double income, double tx, int status )
  double rate;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Not updated for 2024. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Updated for 2024. */
 	if (income <=    17150.0) rate = 0.04;  else
 	if (income <=    23600.0) rate = 0.045;  else
 	if (income <=    27900.0) rate = 0.0525;  else
@@ -612,7 +612,7 @@ double TaxRateLookup( double income, int status )
 }
 
 
-double NYcityTaxRateFunction( double income, int status )	/* From Instructions page 52. */
+double NYcityTaxRateFunction( double income, int status )	/* From Instructions page 40. */
 {
  double tax, dx;
  int m;
@@ -624,7 +624,7 @@ double NYcityTaxRateFunction( double income, int status )	/* From Instructions p
  if (income < 65000.0)
   income = m * dx + 0.5 * dx;      /* Place into center of a $50 bracket. */
 
- if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Not updated for 2024. */
+ if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Updated for 2024. */
   {
    if (income < 21600.0)  tax = income * 0.03078; else
    if (income < 45000.0)  tax = (income - 21600.00) * 0.03762 + 665.00; else
@@ -654,7 +654,7 @@ double NYcityTaxRateFunction( double income, int status )	/* From Instructions p
 }
 
 
-void worksheet1()	/*Tax Computation Worksheet 1 (pg 46) */		/* Not updated for 2024. */
+void worksheet1()	/*Tax Computation Worksheet 1 (pg 46) */		/* Updated for 2024. */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 1.\n");
   ws[1] = L[33];
@@ -929,7 +929,7 @@ void worksheet16()	/*Tax Computation Worksheet 16 (pg 50) */
 
 void tax_computation_worksheet( int status )	/* Called for Line-39 when Line-33 > $107,650. */
 { /* Worksheets from pages 45-50. Come here when AGI L[33] > $107,650. */
- switch (status)								/* Not updated for 2024. */
+ switch (status)								/* Updated for 2024. */
   {
      case MARRIED_FILING_JOINTLY:  case WIDOW:			// 1-6
 	if (L[33] <= 25000000.0)
@@ -1456,10 +1456,10 @@ int main( int argc, char *argv[] )
 
 
 
- switch (status)	/* Determine the Std. Deduction. Instructions Pg. 15. */
+ switch (status)	/* Determine the Std. Deduction. Instructions Pg. 11. */
   {
    case SINGLE: if (Dependent)   std_ded = 3100.0; 
-		else 		 std_ded = 8000.0;			/* Not updated for 2024. */
+		else 		 std_ded = 8000.0;			/* Updated for 2024. */
 	break;
    case MARRIED_FILING_JOINTLY:  std_ded = 16050.0; break;
    case MARRIED_FILING_SEPARAT:  std_ded =  8000.0; break;
