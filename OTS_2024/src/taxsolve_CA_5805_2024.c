@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=5.01;
+float thisversion=6.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -47,47 +47,48 @@ float thisversion=5.01;
 /* 2024 tax rates are used in California for calculating estimated taxes */
 
 double TaxRateFormula( double income, int status )
-{									/* Not updated for 2024. */
+{									/* Updated for 2024. */
  double tax;
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income <  10412.00)  tax =             0.01 * income;                else
-   if (income <  24684.00)  tax =   104.12 +  0.02 * (income -  10412.00);  else
-   if (income <  38959.00)  tax =   389.56 +  0.04 * (income -  24684.00);  else
-   if (income <  54081.00)  tax =   960.56 +  0.06 * (income -  38959.00);  else
-   if (income <  68350.00)  tax =  1867.88 +  0.08 * (income -  54081.00);  else
-   if (income < 349137.00)  tax =  3009.40 + 0.093 * (income -  68350.00);  else
-   if (income < 418961.00)  tax = 29122.59 + 0.103 * (income - 349137.00);  else
-   if (income < 698271.00)  tax = 36314.46 + 0.113 * (income - 418961.00);
-   else                     tax = 67876.49 + 0.123 * (income - 698271.00);
+   if (income <  10756.00)  tax =             0.01 * income;                else
+   if (income <  25499.00)  tax =   107.56 +  0.02 * (income -  10756.00);  else
+   if (income <  40245.00)  tax =   402.42 +  0.04 * (income -  25499.00);  else
+   if (income <  55866.00)  tax =   992.26 +  0.06 * (income -  40245.00);  else
+   if (income <  70606.00)  tax =  1929.52 +  0.08 * (income -  55866.00);  else
+   if (income < 360659.00)  tax =  3108.72 + 0.093 * (income -  70606.00);  else
+   if (income < 432787.00)  tax = 30083.65 + 0.103 * (income - 360659.00);  else
+   if (income < 721314.00)  tax = 37512.83 + 0.113 * (income - 432787.00);
+   else                     tax = 70116.38 + 0.123 * (income - 721314.00);
   }
  else
  if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))
   {
-   if (income <   20824.00)  tax =              0.01 * income;                 else
-   if (income <   49368.00)  tax =    208.24 +  0.02 * (income -   20824.00);  else
-   if (income <   77918.00)  tax =    779.12 +  0.04 * (income -   49368.00);  else
-   if (income <  108162.00)  tax =   1921.12 +  0.06 * (income -   77918.00);  else
-   if (income <  136700.00)  tax =   3735.76 +  0.08 * (income -  108162.00);  else
-   if (income <  698274.00)  tax =   6018.80 + 0.093 * (income -  136700.00);  else
-   if (income <  837922.00)  tax =  58245.18 + 0.103 * (income -  698274.00);  else
-   if (income < 1396542.00)  tax =  72628.92 + 0.113 * (income -  837922.00);
-   else                      tax = 135752.98 + 0.123 * (income - 1396542.00);
+   if (income <   21512.00)  tax =              0.01 * income;                 else
+   if (income <   50998.00)  tax =    215.12 +  0.02 * (income -   21512.00);  else
+   if (income <   80490.00)  tax =    804.84 +  0.04 * (income -   50998.00);  else
+   if (income <  111732.00)  tax =   1984.52 +  0.06 * (income -   80490.00);  else
+   if (income <  141212.00)  tax =   3859.04 +  0.08 * (income -  111732.00);  else
+   if (income <  721318.00)  tax =   6217.44 + 0.093 * (income -  141212.00);  else
+   if (income <  865574.00)  tax =  60167.30 + 0.103 * (income -  721318.00);  else
+   if (income < 1442628.00)  tax =  75025.67 + 0.113 * (income -  865574.00);
+   else                      tax = 140232.77 + 0.123 * (income - 1442628.00);
   }
  else
   { /* Head of Household. */
-   if (income <  20839.00)  tax =             0.01 * income;                else
-   if (income <  49371.00)  tax =   208.39 +  0.02 * (income -  20839.00);  else
-   if (income <  63644.00)  tax =   779.03 +  0.04 * (income -  49371.00);  else
-   if (income <  78765.00)  tax =  1349.95 +  0.06 * (income -  63644.00);  else
-   if (income <  93037.00)  tax =  2257.21 +  0.08 * (income -  78765.00);  else
-   if (income < 474824.00)  tax =  3398.97 + 0.093 * (income -  93037.00);  else
-   if (income < 569790.00)  tax = 38905.16 + 0.103 * (income - 474824.00);  else
-   if (income < 949649.00)  tax = 48686.66 + 0.113 * (income - 569790.00); 
-   else                     tax = 91610.73 + 0.123 * (income - 949649.00);
+   if (income <  21527.00)  tax =             0.01 * income;                else
+   if (income <  51000.00)  tax =   215.27 +  0.02 * (income -  21527.00);  else
+   if (income <  65744.00)  tax =   804.73 +  0.04 * (income -  51000.00);  else
+   if (income <  81364.00)  tax =  1394.49 +  0.06 * (income -  65744.00);  else
+   if (income <  96107.00)  tax =  2331.69 +  0.08 * (income -  81364.00);  else
+   if (income < 490493.00)  tax =  3511.13 + 0.093 * (income -  96107.00);  else
+   if (income < 588593.00)  tax = 40189.03 + 0.103 * (income - 490493.00);  else
+   if (income < 980987.00)  tax = 50293.33 + 0.113 * (income - 588593.00); 
+   else                     tax = 94633.85 + 0.123 * (income - 980987.00);
   }
  return (int)(tax+0.5);
 }
+
 
 double TaxRateFunction( double income, int status )     /* Emulates table lookup or function appropriately. */
 {

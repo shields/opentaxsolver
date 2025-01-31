@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=4.01;
+float thisversion=5.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -47,12 +47,12 @@ int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 
 /*-----------Tax Routines Copied From taxsolve_US_1040_2024.c----------------*/
 
-			/* Following values taken from 1040-Instructions pg 110. */	/* Not updated for 2024. */
+			/* Following values taken from 1040-Instructions pg 110. */	/* Updated for 2024. */
 double brkpt[4][9]={
-		{ 0.0,  11000.0,  44725.0,  95375.0, 182100.0, 231250.0, 578125.0, 9e19 },  /* Single */
-		{ 0.0,  22000.0,  89450.0, 190750.0, 364200.0, 462500.0, 693750.0, 9e19 },  /* Married, filing jointly. */
-		{ 0.0,  11000.0,  44725.0,  95375.0, 182100.0, 231250.0, 346875.0, 9e19 },  /* Married, filing separate. */
-		{ 0.0,  15700.0,  59850.0,  95350.0, 182100.0, 231250.0, 578100.0, 9e19 },  /* Head of Household. */
+		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 609350.0, 9e19 },  /* Single */
+		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731,201.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 365600.0, 9e19 },  /* Married, filing separate. */
+		{ 0.0,  16550.0,  63100.0, 100500.0, 191150.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
 		     };
   double txrt[4][9] ={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Single */
@@ -480,10 +480,10 @@ else
 	
 		/* Schedule AI - Part II - Annualized Self-Employment Tax */
 	
-		a[29] = 4050;			/* Not updated for 2024 */
-		b[29] = 66750;
-		c[29] = 106800;
-		d[29] = 160200;
+		a[29] = 42150;			/* Updated for 2024 */
+		b[29] = 70250;
+		c[29] = 112400;
+		d[29] = 168600;
 	
 		a[31] = NotLessThanZero(a[29] - a[30]);
 		b[31] = NotLessThanZero(b[29] - b[30]);	

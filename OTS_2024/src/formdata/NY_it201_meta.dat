@@ -43,20 +43,20 @@ round_to_whole_numbers
   Check_Depend	  363 638
   Check_NotDep	  424 638
 
-  CkD1y:	799 418
-  CkD1n:	859 418
+  CkD1y:	799 416
+  CkD1n:	859 416
 
-  CkD2_1y:	799 470
-  CkD2_1n:	859 470
+  CkD2_1y:	799 453
+  CkD2_1n:	859 453
 
-  CkE1_1y:	799 503
-  CkE1_1n:	859 503
+  CkE1_1y:	799 637
+  CkE1_1n:	859 637
+  E2_DaysNYC:	813 673
 
-  E2_DaysNYC:	813 541
-  F1_MonthsYouNYC	839 596	
-  F2_MonthsSpNYC	839 633
-  G_SpecCondCode	782 668
-  G_SpecCondCode2	839 668
+  F1_MonthsYouNYC	839 708	
+  F2_MonthsSpNYC	839 744
+  G_SpecCondCode	782 781
+  G_SpecCondCode2	839 781
  FontSz 10
 
  County		700 268
@@ -97,6 +97,20 @@ round_to_whole_numbers
  H5_Relat:	425 985
  H5_SocSec:	567 985
  H5_DOB:	750 985
+
+ H6_Name1st:	 75 1020
+ H6_MidInit:	227 1020
+ H6_NameLst:	273 1020
+ H6_Relat:	425 1020
+ H6_SocSec:	567 1020
+ H6_DOB:	750 1020
+
+ H7_Name1st:	 75 1060
+ H7_MidInit:	227 1060
+ H7_NameLst:	273 1060
+ H7_Relat:	425 1060
+ H7_SocSec:	567 1060
+ H7_DOB:	750 1060
 
 Page 2
 CoordReference:  40, 750  61, 64
@@ -146,7 +160,7 @@ CoordReference:  40, 750  61, 64
  L34	705 1004 12 8
  L35	705 1031 12 8
  L36_entry 685 1050 12 8
- L37	705 1078 10 8
+ L37	705 1078 12 8
 
 
 Page 3

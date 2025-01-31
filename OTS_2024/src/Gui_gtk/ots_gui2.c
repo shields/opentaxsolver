@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.68;
-char package_date[]="Jan 12, 2025";
-char ots_release_package[]="22.00-beta";
+float version=2.69;
+char package_date[]="Jan 30, 2025";
+char ots_release_package[]="22.01";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -3740,9 +3740,6 @@ void slcttxprog( GtkWidget *wdg, void *data )
    selected_other = 0;
    supported_pdf_form = 1;
 
-if (strstr( strg, "NY_IT201" ) != 0)	/* As on Jan. 27, NY has NOT posted their PDF Form. */
- supported_pdf_form = 0;
-
    sprintf(tmpstr,"%s%s", invocation_path, strg);
    printf("Setting Tax Program to be: '%s'\n", tmpstr);
    taxsolvecmd = strdup(tmpstr);
@@ -4249,7 +4246,8 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
- // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ if (0)
+  gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_other );
  txprogstog = make_radio_button( mpanel, txprogstog, x, y, "Other", slcttxprog, formid );

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-January 3, 2025 v22.00 - For Tax Year 2024.
+January 30, 2025 v22.01 - For Tax Year 2024.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,8 +32,13 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-    * v22.00 (1/3/2025) - Preliminary release for Tax-Year 2024.
-		Please check back for updates.
+    * v22.01 (1/30/2025) - Added the NY State PDF form.
+	- Updated Federal Form F2210, and CA-540 State programs.
+    * v22.00 (1/27/2025) - Preliminary release for Tax-Year 2024.
+	- Includes updates for many of the run-able forms.
+	- Although the tax-program for NY State has been updated, we are
+	  still waiting for Dept of Taxation to post NY's PDF Form.
+	- Please check back for more updates.
 
 Usage:
  RPLCSTRNG_03
