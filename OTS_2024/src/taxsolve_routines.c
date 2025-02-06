@@ -864,6 +864,14 @@ void GetString( char *linename, char *chstr )	/* Get a character-string value. *
  get_parameters( infile, 'w', chstr, linename );
 }
 
+void GetLineString( char *linename, char *chstr )	/* Get a character-string value. */
+{
+ char word[1024];
+ get_parameter( infile, 's', word, linename);
+ get_parameter( infile, 'w', chstr, linename );
+ consume_leading_trailing_whitespace( chstr );
+}
+
 
 double smallerof( double a, double b ) { if (a<b) return a; else return b; }
 double SmallerOf( double a, double b ) { if (a<b) return a; else return b; }
@@ -1102,6 +1110,18 @@ int check_form_version( char *title_as_read_in, char *expected_title )
  else
   return 1;
 }
+
+
+void check_if_yes( char *label )	/* Check box 'Y' or "N'. */
+{
+ char word[999];
+ int flag;
+ get_parameter( infile, 's', word, label );
+ get_param_single_line( infile, 'b', &flag, label );
+ if (flag) 
+  fprintf(outfile,"%s X\n", label );
+}
+
 
 //==================================================
 //====== Import Return Data Support Functions ======

@@ -55,7 +55,8 @@ TAXSOLVE := \
     taxsolve_f8960_2024 \
     taxsolve_f2210_2024 \
     taxsolve_CA_5805_2024 \
-    taxsolve_AZ_140_2024 
+    taxsolve_AZ_140_2024 \
+    taxsolve_MI_1040_2024
 
 # List of taxsolver programs in ../bin/
 EXE_TAXSOLVE := $(patsubst %,../bin/%$(EFS), $(TAXSOLVE))

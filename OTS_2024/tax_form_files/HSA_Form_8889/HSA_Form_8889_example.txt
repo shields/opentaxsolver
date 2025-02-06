@@ -14,7 +14,7 @@ L2     5,400          { HSA contributions you made for 2024 }
        1,200
                 ;
 
-L3	3,650	; { If you under 55 and eligible every month, enter 3,650. Or see instructions. }
+L3	4,150	; { If you were under 55 and eligible every month, enter $4,150 ($8,300 for Family Coverage). Or see instructions. (answer: 4150, 8300)}
 
 L4	45	; { Amount you and your employer contributed to your Archer MSAs for 2024 from Form 8853, lines 1 and 2.}
 
@@ -43,3 +43,4 @@ L17a:	Y	 { Do any distributions in L16 meet Exceptions to Addtl 20% tax ? { (ans
 L18	400	; { Last-month rule }
 
 L19	500	; { Qualified HSA funding distribution }
+

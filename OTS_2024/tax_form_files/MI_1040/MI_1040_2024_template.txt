@@ -1,0 +1,69 @@
+Title:  MI-1040 State Tax Form for 2024
+
+Status	 Married/Joint	 {Single, Married/Joint, Married/Sep }
+CkFarmFish		 { If 2/3 income from farming, fishing, seafaring. (answer: Y, N) }
+ResidencyStatus Resident { (answer: Resident, Nonresident, PartYear ) }
+
+L9a		;	{ Number of exemptions. }
+L9b		;	{ Number of special exemptions. }
+L9c		;	{ Number of qualified disabled veterans. }
+L9d		;	{ Number of Certificates of Stillbirth from MDHHS. }
+L9e		;	{ Claimed as dependent, see line 9 NOTE. }
+
+L10		;	{ Adjusted Gross Income from your U.S. Fed. Form 1040. }
+L11		;	{ Additions from Schedule 1, line 9. }
+L13		;	{ Subtractions from Schedule 1, line 31. }
+L15		; 	{ Exemption allowance. Enter amount from line 9f or Schedule NR, line 19. }
+
+L18a		; 	{ Amount of Income Tax Imposed by government units outside MI. }
+L18b		; 	{ Credit for Income Tax Imposed by government units outside MI. }
+
+L19a		; 	{ Amount of Michigan Historic Preservation Tax. }
+L19b		; 	{ Credit for Michigan Historic Preservation Tax. }
+
+L21		; 	{ Voluntary Contributions from Form 4642, line 6. }
+L22		; 	{ Penalty for nonqualified withdrawal from Form 5792, Michigan 1st-Time Home Buyer Savings Program, line 5 .}
+L23		; 	{ USE TAX. Use tax due on Internet, mail order or other out-of-state purchases from Worksheet 1. }
+
+L25		; 	{ Property Tax Credit. Include MI-1040CR or MI-1040CR-2. }
+L26		; 	{ Farmland Preservation Tax Credit. Include MI-1040CR-5. }
+L27a		; 	{ Earned Income Tax Credit. }
+L28		; 	{ Michigan Historic Preservation Tax Credit (refundable). Include Form 3581. }
+L29		; 	{ Credit for allocated share of tax paid by an electing flow-through entity. }
+L30		; 	{ Michigan tax withheld from Schedule W, line 6. Include Schedule W. }
+L31		;	{ Estimated tax, extension payments and 2023 credit forward. }
+
+ { -- Line-32 (below) for Amended Returns only -- }
+Ck32a			{ You had a refund and/or credit forward on the original return. (answer: Y, N) }
+Ck32b			{ You paid with the original return.  (answer: Y, N)}
+L32c		; 	{ }
+
+Interest	; 	{ Interest on underpayment. }
+Penalty		; 	{ Panalty on underpayment. }
+L36		; 	{ Credit Forward. Amount of line 35 to be credited to your 2025 estimated tax. }
+
+{ -------------------------------------------- } 
+{ --- Optional info for Auto-Fillout only. --- }
+ Your1stName: 	
+ YourInitial:  	
+ YourLastName:    	
+ YourSocSec#: 	
+ Spouse1stName:                 { Leave blank if Single, etc. }
+ SpouseInitial: 	
+ SpouseLastName:   
+ SpouseSocSec#: 	
+ Number&Street: 	
+ Town:		
+ State:		MI
+ Zipcode:   	
+ SchoolDist:
+
+{ Optional Refund Direct Deposit info }
+ Routing#: 
+ Account#: 
+ CkChecking		{ Account type is Checking (answer: Y, N) }
+ CkSavings		{ Account type is Savings (answer: Y, N) }
+
+{
+ --------------------------------------------
+}

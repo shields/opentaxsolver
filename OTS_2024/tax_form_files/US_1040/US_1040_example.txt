@@ -411,9 +411,13 @@ S3_13z  17      ;       { Credits from Other. }
  CkDep4_ChildTxCrd:		{ (answer: Yes, No) }
  CkDep4_CrdOtherDep:		{ (answer: Yes, No) }
 
-
    { Other Dependents }
  CkMoreThan_4_Dependents:	{ (answer: Yes, No) }
+
+ { Optional Direct-Deposit info for Refunds }
+L35b:   123456789		{ Routing Number. }
+L35c:   Checking		{ (answer: Checking, Savings) }
+L35d:   12345678901234567	{ Account Number. }
 
 {
  --------------------------------------------

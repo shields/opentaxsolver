@@ -1014,7 +1014,7 @@ static gboolean fb_expose_event( GtkWidget *widget, GdkEventExpose *event, gpoin
 {
  int new_width, new_height;
  gtk_window_get_size( GTK_WINDOW( fbwindow ), &new_width, &new_height );
- if ((new_width != fbwinwidth) || (new_height != fbwinheight))
+ if ((abs( new_width - fbwinwidth ) > 15) || (abs( new_height - fbwinheight ) > 15))
   {
    fbwinwidth = new_width;
    fbwinheight = new_height;
@@ -1040,7 +1040,7 @@ void BrowseFiles0( char *prompt, int maxlength, char *directory, char *wildcards
  fbdata.wildcards = strdup( wildcards );
  fbdata.filename = strdup( filename );
  fbdata.callback = callback;
- fbwinframe = make_window( fbwinwidth, fbwinheight, "File Browser", &fbwindow );
+ fbwinframe = make_window( fbwinwidth+10, fbwinheight, "File Browser", &fbwindow );
  gtk_window_set_resizable( GTK_WINDOW( fbwindow ), 1 );
  g_signal_connect( fbwindow, "draw", G_CALLBACK(fb_expose_event), NULL);
  fbrowser_frame = gtk_fixed_new();

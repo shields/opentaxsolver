@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.08;
-char package_date[]="Jan 30, 2025";
-char ots_release_package[]="22.01";
+float version=3.09;
+char package_date[]="Feb. 4, 2025";
+char ots_release_package[]="22.02";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1118,6 +1118,9 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	 instructions_filename = strdup( "CA_5805_instructions.dat" );	 
 	else
+	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
+	 instructions_filename = strdup( "MI_1040_instructions.dat" );
+	else
 	 return;	
      }
     if (verbose) printf("Instruction file = '%s'\n", instructions_filename );
@@ -1313,6 +1316,9 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	  check_form_version( title_line, "Title:  Form 5805" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
+	  check_form_version( title_line, "Title:  MI-1040" );
   }
 }
 
@@ -2653,6 +2659,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
    strcat( directory_dat, "Form_CA_5805" );
   }
+ else
+ if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "MI_1040" );
+  }
 }
 
 
@@ -3608,6 +3621,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
         { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
+        { form_other, "taxsolve_MI_1040",	   "MI_1040_meta.dat",	"MI_1040_pdf.dat" },
   };
 
 
@@ -3889,7 +3903,7 @@ static gboolean handle_draw_event( GtkWidget *wdg, cairo_t *cr, void *data )
  else
   { /*mode2*/
    gtk_window_get_size( GTK_WINDOW( outer_window ), &new_width, &new_height );
-   if ((new_width != winwidth) || (new_height != winht))
+   if ((abs(new_width - winwidth) > 5) || (abs( new_height - winht ) > 5))
     {
      winwidth = new_width;
      winht = new_height;

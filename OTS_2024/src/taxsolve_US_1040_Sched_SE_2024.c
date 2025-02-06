@@ -48,7 +48,7 @@ double L8a=0.0, L8b=0.0, L8c=0.0, L8d=0.0; 	/* Wages & Tips */
 
 int main( int argc, char *argv[] )
 {
- int i, j, k;
+ int i, j, k, stop=0;
  char word[8000], outfname[8000], *infname=0;
  time_t now;
 
@@ -117,27 +117,41 @@ int main( int argc, char *argv[] )
  L4a = L[2] * 0.9235;									/* Updated for 2024. */
  showline_wlabel( "L4a", L4a );
  L4c = NotLessThanZero( L4a );
- showline_wlabel( "L4c", L4c );
- showline_wlabel( "L5a", L5a );
- L5b = NotLessThanZero( L5a * 0.9235 );
- showline_wlabel( "L5b", L5b );
- L[6] = L4c + L5b;
- showline(6);
- showline_wlabel("L8a", L8a);
- showline_wlabel("L8b", L8b);
- showline_wlabel("L8c", L8c);
- L8d = L8a + L8b + L8c;
- showline_wlabel("L8d", L8d);
- L[9] = NotLessThanZero( L[7] - L8d );
- showline(9);
- L[10] = 0.124 * SmallerOf( L[6], L[9]);
- showline(10);
- L[11] = L[6] * 0.029;									/* Updated for 2024. */
- showline(11);
- L[12] = L[10] + L[11];
- showline_wmsg( 12, "Also enter this number on Schedule-2, line 4." );
- L[13] = L[12] * 0.5;
- showline_wmsg( 13, "Also enter this number on Schedule-1, line 15." );
+ if (L4c < 400.0)
+  {
+   if (L5a > 0.0)
+    L4c = 0.0;
+   else
+    {
+     fprintf(outfile,"\nStop.  You do NOT owe self-employment tax.\n\n");
+     printf("\nStop.  You do NOT owe self-employment tax.\n\n");
+     stop = 1;
+    }
+  }
+ if (!stop)
+  { /*!stop*/
+    showline_wlabel( "L4c", L4c );
+    showline_wlabel( "L5a", L5a );
+    L5b = NotLessThanZero( L5a * 0.9235 );
+    showline_wlabel( "L5b", L5b );
+    L[6] = L4c + L5b;
+    showline(6);
+    showline_wlabel("L8a", L8a);
+    showline_wlabel("L8b", L8b);
+    showline_wlabel("L8c", L8c);
+    L8d = L8a + L8b + L8c;
+    showline_wlabel("L8d", L8d);
+    L[9] = NotLessThanZero( L[7] - L8d );
+    showline(9);
+    L[10] = 0.124 * SmallerOf( L[6], L[9]);
+    showline(10);
+    L[11] = L[6] * 0.029;									/* Updated for 2024. */
+    showline(11);
+    L[12] = L[10] + L[11];
+    showline_wmsg( 12, "Also enter this number on Schedule-2, line 4." );
+    L[13] = L[12] * 0.5;
+    showline_wmsg( 13, "Also enter this number on Schedule-1, line 15." );
+  } /*!stop*/
 
  /* ----- .... Until here.  ----- */
 

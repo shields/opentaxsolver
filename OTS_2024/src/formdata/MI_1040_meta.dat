@@ -1,0 +1,106 @@
+Page 1
+
+CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134    110-dpi
+
+TxtColor: 0 0 0.6
+FontSz 10
+no_zero_entries
+round_to_whole_numbers
+! solid_status_check 6 6 20 .
+
+YourSocSec#:	 593 168 0 17.3
+SpouseSocSec#: 	 593 224 0 17.3
+Your1stName:	  75 157 
+YourInitial:	 283 157 
+YourLastName:	 325 157 
+Spouse1stName:	  75 193
+SpouseInitial:	 283 193 
+SpouseLastName:	 325 193
+SchoolDist:	 605 267 0 12
+SepFullName:	1445 706
+Number&Street: 	  75 230 
+Town:		  75 266
+State:		 406 266
+Zipcode:	 465 266
+Check_single	  92 400
+Check_mfj         94 436
+Check_sep         92 473
+
+CkFarmFish	545 326
+
+CkResident	544 400
+CkNonRes	544 436
+CkPartyear	544 473
+
+L9a		595 563
+L9aa		743 563 12
+
+L9b		595 602
+L9bb		743 602 12
+
+L9c		595 638
+L9cc		743 638 12
+
+L9d		595 675
+L9dd		743 675 12
+
+L9e		590 711
+L9ee		743 711 12
+
+L9		743 748 12
+L10		715 785 15
+L11		716 822 15
+L12		716 858 15
+L13		716 894 15
+L14		716 932 15
+L15		716 968 15
+L16		716 1005 15
+L17		716 1041 15
+
+
+
+Page 2
+
+YourSocSec#:	575 78  0 18.6
+L18a		485 158 15
+L18b		716 158 15	
+
+L19a		485 194 15
+L19b		716 194 15	
+
+L20		716 232 15	
+L21		716 288 15	
+L22		716 324 15	
+L23		716 361 15	
+L24		716 397 15	
+L25		716 469 15	
+L26		716 505 15	
+L27a		478 580 15	
+L27		716 580 15	
+L28		716 618 15	
+L29		716 654 15	
+L30		716 691 15	
+L31		716 725 15
+Ck32a		138 801
+Ck32b		138 838
+L32		716 836 15	
+L33		716 873 15	
+
+
+Page 3
+
+YourSocSec#:	576 78  0 18.6
+interest	197 177 6
+penalty 	357 177 6
+L34		716 176 15	
+L35		716 213 15	
+L36		716 250 15	
+L37		716 287 15	
+
+Routing#:	310 380
+Account#:	505 380
+CkChecking	696 379
+CkSavings	807 379
+
+

@@ -1,6 +1,6 @@
 Page 1
 
-round_to_whole_numbers
+! round_to_whole_numbers
 
 CoordReference:  40, 750  61, 64
 		550, 50  841, 1134    110-dpi
@@ -10,19 +10,19 @@ YourName:	60	176
 YourSocSec#:	676	176	
 L1_i_a:		104	362	
 L1_i_b:		608	362	
-L1_i_c		738	362	11
+L1_i_c		771	362	11
 L1_ii_a:	104	398	
 L1_ii_b:	608	398	
-L1_ii_c		738	398	11
+L1_ii_c		771	398	11
 L1_iii_a:	104	434	
 L1_iii_b:	608	434	
-L1_iii_c	738	434	11
+L1_iii_c	771	434	11
 L1_iv_a:	104	472	
 L1_iv_b:	608	472	
-L1_iv_c		738	472	11
+L1_iv_c		771	472	11
 L1_v_a:		104	508	
 L1_v_b:		608	508	
-L1_v_c		738	508	11
+L1_v_c		771	508	11
 L2		627	545	11
 L3		627	564	11
 L4		627	583	11

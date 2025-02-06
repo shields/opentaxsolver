@@ -64,18 +64,6 @@ double ComputeTax(double taxableIncome)
 }
 
 
-void check_if_yes( char *label )
-{
- char word[999];
- int flag;
- get_parameter( infile, 's', word, label );
- get_param_single_line( infile, 'b', &flag, label );
- if (flag) 
-  fprintf(outfile,"%s X\n", label );
-}
-
-
-
 /*----------------------------------------------------------------------------*/
 /* ---				Main					  --- */
 /*----------------------------------------------------------------------------*/

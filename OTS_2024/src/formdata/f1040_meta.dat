@@ -134,10 +134,10 @@ Page 2
  L38	626 602 12
 
  ! Routing + Account Numbers
- L35b	267 506 0 14.5
+ L35b:	267 506 0 14.5
  CkL35cChecking 577 509
  CkL35cSavings  664 509 
- L35d	267 526 0 14.5
+ L35d:	267 526 0 14.5
 
  Ck3rdPartyYes 626 635
  Ck3rdPartyNo  780 635
