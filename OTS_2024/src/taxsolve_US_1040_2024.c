@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.01;
+float thisversion=22.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -79,7 +79,7 @@ int adjerrcnt=0;
 			/* Following values taken from 1040-Instructions pg 110. */	/* Updated for 2024. */
 double brkpt[4][9]={
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 609350.0, 9e19 },  /* Single */
-		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731,201.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731201.0, 9e19 },  /* Married, filing jointly. */
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 365600.0, 9e19 },  /* Married, filing separate. */
 		{ 0.0,  16550.0,  63100.0, 100500.0, 191150.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
 		     };
@@ -2293,7 +2293,7 @@ int main( int argc, char *argv[] )						/* Updated for 2024. */
  showline_wlabelnz( "S1_21", Sched1[21] );
  showline_wlabel( "S1_22", Sched1[22] );
  showline( 10 );
- showline_wlabelmsg( "L11", L[11], "Adjusted Gross Income" );
+ showline_wlabelmsg( "L11", L[11], "Adjusted Gross Income (AGI)" );
 
 
  if ((L[2] != 0.0) || (L[3] != 0.0))

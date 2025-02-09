@@ -631,8 +631,12 @@ printf("CurDir = '%s'\n", fbdata.directory );
    if (strlen(fullname) > 0)
     strcat( fullname, "/" );
    strcat( fullname, newdirname );
-   printf("Creaing new directory: '%s'.\n", fullname );
-   errs = mkdir( fullname, 0755 );
+   printf("Creating new directory: '%s'.\n", fullname );
+   #ifndef __MINGW32__
+    errs = mkdir( fullname, 0755 );	/* Posix */
+   #else
+    errs = mkdir( fullname );		/* MsWin */
+   #endif
    if (errs)
     {
      printf("Error: Could not create the named directory '%s'.\n", fullname );

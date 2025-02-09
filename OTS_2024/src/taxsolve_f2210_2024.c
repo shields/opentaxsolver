@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=5.00;
+float thisversion=5.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -50,7 +50,7 @@ int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 			/* Following values taken from 1040-Instructions pg 110. */	/* Updated for 2024. */
 double brkpt[4][9]={
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 609350.0, 9e19 },  /* Single */
-		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731,201.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731201.0, 9e19 },  /* Married, filing jointly. */
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 365600.0, 9e19 },  /* Married, filing separate. */
 		{ 0.0,  16550.0,  63100.0, 100500.0, 191150.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
 		     };
