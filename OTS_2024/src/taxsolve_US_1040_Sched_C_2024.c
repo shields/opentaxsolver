@@ -29,7 +29,7 @@
 /* Earlier Updates	Robert Heller  heller@deepsoft.com		*/
 /************************************************************************/
 
-float thisversion=22.01;
+float thisversion=22.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -374,18 +374,27 @@ int main( int argc, char *argv[] )
  L[31] = L[29] - L[30];
  showline_wmsg(31,"Net Profit (loss)");
 
- if (L32 == Yes)
-  fprintf(outfile,"Ck32a: x\n");
- else
-  fprintf(outfile,"Ck32b: x\n");
-
- if ((L32 == Yes) || (L[31] > 0.0))
+ if (L[31] < 0.0) // Loss
   {
-   fprintf(outfile,"Enter %2.2f on Form 1040 line S1_3.   Sched-SE line 2.\n", L[31] );
-   fprintf(outfile,"        Estates and trusts, enter on Form 1041, line 3.\n");
+   if (L32 == Yes)
+    {
+     fprintf(outfile,"Ck32a: x\n");
+    }
+   else
+    {
+     fprintf(outfile,"Ck32b: x\n");
+     fprintf(outfile,"You must attach Form 6198. Your loss may be limited.\n");
+    }
   }
- else
-   fprintf(outfile,"You must attach Form 6198. Your loss may be limited.\n");
+
+ // For either profit, or loss when "All investment is at risk", message is the same
+ if ((L[31] >= 0.0) || L32 == Yes)
+  {
+    {
+     fprintf(outfile,"Enter %2.2f on Form 1040 line S1_3.   Sched-SE line 2.\n", L[31] );
+     fprintf(outfile,"        Estates and trusts, enter on Form 1041, line 3.\n");
+    }
+  }
 
  showline(35);
  showline(36);

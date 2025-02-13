@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.09;
-char package_date[]="Feb. 4, 2025";
-char ots_release_package[]="22.02";
+float version=3.10;
+char package_date[]="Feb. 12, 2025";
+char ots_release_package[]="22.03";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -115,6 +115,8 @@ FILE *infile;
 int ots_column=0, ots_line=0;	/* Input file position. */
 #define MaxFname 4096
 char wildcards_bin[MaxFname]="", filename_exe[MaxFname]="", *ots_path;
+char workdir[MaxFname+512]="";
+char temp_dir[MaxFname+512]="";
 char directory_dat[MaxFname+512]=".", wildcards_dat[MaxFname]="*.txt", filename_incl[MaxFname]="";
 char directory_incl[MaxFname]="tax_form_files", wildcards_incl[MaxFname]="*_out.txt";
 char wildcards_spreadsheet[MaxFname]="*.csv *.tsv";
@@ -195,6 +197,25 @@ char *setform( int formnum )
  sprintf( twrd, "%d", formnum );
  return strdup( twrd );
 }
+
+
+#ifndef PLATFORM_KIND
+ #define Posix_Platform  0 
+ #define Mingw_Platform  1
+ #define MsVisC_Platform 2
+ #ifdef __CYGWIN32__
+  #ifndef __CYGWIN__
+   #define __CYGWIN__ __CYGWIN32__
+  #endif
+ #endif
+ #if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MSYS__)
+  #define PLATFORM_KIND Mingw_Platform /* MinGW or like platform */
+ #elif defined(__WIN32) || defined(WIN32)
+  #define PLATFORM_KIND MsVisC_Platform /* microsoft visual C */
+ #else
+  #define PLATFORM_KIND Posix_Platform    /* Posix/Linux/Unix */
+ #endif
+#endif
 
 
 #if (PLATFORM_KIND != Posix_Platform) 
@@ -873,25 +894,6 @@ void verify_capgain_reset(GtkWidget *wdg, void *data)  /* Code follows edit_line
 }
 
 
-#ifndef PLATFORM_KIND
- #define Posix_Platform  0 
- #define Mingw_Platform  1
- #define MsVisC_Platform 2
- #ifdef __CYGWIN32__
-  #ifndef __CYGWIN__
-   #define __CYGWIN__ __CYGWIN32__
-  #endif
- #endif
- #if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MSYS__)
-  #define PLATFORM_KIND Mingw_Platform /* MinGW or like platform */
- #elif defined(__WIN32) || defined(WIN32)
-  #define PLATFORM_KIND MsVisC_Platform /* microsoft visual C */
- #else
-  #define PLATFORM_KIND Posix_Platform    /* Posix/Linux/Unix */
- #endif
-#endif
-
-
 void switch_form( GtkWidget *wdg, void *data )
 { char *cmd;
  Update_box_info();
@@ -915,6 +917,11 @@ void switch_form( GtkWidget *wdg, void *data )
    strcat( cmd, tmpfname );
    free( tmpfname );
  #endif
+  if (strlen(workdir) > 0)
+   {
+    strcat( cmd, " -workdir ");
+    strcat( cmd, workdir );
+   }
   printf("Issuing: '%s'\n", cmd );
   system( cmd );
   exit(0);
@@ -2553,6 +2560,7 @@ void open_taxfile( char *filename )
 void save_taxfile( GtkWidget *wdg, void *data )
 { 
  char *cpt, *param;
+ char *directory_save;  // Pointer to directory to use; either current, or overriden by working_dir
  if (verbose) printf("File-Save Dialog at: '%s'\n", directory_dat );
  param = (char *)data;
  if (param[0] == '0') pending_compute = 0;
@@ -2565,8 +2573,13 @@ void save_taxfile( GtkWidget *wdg, void *data )
  cpt = strstr( filename_fb, "_template.txt" );
  if (cpt != 0)
   strcpy( cpt, "_xxxx.txt" );
- // printf("OTS_save_taxfile: dir='%s', wc='%s', fname='%s'\n", directory_dat, wildcards_fb, filename_fb );
- Browse_Files( "File to Save As:", 2048, directory_dat, wildcards_fb, filename_fb, Save_Tax_File );
+
+ if (strlen(workdir) > 0)
+  directory_save = workdir;
+ else
+  directory_save = directory_dat;
+ printf("OTS_save_taxfile: dir='%s', wc='%s', fname='%s'\n", directory_save, wildcards_fb, filename_fb );
+ Browse_Files( "File to Save As:", 2048, directory_save, wildcards_fb, filename_fb, Save_Tax_File );
 }
 
 
@@ -3968,6 +3981,14 @@ void pick_file( GtkWidget *wdg, void *data )
   gtk_file_filter_add_pattern( rule, "*.txt" );
   // gtk_file_filter_add_custom( rule, 15, filterfunc, 0, 0 );
 
+ // If workdir option is set, save the current directory_dat
+ // path to temp_dir, and then set it to the workdir path
+ if (strlen(workdir) > 0)
+  { 
+   strcpy(temp_dir, directory_dat);
+   strcpy( directory_dat, workdir );
+  }
+
   j = strlen( directory_dat );
   if ((j > 0) && (directory_dat[j-1] != slashchr))
    strcat( directory_dat, slashstr );
@@ -3980,6 +4001,11 @@ void pick_file( GtkWidget *wdg, void *data )
   strcpy( filename_fb, "" );
   // printf("OTS_pick_file: dir='%s', wc='%s', fname='%s'\n", directory_dat, wildcards_fb, filename_fb );
   Browse_Files( "Select File", 2048, directory_dat, wildcards_fb, filename_fb, receive_filename );
+
+ // If modified, restore directory_dat path from temp_dir, so that templates
+ // are found properly during the call to pick_template.
+ if (strlen(workdir) > 0)
+  strcpy( directory_dat, temp_dir );
 }
 
 
@@ -4124,6 +4150,7 @@ int main(int argc, char *argv[] )
  if (invocation_path[k]==slashchr) k++;
  invocation_path[k] = '\0';
  // printf("Invocation path = '%s'\n", invocation_path);
+ // printf("Start cmd: '%s'; invocation path = '%s'; slashchr = '%c'\n", start_cmd, invocation_path, slashchr);
  set_ots_path();
 
  /* Decode any command-line arguments. */
@@ -4144,6 +4171,7 @@ int main(int argc, char *argv[] )
     printf("  -winsz wd ht      - Set the window size to wd x ht.\n");
     printf("  -debug            - Set debug mode.\n");
     printf("  -taxsolver xx     - Set path and name of the tax-solver executable.\n");
+    printf("  -workdir yy       - Set path for opening and saving data files.\n");
     printf("  {file-name}.txt   - Set path and name of the tax data input file.\n\n");
     exit(0);
    }
@@ -4168,6 +4196,14 @@ int main(int argc, char *argv[] )
     selected_form = form_other;
     other_form_selected = 1;
     ok_slcttxprog = 0;
+   }
+  else
+  if (strcmp(argv[argn],"-workdir")==0)
+   {
+    argn++;
+    if (argn == argc) { printf("Missing entry after '-workdir'.\n");  exit(1); }
+    strcpy(workdir, argv[argn]);
+    printf(" Setting WorkDir to be '%s'.\n", workdir );
    }
   else
   if (strcmp(argv[argn],"-winsz")==0)
