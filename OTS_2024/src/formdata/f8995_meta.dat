@@ -24,10 +24,12 @@ L1_v_a:		104	508
 L1_v_b:		608	508	
 L1_v_c		771	508	11
 L2		627	545	11
+display_without_sign L3
 L3		627	564	11
 L4		627	583	11
 L5		771	600	11
 L6		627	638	11
+display_without_sign L7
 L7		627	673	11
 L8		627	712	11
 L9		771	730	11
@@ -37,6 +39,8 @@ L12		627	802	11
 L13		627	820	11
 L14		771	838	11
 L15		771	875	11
+display_without_sign L16
 L16		771	893	11
+display_without_sign L17
 L17		771	930	11
 

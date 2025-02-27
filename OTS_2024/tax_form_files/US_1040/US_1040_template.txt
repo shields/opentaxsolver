@@ -8,9 +8,7 @@ You_65+Over?	N	{ Were you born before January 2, 1960 ? (answer: Yes, No) }
 You_Blind?	N	{ Are you blind ? (answer: Yes, No) }
 Spouse_65+Over?	N	{ Was Spouse born before January 2, 1960 ? (answer: Yes, No) }
 Spouse_Blind?	N	{ Is Spouse blind ? (answer: Yes, No) }
-
-Dependents      1       { Number of Dependents, (answer: 1, 2, 3, 4, 5, 6, 7, 8, 9, ...)
-				self=1, spouse, etc. }
+Dependents      0       { Number of Dependents, (answer: 0, 1, 2, 3, 4, 5, 6, 7, 8, ...) }
 
 VirtCurr?	N	{ During 2024, did you receive/exchange/sell any Digital Asset? (answer: Yes, No) }
 
@@ -101,9 +99,13 @@ CapGains-C/F	        { Capital Gains/Losses, 1099-B. For when Form 8949 (A,B,D,E
                 ;
 
 
+D1ad		;	{ Proceeds of Short-term transactions (Forms 1099-B). }
+D1ae		;	{ Cost of Short-term transactions (Forms 1099-B). }
 D4		;	{ Short-term gain from 6252, gain or loss from Forms 4684, 6781, 8824. }
 D5		;	{ Short-term gain/loss from partnerships, S corps, estates, trusts, K-1. }
 D6              ;       { Short-term 2023 loss carryover. Or, LastYear's return output File-name. }
+D8ad		;	{ Proceeds of Long-term transactions (Forms 1099-B). }
+D8ae		;	{ Cost of Long-term transactions (Forms 1099-B). }
 D11		;       { Gain from Form 4797. }
 D12		;       { Partnership net long-term gains or losses. }
 D13		;       { Cap Gains Distributions - 1099-DIV column 2a. }

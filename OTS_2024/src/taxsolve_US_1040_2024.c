@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.02;
+float thisversion=22.03;
 
 #include <stdio.h>
 #include <time.h>
@@ -53,7 +53,7 @@ float thisversion=22.02;
 double SchedA[MAX_LINES], SchedB[MAX_LINES], SchedD[MAX_LINES], amtws[MAX_LINES];
 double Sched1[MAX_LINES], Sched2[MAX_LINES], Sched3[MAX_LINES];
 double Sched3_13a=0.0, Sched3_13b=0.0, Sched3_13c=0.0, Sched3_13d=0.0,
-	Sched3_13z=0.0;
+	Sched3_13z=0.0, SchedD1ad=0.0, SchedD1ae=0.0, SchedD1ah=0.0, SchedD8ad=0.0, SchedD8ae=0.0, SchedD8ah=0.0;
 double L1a=0.0, L1b=0.0, L1c=0.0, L1d=0.0, L1e=0.0, L1f=0.0, L1g=0.0, L1h=0.0, L1i=0.0;
 double L2a=0.0;			/* Tax-exempt interest (only for SocSec calculations). */
 double L3a=0.0;			/* Qualified dividends. */
@@ -1205,10 +1205,31 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2024. */
    free_capgain_list( &long_trades );
   }
 
- stcg = SchedD[1] + SchedD[2] + SchedD[3];
- ltcg = SchedD[8] + SchedD[9] + SchedD[10];
 
- GetLine( "D4", &SchedD[4] );       /* Short term gain from 6252 and short-term gain or loss from Forms 4684, 6781, 8824. */
+ get_parameter( infile, 'l', labelx, "D1a_d or D4" );	/* Optionally (for 2024) get either D1a or D4 here. */
+ if (strcmp( labelx, "D1ad" ) == 0)
+  {
+   get_parameters( infile, 'f', &SchedD1ad, "D1ad" );
+   showline_wlabelnz( labelx, SchedD1ad );
+   GetLine( "D1ae", &SchedD1ae );
+   showline_wlabelnz( "D1ae", SchedD1ae );
+   SchedD1ah = SchedD1ad - SchedD1ae;
+   showline_wlabelnz( "D1ah", SchedD1ah );
+   GetLine( "D4", &SchedD[4] );
+  }
+ else
+ if (strcmp( labelx, "D4" ) == 0)
+  {
+   get_parameters( infile, 'f', &SchedD[4], "D4" );
+  }
+ else
+  {
+   printf("Error: Found '%s' when expecteding D1ad or D4.\n", labelx );
+   fprintf(outfile,"Error: Found '%s' when expecteding D1a or D4.\n", labelx );
+   exit(1);
+  }
+ // GetLine( "D4", &SchedD[4] );       /* Short term gain from 6252 and short-term gain or loss from Forms 4684, 6781, 8824. */
+
  GetLine( "D5", &SchedD[5] );       /* Net short-term gain or loss from partnerships, S corps, estates, trusts from K-1. */
 
  get_parameter( infile, 's', word, "D6" );	/* Carryover short-term loss from last year.  Or, LastYear's Return Output File-name. */
@@ -1223,7 +1244,36 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2024. */
     } while (strcmp(word,";") != 0);
   }
 
- GetLine( "D11", &SchedD[11] );	    /* Gain from Form 4797. */
+
+ get_parameter( infile, 'l', labelx, "D8ad or D11" );	/* Optionally (for 2024) get either D8a or D11 here. */
+ if (strcmp( labelx, "D8ad" ) == 0)
+  {
+   get_parameters( infile, 'f', &SchedD8ad, "D8ad" );
+   showline_wlabelnz( labelx, SchedD8ad );
+   GetLine( "D8ae", &SchedD8ae );
+   showline_wlabelnz( "D8ae", SchedD8ae );
+   SchedD8ah = SchedD8ad - SchedD8ae;
+   showline_wlabelnz( "D8ah", SchedD8ah );
+   GetLine( "D11", &SchedD[11] );
+  }
+ else
+ if (strcmp( labelx, "D11" ) == 0)
+  {
+   get_parameters( infile, 'f', &SchedD[11], "D11" );
+  }
+ else
+  {
+   printf("Error: Found '%s' when expecteding D8ad or D11.\n", labelx );
+   fprintf(outfile,"Error: Found '%s' when expecteding D1a or D4.\n", labelx );
+   exit(1);
+  }
+ // GetLine( "D11", &SchedD[11] );	    /* Gain from Form 4797. */
+
+
+ stcg = SchedD[1] + SchedD[2] + SchedD[3];
+ ltcg = SchedD[8] + SchedD[9] + SchedD[10];
+
+
  GetLine( "D12", &SchedD[12] );	    /* Partnership net long-term gain or loss. */
  GetLine( "D13", &SchedD[13] );	    /* Cap Gains Distributions - 1099-DIV col. 2a. */
  GetLine( "D14", &SchedD[14] );     /* Carryover long-term loss from last year. Or, leave blank if last year's file entered in line D6. */
@@ -1283,7 +1333,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2024. */
    fprintf(outfile," D4 = %6.2f\n", SchedD[4] );
    fprintf(outfile," D5 = %6.2f\n", SchedD[5] );
    fprintf(outfile," D6 = %6.2f		(Carry-over Loss)\n", SchedD[6] );
-   SchedD[7] = SchedD[1] + SchedD[2] + SchedD[3] + SchedD[4] + SchedD[5] + SchedD[6];
+   SchedD[7] = SchedD1ah + SchedD[1] + SchedD[2] + SchedD[3] + SchedD[4] + SchedD[5] + SchedD[6];
    fprintf(outfile," D7 = %6.2f		{ Net short-term capital gain or loss }\n", SchedD[7] );
 
    fprintf(outfile," D8bd = %10.2f\n   D8be = %10.2f\n   D8bg = %10.2f\n   D8bh = %10.2f\n", SchedDd[8], absolutev(SchedDe[8]), SchedDg[8], SchedD[8] );
@@ -1297,7 +1347,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2024. */
    fprintf(outfile," D12 = %6.2f\n", SchedD[12] );
    fprintf(outfile," D13 = %6.2f\n", SchedD[13] );
    fprintf(outfile," D14 = %6.2f	(Carry-over Loss)\n", SchedD[14] );
-   SchedD[15] = SchedD[8] + SchedD[9] + SchedD[10] + SchedD[11] + SchedD[12] + SchedD[13] + SchedD[14];
+   SchedD[15] = SchedD8ah + SchedD[8] + SchedD[9] + SchedD[10] + SchedD[11] + SchedD[12] + SchedD[13] + SchedD[14];
    fprintf(outfile," D15 = %6.2f		{ Net long-term capital gain or loss }\n", SchedD[15] );
    fprintf(outfile,"EndPDFpage.\nPDFpage: 12 12\n");
 

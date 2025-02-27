@@ -40,7 +40,7 @@
 #define MaxPages 400
 #define MAXLINE 2048
 
-float version=1.12;
+float version=1.14;
 int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
@@ -90,21 +90,12 @@ struct nvpair
  } *results_list=0, *special_list=0;
 
 
-struct showzero_rec
+struct special_format_rec
  {
   char *label;
-  struct showzero_rec *nxt;
- } *showevenifzerolist=0;
-
-
-void add_showifzero( char *label )
-{
- struct showzero_rec *new;
- new = (struct showzero_rec *)malloc( sizeof( struct showzero_rec ) );
- new->label = strdup( label );
- new->nxt = showevenifzerolist;
- showevenifzerolist = new;
-}
+  int showifzero, check_display_without_sign;
+  struct special_format_rec *nxt;
+ } *special_formats_list=0;
 
 
 /* Check for partial match of strings ending in wildcard '*'. */
@@ -124,17 +115,66 @@ int checkwildcard( char *needle, char *haystack )
 }
 
 
+struct special_format_rec *get_label_special_format_entry( char *label )
+{
+ struct special_format_rec *item;
+ item = special_formats_list;
+ while (item && ((strcmp( item->label, label ) != 0) && (checkwildcard( item->label, label ) == 0)))
+   item = item->nxt;
+ if (item == 0)
+  {
+   item = (struct special_format_rec *)calloc( 1, sizeof( struct special_format_rec ) );
+   item->label = strdup( label );
+  }
+ return item;
+}
+
+void add_showifzero( char *label )
+{
+ struct special_format_rec *new;
+ new = get_label_special_format_entry( label );
+ new->showifzero = 1;
+ new->nxt = special_formats_list;
+ special_formats_list = new;
+}
+
+
 int checknzoveride( char *label )
 { /* Return 0 if label is to display even if zero. Else return 1. */
-  struct showzero_rec *item;
-  item = showevenifzerolist;
+  struct special_format_rec *item;
+  item = special_formats_list;
   while (item && ((strcmp( item->label, label ) != 0) && (checkwildcard( item->label, label ) == 0)))
    item = item->nxt;
- if (item) 
-  return 0;
- else
-  return 1;
+  if ((item) && (item->showifzero))
+   return 0;
+  else
+   return 1;
 }
+
+
+void add_display_without_sign( char *label )
+{
+ struct special_format_rec *new;
+ new = get_label_special_format_entry( label );
+ new->check_display_without_sign = 1;
+ new->nxt = special_formats_list;
+ special_formats_list = new;
+}
+
+
+void check_display_without_sign( char *label, char *value )
+{
+  struct special_format_rec *item;
+  item = special_formats_list;
+  while (item && ((strcmp( item->label, label ) != 0) && (checkwildcard( item->label, label ) == 0)))
+   item = item->nxt;
+  if ((item) && (item->check_display_without_sign))
+   {
+     if (value[0] == '-')
+      value[0] = ' ';
+   }
+}
+
 
 
 struct nvpair *new_item( char *label, char *value )
@@ -156,6 +196,7 @@ void add_entry( char *label, char *value )      /* Builds list of result items (
  if ((no_zero_entries) && ((strcmp( value, "0.00" ) == 0) || (strcmp( value, "0" ) == 0)
      || (strcmp( value, "0.0" ) == 0) || (strcmp( value, "-0.00") == 0)) && (checknzoveride(label)))
   return;
+ check_display_without_sign( label, value );
  item = new_item( label, value );
  item->nxt = results_list;
  results_list = item;
@@ -574,6 +615,7 @@ void read_metadata( char *fname )
        metadata[pg] = (struct metapage_rec *)calloc( 1, sizeof(struct metapage_rec) );
        next_word( line, wrd, " \t\n\r" );
        nparamsrd = sscanf( wrd, "%d", &k );
+       // printf("Reading Form Page %d, as %d, num_defined_pages = %d\n", pg + 1, k, num_defined_pages );
        // printf("Reading Form Page %d\n", pg + 1 );
        // printf("	nparamsrd = %d, k = %d, pg = %d\n", nparamsrd, k, pg );
        if ((nparamsrd != 1) || (k != pg + 1))
@@ -588,6 +630,7 @@ void read_metadata( char *fname )
        metadata[pg]->optional = 1;
        next_word( line, wrd, " \t\n\r" );
        nparamsrd = sscanf( wrd, "%d", &k );
+       // printf("Reading OPTIONAL Form Page %d, as %d, num_defined_pages = %d\n", pg + 1, k, num_defined_pages );
        // printf("Reading Optional Form Page %d\n", pg + 1 );
        // printf("	nparamsrd = %d, k = %d, pg = %d\n", nparamsrd, k, pg );
        if ((nparamsrd != 1) || (k != pg + 1))
@@ -624,6 +667,12 @@ void read_metadata( char *fname )
       {
        next_word( line, wrd, " \t\n\r" );
        add_showifzero( wrd );
+      }
+     else
+     if (strcmp( wrd, "display_without_sign" ) == 0)
+      {
+       next_word( line, wrd, " \t\n\r" );
+       add_display_without_sign( wrd );
       }
      else
      if (strcmp( wrd, "no_commas") == 0)

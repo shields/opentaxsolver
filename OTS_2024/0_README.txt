@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-February 12, 2025 v22.03 - For Tax-Year 2024.
+February 28, 2025 v22.04 - For Tax-Year 2024.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,11 +32,17 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v22.04 (2/28/2025) - The PDF fill-out program can now suppress
+	negative signs for form-lines enclosed in parenthesis, which
+	are expected to be negative (by accounting notation).
+	As for example on Schedule-D, lines 14 and 21. 
+	Added Fed-1040 Sched-D lines 1a and 8a, for those who receive
+	Forms 1099-B on some transactions.
+
     * v22.03 (2/12/2025) - Fixed stray comma in Fed 1040 and 2210 tax-table.
 	Added click-able instructions for forms 8602, 8812, 8895, 8959, and 8960.
 	Added option in GUI to set a custom save-directory instead of the default,
 	Invoke ots_gui with command-line option '-help' to see the option(s).
-	
     * v22.02 (2/6/2025) - Added initial preliminary version of Michigan
 	  State tax form.
 	- Added options to Run_taxsolve_GUI for enlarging window and text

@@ -159,9 +159,11 @@ Page 3
  S1_5	778 369 12
  S1_6	778 387 12
  S1_7	778 406 12
+ display_without_sign S1_8a
  S1_8a	630 442 12
  S1_8b	630 461 12
  S1_8c	630 479 12
+ display_without_sign S1_8d
  S1_8d	630 497 12
  S1_8e	630 516 12
  S1_8f	630 534 12
@@ -180,6 +182,7 @@ Page 3
  S1_8q	630 754 12
  S1_8r	630 772 12
 
+ display_without_sign S1_8s
  S1_8s	630 811 12
  S1_8t	630 835 12
  S1_8u	630 865 12
@@ -535,6 +538,7 @@ Optional_Page 11
  D3h 	771 525 12
  D4	771 547 12
  D5	771 581 12
+ display_without_sign D6
  D6	771 620 12
  D7	771 656 12
  D8ad	443 834 12
@@ -555,6 +559,7 @@ Optional_Page 11
  D11	771 1003 12 
  D12	771 1023 12 
  D13	771 1043 12 
+ display_without_sign D14
  D14	771 1078 12 
  D15	771 1114 12 
 
@@ -568,6 +573,7 @@ Optional_Page 12
  D19	751 453 12
  CkD20y 103 508
  CkD20n 103 563
+ display_without_sign D21
  D21	751 656 12
  CkD22y 103 784
  CkD22n 103 838
@@ -861,7 +867,6 @@ Optional_Page 14
 
 
 
-
 Optional_Page 15
  YourNames: 	 92 155
  YourSocSec#:	736 155
@@ -869,10 +874,12 @@ Optional_Page 15
  AMT_Form_6251_L1     767 235 12
 
  AMT_Form_6251_L2a    767 271 12
+ display_without_sign AMT_Form_6251_L2b
  AMT_Form_6251_L2b    767 290 12
  AMT_Form_6251_L2c    767 307 12
  AMT_Form_6251_L2d    767 327 12
  AMT_Form_6251_L2e    767 346 12
+ display_without_sign AMT_Form_6251_L2f
  AMT_Form_6251_L2f    767 363 12
  AMT_Form_6251_L2g    767 381 12
  AMT_Form_6251_L2h    767 400 12
@@ -886,6 +893,7 @@ Optional_Page 15
  AMT_Form_6251_L2p    767 545 12
  AMT_Form_6251_L2q    767 564 12
  AMT_Form_6251_L2r    767 583 12
+ display_without_sign AMT_Form_6251_L2s
  AMT_Form_6251_L2s    767 602 12
  AMT_Form_6251_L2t    767 620 12
 
@@ -900,6 +908,7 @@ Optional_Page 15
  AMT_Form_6251_L10    767 1114 12
  showevenifzero AMT_Form_6251_L11
  AMT_Form_6251_L11    767 1132 12
+
 
 Optional_Page 16
 

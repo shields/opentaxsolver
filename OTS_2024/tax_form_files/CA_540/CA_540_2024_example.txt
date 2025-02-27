@@ -158,7 +158,6 @@ CA540_P2_21	48	; { Other expenses - investment, safe deposit box, etc. }
  L71      1,119.20 ;     { CA state income tax withheld. }
  L72         67.21 ;     { Estimated tax paid (pg 13). }
  L73         59    ;     { Realestate withholing (forms 592-B, 594, 597) (see pg 13). }
- L74         60    ;     { Excess SDI (pg 13). }
  L75         61    ;     { Earned Income Tax Credit (EITC). }
  L76         62    ;     { Young Child Tax Credit (YCTC). }
  L77         32.10 ;     { Net Premium Assistance Subsidy (PAS). }

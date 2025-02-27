@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.01;
+float thisversion=22.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -764,6 +764,7 @@ int main( int argc, char *argv[] )
 	 sched540Cb24i=0.0, sched540Cb24j=0.0, sched540Cb24k=0.0, sched540Cb24z=0.0,
 	 sched540Cc24z=0.0;
  int CkPayedUseTaxCDTFA=0;
+ char labelx[1024]="";
  time_t now;
 
  /* Decode any command-line arguments. */
@@ -1632,9 +1633,28 @@ int main( int argc, char *argv[] )
  
  GetLineF( "L73", &L[73] ); 	/* Realestate withholding. */
  
- GetLineF( "L74", &L[74] ); 	/* Excess SDI. */
+ // GetLineF( "L74", &L[74] ); 	/* Excess SDI. */
 
- GetLineF( "L75", &L[75] ); 	/* Earned Income Tax Credit (EITC). */
+ /* Allow un-needed L74 for now. (Remove *optional* logic for 2024, once reoved from on ALL templates.) */
+ get_parameter( infile, 'l', labelx, "L74 or L75");
+ if (strcmp( labelx, "L74" ) == 0)
+  {
+   get_parameters( infile, 'f', &L[74], labelx );
+   GetLineF( "L75", &L[75] ); 	/* Earned Income Tax Credit (EITC). */
+  }
+ else
+ if (strcmp( labelx, "L75" ) == 0)
+  {
+   get_parameters( infile, 'f', &L[75], labelx );
+   showline(75);
+  }
+ else
+  {
+   printf("Error: Found '%s' when expecteding A18 or B7a.\n", labelx );
+   fprintf(outfile,"Error: Found '%s' when expecteding A18 or B7a\n", labelx );
+   exit(1);
+  }
+
 
  GetLineF( "L76", &L[76] ); 	/* Young Child Tax Credit (YCTC). */
 

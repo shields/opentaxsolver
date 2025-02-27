@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.10;
-char package_date[]="Feb. 12, 2025";
-char ots_release_package[]="22.03";
+float version=3.11;
+char package_date[]="Feb. 28, 2025";
+char ots_release_package[]="22.04";
 
 /************************************************************/
 /* Design Notes - 					    */

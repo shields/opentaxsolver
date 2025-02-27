@@ -9,9 +9,7 @@ You_65+Over?	N	{ Were you born before January 2, 1960 ? (answer: Yes, No) }
 You_Blind?	N	{ Are you blind ? (answer: Yes, No) }
 Spouse_65+Over?	Y	{ Was Spouse born before January 2, 1960 ? (answer: Yes, No) }
 Spouse_Blind?	N	{ Is Spouse blind ? (answer: Yes, No) }
-
-Dependents      3       { Number of Dependents, (answer: 1, 2, 3, 4, 5, 6, 7, 8, 9, ...)
-				self=1, spouse, etc. }
+Dependents      0       { Number of Dependents, (answer: 0, 1, 2, 3, 4, 5, 6, 7, 8, ...) }
 
 VirtCurr?	N	{ During 2024, did you receive/exchange/sell any Digital Asset? (answer: Yes, No) }
 
