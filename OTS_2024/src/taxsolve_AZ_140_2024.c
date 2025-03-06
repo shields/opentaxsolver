@@ -22,7 +22,7 @@
    Original Author:  E. Strnod 9/12/2024
  ***********************************************************************/
 
-float thisversion = 3.00;
+float thisversion = 3.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -66,7 +66,7 @@ double getAZTaxAmt( double azTaxableIncome )
 
 int main( int argc, char *argv[] )
 {
-	int i, j, k, deduction = 0, includePage4 = 0;
+	int i, j, k, deduction = 0, includePage4 = 0, numtaxpayers=1;
 	char word[4000], outfname[4000], prelim_1040_outfilename[5000], *infname = 0;
 	time_t now;
 	double L10a = 0.0, L10b = 0.0, L11a = 0.0;
@@ -181,8 +181,8 @@ int main( int argc, char *argv[] )
 	 GetTextLineF("DaytimePhone#:" );
 
 	 fprintf(outfile, "Town/City: %s\n", town );
-     fprintf(outfile, "State: %s\n", state );
-     fprintf(outfile, "ZipCode: %s\n", zipcode );
+	 fprintf(outfile, "State: %s\n", state );
+	 fprintf(outfile, "ZipCode: %s\n", zipcode );
 
 	 // get prior last names
 	 GetTextLineF("PriorLastNames:" );
@@ -195,15 +195,19 @@ int main( int argc, char *argv[] )
 	 	fprintf(outfile, "L4Chk X\n");
 		if (j != 0)
 			fprintf(outfile, "L4a_InjuredSpouseChk X\n");
+		numtaxpayers = 2;
 	 } else if (status == HEAD_OF_HOUSEHOLD) {
 		 fprintf(outfile, "L5Chk X\n");
 		 // TODO L5 includes space to name qualifying child or dependent;
 		 // this is also in 1040, but not collected by OTS.  Ideally, it
 		 // could be captured there and made use of here.
+		numtaxpayers = 1;
 	 } else if (status == MARRIED_FILING_SEPARAT) {
 		 fprintf(outfile, "L6Chk X\n");
+		numtaxpayers = 1;
 	 } else if (status == SINGLE) {
 		 fprintf(outfile, "L7Chk X\n");
+		numtaxpayers = 1;
 	 }
 
 	GetLineF("L8", &L[8]); // age 65+ filers
@@ -338,14 +342,15 @@ int main( int argc, char *argv[] )
 	GetLineF("L26", &L[26]);
 	GetLineF("L27", &L[27]);
 	GetLineF("L28", &L[28]);
-	GetLineF("L29a", &L29a);
+	GetLine("L29a", &L29a);
 
 	// validate 29a - no greater than $2500 per taxpayer
-	if (L29a > 2500.0) {
-         printf("Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500. Exiting.\n", L29a);
-         fprintf(outfile,"Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500. Exiting.\n", L29a);
-         exit(1);
+	if (L29a > 2500.0 * numtaxpayers) {
+         printf("Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500 per taxpayer. Limiting.\n", L29a);
+         fprintf(outfile,"Error: Line 29a entry '%9.2f' (Exclusion for U.S. Gov't, AZ State or Local Gov't Pensions) may not exceed $2500 per taxpayer. Limiting.\n", L29a);
+         L29a = 2500.0 * numtaxpayers;	// exit(1);
 	}
+	showline_wlabel( "L29a", L29a );
 
 	GetLineF("L29b", &L29b);
 	GetLineF("L30", &L[30]);

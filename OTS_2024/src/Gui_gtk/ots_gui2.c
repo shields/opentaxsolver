@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.72;
-char package_date[]="Feb. 28, 2025";
-char ots_release_package[]="22.04";
+float version=2.73;
+char package_date[]="March 6, 2025";
+char ots_release_package[]="22.05";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -161,13 +161,14 @@ char program_names[30][100] =
 	 "taxsolve_MA_1_2024",			/* 10 */
 	 "taxsolve_GA_500",			/* 11 */
 	 "taxsolve_AZ_140_2024",		/* 12 */
+	 "taxsolve_MI_1040_2024",		/* 13 */
 	 "Other",				/* xx */
 	};
 
 enum form_names { form_US_1040, form_US_1040_Sched_C, form_US_8829, form_CA_540, 
 		  form_NC_D400, form_NJ_1040, form_OH_IT1040, form_PA_40,
 		  form_VA_760, form_NY_IT201, form_MA_1, form_GA_500, form_AZ_140,
-		  form_other,
+		  form_MI_1040, form_other,
 		  form_1040e, form_4562, form_8582
 		};
 int selected_form=form_other, other_form_selected=0;
@@ -1055,6 +1056,8 @@ void read_instructions( int init )
 	instructions_filename = strdup( "MA_1_instructions.dat" );	break;
       case form_NC_D400:
 	instructions_filename = strdup( "NC_instructions.dat" );	break;
+      case form_MI_1040:
+	instructions_filename = strdup( "MI_instructions.dat" );	break;
       default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
 	 instructions_filename = strdup( "f8889_instructions.dat" );
@@ -1253,6 +1256,8 @@ void check_form_type( char *title_line )
    case form_MA_1: check_form_version( title_line, "Title:  Massachusetts Form 1 Tax Form" );
 	break;
    case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2024" );
+	break;
+   case form_MI_1040: check_form_version( title_line, "Title:  MI-1040 State Tax Form" );
 	break;
    default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
@@ -3431,6 +3436,15 @@ void setpdfoutputname( char *origname, char *suffix, char *newname )
 void prepare_universal_pdf_cmd( char *options, char *metadata, char *wrkingfname, char *markedpdf, char *outputname )
 { char *tmpmetadata, *tmpwrkingfname, *tmpmarkedpdf, *tmpout;
 
+ if (metadata==0)
+  { printf("Error in prepare_universal_pdf_cmd: metadata is null.\n");  return; }
+ if (wrkingfname==0)
+  { printf("Error in prepare_universal_pdf_cmd: wrkingfname is null.\n");  return; }
+ if (markedpdf==0)
+  { printf("Error in prepare_universal_pdf_cmd: markedpdf is null.\n");  return; }
+ if (outputname==0)
+  { printf("Error in prepare_universal_pdf_cmd: outputname is null.\n");  return; }
+
  tmpmetadata = (char *)malloc(4096);
  tmpwrkingfname = (char *)malloc(4096);
  tmpmarkedpdf = (char *)malloc(4096);
@@ -3561,6 +3575,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_4562,            "",     	"f4562_meta.dat",         "f4562_pdf.dat" },
         { form_8582,            "",     	"f8582_meta.dat",         "f8582_pdf.dat" },
         { form_AZ_140,          "",     	"AZ_140_meta.dat",        "AZ_140_pdf.dat" },
+        { form_MI_1040, 	"",		"MI_1040_meta.dat",	  "MI_1040_pdf.dat" },
     /* Other added forms: */
         { form_other, "taxsolve_HSA_f8889",        "f8889_meta.dat",    "f8889_pdf.dat" },
         { form_other, "taxsolve_f8606",            "f8606_meta.dat",    "f8606_pdf.dat" },
@@ -3571,8 +3586,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
-        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
-        { form_other, "taxsolve_MI_1040",	   "MI_1040_meta.dat",	"MI_1040_pdf.dat" },
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
   };
 
 
@@ -3603,7 +3617,7 @@ void do_pdf_conversion()
         if ((psp->sel_form == form_other) && (strstr( taxsolvestrng, psp->other_form_name ) != 0))
 	 {
             ppdf = psp;
-            printf("%s: Found form_pdf: %d, %s\n", taxsolvestrng, ppdf->sel_form, ppdf->other_form_name);
+            printf("%s: Found form_pdf: %d, %s\n", taxsolvestrng, ppdf->sel_form, ppdf->other_form_name );
             break;
          }
      }
@@ -3745,6 +3759,7 @@ void slcttxprog( GtkWidget *wdg, void *data )
    fb_ban_files( "taxsolve_US_1040_Sched_C_" );
    fb_ban_files( "taxsolve_VA_760_" );
    fb_ban_files( "taxsolve_AZ_140_" );
+   fb_ban_files( "taxsolve_MI_1040_" );
 
    strcpy( wildcards_fb, "" );
    strcpy( filename_fb, "" );
@@ -4063,7 +4078,7 @@ void helpabout1( GtkWidget *wdg, void *data )
  strcat( msg, " 5. Click 'Compute Tax' to see your results.\n");
  strcat( msg, " 6. Click 'Print' to fill-out or print-out your forms.\n\n");
  strcat( msg, "For help, additional information, and updates:\n" );
- strcat( msg, " Surf to:   http://opentaxsolver.sourceforge.net/\n" );
+ strcat( msg, " Surf to:   https://opentaxsolver.sourceforge.net/\n" );
  GeneralPopup( "OTS Information", msg, 1 );
 }
 
@@ -4246,13 +4261,13 @@ int main(int argc, char *argv[] )
   // tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
   // set_widget_color( tmpwdg, "#ff0000" );
 
- y = y + 35;
+ y = y + 33;
  make_sized_label( mpanel, 10, 135, "Select Tax Program:", 12.0 );
 
  x = 30;
  y = y + 25;
  y1 = y;
- dy = ((winht - 120) - y) / 6;
+ dy = ((winht - 120) - y) / 7;
  formid = setform( form_US_1040 );
  txprogstog = make_radio_button( mpanel, 0, x, y, "US 1040 (w/Scheds A,B,D)", slcttxprog, formid );
  add_tool_tip( txprogstog, "Also does the 8949 forms." );
@@ -4275,6 +4290,11 @@ int main(int argc, char *argv[] )
  formid = setform( form_AZ_140 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "AZ State 140", slcttxprog, formid );
  // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ y = y + dy;
+ formid = setform( form_MI_1040 );
+ tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MI State 1040", slcttxprog, formid );
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ fronty2 = y + dy;
 
  y = y1;
  x = winwidth/2 + 40;
@@ -4305,17 +4325,18 @@ int main(int argc, char *argv[] )
  if (selected_other) set_radio_button( txprogstog );
 
  fronty1 = y1;
- fronty2 = y2;
+ if (y2 > fronty2)
+  fronty2 = y2;
  // make_rectangular_separator( mpanel, 20, y1-5, winwidth - 20, y2 );
 
  slcttxprog( 0, "0" );	/* Set default tax program. */
 
  if (infile == 0) 
   {
-   button = make_button_wsizedcolor_text( mpanel, 30, winht - 100, "Start New Return", 14.0, "#000000", pick_template, 0 );
+   button = make_button_wsizedcolor_text( mpanel, 30, winht - 95, "Start New Return", 14.0, "#000000", pick_template, 0 );
    add_tool_tip( button, "Start a fresh new blank return of the selected type." );
 
-   button = make_button_wsizedcolor_text( mpanel, (int)(0.5222 * (float)winwidth), winht - 100, "Open Saved Form", 14.0, "#000000", pick_file, 0 );
+   button = make_button_wsizedcolor_text( mpanel, (int)(0.5222 * (float)winwidth), winht - 95, "Open Saved Form", 14.0, "#000000", pick_file, 0 );
    add_tool_tip( button, "Open a previously saved or existing, tax form or example." );
    make_sized_label( mpanel, winwidth / 2 - 25, winht - 30, vrsnmssg, 8 );
    make_sized_label( mpanel, winwidth / 2 - 45, winht - 14, ots_pkg_mssg, 7 );

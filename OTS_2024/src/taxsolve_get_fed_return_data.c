@@ -1,9 +1,9 @@
 /************************************************************************/
-/* taxsolve_get_fed_return_data.c		*/
+/* taxsolve_get_fed_return_data.c					*/
 /* Copyright (C) 2023 - Aston Roberts					*/
-/*														*/
-/* (Abstracted from taxsolve_CA_540_2023.c by E. Strnod for */
-/* use in AZ and potentially other State tax solvers.	*/
+/*									*/
+/* (Abstracted from taxsolve_CA_540_2023.c by E. Strnod for 		*/
+/* use in AZ and potentially other State tax solvers.			*/
 /* 									*/
 /* GNU Public License - GPL:						*/
 /* This program is free software; you can redistribute it and/or	*/
@@ -22,7 +22,7 @@
 /* 02111-1307 USA							*/
 /* 									*/
 /* Aston Roberts 1-2-2024	aston_roberts@yahoo.com			*/
-/* Ellen Strnod  9/14/2024											*/
+/* Ellen Strnod  9/14/2024						*/
 /************************************************************************/
 
 #include <stdio.h>

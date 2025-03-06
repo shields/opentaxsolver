@@ -16,6 +16,7 @@ SpouseMidInit:	386 310
 SpouseLastName: 420 310 0 13.7
 SpouseSocSec#: 	403 206 9 13.3
 Number&Street:   60 367 0 13.7
+AddressLine2:    60 422 0 13.7
 Town:     	 60 474 0 13.7
 State:		497 474 0 13.7
 Zipcode: 	553 474 0 13.7

@@ -31,7 +31,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=1.00;
+float thisversion=1.01;
 
 #define SINGLE                  1
 #define MARRIED_FILING_JOINTLY  2
@@ -216,7 +216,7 @@ printf("L9c = %d\n", L9c );
  for (j=25; j <= 32; j++)
   L[33] = L[33] + L[j];
 
- if (L[22] < L[24])
+ if (L[33] < L[24])
   { /*Owe*/
     L[34] = L[24] - L[33] + interest + penalty;
 

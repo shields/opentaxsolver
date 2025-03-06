@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-double thisversion=22.00;
+double thisversion=22.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -442,6 +442,8 @@ int main( int argc, char *argv[] )
  GetTextLineF( "Town:" );
  fprintf(outfile,"State: OH\n");
  GetTextLineF( "Zipcode:" );
+ GetTextLineF( "AddressLine2:" );
+ GetTextLineF( "OhioCounty:" );
 
  fprintf(outfile,"CkFYrRes: X\n");
  if (status == MARRIED_FILING_JOINTLY)

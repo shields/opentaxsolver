@@ -131,6 +131,8 @@ Credits_45  10.0 ;	{ Venture capital credit }
  Number&Street:	432 Ormo St
  Town:		Halo Ville
  Zipcode:   	43004
+ AddressLine2:   Unit B
+ OhioCounty:      LIMA             { 4 letters }
 
 {
  --------------------------------------------  

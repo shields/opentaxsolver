@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.03;
+float thisversion=22.04;
 
 #include <stdio.h>
 #include <time.h>
@@ -2818,7 +2818,7 @@ int main( int argc, char *argv[] )						/* Updated for 2024. */
       {
 	if (strstr( labelx,"SocSec" ) != 0)
 	  format_socsec( word, 1 );
-	fprintf(outfile, "%s \"%s\"\n", labelx, word );
+	fprintf(outfile, "%s %s\n", labelx, word );
       }
      else
      if (strncmp( labelx,"CkDep", 5 ) == 0)

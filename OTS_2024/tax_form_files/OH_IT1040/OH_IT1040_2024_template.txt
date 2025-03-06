@@ -131,7 +131,8 @@ Credits_45	;	{ Venture capital credit }
  Number&Street:	
  Town:		
  Zipcode:   	
-
+ AddressLine2:		
+ OhioCounty:			{ 4 letters }
 { 
  ------------------------------------------- 
 }

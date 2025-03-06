@@ -26,7 +26,7 @@
 /* Corrections 2023 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=22.00;
+float thisversion=22.01;
 
 #include "taxsolve_routines.c"
 
@@ -106,6 +106,18 @@ char *pull_initial( char *name )
 }
 
 
+ void grab_line_string( char *fline, char *strng )
+ { /* Grab a string and copy it into pre-allocated character array. */
+  char twrd[2048];
+  strng[0] = '\0';
+  do
+   {
+    next_word(fline, twrd, " \t=" );
+    if (twrd[0] != ';')
+     { strcat( strng, twrd );  strcat( strng, " " ); }
+   }
+  while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
+ }
 
 
 
@@ -474,25 +486,25 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
      if (strncmp(word,"Dep5_",5) == 0) j = 5; else j = -1;
      if (j > 0)
       {
-	next_word( fline, word, " \t\n\r" );
+	grab_line_string( fline, word );	// next_word( fline, word, " \t\n\r" );
 	Dep_info[j].Name1st = strdup( word );
 	read_line(infile,fline);
 	next_word( fline, word, " \t\n\r" );
 	if (strstr( word, "_LastName:" ) == 0)
 	 { printf("Error: expected dependent %d last name, but found '%s'\n", j, word ); }
-	next_word( fline, word, " \t\n\r" );
+	grab_line_string( fline, word );	// next_word( fline, word, " \t\n\r" );
 	Dep_info[j].NameLst = strdup( word );
 	read_line(infile,fline);
         next_word( fline, word, " \t\n\r" );
         if (strstr( word, "_SocSec#:" ) == 0)
          { printf("Error: expected dependent %d SocSec#, but found '%s'\n", j, word ); }
-        next_word( fline, word, " \t\n\r" );
+	grab_line_string( fline, word );	// next_word( fline, word, " \t\n\r" );
         Dep_info[j].SocSec = strdup( word );
         read_line(infile,fline);
         next_word( fline, word, " \t\n\r" );
         if (strstr( word, "_Relation:" ) == 0)
          { printf("Error: expected dependent %d Relation, but found '%s'\n", j, word ); }
-        next_word( fline, word, " \t\n\r" );
+	grab_line_string( fline, word );	// next_word( fline, word, " \t\n\r" );
         Dep_info[j].Relat = strdup( word );
         nDeps = j;
       }
