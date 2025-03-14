@@ -17,8 +17,8 @@ L2		; { Total area of home}
 
 L4		; { Multiply days used for daycare during year by hours used per day.
  Leave blank or 0.00 for non-daycare business, or daycare area used exclusively for business }
-L5    8,760	; { If you started or stopped using your home for daycare during the year
- see instructions; otherwise, enter 8760 }
+L5    8,784	; { If you started or stopped using your home for daycare during the year
+ see instructions; otherwise, enter 8784 }
 
 
 {--- Part II   Figure Your Allowable Deduction ---}

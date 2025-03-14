@@ -4,14 +4,15 @@ Page 1
 
  CoordReference:  40, 750  61, 64
                   550, 50  841, 1134    110-dpi
+ round_to_whole_numbers
 
  YourName:     82 179
  SocSec#: 721 179 0 6.5
 
  L1	778 218 12
- L2a    636 234 12
- L2c    636 251 12
- L2b    636 272 12
+ L2a    630 234 12
+ L2c    630 251 12
+ L2b    630 272 12
  L2d    778 290 12
  L3	778 310 12
  L4	680 326 

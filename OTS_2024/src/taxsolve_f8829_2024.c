@@ -165,7 +165,7 @@ int main( int argc, char *argv[] )
     L[6] = L[4]/L[5];
  else
     L[6] = 0.0;
- ShowLineNonZero( 6 );
+ showline( 6 );
 
  // L[4] is being non-zero is used to indicate that this is a
  // daycare business with non-exclusive use of the space.

@@ -12,8 +12,8 @@ L2	2,650		; { Total area of home}
  {-- For daycare facilities not used exclusively for business, go to line 4. All others, go to line 7 --}
 L4			; { Multiply days used for daycare during year by hours used per day.
  Leave blank or 0.00 for non-daycare business, or daycare area used exclusively for business }
-L5	8,760		; { If you started or stopped using your home for daycare during the year
- see instructions; otherwise, enter 8760 }
+L5	8,784		; { If you started or stopped using your home for daycare during the year
+ see instructions; otherwise, enter 8784 }
  {--- Part II   Figure Your Allowable Deduction ---}
 L8	0		; { Enter the amount from Schedule C, line 29, plus any gain derived from the business use of your
  home, minus any loss from the trade or business no derived from the business use of your home.

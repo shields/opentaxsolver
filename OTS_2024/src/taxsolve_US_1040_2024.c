@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.04;
+float thisversion=22.05;
 
 #include <stdio.h>
 #include <time.h>
@@ -2838,6 +2838,11 @@ int main( int argc, char *argv[] )						/* Updated for 2024. */
 	 fprintf(outfile, "CkL35cSavings X\n");
 	if (strcasecmp( word, "Checking" ) == 0)
 	 fprintf(outfile, "CkL35cChecking X\n");
+      }
+     else
+     if (strncmp( labelx,"PIN_", 4 ) == 0)
+      {
+	 fprintf(outfile, "%s %s\n", labelx, word );
       }
     } /*valid_entry*/
    get_word(infile, labelx );

@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.02;
+float thisversion=22.03;
 
 #include <stdio.h>
 #include <time.h>
@@ -1819,6 +1819,32 @@ int main( int argc, char *argv[] )
     fprintf(outfile,"L10Dep%dSSN: %s\n", j, PrelimFedReturn.DepSocSec[j] );
     fprintf(outfile,"L10Dep%dRelation: %s\n", j, PrelimFedReturn.DepRelation[j] );
    }
+
+ get_word(infile, labelx );     /* Look for optional fields. */
+ while (!feof(infile))
+  { /*OptionalLine*/
+   read_comment_filtered_line( infile, word, 512 );
+   // printf("\nLine '%s' = '%s'\n", labelx, word );
+   if (word[0] != '\0')
+    { /*valid_entry*/
+      if (strstr( labelx,"WantHealthInfo" ) != 0)
+       {
+        if (toupper(word[0]) == 'Y')
+         fprintf(outfile, "CkHCinfoYes X\n"); 
+	else
+         fprintf(outfile, "CkHCinfoNo X\n"); 
+       }
+      else
+      if (strstr( labelx,"Discuss" ) != 0)
+       {
+        if (toupper(word[0]) == 'Y')
+         fprintf(outfile, "CkDiscussYes X\n"); 
+	else
+         fprintf(outfile, "CkDiscussNo X\n"); 
+       }
+    } /*valid_entry*/
+   get_word(infile, labelx );
+  } /*OptionalLine*/
 
  fclose(infile);
  grab_any_pdf_markups( infname, outfile );

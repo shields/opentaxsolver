@@ -24,8 +24,8 @@ Town:     	 60 357
 State:		615 357
 ZipCode: 	665 357		0 11
 
-YourDOB:	111 473		0 6
-SpouseDOB:	499 473		0 6
+YourDOB:	109 473		0 5.6
+SpouseDOB:	497 473		0 5.6
 
 CountyName:	111 582
 
@@ -195,13 +195,22 @@ CkCheckingL116: 237 493
 CkSavingsL116:	237 530
 CkCheckingL117: 237 603
 CkSavingsL117:	237 640
+
+CkHCinfoYes	761 807
+CkHCinfoNo	831 807
 FontSz 10
 
 
 Page 6
 
-YourNames:	 148 86 
-YourSocSec#:     480 87
+YourName:	 148 86 
+YourSocSec#:     476 87
+
+FontSz 18
+CkDiscussYes	687 496
+CkDiscussNo	762 496
+FontSz 10
+
 
 
 Page 7

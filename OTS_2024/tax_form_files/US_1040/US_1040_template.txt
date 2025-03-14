@@ -357,6 +357,11 @@ S3_13z		;	{ Credits from Other. }
 L35b:				{ Routing Number. }
 L35c:				{ (answer: Checking, Savings) }
 L35d:				{ Account Number. }
+
+ { Optional PIN Numbers. }
+PIN_3rdParty:			{ Third Party Personal Identity PIN. (5-digits.) }
+PIN_Your:			{ Your Identity Protection PIN. (6-digits from IRS.) }
+PIN_Spouse:			{ Spouse's Identity Protection PIN. (6-digits from IRS.) }
  
 {
  --------------------------------------------

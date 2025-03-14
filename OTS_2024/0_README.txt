@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 6, 2025 v22.05 - For Tax-Year 2024.
+March 14, 2025 v22.06 - For Tax-Year 2024.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,10 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v22.06 (3/14/2025) - Switched formatting of Fed-1040, and related 
+	Federal Forms to Round-to-Whole dollars.  Added ability to fill-in 
+	PIN numbers in Fed-1040.  Added ability to check request for Health
+	info on the CA-540 PDF Form.  Updated the Form 8829 template.  
     * v22.05 (3/6/2025) - Promoted the new MI State form to front GUI panel.
 	Fixed the new MI State form line 34.  In OH State form's optional
 	information section, added second address line, and county-code.

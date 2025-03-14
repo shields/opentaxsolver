@@ -110,6 +110,19 @@ GtkWidget *make_sized_label( GtkWidget *panel, int xpos, int ypos, const char *t
  return label;
 }
 
+void set_label_size_color( GtkWidget *label, float fontsize, const char *color_value )	/* Specify colors as: "#rrggbb" in hex 00-ff. */
+{
+ char *tmptxt;
+ const char *text;
+ text = gtk_label_get_text( (GtkLabel *)label );
+ tmptxt = (char *)malloc( strlen(text) + 128 );
+ sprintf( tmptxt, "<span font_desc=\"%g\" foreground=\"%s", fontsize, color_value );
+ strcat( tmptxt, "\">" );  strcat( tmptxt, text );  strcat( tmptxt, "</span>" );
+ gtk_label_set_markup( (GtkLabel *)label, tmptxt );
+ free( tmptxt );
+}
+
+
 
 
 /* ------------- End GTK Text / Label Routines ----------------- */
@@ -345,7 +358,6 @@ GtkEntry *make_formbox( GtkWidget *panel, int xpos, int ypos, int nchars_wide, c
  gtk_entry_set_width_chars( GTK_ENTRY(formbox), nchars_wide );
  if (callback != 0)
   g_signal_connect( formbox, "activate", G_CALLBACK( callback ), data );
-// gtk_signal_connect( GTK_OBJECT(formbox), "activate", GTK_SIGNAL_FUNC( callback ), data );
  gtk_container_add( GTK_CONTAINER( bpanel ), formbox );
  return GTK_ENTRY(formbox);
 }
@@ -625,7 +637,7 @@ void select_combo_suggestion( GtkWidget *combobox, int item )
 GtkWidget *make_formbox_wcombo( GtkWidget *panel, int xpos, int ypos, int width )
 {
  GtkWidget *bpanel, *combobox;
- combobox = gtk_combo_box_text_new();
+ combobox = gtk_combo_box_text_new_with_entry();
  bpanel = gtk_fixed_new();
  gtk_fixed_put( GTK_FIXED( panel ), bpanel, xpos, ypos );
  gtk_widget_set_size_request( combobox, width, 25 );

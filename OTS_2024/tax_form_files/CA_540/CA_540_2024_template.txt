@@ -174,6 +174,9 @@ CA540_P2_21		; { Other expenses - investment, safe deposit box, etc. }
  YourDOB:	
  SpouseDOB:	
 
+ WantHealthInfo     No	{ Do you want information about low-cost health coverage ?  (answer: Yes, No) }
+ Discuss	    No	{ Do you want to allow another person to discuss this return ?  (answer: Yes, No) }
+
 { 
  ---------------------------------------------
 } 
