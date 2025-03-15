@@ -45,6 +45,7 @@ int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
 int FontSz=10, round_to_whole_numbers=0, add_commas=1, rjustify=0;
+char Typeface[256] = "Helvetica";
 int txtcolor=0, current_page=-1;
 float txtred=0.0, txtgrn=0.0, txtblu=0.0;
 int num_defined_pages=0, num_pages_to_print=0, num_main_pages=0;
@@ -643,6 +644,12 @@ void read_metadata( char *fname )
        sscanf( wrd, "%d", &FontSz );
       }
      else
+     if (strcmp( wrd, "Typeface" ) == 0)
+      {
+       next_word( line, wrd, " \t\n\r" );
+       strcpy(Typeface, wrd);
+      }
+     else
      if (strcmp( wrd, "no_zero_entries") == 0)
       {
        no_zero_entries = 1;
@@ -1187,7 +1194,7 @@ void page_collector( char *rawpdfname, char *outfname )
     spew_sumline( outfile, line, &cnt );
    sprintf(line,"/Resources << /ProcSet [/PDF /Text] /Font << /F1 << /Type /Font /Subtype /Type1 /Name ");
     spew_sumline( outfile, line, &cnt );
-   sprintf(line,"/F1 /BaseFont /Helvetica /Encoding /MacRomanEncoding >>\n>>\n");
+   sprintf(line,"/F1 /BaseFont /%s /Encoding /MacRomanEncoding >>\n>>\n", Typeface);
     spew_sumline( outfile, line, &cnt );
    sprintf(line,"/XObject << /x5 %d 0 R>>\n", nobjs + 3 );
     spew_sumline( outfile, line, &cnt );

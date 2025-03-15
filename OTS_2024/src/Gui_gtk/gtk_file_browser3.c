@@ -714,7 +714,7 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
  if (directory[0] == '\0') strcpy( directory, "." );
 
  sprintf(line,"Directory:  %s", directory );
- make_label( fbrowser_frame, 5, 5, line );
+ make_label( fbrowser_frame, 5, 2, line );
 
  strcpy_safe( fb_dirname, directory, MXLEN );
 
@@ -745,7 +745,7 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
   }
 
  fb_selection_count = 0;
- mylist = make_multicolumn_selection_list( fbrowser_frame, 5, 26, fbwinwidth - 10, fbwinheight - 145, 
+ mylist = make_multicolumn_selection_list( fbrowser_frame, 5, 24, fbwinwidth - 10, fbwinheight - 154, 
 				FB_COLUMNS, headings, fb_select, fb_accept, 0 );
  for (j=0; j < FB_COLUMNS; j++) dir_row[j] = (char *)calloc( 1, 200 );
 
@@ -927,7 +927,7 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
  j = 0;
  while (wildcard_array[j] != 0) { free(wildcard_array[j]);  j++; }
 
- ypos = fbwinheight - 95;
+ ypos = fbwinheight - 105;
  make_label( fbrowser_frame, 296, ypos - 11, "Sort by:" );
  if (fb_sort_state)
   {
@@ -942,11 +942,11 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
 
  make_label( fbrowser_frame, 2, ypos, prompt );
  #ifdef __MINGW32__
-  make_button( fbrowser_frame, fbwinwidth - 100, ypos - 15, "New Folder", fb_create_new_dir, 0 );
+  make_button( fbrowser_frame, fbwinwidth - 110, ypos - 15, "New Folder", fb_create_new_dir, 0 );
  #else
-  make_button( fbrowser_frame, fbwinwidth - 78, ypos - 15, "New Dir", fb_create_new_dir, 0 );
+  make_button( fbrowser_frame, fbwinwidth - 85, ypos - 15, "New Dir", fb_create_new_dir, 0 );
  #endif
- ypos = ypos + 20;
+ ypos = ypos + 22;
  if (fb_altdirs)	/* If alternate-directories list is populated, then place selector button. */
   { struct fb_word_list_item *altdir=fb_altdirs;
    pulldown = make_menu_button( fbrowser_frame, fbwinwidth - 30, ypos, "v" );
@@ -962,20 +962,20 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
    frmbx_wdth_pix = fbwinwidth - 30;
  fb_filename_formbox = make_formbox_bypix( fbrowser_frame, 25, ypos, frmbx_wdth_pix, filename, maxlength, fb_accept, 0 );
 
- make_button( fbrowser_frame, 10, fbwinheight - 38, "    OK    ", fb_accept, 0 );
+ make_button( fbrowser_frame, 10, fbwinheight - 41, "    OK    ", fb_accept, 0 );
 
- posx1 = 0.38;
- make_label( fbrowser_frame, posx1 * fbwinwidth - 72, fbwinheight - 36, "File Types:" );
- frmbx_wdth_pix = 100;
- fb_wildcard_formbox = make_formbox_bypix( fbrowser_frame, posx1 * fbwinwidth, fbwinheight - 39, frmbx_wdth_pix, wildcards, 500, fb_wildcard_accept, 0 );
- btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 102, fbwinheight - 40, "Filter", fb_wildcard_accept, 0 );
+ posx1 = 0.30;
+ make_label( fbrowser_frame, posx1 * fbwinwidth - 70, fbwinheight - 35 + 2, "File Types:" );
+ frmbx_wdth_pix = 90;
+ fb_wildcard_formbox = make_formbox_bypix( fbrowser_frame, posx1 * fbwinwidth, fbwinheight - 41, frmbx_wdth_pix, wildcards, 500, fb_wildcard_accept, 0 );
+ btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 107, fbwinheight - 41, "Filter", fb_wildcard_accept, 0 );
  add_tool_tip( btn, "Refresh file listing showing only files matching the current filter strings." );
- btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 152, fbwinheight - 40, "Clr", fb_wildcard_clear, 0 );
+ btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 178, fbwinheight - 41, "Clr", fb_wildcard_clear, 0 );
  add_tool_tip( btn, "Clear filter wildcards to Show All File Types." );
- btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 188, fbwinheight - 40, "Res", fb_wildcard_restore, 0 );
+ btn = make_button( fbrowser_frame, posx1 * fbwinwidth + 238, fbwinheight - 41, "Res", fb_wildcard_restore, 0 );
  add_tool_tip( btn, "Restore the normal file filter types." );
 
- make_button( fbrowser_frame, fbwinwidth - 70, fbwinheight - 38, "Cancel ", cancel_fbwindow, 0 );
+ make_button( fbrowser_frame, fbwinwidth - 79, fbwinheight - 41, "Cancel ", cancel_fbwindow, 0 );
  for (j=0; j < FB_COLUMNS; j++) free(dir_row[j]);
  free(pathname);
  free(twrd1);
@@ -1033,11 +1033,11 @@ static gboolean fb_expose_event( GtkWidget *widget, GdkEventExpose *event, gpoin
 
 void BrowseFiles0( char *prompt, int maxlength, char *directory, char *wildcards, char *filename, void (*callback)(char *fname) )
 {
- fbwinwidth = 600;
+ fbwinheight = 525;
  if (SHOWFILESIZE)
-  fbwinheight = 500;
+  fbwinwidth = 750;
  else
-  fbwinheight = 450;
+  fbwinwidth = 700;
  fbdata.prompt = strdup( prompt );
  fbdata.maxlength = maxlength;
  fbdata.directory = strdup_padded( directory );

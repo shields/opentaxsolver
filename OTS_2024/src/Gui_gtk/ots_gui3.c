@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.12;
-char package_date[]="March 6, 2025";
-char ots_release_package[]="22.05";
+float version=3.14;
+char package_date[]="March 15, 2025";
+char ots_release_package[]="22.06";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -180,13 +180,14 @@ char program_names[30][100] =
 	 "taxsolve_GA_500",			/* 11 */
 	 "taxsolve_AZ_140_2024",		/* 12 */
 	 "taxsolve_MI_1040_2024",		/* 13 */
+	 "taxsolve_OR_40_2024",			/* 14 */
 	 "Other",				/* xx */
 	};
 
 enum form_names { form_US_1040, form_US_1040_Sched_C, form_US_8829, form_CA_540, 
 		  form_NC_D400, form_NJ_1040, form_OH_IT1040, form_PA_40,
 		  form_VA_760, form_NY_IT201, form_MA_1, form_GA_500, form_AZ_140,
-		  form_MI_1040, form_other,
+		  form_MI_1040, form_OR_40, form_other,
 		  form_1040e, form_4562, form_8582
 		};
 int selected_form=form_other, other_form_selected=0;
@@ -1099,7 +1100,9 @@ void read_instructions( int init )
       case form_NC_D400:
 	instructions_filename = strdup( "NC_instructions.dat" );	break;
       case form_MI_1040:
-	instructions_filename = strdup( "MI_instructions.dat" );	break;
+	instructions_filename = strdup( "MI_1040_instructions.dat" );	break;
+      case form_OR_40:
+	instructions_filename = strdup( "OR_40_instructions.dat" );	break;
       default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
 	 instructions_filename = strdup( "f8889_instructions.dat" );
@@ -1127,9 +1130,6 @@ void read_instructions( int init )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	 instructions_filename = strdup( "CA_5805_instructions.dat" );	 
-	else
-	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
-	 instructions_filename = strdup( "MI_1040_instructions.dat" );
 	else
 	 return;	
      }
@@ -1299,7 +1299,9 @@ void check_form_type( char *title_line )
 	break;
    case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2024" );
 	break;
-   case form_MI_1040: check_form_version( title_line, "Title:  MI-1040 State Tax Form" );
+   case form_MI_1040: check_form_version( title_line, "Title:  MI-1040" );
+	break;
+   case form_OR_40: check_form_version( title_line, "Title: Oregon Form OR-40" );
 	break;
    default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
@@ -1324,13 +1326,10 @@ void check_form_type( char *title_line )
 	  check_form_version( title_line, "Title:  Form 2210 for Tax Year 2024" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8812" ) != 0)
-	  check_form_version( title_line, "Title:  Form 8812 - " );
+	  check_form_version( title_line, "Title:  Form 8812 -" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	  check_form_version( title_line, "Title:  Form 5805" );
-	else
-	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
-	  check_form_version( title_line, "Title:  MI-1040" );
   }
 }
 
@@ -1575,32 +1574,32 @@ void Setup_Tax_Form_Page( int init )	/* This is called whenever the form window 
  gtk_widget_set_size_request( scrolledpane, winwidth, winht - 80 );
  operating_mode = 2;
 
- xpos = (int)(0.037 * (float)winwidth + 0.5);
+ xpos = (int)(0.03 * (float)winwidth + 0.5);
  // printf("\nwinwidth = %d, Save = %g, ", winwidth, (float)xpos / (float)winwidth );
  button = make_button( mpanel, xpos, winht - 35, "  Save  ", save_taxfile, "0" );	/* The "Save" button. */
  add_tool_tip( button, "Save your changes." );
 
- xpos = (int)(0.17 * (float)winwidth + 0.5);
+ xpos = (int)(0.165 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Compute Tax", Run_TaxSolver, 0 );
  add_tool_tip( button, "Run TaxSolver." );
 
- xpos = (int)(0.36 * (float)winwidth + 0.5);
+ xpos = (int)(0.355 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "  Print  ", printout, 0 );
  add_tool_tip( button, "Print results." );
 
- xpos = (int)(0.555 * (float)winwidth + 0.5);
+ xpos = (int)(0.51 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Options", options_pdf_diaglog, 0 ); 
  add_tool_tip( button, "Review and set options." );
 
- xpos = (int)(0.66 * (float)winwidth + 0.5);
+ xpos = (int)(0.64 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Help", helpabout2, 0 );
  add_tool_tip( button, "Get information about this program,\n Help, and Updates." );
 
- xpos = (int)(0.76 * (float)winwidth + 0.5);
+ xpos = (int)(0.745 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Switch Form", switch_form, 0 );
  add_tool_tip( button, "Switch to-, or Open-, another form." );
 
- xpos = (int)(0.94 * (float)winwidth + 0.5) - 20;
+ xpos = (int)(0.93 * (float)winwidth + 0.5) - 20;
  // printf("Exit = %1.2g\n", (float)xpos / (float)winwidth );
  button = make_button( mpanel, xpos, winht - 35, " Exit ", quit_wcheck, 0 );
  add_tool_tip( button, "Leave this program." );
@@ -2684,6 +2683,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
    strcat( directory_dat, "MI_1040" );
   }
+ else
+ if (strstr( taxsolvestrng, "taxsolve_OR_40" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "OR_40" );
+  }
 }
 
 
@@ -3638,7 +3644,8 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_8582,            "",     	"f8582_meta.dat",         "f8582_pdf.dat" },
         { form_AZ_140,          "",     	"AZ_140_meta.dat",        "AZ_140_pdf.dat" },
         { form_MI_1040, 	"",		"MI_1040_meta.dat",	  "MI_1040_pdf.dat" },
-    /* Other added forms: */
+        { form_OR_40, 	"taxsolve_OR_40",       "OR_40_meta.dat",	  "OR_40_pdf.dat" },
+     /* Other added forms: */
         { form_other, "taxsolve_HSA_f8889",        "f8889_meta.dat",    "f8889_pdf.dat" },
         { form_other, "taxsolve_f8606",            "f8606_meta.dat",    "f8606_pdf.dat" },
         { form_other, "taxsolve_US_1040_Sched_SE", "f1040sse_meta.dat", "f1040sse_pdf.dat" },
@@ -3649,7 +3656,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
         { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
-  };
+    };
 
 
 void do_pdf_conversion()
@@ -4361,8 +4368,14 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
- if (0)
+ if (0)   /* Need to leave one of these in code, to prevent compiler warning about unused variable. */
   gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+
+ y = y + dy;
+ formid = setform( form_OR_40 );
+ tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "OR State 40", slcttxprog, formid );
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+
  y = y + dy;
  formid = setform( form_other );
  txprogstog = make_radio_button( mpanel, txprogstog, x, y, "Other", slcttxprog, formid );
@@ -4389,9 +4402,9 @@ int main(int argc, char *argv[] )
  else
    Get_New_Tax_Form_Page( current_working_filename );
 
- button = make_button( mpanel, 20, winht - 35, "Help", helpabout1, 0 );
+ button = make_button( mpanel, 20, winht - 39, "Help", helpabout1, 0 );
  add_tool_tip( button, "Get information about this program, Help, and Updates." );
- button = make_button( mpanel, winwidth - 60, winht - 35, " Quit ", quit, 0 );
+ button = make_button( mpanel, winwidth - 74, winht - 39, "Quit", quit, 0 );
  add_tool_tip( button, "Leave this program." );
 
  ok_slcttxprog = 1;

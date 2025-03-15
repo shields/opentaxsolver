@@ -1,0 +1,240 @@
+Title: Oregon Form OR-40 - 2024
+
+{ --- Federal Return --- }
+
+FileName1040:  { File-name of Form 1040 output file. }
+
+{ --- Fiscal Year, Amended Return, Special Status --- }
+FiscalYearEnd: { For fiscal year filers, enter fiscal year end as MM/DD/YYYY}
+CkAmended No { Is this an amended return ? (answer: Yes, No) }
+NOLTaxYear: { If amending for an NOL (Net Operating Loss), enter the tax year the NOL was generated }
+CkCalcAsIfFed No  { Calculated with "as if" federal return? (answer: Yes, No) }
+CkShortYear No { Short-year tax election? (answer: Yes, No) }
+CkExtFiled No { Extension Filed? (answer: Yes, No) }
+CkFormOR24       No { Form OR-24? (answer: Yes, No) }
+CkFormOR243      No { Form OR-243? (answer: Yes, No) }
+CkFedForm8379    No { Federal Form 8379? (answer: Yes, No) }
+CkFedForm8886    No { Federal Form 8886? (answer: Yes, No) }
+CkDisasterRelief No { Disaster relief? (answer: Yes, No) }
+
+{ --- Optional info for auto-fillout only --- }
+{ The federal Form 1040 is used as the primary source for optional personal
+ info, but Oregon requires the following additional information. }
+
+YourDOB: { Enter your date of birth as MM/DD/YYYY }
+
+CkYFirstSSN No { Your first time using this SSN? (answer: Yes, No) }
+CkYAppITIN  No { You applied for ITIN? (answer: Yes, No) }
+CkYDeceased No { Taxpayer is deceased? (answer: Yes, No) }
+
+SpouseDOB: { Enter your spouse's date of birth as MM/DD/YYYY }
+
+CkSFirstSSN No { Spouse first time using this SSN? (answer: Yes, No) }
+CkSAppITIN  No { Spouse applied for ITIN? (answer: Yes, No) }
+CkSDeceased No { Spouse is deceased? (answer: Yes, No) }
+
+Country: { Country }
+Phone:	 { Phone number, enter as XXX-XXX-XXXX }
+
+{ --- Exemptions --- }
+
+CkL6aRegular Yes { Regular exemption credit for yourself? (answer: Yes, No) }
+CkL6aDisabled No { You are severely disabled? (answer: Yes, No) }
+CkL6aDep No { Someone else can claim you as a dependent? (answer: Yes, No) }
+
+CkL6bRegular No { Spouse regular exemption credit (answer: Yes, No) }
+CkL6bDisabled No { Spouse is severely disabled? (answer: Yes, No) }
+CkL6bDep No { Someone else can claim your spouse as a dependent? (answer: Yes, No) }
+
+{ --- Dependents --- }
+{ --- Optional info for auto-fillout only --- }
+
+{ The federal Form 1040 is used as the primary source for dependent info, 
+ but Oregon requires the following additional information. 
+ Enter dependents on Form 1040 in order from youngest to oldest, as required by
+ Oregon, so that they will match with the DOB values entered here.
+ }
+
+Dep1DOB: { Enter Dependent 1 data of birth as MM/DD/YYYY }
+Dep1Code: { Enter Dependent 1 code. Click label for code info.}
+CkDep1Dis No { Dependent 1 has a qualifying disability? (answer: Yes, No) }
+
+Dep2DOB: { Enter Dependent 2 data of birth as MM/DD/YYYY }
+Dep2Code: { Enter Dependent 2 code }
+CkDep2Dis No { Dependent 2 has a qualifying disability? (answer: Yes, No) }
+
+Dep3DOB: { Enter Dependent 3 data of birth as MM/DD/YYYY }
+Dep3Code: { Enter Dependent 3 code }
+CkDep3Dis No { Dependent 3 has a qualifying disability? (answer: Yes, No) }
+
+{ --- Dependent Totals  --- }
+L6c ; { Total number of dependents }
+L6d ; { Total number of dependent children with a qualifying disability (see instructions) }
+
+{ --- Taxable Income --- }
+
+{ --- Subtractions from Taxable Income --- }
+L10_worksheet_L4 ; { Federal Tax Worksheet line 4 'Other Taxes'. Form 1040 section 2 line 17 with exceptions. }
+L10_worksheet_L7 ; { Federal Tax Worksheet line 7 'Premium tax credit (Form 8962, line 24)' }
+
+L12 ; { Oregon income tax refund included in federal income }
+
+{ --- Deductions --- }
+CkStdDedOverride No { Set to 'Yes' to override auto calculation of the standard deduction. Click label for line help. (answer: Yes, No) }
+ 
+StdDedOverride ; { Enter a manually calculated standard deduction if previous field is set to 'Yes' }
+
+CkL17a No { You are 65 or older (answer: Yes, No) }
+CkL17b No { You are blind (answer: Yes, No) }
+CkL17c No { Spouse is 65 or older (answer: Yes, No) }
+CkL17d No { Spouse is blind (answer: Yes, No) }
+
+{ --- Oregon Tax --- }
+{ If all three of these checkboxes are set to 'No', the standard tax table is used for auto-calculation }
+CkL20a No { Use Schedule OR-FIA-40 for tax? (answer: Yes, No) }
+CkL20b No { Use Worksheet FCG for tax? (answer: Yes, No) }
+CkL20c No { Use Schedule OR-PTE-FY for tax? (answer: Yes, No) }
+AltMethodTaxAmt ; { Enter tax amount if any checkbox is selected, and an alternative method is used }
+
+L21 ; { Interest on certain installment sales }
+
+{ --- Standard and Carryfoward Credits --- }
+L26 ; { Political contribution credit. See limits in instructions }
+
+{ --- Payments and Refundable Credits --- }
+L32 ; { Oregon income tax withheld. Include a copy of your Forms W-2 and 1099 }
+L33 ; { Prior-year refund applied as estimated payment  }
+L34 ; { Estimated tax payments for 2024.  Include all estimated payments, including
+any extension payment, that you made by April 15, 2025 }
+L35 ; { Estimated tax payments from Schedule OR-K-1, line 20  }
+L36 ; { Earned income credit  }
+L37 ; { Oregon Kids Credit }
+
+{ --- Tax to pay or refund --- }
+L43 ; { Penalty and interest for filing or paying late }
+L44 ; { Interest on underpayment of estimated tax. Include Form OR-10 }
+L44a ; { Exception number from Form OR-10, line 1 }
+CkL44b No { Enter Yes if you annualized (answer: Yes, No) }
+L48 ; { Amount from line 47 you want to apply as a payment of your 2025
+estimated tax }
+L49 ; { Charitable checkoff donations from Schedule OR-DONATE, line 30 }
+L50 ; { Political party $3 checkoff }
+L50a: { Your party code }
+L50b: { Spouse party code }
+L51 ; { Higher education savings plan deposits from Schedule OR-529, line 5 }
+
+{ --- Direct deposit --- }
+{ --- Optional info for auto-fillout only --- }
+CkL54DepOutUS No { Is the final deposit destination outside the United States? (answer: Yes, No) }
+CkAcctChecking No { Checking account? (answer: Yes, No) }
+CkAcctSavings No { Savings account? (answer: Yes, No) }
+AcctRoutingNumber: { Enter 9 digit ACH routing number }
+AcctNumber: { Enter ACH account number, up to 17 digits }
+
+{ --- OR-40 Supporting Schedules --- }
+
+{ --- Schedule OR-A --- }
+
+{ Medical and dental expenses  }
+SchA_L1 ; { Medical and dental expenses }
+
+{ Taxes you paid  }
+SchA_L5 ; { State and local income taxes. Don't include Oregon income tax,
+including Oregon withholding. }
+SchA_L6 ; { Real estate taxes }
+SchA_L7 ; { Personal property taxes }
+SchA_L10 ; { Other taxes }
+SchA_L10_Type: { Type of 'Other taxes' on L10 }
+
+{ Interest you paid  }
+SchA_L12 ; { Mortgage interest and points reported on federal Form 1098 }
+SchA_L13 ; { Mortgage interest not reported on federal Form 1098 }
+SchA_L14 ; { Points not reported on federal Form 1098 }
+SchA_L16 ; { Investment interest }
+
+{ Gifts to charity }
+SchA_L18 ; { Gifts by cash or check }
+SchA_L19 ; { Gifts other than by cash or check }
+SchA_L20 ; { Carryover from prior year }
+
+{ Other miscellaneous deductions }
+SchA_L22 ; { Other deductions. Important! Don't include employee business
+expenses, tax preparation fees, or other deductions subject to the
+2 percent of AGI limitation }
+SchA_L22_Type: { Type of 'Other deduction' on L22 }
+
+{ --- Schedule OR-ASC --- }
+{ Section A: Additions (codes 100-199) }
+{ First row }
+SchASC_A1:  { Code }
+SchASC_A2 ; { Amount }
+{ Second row }
+SchASC_A3:  { Code }
+SchASC_A4 ; { Amount }
+
+{ Section B: Subtractions (codes 300-399) }
+{ First row }
+SchASC_B1:  { Code }
+SchASC_B2 ; { Amount }
+{ Second row }
+SchASC_B3:  { Code }
+SchASC_B4 ; { Amount }
+{ Third row }
+SchASC_B5:  { Code }
+SchASC_B6 ; { Amount }
+
+{ Section C: Tax recaptures (codes 950-999) }
+{ First row }
+SchASC_C1:  { Code }
+SchASC_C2 ; { Amount }
+{ Second row }
+SchASC_C3:  { Code }
+SchASC_C4 ; { Amount }
+
+{ Section D: Standard credits (codes 800-834) }
+{ First row }
+SchASC_D1:  { Code }
+SchASC_D2:  { State }
+SchASC_D3 ; { Amount }
+{ Second row }
+SchASC_D4:  { Code }
+SchASC_D5:  { State }
+SchASC_D6 ; { Amount }
+{ Third row }
+SchASC_D7:  { Code }
+SchASC_D8:  { State }
+SchASC_D9 ; { Amount }
+{ Fourth row }
+SchASC_D10:  { Code }
+SchASC_D11:  { State }
+SchASC_D12 ; { Amount }
+{ Fifth row }
+SchASC_D13:  { Code }
+SchASC_D14:  { State }
+SchASC_D15 ; { Amount }
+
+{ Section E: Carryforward credits (codes 835-889) }
+{ First block }
+SchASC_E1:  { Code }
+SchASC_E2 ; { Amount }
+SchASC_E3 ; { Amount }
+SchASC_E4 ; { Amount }
+{ Second block }
+SchASC_E5:  { Code }
+SchASC_E6 ; { Amount }
+SchASC_E7 ; { Amount }
+SchASC_E8 ; { Amount }
+
+{ Section F: Refundable credits (codes 890-949) }
+{ First row }
+SchASC_F1:  { Code }
+SchASC_F2 ; { Amount }
+{ Second row }
+SchASC_F3:  { Code }
+SchASC_F4 ; { Amount }
+{ Third row }
+SchASC_F5:  { Code }
+SchASC_F6 ; { Amount }
+
+
+{--------------------------------------------- }  

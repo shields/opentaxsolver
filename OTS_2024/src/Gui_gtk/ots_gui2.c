@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.73;
-char package_date[]="March 6, 2025";
-char ots_release_package[]="22.05";
+float version=2.74;
+char package_date[]="March 15, 2025";
+char ots_release_package[]="22.06";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -162,13 +162,14 @@ char program_names[30][100] =
 	 "taxsolve_GA_500",			/* 11 */
 	 "taxsolve_AZ_140_2024",		/* 12 */
 	 "taxsolve_MI_1040_2024",		/* 13 */
+	 "taxsolve_OR_40_2024",			/* 14 */
 	 "Other",				/* xx */
 	};
 
 enum form_names { form_US_1040, form_US_1040_Sched_C, form_US_8829, form_CA_540, 
 		  form_NC_D400, form_NJ_1040, form_OH_IT1040, form_PA_40,
 		  form_VA_760, form_NY_IT201, form_MA_1, form_GA_500, form_AZ_140,
-		  form_MI_1040, form_other,
+		  form_MI_1040, form_OR_40, form_other,
 		  form_1040e, form_4562, form_8582
 		};
 int selected_form=form_other, other_form_selected=0;
@@ -1057,7 +1058,9 @@ void read_instructions( int init )
       case form_NC_D400:
 	instructions_filename = strdup( "NC_instructions.dat" );	break;
       case form_MI_1040:
-	instructions_filename = strdup( "MI_instructions.dat" );	break;
+	instructions_filename = strdup( "MI_1040_instructions.dat" );	break;
+      case form_OR_40:
+	instructions_filename = strdup( "OR_40_instructions.dat" );	break;
       default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
 	 instructions_filename = strdup( "f8889_instructions.dat" );
@@ -1085,9 +1088,6 @@ void read_instructions( int init )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	 instructions_filename = strdup( "CA_5805_instructions.dat" );	 
-	else
-	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
-	 instructions_filename = strdup( "MI_1040_instructions.dat" );
 	else
 	 return;	
      }
@@ -1257,7 +1257,9 @@ void check_form_type( char *title_line )
 	break;
    case form_NC_D400: check_form_version( title_line, "Title:  NC State Tax Form 400 for 2024" );
 	break;
-   case form_MI_1040: check_form_version( title_line, "Title:  MI-1040 State Tax Form" );
+   case form_MI_1040: check_form_version( title_line, "Title:  MI-1040" );
+	break;
+   case form_OR_40: check_form_version( title_line, "Title: Oregon Form OR-40" );
 	break;
    default:
 	if (strstr( taxsolvestrng, "taxsolve_HSA_f8889" ) != 0)
@@ -1286,9 +1288,6 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_CA_5805" ) != 0)
 	  check_form_version( title_line, "Title:  Form 5805" );
-	else
-	if (strstr( taxsolvestrng, "taxsolve_MI_1040" ) != 0)
-	  check_form_version( title_line, "Title:  MI-1040" );
   }
 }
 
@@ -2622,6 +2621,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
    strcat( directory_dat, "MI_1040" );
   }
+ else
+ if (strstr( taxsolvestrng, "taxsolve_OR_40" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "OR_40" );
+  }
 }
 
 
@@ -3576,6 +3582,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_8582,            "",     	"f8582_meta.dat",         "f8582_pdf.dat" },
         { form_AZ_140,          "",     	"AZ_140_meta.dat",        "AZ_140_pdf.dat" },
         { form_MI_1040, 	"",		"MI_1040_meta.dat",	  "MI_1040_pdf.dat" },
+        { form_OR_40, 	"taxsolve_OR_40",       "OR_40_meta.dat",	  "OR_40_pdf.dat" },
     /* Other added forms: */
         { form_other, "taxsolve_HSA_f8889",        "f8889_meta.dat",    "f8889_pdf.dat" },
         { form_other, "taxsolve_f8606",            "f8606_meta.dat",    "f8606_pdf.dat" },
@@ -4099,7 +4106,7 @@ void helpabout2( GtkWidget *wdg, void *data )
  strcat( msg, "  4. Click 'Print' to print-out the results or to automatically\n");
  strcat( msg, "       fill-out the final forms.\n\n"); 
  strcat( msg, "For help, additional information, and updates:\n" );
- strcat( msg, " Surf to:   http://opentaxsolver.sourceforge.net/\n" );
+ strcat( msg, " Surf to:   https://opentaxsolver.sourceforge.net/\n" );
  GeneralPopup( "OTS Information", msg, 1 );
 }
 
@@ -4318,6 +4325,10 @@ int main(int argc, char *argv[] )
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
  if (0)
   gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ y = y + dy;
+ formid = setform( form_OR_40 );
+ tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "OR State 40", slcttxprog, formid );
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_other );
  txprogstog = make_radio_button( mpanel, txprogstog, x, y, "Other", slcttxprog, formid );

@@ -1157,8 +1157,15 @@ void GrabLineAlloc( char *fline, char **strng )
 { /* Grab a string and allocate space for it. */
  char twrd[4096];
  GrabLineString( fline, twrd );
- if (twrd[0] != '\0')
+ if (twrd[0] != '\0') {
+  // Trim trailing spaces from output string
+  int cpos = strlen(twrd) - 1;
+  while (twrd[cpos] == ' ') {
+   --cpos;
+  }
+  twrd[cpos + 1] = '\0';
   *strng = strdup( twrd );
+ }
 }
 
 void ConvertSlashes( char *fname )
@@ -1235,7 +1242,6 @@ int ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, in
 
     fclose( infile );
     return( 0 ); 
-
 }
 
 

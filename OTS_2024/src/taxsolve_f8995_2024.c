@@ -181,7 +181,7 @@ int main( int argc, char *argv[] )
 
  // GetTextLine( "YourName:" );
  // GetTextLine( "YourSocSec#:" );
- fprintf(outfile, "YourName: %s%s\n", f1040i.Your1stName, f1040i.YourLastName);
+ fprintf(outfile, "YourName: %s %s\n", f1040i.Your1stName, f1040i.YourLastName);
  fprintf(outfile, "YourSocSec#: %s\n", f1040i.YourSocSec);
 
  // showline_wlabel( "INFO: Net QBI Income (this form L1-<row>-c)", f1040i.S1_3 - f1040i.S1_26);
