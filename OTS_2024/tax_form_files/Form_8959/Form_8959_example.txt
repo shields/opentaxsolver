@@ -26,3 +26,5 @@ L23	45		; { Additional Medicare Tax withholding on railroad
  retirement (RRTA)  compensation from Form W-2, box  14 (see
  instructions)}
  {--------------------------------------------- }
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

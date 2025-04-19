@@ -44,3 +44,5 @@ L19a			; { Adjusted Gross Income (see instructions)}
 L19b			; { Highest tax bracket for estates and trusts for the year
  (see instructions)}
  {--------------------------------------------- }
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

@@ -36,3 +36,6 @@ TownStateZip:
 ForeignCountry:
 ForeignState:
 ForeignPostcode:
+
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

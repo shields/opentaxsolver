@@ -218,4 +218,7 @@ L19			; { Penalty. Enter the total penalty from line 14 of the
  Penalty. Also include this amount on Form 1040, 1040-SR, or
  1040-NR, line 38; or Form 1041, line 27. Don't file Form
  2210 unless you checked a box in Part II.}
+
+ {-------------------------------------------- }
+ Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
  {-------------------------------------------- }

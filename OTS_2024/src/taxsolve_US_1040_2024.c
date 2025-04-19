@@ -29,7 +29,7 @@
 /* Aston Roberts 1-5-2025	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=22.05;
+float thisversion=22.06;
 
 #include <stdio.h>
 #include <time.h>
@@ -81,7 +81,7 @@ double brkpt[4][9]={
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 609350.0, 9e19 },  /* Single */
 		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731201.0, 9e19 },  /* Married, filing jointly. */
 		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 365600.0, 9e19 },  /* Married, filing separate. */
-		{ 0.0,  16550.0,  63100.0, 100500.0, 191150.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
+		{ 0.0,  16550.0,  63100.0, 100500.0, 191950.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
 		     };
   double txrt[4][9] ={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Single */
@@ -1953,7 +1953,24 @@ int main( int argc, char *argv[] )						/* Updated for 2024. */
  GetLineF( "L3b", &L[3] );	/* Ordinary Dividends. (Sched-B) */
  GetLineF( "L4a", &L4a );	/* IRAs distributions. */
  GetLineF( "L4b", &L[4] );	/* Taxable IRAs distributions. */
- GetLineF( "L5a", &L5a );	/* Pensions and annuities. */
+
+get_parameter( infile, 'l', labelx, "QCD or L5a" );		/* Get optional line for 2024. */	/* Update in 2026. */
+printf("PARAMETER = '%s'\n", labelx );
+if (strcmp( labelx, "QCD" ) == 0)
+ {
+   get_parameter( infile, 'b', &j, "QCD" );
+   if (j)
+    fprintf(outfile,"QCD = QCD\n");
+printf("QCD = %d\n", j );
+   GetLineF( "L5a", &L5a );	/* Pensions and annuities. */
+ }
+else
+ {
+   get_parameters( infile, 'f', &L5a, "L5a" );
+   showline_wlabel( "L5a", L5a );
+ }
+// GetLineF( "L5a", &L5a );	/* Pensions and annuities. */
+
  GetLineF( "L5b", &L[5] );	/* Taxable pensions, and annuities. */
  GetLineF( "L6a", &L6a );	/* Social Security benefits.  Forms SSA-1099 box-5. */
 

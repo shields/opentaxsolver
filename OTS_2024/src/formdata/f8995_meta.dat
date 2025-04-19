@@ -1,10 +1,8 @@
 Page 1
 
-! round_to_whole_numbers
-
 CoordReference:  40, 750  61, 64
 		550, 50  841, 1134    110-dpi
-round_to_whole_numbers
+! round_to_whole_numbers
 
 TxtColor:   	0  0  0.6
 YourName:	60	176	

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-March 14, 2025 v22.06 - For Tax-Year 2024.
+April 18, 2025 v22.07 - For Tax-Year 2024.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,13 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+    * v22.07 (4/18/2025) - Improved result-rounding, now controlable from
+	the OTS GUI, or directly from individual files, which only affects PDF
+	Form fill-outs, and works uniformly for all forms.  In Fed Form 1040, 
+	added switch for Qualified Charitable Distributions (QCD) after line 4b. 
+	Fixed Fed-1040 tax-breaakpoint for Head-of-Household.
+	In NY State Form, added special limit for MFJ on line 29.
+	Fixes to Sched-SE, added Minister checkbox, and now prints line 3.
     * v22.06 (3/15/2025) - Switched formatting of Fed-1040, and related 
 	Federal Forms to Round-to-Whole dollars.  Added ability to fill-in 
 	PIN numbers in Fed-1040.  Added ability to check request for Health

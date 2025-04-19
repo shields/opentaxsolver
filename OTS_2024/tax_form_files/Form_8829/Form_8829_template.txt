@@ -65,4 +65,7 @@ L41		; {Depreciation percentage (see instructions) }
 
 {--- Part IV   Carryover of Unallowed Expenses to Next Year --- }
 
+
+{--------------------------------------------- }  
+Round_PDF_to_Whole_Dollars  n	{ Controls format of PDF form. (answer: Yes, No) }
 {--------------------------------------------- }  

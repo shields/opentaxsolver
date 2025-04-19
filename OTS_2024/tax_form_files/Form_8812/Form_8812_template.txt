@@ -34,3 +34,6 @@ L24 	; { Total of amounts from Form 1040, line 27, and Sched-3 line 11. }
 YourName:
 
 SocSec:
+
+Round_PDF_to_Whole_Dollars  Y   { Controls format of PDF form. (answer: Yes, No) }
+

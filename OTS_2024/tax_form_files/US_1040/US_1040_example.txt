@@ -61,6 +61,8 @@ L3b
  { --- Other Income & Credits --- }
 L4a	41.41	;       { IRA distributions. (1099-R) }
 L4b	41.00	;       { Taxable IRA distributions. (1099-R) }
+ QCD	 no		{ Qualified Charitable Distribution ? (answer: yes, no) }
+
 L5a	43.43	;       { Pensions, Annuities. (1099-R) }
 L5b	43.00	;       { Taxable Pensions, Annuities. (1099-R) }
 
@@ -422,6 +424,7 @@ PIN_3rdParty: 	00000		{ Third Party Personal Identity PIN. (5-digits.) }
 PIN_Your:	123456		{ Your Identity Protection PIN. (6-digits from IRS.) }
 PIN_Spouse:	222222		{ Spouse's Identity Protection PIN. (6-digits from IRS.) }
 
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
 {
  --------------------------------------------
 }

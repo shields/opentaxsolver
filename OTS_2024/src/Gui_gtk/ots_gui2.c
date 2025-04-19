@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.74;
-char package_date[]="March 15, 2025";
-char ots_release_package[]="22.06";
+float version=2.76;
+char package_date[]="April 18, 2025";
+char ots_release_package[]="22.07";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -111,7 +111,7 @@ char *yourfilename=0;
 char toolpath[MaxFname]="", *start_cmd;
 int pending_compute=0, supported_pdf_form=1;
 int filingstatus_mfj=1;
-int round_to_whole_nums=0;
+int round_to_whole_nums=0, round_pdf_to_whole_dollars=0;
 
 void pick_file( GtkWidget *wdg, void *data );	/* Prototype */
 void consume_leading_trailing_whitespace( char *line );
@@ -313,7 +313,7 @@ struct value_list
   GtkEntry  *box;
   GtkWidget *comment_label;
   struct value_list *nxt;
- };
+ } *rptwd_txline=0;
 
 struct taxline_record
  {
@@ -1309,6 +1309,14 @@ int datecheck( char *word )
 }
 
 
+int interpret_boolean( char *word )
+{
+ if ((toupper( word[0] ) == 'Y') || (toupper( word[0] ) == 'T') || (word[0] == '1'))
+  return 1;
+ return 0;
+}
+
+
 char *taxform_name;
 
 
@@ -1392,6 +1400,11 @@ void Read_Tax_File( char *fname )
 	     tmppt = new_list_item_value( VKIND_TEXT, txline, word, column, linecnt );
 	     if (strstr( txline->linename, ":" ) != 0)
 		 tmppt->formtype = LITERAL_INFO;
+	     if (strcmp( txline->linename, "Round_PDF_to_Whole_Dollars" ) == 0)
+		{
+		 round_pdf_to_whole_dollars = interpret_boolean( word );
+		 rptwd_txline = tmppt;
+		}
 	     entrycnt++;
 	    }
 	  } /*stateNotzero*/
@@ -1489,17 +1502,36 @@ void set_r2wn_option( GtkWidget *wdg, void *data )
  save_needed++;  compute_needed = 1; 
 }
 
+void set_round_pdf_option( GtkWidget *wdg, void *data )
+{
+ // printf("dT = %g\n", Report_Time() - winopentime );
+ if (Report_Time() - winopentime < 0.2) return;
+ round_pdf_to_whole_dollars = !round_pdf_to_whole_dollars;
+ if (rptwd_txline)
+  {
+   rptwd_txline->value = round_pdf_to_whole_dollars;
+   if (round_pdf_to_whole_dollars)
+    rptwd_txline->text = strdup( "Yes" );
+   else
+    rptwd_txline->text = strdup( "No" );
+   modify_formbox( rptwd_txline->box, rptwd_txline->text );
+  }
+ printf("Round_PDF_to_Whole_Dollars = %d\n", round_pdf_to_whole_dollars );
+}
+
 void options_pdf_diaglog( GtkWidget *wdg, void *data )
 {
  GtkWidget *panel;
- int wd=400, ht=170, xpos=10, ypos=30;
+ int wd=400, ht=210, xpos=10, ypos=30;
  panel = make_window( wd, ht, "Options Menu", &options_window );
  make_sized_label( panel, 5, 1, "Options Menu:", 12 );
  winopentime = Report_Time();
  allforms_button = make_toggle_button( panel, xpos, ypos, "Force production of All PDF Form Pages", allforms_toggle, set_pdf_option, "allforms" );
  ypos = ypos + 30;
- make_toggle_button( panel, xpos, ypos, "Round calculations to Whole Numbers", round_to_whole_nums, set_r2wn_option, 0 );
+ make_toggle_button( panel, xpos, ypos, "Round Calculations to Whole Numbers", round_to_whole_nums, set_r2wn_option, 0 );
  ypos = ypos + 30;
+ make_toggle_button( panel, xpos, ypos, "Force PDF form-fill-out to Round to Whole Numbers", round_pdf_to_whole_dollars, set_round_pdf_option, 0 );
+ ypos = ypos + 40;
  make_button( panel, xpos, ypos, "Set PDF-Viewer", set_pdfviewer, 0 ); 
  make_button( panel, wd/2 - 30, ht - 35, " Close ", close_any_window, &options_window ); 
  show_wind( options_window );
@@ -1544,19 +1576,19 @@ void Setup_Tax_Form_Page( int init )	/* This is called whenever the form window 
  button = make_button( mpanel, xpos, winht - 35, "  Print  ", printout, 0 );
  add_tool_tip( button, "Print results." );
 
- xpos = (int)(0.555 * (float)winwidth + 0.5);
+ xpos = (int)(0.54 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Options", options_pdf_diaglog, 0 ); 
  add_tool_tip( button, "Review and set options." );
 
- xpos = (int)(0.66 * (float)winwidth + 0.5);
+ xpos = (int)(0.65 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Help", helpabout2, 0 );
  add_tool_tip( button, "Get information about this program,\n Help, and Updates." );
 
- xpos = (int)(0.76 * (float)winwidth + 0.5);
+ xpos = (int)(0.745 * (float)winwidth + 0.5);
  button = make_button( mpanel, xpos, winht - 35, "Switch Form", switch_form, 0 );
  add_tool_tip( button, "Switch to-, or Open-, another form." );
 
- xpos = (int)(0.94 * (float)winwidth + 0.5) - 20;
+ xpos = (int)(0.93 * (float)winwidth + 0.5) - 20;
  // printf("Exit = %1.2g\n", (float)xpos / (float)winwidth );
  button = make_button( mpanel, xpos, winht - 35, " Exit ", quit_wcheck, 0 );
  add_tool_tip( button, "Leave this program." );
@@ -1820,6 +1852,35 @@ GtkWidget *make_bold_label( GtkWidget *panel, int xpos, int ypos, char *text )
  free( tmptxt1 );
  free( tmptxt2 );
  return label;
+}
+
+
+char check_for_illegal_symbols( char *phrase, char *illegal_characters )
+{ /* Check for any problematic chararcters in file-names or file-paths. */
+  /* Return 0 if OK.  Otherwise returns the illegal character encountered. */
+  int j=0, k;
+  while (phrase[j] != '\0')
+   {
+    k = 0;
+    while ((illegal_characters[k] != '\0') && (phrase[j] != illegal_characters[k]))
+     k++;
+    if (illegal_characters[k] != '\0')
+     return illegal_characters[k];
+    j++;
+   }
+  return 0;
+}
+
+
+void Check_for_illegal_characters_in_the_file_path( char *pathname )
+{ /* Check for any illegal characters in the file-path. */
+  char ch, msg[4096];
+  ch = check_for_illegal_symbols( pathname, "'|()!@#~<>#$%^&*={}[]`;:,?\"\t" );
+  if (ch != 0)
+   {
+     sprintf(msg,"Problematic character:    %c    found in file-path.\nWill prevent proper operation of OTS.\nRemove illegal character. Or re-install OTS under a legal directory path\ncontaining only characters:   A-Z,  a-z,  0-9,  _ (underscore),  or  . (dot).", ch );
+     GeneralPopup( "Illegal Character", msg, 1 );
+   }
 }
 
 
@@ -2484,6 +2545,8 @@ void Save_Tax_File( char *fname )
 
 void open_taxfile( char *filename )
 {
+ if (yourfilename == 0)
+  yourfilename = strdup( filename );
  infile = fopen(filename,"r");
  if (infile==0) 
   {
@@ -2799,8 +2862,8 @@ void taxsolve()				/* "Compute" the taxes. Run_TaxSolver. */
  else
   strcpy( run_options, "" );
 
- if (round_to_whole_nums)
-  strcat( run_options, " -round_to_whole_dollars" );
+ // if (round_to_whole_nums)
+ // strcat( run_options, " -round_to_whole_dollars" );
 
  #if (PLATFORM_KIND == Posix_Platform)
   sprintf(cmd,"'%s' %s '%s' &", taxsolvecmd, run_options, current_working_filename );
@@ -3599,7 +3662,7 @@ FORM_PDF_CONVERT form_pdfs[] =
 
 void do_pdf_conversion()
 {  
-    char outputname[4096];
+    char outputname[4096], updf_options[1024]="";
     int f;
     schedule_PDF_conversion = 0;
     predict_output_filename( current_working_filename, wrkingfname );
@@ -3639,7 +3702,16 @@ void do_pdf_conversion()
     // Found a matching entry, since ppdf is not NULL
     statusw.nfiles = 0;
     setpdfoutputname( wrkingfname, ".pdf", outputname );
-    prepare_universal_pdf_cmd( "", ppdf->form_meta_data_name, wrkingfname,  ppdf->form_pdf_name, outputname );
+
+    if (rptwd_txline)
+     {
+      round_pdf_to_whole_dollars = interpret_boolean( rptwd_txline->text );
+      // printf("INTERPRETTED '%s' as %d\n", rptwd_txline->text, round_pdf_to_whole_dollars );
+     }
+    if (round_pdf_to_whole_dollars)
+     strcpy( updf_options, "-round_to_whole_numbers" );
+
+    prepare_universal_pdf_cmd( updf_options, ppdf->form_meta_data_name, wrkingfname,  ppdf->form_pdf_name, outputname );
     printf("Issuing: %s\n", fillout_pdf_command );
     add_status_line( outputname );
     execute_cmd( fillout_pdf_command );
@@ -4359,6 +4431,8 @@ int main(int argc, char *argv[] )
  add_tool_tip( button, "Get information about this program, Help, and Updates." );
  button = make_button( mpanel, winwidth - 60, winht - 35, " Quit ", quit, 0 );
  add_tool_tip( button, "Leave this program." );
+
+ Check_for_illegal_characters_in_the_file_path( argv[0] );
 
  ok_slcttxprog = 1;
  gtk_widget_show_all( outer_window );

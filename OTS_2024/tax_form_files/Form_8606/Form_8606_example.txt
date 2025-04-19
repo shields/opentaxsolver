@@ -34,3 +34,6 @@ TownStateZip: Tax City, KS 12345
 ForeignCountry: 23
 ForeignState:   123
 ForeignPostcode: 453 827
+
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

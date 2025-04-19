@@ -49,6 +49,8 @@ L3b
  { --- Other Income & Credits --- }
 L4a		;       { IRA distributions. (1099-R) }
 L4b		;       { Taxable IRA distributions. (1099-R) }
+ QCD	 no		{ Qualified Charitable Distribution ? (answer: yes, no) }
+
 L5a		;       { Pensions, Annuites. (1099-R) }
 L5b		;       { Taxable Pensions, Annuites. (1099-R) }
 L6a		;       { Social Security benefits.  Forms SSA-1099 box-5. }
@@ -362,7 +364,8 @@ L35d:				{ Account Number. }
 PIN_3rdParty:			{ Third Party Personal Identity PIN. (5-digits.) }
 PIN_Your:			{ Your Identity Protection PIN. (6-digits from IRS.) }
 PIN_Spouse:			{ Spouse's Identity Protection PIN. (6-digits from IRS.) }
- 
+
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) } 
 {
  --------------------------------------------
 }

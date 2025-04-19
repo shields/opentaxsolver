@@ -28,3 +28,5 @@ L6	2222		; { Qualified REIT dividends and publicly traded partnership (PTP) inco
 L7	-3456		; { Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year. Enter negative value for loss. }
 L12	2		; { Net capital gain }
  {--------------------------------------------- }
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

@@ -40,7 +40,7 @@
 #define MaxPages 400
 #define MAXLINE 2048
 
-float version=1.14;
+float version=1.15;
 int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
@@ -1317,6 +1317,11 @@ int main( int argc, char *argv[] )
 	{ printf("Missing file-name after '-o'\n");  exit(1); }
        else
 	outfname = strdup( argv[k] );
+      }
+     else
+     if (strncmp( argv[k], "-round_to_whole_numbers", 15 ) == 0)
+      {
+       round_to_whole_numbers = 1;
       }
      else
      if (strncmp( argv[k], "-help", 2 ) == 0)

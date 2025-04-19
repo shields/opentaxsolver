@@ -41,3 +41,5 @@ L23	;{ Additional Medicare Tax withholding on railroad
  instructions)}
 
 {--------------------------------------------- }  
+Round_PDF_to_Whole_Dollars  Y	{ Controls format of PDF form. (answer: Yes, No) }
+

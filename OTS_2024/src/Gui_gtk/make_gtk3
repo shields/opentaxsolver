@@ -26,7 +26,7 @@ all: $(EXE_OTS_GUI)
 # Pattern rule for GUI programs in ../../bin/
 # includes dependency on any (all) gtk modules
 $(EXE_OTS_GUI): ../../bin/%: %.c    gtk_utils3.c gtk_utils3.h  gtk_file_browser3.c
-	gcc -O -Wall -fmax-errors=1 `pkg-config --cflags gtk+-3.0` $< `pkg-config --libs gtk+-3.0`  -o $@
+	gcc -O -Wall -fmax-errors=1 -Wno-unused-result `pkg-config --cflags gtk+-3.0` $< `pkg-config --libs gtk+-3.0`  -o $@
 
 clean:
 	rm -f $(EXE_OTS_GUI)

@@ -5,7 +5,7 @@ Page 1
  CoordReference:  40, 750  61, 64
                   550, 50  841, 1134	110-dpi
  no_zero_entries
- round_to_whole_numbers
+! round_to_whole_numbers
 
 
  Your1stName: 	 83 147
@@ -87,6 +87,7 @@ ForeignPostCd	630 295
 
  L4a	388 884 12
  L4b	770 884 12
+ QCD    875 884
  L5a	388 902 12
  L5b	770 902 12
  L6a	388 922 12

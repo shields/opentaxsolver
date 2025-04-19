@@ -196,6 +196,7 @@ void intercept_any_pragmas( FILE *infile, char *word )	/* Intercept any special 
  if (strcmp( word, "Round_to_Whole_Dollars" ) == 0)	/* Intercept any mode-setting commands. */
   {
    round_to_whole_dollars = 1;
+printf("Setting Round_to_whole_dollars = True.\n");
    get_word( infile, word );
   }
 }

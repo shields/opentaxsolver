@@ -26,7 +26,7 @@
 /* Corrections 2023 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=22.01;
+float thisversion=22.02;
 
 #include "taxsolve_routines.c"
 
@@ -1284,8 +1284,16 @@ int main( int argc, char *argv[] )
  GetLine( "L29", &L[29] );	/* Pension and annuity income exclusion  */
  if (L[29] > 20000.0)
   {
-   L[29] = 20000.0;
-   showline_wmsg( 29, "(Limited to 20,000.)" );
+   if (status == MARRIED_FILING_JOINTLY)
+    {
+     L[29] = smallerof( L[29], 40000.0 );
+     showline_wmsg( 29, "(Limited to 40,000.)" );
+    }
+   else
+    {
+     L[29] = smallerof( L[29], 20000.0 );
+     showline_wmsg( 29, "(Limited to 20,000.)" );
+    }
   }
  else
   showline(29);
@@ -1670,7 +1678,8 @@ int main( int argc, char *argv[] )
    showline_wmsg(58,"NYC taxes");
   } /*NYC*/
 
- GetLineF( "L59", &L[59] );	/* Sales or use tax, see pg 29. */
+ GetLine( "L59", &L[59] );	/* Sales or use tax, see pg 29. */
+ showline( 59 );		/* Force display even if zero. */
 
  GetLineF( "L60", &L[60] );	/* Voluntary Gift contibutions (pgs 30). */
 

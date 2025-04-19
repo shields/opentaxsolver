@@ -28,7 +28,7 @@
 
  ************************************************************************/
 
-float thisversion=5.00;
+float thisversion=5.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -48,8 +48,9 @@ double L8a=0.0, L8b=0.0, L8c=0.0, L8d=0.0; 	/* Wages & Tips */
 
 int main( int argc, char *argv[] )
 {
- int i, j, k, stop=0;
+ int i, j, k, stop=0, CkMinister=0;
  char word[8000], outfname[8000], *infname=0;
+ double L1a=0.0, L1b=0.0;
  time_t now;
 
  printf("US 1040 Schedule SE, 2024 - v%1.0f\n", thisversion);
@@ -105,7 +106,15 @@ int main( int argc, char *argv[] )
  GetTextLineF( "YourName:" );
  GetTextLineF( "YourSocSec#:" );
 
- GetLine( "L2", &L[2] );	/* Net Profit/Loss */	
+											/* Updated for 2024. */
+								/* -- Uncomment and implement these lines for 2025. -- */
+ // GetYesNoSL( "CkMinister:", &CkMinister );	/* Check if you're a minister/religeous practioner w/self-employment. */
+ if (CkMinister)
+  fprintf(outfile,"CkMinister: = X\n");
+ // GetLine( "L1a", &L1a );	/* Net farm profit or loss from Sched-F, line-34. K1 box 14. */	
+ // GetLine( "L1a", &L1a );	/* Conserv. Reserv. Prog benefits, Sched-F, line-4b. K1 box 20. */
+
+ GetLine( "L2", &L[2] );	/* Net Profit/Loss, Sched-C line-31. */	
  GetLine( "L5a", &L5a );	/* Church employee income from Form W-2 */	
  L[7] = 168600.0;           	/* Constant value for tax year 2024 */			/* Updated for 2024. */
  GetLine( "L8a", &L8a );	/* Wages & Tips */
@@ -114,7 +123,12 @@ int main( int argc, char *argv[] )
 
  /* -- Compute the tax form  -- */
  showline(2);
- L4a = L[2] * 0.9235;									/* Updated for 2024. */
+ L[3] = L1a + L1b + L[2];
+ showline(3);
+ if (L[3] > 0.0)
+  L4a = L[3] * 0.9235;									/* Updated for 2024. */
+ else
+  L4a = L[3];
  showline_wlabel( "L4a", L4a );
  L4c = NotLessThanZero( L4a );
  if (L4c < 400.0)
@@ -143,7 +157,7 @@ int main( int argc, char *argv[] )
     showline_wlabel("L8d", L8d);
     L[9] = NotLessThanZero( L[7] - L8d );
     showline(9);
-    L[10] = 0.124 * SmallerOf( L[6], L[9]);
+    L[10] = 0.124 * SmallerOf( L[6], L[9] );
     showline(10);
     L[11] = L[6] * 0.029;									/* Updated for 2024. */
     showline(11);
