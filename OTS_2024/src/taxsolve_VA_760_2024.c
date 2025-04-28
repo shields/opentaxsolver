@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=22.00;
+float thisversion=22.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -317,16 +317,8 @@ int main( int argc, char *argv[] )
  showline(16);
  Report_bracket_info( L[15], L[16], status );
 
-/*
-	 get_parameter( infile, 'l', word, "L17" );
-	 if (strcmp( word, "STA_VAGI" ) == 0)
-	  {
-	   get_parameters( infile, 'f', &STA_VAGI, "STA_VAGI" );
-	   showline_wlabelnz( "STA_VAGI", STA_VAGI );
-	   get_parameter( infile, 's', word, "L17" );
-	  }
-*/
  GetLine( "STA_VAGI", &STA_VAGI );
+ showline_wlabelnz( "STA_VAGI", STA_VAGI );
  GetLine( "L17", &L[17] );	/* Spouse Tax Adjustment. */
  showline(17);
 

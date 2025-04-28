@@ -63,7 +63,7 @@
 /**********************************************************************/
 
 float version=3.16;
-char package_date[]="April 18, 2025";
+char package_date[]="April 28, 2025";
 char ots_release_package[]="22.07";
 
 /************************************************************/
@@ -1922,7 +1922,11 @@ char check_for_illegal_symbols( char *phrase, char *illegal_characters )
 void Check_for_illegal_characters_in_the_file_path( char *pathname )
 { /* Check for any illegal characters in the file-path. */
   char ch, msg[4096];
-  ch = check_for_illegal_symbols( pathname, "'|()!@#~<>#$%^&*={}[]`;:,?\"\t" );
+  #ifdef __MINGW32__
+   ch = check_for_illegal_symbols( pathname, "'|()!@#~<>#$%^&*={}[]`;,?\"\t" );
+  #else
+   ch = check_for_illegal_symbols( pathname, "'|()!@#~<>#$%^&*={}[]`;:,?\"\t" );
+  #endif
   if (ch != 0)
    {
      sprintf(msg,"Problematic character:    %c    found in file-path.\nWill prevent proper operation of OTS.\nRemove illegal character. Or re-install OTS under a legal directory path\ncontaining only characters:   A-Z,  a-z,  0-9,  _ (underscore),  or  . (dot).", ch );

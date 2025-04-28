@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-April 18, 2025 v22.07 - For Tax-Year 2024.
+April 28, 2025 v22.07 - For Tax-Year 2024.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,7 +32,7 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-    * v22.07 (4/18/2025) - Improved result-rounding, now controlable from
+    * v22.07 (4/28/2025) - Improved result-rounding, now controlable from
 	the OTS GUI, or directly from individual files, which only affects PDF
 	Form fill-outs, and works uniformly for all forms.  In Fed Form 1040, 
 	added switch for Qualified Charitable Distributions (QCD) after line 4b. 
