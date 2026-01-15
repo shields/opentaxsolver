@@ -1,0 +1,616 @@
+Instructions:
+[FileName1040:] Enter the path and filename to the Form 1040 output file. This
+is a primary source for information required for the OR-40 form, so complete it
+first. Review the output file for complete list of the Form 1040 fields used,
+and their values, in the section 'Imported 1040 Data'.
+
+[Dep1Code:] Dependent codes are:
+ SD Biological or adopted child.
+ SC Stepchild.
+ FC Foster child.
+ SB Sibling, half sibling, stepsibling, or sibling-in-law.
+ PT Parent, stepparent, or parent-in-law.
+ SP Spouse or RDP.
+ GP Grandparent or great-grandparent.
+ GC Grandchild or great-grandchild.
+ AU Parent's sibling or the sibling's spouse or RDP.
+ NN Sibling's child, grandchild, or other descendant.
+ OR Child's spouse or RDP, cousin, or other related individual.
+ NR Unrelated qualifying individual.
+
+[Dep2Code:] See instructions for Dep1Code.
+[Dep3Code:] See instructions for Dep1Code.
+
+[CkL6aRegular] If you can't be claimed as a dependent on someone else's return,
+check the "Regular" exemption box below line 6a (CkL6aRegular) ; otherwise,
+check the "Someone else can claim you as a dependent" box (CLK6aDep) , even if
+the other person doesn't actually claim you as a dependent. If you're married
+and filing a joint return (or filing separately but your spouse has no income)
+and your spouse can't be claimed as a dependent on someone else's return, check
+the "Regular" exemption box below line 6b (CkL6bRegular); otherwise, check the
+"Someone else can claim your spouse as a dependent" box (CkL6bDep), even if the
+other person doesn't actually claim your spouse as a dependent.
+
+Severe disability exemption. You or your spouse may qualify for the additional
+"severe disability" exemption, even if someone else can claim you or your spouse
+as a dependent, if any of the following apply to you or your spouse:
+- You permanently lost the use of one or both legs or feet.
+- You permanently lost the use of both hands.
+- You're permanently blind.
+- You have a permanent condition that, without special equipment or outside
+help, limits your ability to earn a living, maintain a household, or transport
+yourself.
+- You're unable to earn a living due to a permanent
+condition or an impairment of indefinite duration.
+To confirm that you or your spouse qualify for the additional exemption, a
+licensed physician must write a letter describing the nature and extent of the
+disability. Keep the letter with your records in case we request a copy.  If you
+qualify for this additional exemption, check the "Severe disability" box below
+line 6a. If your spouse qualifies, check the box below line 6b.
+
+[CkL6aDisabled] See instructions for CkL6aRegular.
+[CkL6aDep] See instructions for CkL6aRegular.
+[CkL6bRegular] See instructions for CkL6aRegular.
+[CkL6bDisabled] See instructions for CkL6aRegular.
+[CkL6bDep] See instructions for CkL6aRegular.
+
+[CkDep1Dis] Child with a disability. The additional "Child with a disability"
+exemption is for a dependent child, age 21 or younger, who was eligible for
+early intervention or special education services, as defined by the State Board
+of Education of the state where the child attended school, as of the end of the
+tax year.  The child must have had an eligible disability under the federal
+Individuals with Disabilities Education Act.
+Eligible disabilities include:
+- Autism spectrum disorder.
+- Communication disorder.
+- Deafblindness.
+- Developmental delay.
+- Emotional disturbance.
+- Hearing impairment (including deafness).
+- Intellectual disability.
+- Orthopedic impairment.
+- Other health impairment.
+- Specific learning disability.
+- Traumatic brain injury.
+- Visual impairment (including blindness).
+Each year, you must be able to provide an eligibility statement and a cover
+sheet from the child's IEP (Individualized Education Program) or IFSP
+(Individualized Family Service Plan). Keep these with your tax records.
+
+[CkDep2Dis] See instructions for CkDep1Dis.
+
+[CkDep3Dis] See instructions for CkDep1Dis.
+
+[L6c] Enter your total number of dependents, including the total(s) from
+Schedule OR-ADD-DEP, line 6.
+
+[L6d] See instructions for CkDep1Dis.  Total number of children with a
+disability. Enter the total number of boxes checked for this additional
+exemption, including the total(s) from Schedule OR-ADD-DEP, line 7.
+
+[L10_worksheet_L4] 
+Lines from worksheet not listed here are auto-calculated. See output file for all
+worksheet values.  From 'Instructions for Federal tax liability subtraction
+worksheet': 
+Line 4: Enter the total of any other taxes, plus any tax recaptures
+or other additions to tax that include only income tax, from Form 1040, Schedule
+2, lines 8, 16, and 17. If you're repaying a 2008 first-time homebuyer credit
+and filing federal Form 5405 , include the amount from Schedule 2, line 10.
+Include any tax on non-effectively connected income from Form 1040-NR, line 23a.
+Don't include any additions to tax from Schedule 2, line 17 that are penalties,
+interest, excise tax, or other amounts that aren't income tax. If you have no
+other taxes, enter 0.
+
+[L10_worksheet_L7] Lines from worksheet not listed here are auto-calculated. See
+output file for all worksheet values.  From 'Instructions for Federal tax
+liability subtraction worksheet':
+Line 7: Enter your total premium tax credit amount from federal Form 8962, line
+24. This is your allowable premium credit regardless of any excess advance
+payments you received or credit you're claiming on your federal return.
+
+[CkStdDedOverride] If you need to enter a different standard deduction, set this
+to 'Yes' to disable auto calculation of the standard deduction, and enter a
+value in the 'StdDedOverride' field below.
+
+See the exceptions below for:
+- Dependents who can be claimed on another taxpayer's return.
+- Non-U.S. citizens without permanent resident status.
+- Spouses filing separate returns
+
+Exception 1:
+Standard deduction-Dependents who can be claimed on another taxpayer's return.
+If someone else can claim you as a dependent, your standard deduction is limited
+to the larger of:
+- Your earned income plus $450, up to the maximum
+allowed for your filing status (see Table 5); or
+- $1,300.
+This limit applies even if the other person doesn't actually claim you as a
+dependent on their return.  If you're a dependent and not married, use the
+worksheet to figure your standard deduction. If you're a dependent and married,
+see "Deductions and modifications" in Publication OR-17. See worksheet in the
+From OR-40 Instructions.
+
+Exception 2:
+Standard deduction-Non-U.S. citizen without permanent resident status. Your
+standard deduction is $0, but you may claim itemized deductions.
+
+Exception 2:
+Standard deduction-Married filing separately. The standard deduction for married
+individuals filing separately is $0 if one spouse itemizes. This applies even if
+the standard deduction is more than your itemized deductions.
+
+[StdDedOverride] See instructions for CkStdDedOverride above.
+
+[CkL17a] Standard deduction-Age 65 or older, or blind. If you or your spouse
+turned age 65 by January 1, 2025, or were blind at the end of the tax year,
+you're entitled to a larger standard deduction. If you or your spouse are
+permanently blind, you may also qualify for the severe disability exemption
+claimed on lines 6a and 6b.
+NOTE: This calculation is done automatically:
+Check the applicable boxes below line 17, then multiply the number of boxes
+checked by:
+- $1,200 if single or head of household filing status; or
+- $1,000 for all other filers.
+Add this amount to the standard deduction for your filing status from Table 5.
+Enter the total on line 17
+
+[CkL17b] See instructions for Clk17a.
+[CkL17c] See instructions for Clk17a.
+[CkL17d] See instructions for Clk17a.
+
+[CkL20a] Other tax methods. If you qualify, you can compute your Oregon tax
+using any of the following methods: Farm income averaging method. Did you have
+income from a farm? You may use the federal farm income averaging method to
+compute your Oregon tax even if you didn't use farm income averaging on your
+federal return. Use Publication OR-FIA and Schedule ORFIA-40 to compute the
+Oregon tax using this method.  You can download them from our website or contact
+us to order them.  If you use farm income averaging to calculate your tax, enter
+the tax amount from Schedule OR-FIA-40, line 24 and check box 20a. Don't include
+the schedule with your return. Keep it with your records.
+
+[CkL20b] Farm asset capital gain method. Did you sell or exchange capital assets
+primarily used in farming because you were getting out of a farming business?
+Or, did you sell or exchange a farming business in which you held at least a 10
+percent ownership interest? If so, you may be eligible for a reduced tax rate on
+the net capital gain from the proceeds. Use Worksheet FCG inside Publication
+OR-FCG to compute the Oregon tax using this method. You can download it from our
+website or contact us to order it.  Enter the tax amount from Worksheet FCG,
+line 9, and check box 20b. Don't include the worksheet with your return. Keep it
+with your records.
+
+[CkL20c] Oregon qualified business income reduced tax rate.  Did you have
+business income from a sole proprietorship, partnership, or S corporation in
+which you materially participated? If so, you may qualify to use this reduced
+tax rate. For details, see Schedule OR-PTE-FY and instructions on our website or
+contact us to order them.  Note: If you elect to use this reduced tax rate for
+qualifying income, the election is irrevocable and must be made on your original
+return. An original return includes an amended return filed on or before the due
+date, including extensions. You can't change the election after your original
+return has been filed.  If you elect to use the reduced rate to calculate your
+tax, enter the tax amount from Schedule OR-PTE-FY, line 14a and check box 20c.
+Include the schedule with your Oregon return.
+
+[AltMethodTaxAmt] Enter a value here only if ClkL20a, ClkL20b, or ClkL20c is set
+to Yes. This value is ignored if all 3 are set to No, and the result from the
+standard tax table or tax formula is automatically inserted.
+
+[L21] Interest on certain installment sales. Did you have installment sales that
+required you to pay interest on the deferred tax liability for federal purposes?
+If so, you must also compute interest for Oregon using the same method as for
+federal. The annual interest rate is 8 percent for 2024 and 9 percent for 2025.
+
+[L26] Political contribution credit. If your federal AGI isn't more than $75,000
+($150,000 if you're filing a joint return), you may claim a standard credit of
+up to $50 ($100 if you're filing a joint return) for cash contributions you made
+during 2024 to any:
+- Qualified political party.
+- Qualified candidate for federal, state, or local elective office, or the
+  candidate's campaign, for an election in Oregon.
+- Political action committee certified in Oregon.
+
+[L32] Oregon income tax withheld. Enter the total Oregon tax withheld from your
+wages and other income. State tax withheld from wages is shown in box 17 of Form
+W-2 and in the State area of various 1099 forms. Don't include FICA (Social
+Security) tax withheld or tax withheld from your wages by other states.  You
+must include a legible, unaltered copy of your Form W-2 from each job and any
+Form 1099 showing Oregon income tax withheld with your Oregon return.  
+
+If you don't have a Form W-2 or 1099, you must provide other proof of Oregon tax
+withheld. Proof may include a copy of a final paycheck stub or a letter from
+your employer. If you file before February 1, 2025, we can only accept a Form
+W-2 or 1099 as proof.  
+
+If you have tax to pay, you may want to increase the amount your employer or
+other payer withholds from your wages. You can find withholding information and
+do a "paycheck checkup" on our website.
+
+[L33] Prior-year refund applied as estimated tax payment. Enter the amount of
+any prior-year refund you applied as a payment of 2024 estimated tax.  If we
+adjusted your applied refund, be sure to use the adjusted amount. If you need to
+verify your applied refund amount, log into or create your Revenue Online
+account on our website or contact us.
+
+[L34] Estimated tax payments for 2024. Enter the total estimated tax payments
+you made before April 15, 2025. For calendar-year filers, these payments were
+due April 15, 2024; June 17, 2024; September 16, 2024; and January 15, 2025. If
+you're filing on extension, include any extension payment made on or before the
+due date (without extensions), but don't include any payments made after April
+15, 2025. Don't include the amount reported on line 33. If you need to verify
+your estimated payments, log into or create your Revenue Online account on our
+website or contact us.
+
+[L35] Estimated tax payments from Schedule OR-K-1, line 20. An Oregon
+pass-through entity (PTE) or an out-of-state PTE with Oregon-source income may
+choose to make estimated Oregon tax payments on its owners' behalf. PTEs report
+these payments to us on Form OR-19 and to owners on Schedule OR-K-1.
+
+Enter the amount from Schedule OR-K-1, line 20. If the PTE didn't provide
+Schedule OR-K-1 to you, enter the amount of estimated tax paid on your behalf
+that the PTE reported to us on Form OR-19. Don't include any PTE elective tax
+payments or credit from Schedule OR- 21-K-1. See Publication OR-17 for
+information about the PTE elective tax and related credit.
+
+[L36] Earned income credit. Oregon's earned income credit is a percentage of the
+earned income tax credit (EITC) claimed on your federal return. The percentage
+is based on the age of your youngest dependent at the end of the tax year.  Note
+to RDPs: You may claim this credit if you would otherwise qualify for the EITC
+using your "as if" federal return.  Schedule OR-EIC-ITIN. If you can't claim any
+or all of the federal EITC because you, your spouse, or your child(ren) do not
+have an SSN that is valid for work or are using an ITIN, you may qualify for
+Oregon's earned income credit for ITIN filers. See Schedule OR-EICITIN
+Instructions for more information. The schedule and instructions are available
+in English and Spanish.  Download them from our website or contact us to order
+them.
+
+Use the worksheet in the Form OR-40 instructions to figure your credit.
+
+[L37] Oregon Kids Credit. The Oregon Kids Credit is available for certain
+taxpayers with qualifying dependent children who were under the age of six at
+the end of the tax year. See "Exemption credit" in Publication OR-17 for
+information about qualifying children.  Eligibility. To be eligible for the
+Oregon Kids Credit, you must:
+
+1. Use a filing status other than married filing separately. If you're married
+and filing separate returns, you do not qualify for this credit.
+2. Have one or more dependents age five or younger at the end of 2024 listed on
+your Oregon return.*
+3. Have qualifying income under $30,750.
+
+If you're eligible, use the Oregon Kids Credit worksheet to figure your credit.
+Credit amount. For 2024, the maximum amount of the Oregon Kids Credit is $1,000
+per qualifying dependent, for up to five dependents. Your credit amount may be
+limited by your income.
+
+* Note for divorced, separated, or unmarried parents:
+If a child is listed as a dependent on your Oregon return only because the
+
+custodial parent released the child's dependent exemption to you, the child
+doesn't qualify for purposes of this credit.  If you're the custodial parent of
+an otherwise qualifying child, you may be able to claim this credit even if the
+child's dependent exemption has been released to the other parent.
+
+Use the worksheet in the Form OR-40 instructions to figure your credit.
+
+[L43] Your 2024 tax must be paid by April 15, 2025, even if you requested an
+extension of time to file your return. Your 2024 return must be filed by April
+15, 2025. If you requested an extension, your return must be filed by October
+15, 2025.  Round the total of penalties and interest to the nearest whole
+dollar. For more information and examples showing how penalties and interest are
+calculated, see "Interest and penalties" in Publication OR-17. See OR-40
+instructions for calculations.
+
+[L44] Interest on underpayment of estimated tax.
+Underpayment interest is charged if:
+- Your tax after all credits and withholding is $1,000 or more;
+- You were required to make estimated tax payments;
+- One or more of your required installments was underpaid; and
+- You don't qualify for an exception.
+
+Note: You could be charged interest on underpayment of estimated tax even if
+line 41 shows an overpayment.  
+
+See Form OR-10 Instructions to determine if you owe underpayment interest or
+qualify for an exception.  Download Form OR-10 and the instructions from our
+website or contact us to order them.
+
+If you owe underpayment interest, enter the amount from line 4 of Form OR-10. If
+you qualify for an exception, enter the exception number from line 1 of the form
+inside box 44a. If you used the Annualized Income Worksheet (located in Form
+OR-10 Instructions) to figure your interest, check box 44b. Include Form OR-10
+with your return. Keep your underpayment interest worksheets and any required
+statements with your records.
+
+[L48] Apply refund as estimated tax payment. Enter the amount of your refund you
+want to apply as an estimated tax payment for a later year. The payment will be
+applied to the 2025 tax year unless you're filing this return after January 15,
+2026. For more information about open estimated tax accounts, see "Payments and
+refunds" in Publication OR-17.
+
+Instructions for amended returns. Enter the amount, if any, from a refund on
+your original return that you've already applied as an estimated tax payment for
+a later year. If line 5 of the Amended worksheet shows a refund and you want to
+apply some or all of it as an estimated tax payment, include the amount you want
+to apply.
+
+[L49] Charitable checkoff donations. Enter the amount from line 30 of Schedule
+OR-DONATE.  For more information, see the instructions on the schedule. You can
+download Schedule OR-DONATE from our website or contact us to order it.
+
+Note: If your refund-after any application as a payment of estimated tax-is less
+than your total donation amount, your donations will be prorated.
+
+To make direct donations instead, you can find each charity's address listed on
+our website. Don't mail your donations to us.
+
+Instructions for amended returns. Enter the amount, if any, from a refund on
+your original return that you applied as charitable donations using Schedule
+ORDONATE. If line 5 of the Amended worksheet shows a refund, you can donate some
+or all of it to one or more of the listed charities. Include this amount and an
+amended Schedule OR-DONATE with your amended return. Note: The refund from your
+amended return will be applied as a donation for the calendar year in which
+you're filing it.
+
+[L50] Political party checkoff. You may use your refund to contribute $3 to the
+Oregon political party of your choice. If you're filing a joint return, you and
+your spouse may each contribute $3. Note: Your contribution will reduce your
+refund and does not qualify for the political contribution credit.
+
+To make a contribution:
+1. Designate the political party of your choice using the party's code from the
+alphabetized list below.
+- If you contribute, enter one code in box 50a.
+- If your spouse contributes on a joint return, enter one code in box 50b.
+
+Enter only one code per taxpayer. Spouses filing a joint return don't have to
+enter the same code.
+- Constitution Party of Oregon [code 500].
+- Democratic Party of Oregon [code 501].
+- Independent Party of Oregon [code 502].
+- Libertarian Party of Oregon [code 503].
+- Oregon Republican Party [code 504].
+- Pacific Green Party of Oregon [code 505].
+- Progressive Party [code 506].
+- We the People Party [code 508].
+- Working Families Party of Oregon [code 507]
+
+2. Enter your total contribution amount.
+- If you or your spouse contribute, enter $3.
+- If both you and your spouse contribute on a joint return, enter $6.
+
+Note: Your political party contribution won't be made if:
+
+- Your refund-after any application as a payment of estimated tax or charitable
+  checkoff donation-is less than your total contribution amount.
+- You enter an amount but don't designate a party (or parties).
+- You designate a party (or parties) but don't enter an amount.
+- You enter more than one party code per taxpayer.
+
+Instructions for amended returns. Enter the amount, if any, from a refund on
+your original return that you applied as a political party contribution. If line
+5 of the Amended worksheet shows a refund and you didn't make the maximum
+political party contribution on your original return, you may use the refund to
+make a contribution on your amended return.
+
+[L51] Oregon higher education savings plan deposits. Enter the amount from line
+5 of Schedule OR-529. For minimum deposit amounts and other information, see the
+schedule instructions. You can download Schedule OR-529 and instructions from
+our website or contact us to order them.
+
+You can also use Schedule OR-529 to provide your information to the Oregon
+Treasury Savings Network if you'd like them to set up an Oregon College Savings
+Plan account for you. However, you can make contributions from a refund on your
+return only after the account has been created. See Schedule OR-529 Instructions
+for details.
+
+Note: If the amount of your refund-after any application as a payment of
+estimated tax, charitable checkoff donation, or political party contribution-is
+less than the total amount you want to deposit, no deposit will be made.
+
+Instructions for amended returns. Enter the amount, if any, from a refund on
+your original return that you applied as an Oregon higher education savings plan
+deposit. If line 5 of the Amended worksheet shows a refund, add the amount you
+want to apply as a deposit and include an amended Schedule OR-529 with your
+amended return. The refund will be applied for the year in which you're filing
+the amended return.
+
+[CkL54DepOutUS] Check the box if the final destination for your refund would be
+an account outside the United States.  Note: If you check this box, you will be
+issued a paper check.
+
+[CkAcctChecking] Check the appropriate box, either checking or savings, but not both.
+
+[CkAcctSavings] Check the appropriate box, either checking or savings, but not both.
+
+
+[AcctRoutingNumber:] Enter your nine-digit routing number. Routing numbers begin
+with the digits 01 through 12, 21 through 32, or 61 through 72.
+
+[AcctNumber:] Enter your account number. Account numbers can be up to 17
+characters (both numbers and letters).  Don't include hyphens, spaces, or
+special symbols.
+
+[SchA_L1] You can deduct only the part of your medical and dental expenses that
+exceeds 7.5 percent of the amount of your federal adjusted gross income on Form
+OR-40, line 7, or Form OR-40-N or OR-40-P, line 29F.
+
+Examples of medical and dental payments you can deduct.
+
+To the extent you weren't reimbursed, and with certain limitations, you can
+generally deduct what you paid for:
+- Insurance premiums for medical and dental care, including Medicare Parts B and D.
+- Prescription medicines and insulin.
+- Healthcare professionals, including medical doctors, dentists, physical
+  therapists, and psychologists.
+- Medical examinations, X-rays, laboratory fees, diagnostic tests, and other services.
+- Hospital care and nursing help.
+- Ambulance service and other travel costs.
+- Nicotine cessation, medical weight-loss, and addiction treatment.
+- Hearing aids, eyeglasses, wheelchairs, guide dogs, and other medical aids.
+- Lodging costs and travel for treatment away from home.
+- Lactation supplies.
+
+See Schedule OR-A instructions for full list of inclusions and exclusions and
+worksheets.
+
+[SchA_L5] You may deduct certain state or local income taxes or foreign income
+taxes you paid during the tax year, such as income taxes paid to a state other
+than Oregon, mandatory contributions to certain employment-related programs in
+other states, and taxes on real or personal property located in the United
+States that are based on the property's value (known as ad valorem tax).
+Income-based taxes paid to a local government within Oregon, such as Portland's
+Arts Tax, may be deducted because they're not paid to the State of Oregon.
+
+Enter the total of the state and local income taxes you paid to a local
+government or to a state other than Oregon, reduced as explained above for any
+credits you're claiming for income taxes paid to another state.  Note: If you
+deducted sales tax paid instead of income tax paid on your federal Schedule A,
+you must enter 0 on line 5.
+
+[SchA_L6] Enter the state or local taxes you paid on real estate you own that
+wasn't used for business, but only if the taxes are assessed uniformly at a like
+rate on all real property throughout the community, and the proceeds are used
+for general community or governmental purposes. See IRS Publication 530, Tax
+Information for Homeowners, for more information.
+
+Don't include the following:
+
+- Taxes on real property located outside the United States or its possessions.
+- Itemized charges for services to specific property or persons (for example, a
+  flat fee charged by the county for mowing a lawn that has grown beyond the
+  permitted height).
+- Charges for improvements that tend to increase the value of your property,
+  such as sidewalk assessments
+
+[SchA_L7] Personal property taxes. Enter the state or local personal property
+taxes you paid that were:
+- Based only on the property's value (ad valorem) and
+- Imposed on a yearly basis.
+
+[SchA_L10] List the type and amount of other deductible taxes that aren't
+already included on lines 5, 6, or 7.
+
+[SchA_L10_Type] List the type and amount of other deductible taxes that aren't
+already included on lines 5, 6, or 7.
+
+
+[SchA_L12] Enter the home mortgage interest and points reported to you on
+federal Form 1098, Mortgage Interest Statement.
+
+[SchA_L13] Enter the home mortgage interest you paid to a recipient who didn't
+provide you with a Form 1098. If the recipient was the person from whom you
+bought the home, enter the person's name, address, and Social Security number
+(SSN) (if an individual) or employer identification number (EIN) on the dotted
+line next to line 13.
+
+[SchA_L14] Points are shown on your settlement statement. You may deduct points
+paid to borrow money but not for other purposes. Points paid to refinance a
+mortgage must be deducted over the life of the loan. See IRS Publication 936 for
+more information.
+
+[SchA_L16]  Enter the interest you paid on money you borrowed to buy property
+held for investment.  Use the amount you calculated using federal Form 4952, if
+applicable.
+
+- Don't include interest paid on money you borrowed to buy bonds issued by the
+  Commonwealth of Puerto Rico or the territories of Puerto Rico, Guam, Samoa, or
+  the Virgin Islands. Income from these bonds isn't taxable by Oregon.
+
+- If you're deducting interest paid on money you borrowed to buy U.S. bonds,
+  notes, or other obligations, you'll need to reduce your subtraction for this
+  income on your Oregon return. See "Interest and dividends on U.S. bonds and
+  notes" in Publication OR-17 for more information.
+
+- You'll have an addition on your Oregon return if you have income from bonds
+  and notes issued by another state, or political subdivision of another state.
+  The income from these bonds and notes isn't subject to federal tax, but it is
+  taxable by Oregon. However, you may reduce your addition by the amount of
+  related investment expense that you couldn't include in your federal itemized
+  deductions. See "Interest on state and local government bonds of other states"
+  in Publication OR-17 for more information.
+
+[SchA_L18]  Enter the total value of the gifts you made in cash or by check,
+including unreimbursed out-of-pocket expenses.
+
+[SchA_L19] Enter the total value of your contributions of property other than by
+cash or check. For used items, such as clothing or furniture, you may deduct
+their fair market value at the time you donated them. Fair market value is what
+a willing buyer would voluntarily pay a willing seller for the item. If the
+amount of your deduction is more than $500 (before applying any income limits),
+complete federal Form 8283, Noncash Charitable Contributions. Keep a copy of
+this form with your Oregon tax records; we may ask for it later. For additional
+requirements, see the instructions for Form 8283.
+
+[SchA_L20] Enter contributions that you couldn't deduct in an earlier year
+because they exceeded that year's limits. Your total contributions for this
+year, including any carryover amount, can't exceed this year's limits.
+
+[SchA_L22] List the type and amount of your miscellaneous itemized deductions,
+and enter the total on line 22. Don't include employee business expenses, tax
+preparation fees, or other deductions subject to the 2 percent of AGI limitation
+
+[SchA_L22_Type:] List the type and amount of your miscellaneous itemized deductions,
+and enter the total on line 22. Don't include employee business expenses, tax
+preparation fees, or other deductions subject to the 2 percent of AGI limitation
+
+[SchASC_A1:] Additions are items the federal government doesn't tax but Oregon
+does. For detailed information, see "Additions" in Publication OR-17.  Enter the
+code and the amount of each addition in Section A.  The federal and Oregon
+amounts may be different.  Use each code only once. See publication OR-CODES for
+the list of codes.
+
+[SchASC_B1:] Subtractions are items the federal government taxes but Oregon
+doesn't. Note: You can only subtract amounts that are included in your Oregon
+income. Amounts that aren't included in your Oregon income can't be subtracted.
+For detailed information, see "Subtractions" in Publication OR-17.  Enter the
+code and the amount of each subtraction in Section B.  The federal and Oregon
+amounts may be different, but the amount in the Oregon column can't be more than
+the amount in the federal column.  Use each code only once. See publication
+OR-CODES for the list of codes. See Schedule OR-ASC instructions for common
+subtractions, and the Special Oregon medical subtraction worksheet.
+
+[SchASC_C1:] Tax recaptures increase your tax for the year when you must forfeit
+a prior credit. For information about forfeiting a credit, see "Additions to
+tax" in Publication OR-17.  For recaptures with a code between 950 and 999,
+enter the code and the amount of tax you're adding. Use each code only once. See
+Schedule OR-ASC instructions for common subtractions, and the Special Oregon
+medical subtraction worksheet. See publication OR-CODES for the list of codes.
+
+[SchASC_D1:] Standard credits are nonrefundable credits that can only be claimed
+on the current year's tax return. Credit amounts that aren't used in the current
+tax year are lost. If you're also claiming carryforward or refundable credits,
+use your standard credits first. 
+
+Step 1: Enter the code and the amount for each credit you're claiming with a
+code from 802 through 834.  If you're using code 802 or 815 to claim credits for
+taxes paid to more than one other state on income that was also taxed by Oregon,
+enter each credit on a separate line. Note: The credit for taxes paid to another
+state on mutually-taxed income (codes 802 and 815) is for taxpayers who have
+mutually taxed income in more than one state. Except for codes 802 and 815, use
+each code only once.
+
+Step 2: If you're claiming a credit for income taxes paid to another state on
+mutually-taxed income, enter that state's two-letter postal abbreviation in the
+corresponding box. If you aren't claiming this credit, leave the box blank.
+
+For detailed information, see "Standard credits" in Publication OR-17. See
+publication OR-CODES for the list of codes.
+
+[SchASC_E1:] Carryforward credits are nonrefundable credits for which any unused
+portion in the current tax year may be carried forward to the next tax year. The
+number of years that a credit may be carried forward varies according to the
+carryforward rules of that credit.  When we process your return, we'll apply
+your credits against your tax in the order in which they're listed on the
+schedule. If you're claiming more than one type of carryforward credit and the
+total you can use is more than your tax liability for the year, enter your
+credits in the order in which they expire. Start with credits that expire
+earlier, followed by credits that expire later. List all credits you have
+available even if you can't use them this year.  For detailed information about
+each credit, see "Carryforward credits" in Publication OR-17.  See publication
+OR-CODES for the list of codes. See Schedule OR-ASC instructions for examples.
+
+[SchASC_F1:] Like standard credits, refundable credits can be claimed only on
+the current year's tax return, but any amount that is more than your tax will be
+refunded to you. For detailed information about other refundable credits, see
+"Refundable credits" in Publication OR-17. For credits with a code between 890
+and 949, enter the code and the amount you're claiming. Use each code only once.
+See publication OR-CODES for the list of codes.

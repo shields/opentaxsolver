@@ -1,0 +1,259 @@
+Page 1
+
+ TxtColor: 0 0 0.6
+
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+                  
+ Your1stName: 85 141
+ YourLastName: 448 141
+ YourSocSec#: 784 141
+ Spouse1stName:85 178
+ SpouseLastName: 448 178
+ SpouseSocSec#: 784 178
+ Number&Street: 85 215
+ Apt#: 535 215
+ DaytimePhone#: 689 215
+ Town/City: 85 252
+ State: 332 252
+ ZipCode: 478 252
+ PriorLastNames: 613 252
+
+ L4Chk 114 272
+ L4a_InjuredSpouseChk 307 272
+ L5Chk 114 290
+ L6Chk 114 326
+ L7Chk 114 346
+
+ L8 113 381
+ L9 113 401
+ L10a 113 418
+ L10b 369 418
+ L11a 113 438
+  
+ L10_NeedMoreSpaceChk 645 455 
+ Dep1_FirstName: 107 536
+ Dep1_LastName: 242 536
+ Dep1_SocSec#: 410 536
+ Dep1_Relation: 528 536
+
+ Dep2_FirstName: 107 554
+ Dep2_LastName: 242 554
+ Dep2_SocSec#: 410 554
+ Dep2_Relation: 528 554
+
+ Dep3_FirstName: 107 571
+ Dep3_LastName: 242 571
+ Dep3_SocSec#: 410 571
+ Dep3_Relation: 528 571
+
+ L11_NeedMoreSpaceChk 656 594
+ L11b_PG1_FirstName: 109 666
+ L11b_PG1_LastName: 242 666
+ L11b_PG1_SocSec#: 407 666
+ L11b_PG1_Relation: 528 666
+ L11b_PG1_Months: 639 666
+ L11c_PG2_FirstName: 109 684
+ L11c_PG2_LastName: 242 684
+ L11c_PG2_SocSec#: 407 684
+ L11c_PG2_Relation: 528 684
+ L11c_PG2_Months: 639 684
+ 
+ L12 761 703 10
+ L13_Filing140SBIChk 247 724
+ L13 761 723 10
+ L14 761 741 10
+ L15 761 760 10
+ L16 761 777 10
+ L17 761 795 10
+ L18 761 812 10
+ L19 761 830 10
+ L20 629 850 10
+ L21 629 869 10
+ L22 629 888 10
+ L23 629 905 10
+ L24 761 923 10
+ L25 761 941 10
+ L26 761 960 10
+ L27 761 978 10
+ L28 761 997 10
+ L29a 761 1016 10
+ L29b 761 1035 10
+ L30 761 1053 10
+ L31 761 1071 10
+ L32 761 1090 10
+ L33 761 1108 10
+ L34a 325 1127 10
+ L34b 540 1127 10
+ L34 761 1126 10
+ L35 761 1145 10
+ 
+
+Page 2
+
+ TxtColor: 0 0 0.6
+
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+ 
+ YourName: 77 86
+ YourSocSec#: 624 86
+ L36 764 106 10
+ L37 764 124 10
+ L38 764 143 10
+ L39 764 162 10
+ L40e 351 181
+ L40 764 181 10
+ L41 764 198 10
+ L42 764 216 10
+ L43_DeductionsItemizedChk 535 236
+ L43_DeductionsStandardChk 639 236
+ L43 764 234 10
+ L44_CharitableChk 475 254 
+ L44 764 254 10
+ L45 764 272 10
+ L46 764 289 10
+ L47 764 309 10
+ L48 764 327 10
+ L49 764 344 10
+ L50 764 363 10
+ L51 764 382 10
+ L52 764 399 10
+ L53 764 418 10
+ L54a 309 436 10
+ L54b 534 436 10
+ L54 764 436 10
+ L55 764 454 10
+ L56 764 473 10
+ L57 764 492 10
+ L58_Filing308IChk 549 511
+ L58_Filing334Chk  621 511
+ L58_Filing349Chk  684 511
+ L58 764 509 10
+ L59 764 530 10
+ L60 764 547 10
+ L61 764 566 10
+ L62 764 585 10
+ L63 764 602 10
+ L64 460 622 5
+ L65 659 622 5
+ L66 251 640 5
+ L67 460 640 5
+ L68 659 640 5
+ L69 251 658 5
+ L70 460 658 5
+ L71 659 658 5
+ L72 251 676 5
+ L73 460 676 5
+ L74 659 676 5
+ L75_DemocraticChk 435 697
+ L75_LibertarianChk 541 697
+ L75_RepublicanChk 645 697
+ L76 764 714 10
+ L77_1AnnualizedOtherChk 119 734
+ L77_2FarmerFishermanChk 242 734
+ L77_Filing221Chk 385 734
+ L78 764 751 10
+ L79 764 775 10
+ L79_ForeignAcctChk 709 783
+ L80 764 848 10
+ 
+
+Optional_Page 3
+ TxtColor: 0 0 0.6
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+ 
+ YourName: 74 86
+ YourSocSec#: 622 86 
+ 
+ SD1C 712 611 10
+ SD2C 712 637 10
+ SD3C 712 664 10
+ SD4C 712 690 10
+ SD5C 712 719 10
+ SD6C 712 754 10
+ SD7C 712 782 10
+ 
+
+Optional_Page 4
+ TxtColor: 0 0 0.6
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+ 
+ YourName: 74 86
+ YourSocSec#: 622 86 
+ 
+ 
+Optional_Page 5
+ TxtColor: 0 0 0.6
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+ 
+ YourName: 74 73
+ YourSocSec#: 622 73 
+ 
+ OA_A 757 236 10
+ OA_B 757 260 10
+ OA_C 757 284 10
+ OA_D 757 310 10
+ OA_E 757 338 10
+ OA_Fa 757 363 10
+ OA_Fb 757 388 10
+ OA_Ga 757 422 10
+ OA_Gb 757 454 10
+ OA_Ha 757 502 10
+ OA_Hb 757 549 10
+ OA_Hc 757 596 10
+ OA_I 757 621 10
+ OA_J 757 685 10
+ OA_K 757 710 10
+ OA_L 757 744 10
+ OA_M 757 769 10
+ OA_N 757 796 10
+ OA_O 757 828 10
+ OA_P 757 854 10
+ OA_Q 757 878 10
+ OA_R 757 905 10
+ OA_S 757 930 10
+ OA_T 757 956 10
+
+
+Optional_Page 6
+ TxtColor: 0 0 0.6
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+ round_to_whole_numbers
+ 
+ YourName: 74 73
+ YourSocSec#: 622 73 
+ 
+ OS_A 733 271 10
+ OS_B 733 297 10
+ OS_C 733 325 10
+ OS_D 733 351 10
+ OS_E 733 377 10
+ OS_F 733 404 10
+ OS_G 733 430 10
+ OS_H 733 455 10
+ OS_I 733 481 10
+ OS_J 733 506 10
+ OS_K 733 533 10
+ OS_L 733 593 10
+ OS_M 733 620 10
+ OS_N 733 646 10
+ OS_O 733 672 10
+ OS_P 733 762 10
+ OS_Q 733 824 10
+ OS_R 733 857 10
+ OS_S 733 888 10
+ OS_T 733 913 10
+ OS_U 733 939 10
+ OS_V 733 965 10
+ OS_W 733 996 10
+ 

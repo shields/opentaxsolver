@@ -1,0 +1,163 @@
+Page 1
+
+CoordReference:  40, 750  61, 64
+		550, 50  841, 1134    110-dpi
+
+FontSz 10
+no_zero_entries
+no_commas
+round_to_whole_numbers
+solid_status_check 12 4 20 .
+
+Your1stName:     51 158 0 15.4
+YourInitial:    298 158 0
+YourLastName:   336 158 0 15.4
+YourSocSec#:    701 158 0 14.3
+Spouse1stName:   51 213 0 15.4
+SpouseInitial:  298 213 0
+SpouseLastName: 336 213 0 15.4
+SpouseSocSec#:  701 213 0 14.3
+Number&Street:   52 269 0 11
+Town:           450 269 0 14.6
+State:          732 269 0 15
+Zipcode:        781 269 0 15
+Check_single     66 714 0
+Check_mfj       158 714 0
+Check_sep        66 734 0
+Check_hh        492 714 0
+La      	253 658 8 13
+Lb      	700 658 8 13
+2a.     	782 807 4 13
+2bnum   	608 840 2 13
+2b.     	761 838 5 13
+Check_2cyou 	243 877 0
+Check_2csp 	328 877 0
+2cnum   	628 870 1 13
+2c.     	780 870 4 13
+Check_2dyou 	243 910 0
+Check_2dsp 	328 910 0
+2dnum   	628 906 1 13
+2d.     	780 906 4 13
+2e.     	741 933 6 13
+2f.     	741 965 6 13
+2g.		741 996 6 13
+
+
+Page 2
+CoordReference:  40, 750  61, 64
+		550, 50  841, 1134    110-dpi
+
+Your1stName:     50 129 0 15.4
+YourInitial:    289 129 0
+YourLastName:   312 129 0 15.4
+YourSocSec#:    701 129 0 14.3
+
+L3      	700 172 8 13
+L4      	700 204 8 13
+L5      	700 237 8 13
+L6a      	700 269 8 13
+L6b      	700 300 8 13
+L7      	700 331 8 13
+L8a     	700 364 8 13
+L8b     	700 396 8 13
+L9      	700 427 8 13
+L10		700 459 8 13
+L11a		778 509 4 13
+L11b		778 540 4 13
+L14a		558 662 5 13
+L14		779 661 4 13
+L15		700 694 8 13
+L16		700 725 8 13
+L17		700 757 8 13
+L18		700 789 8 13
+L19		700 832 8 13
+L20		700 863 8 13
+L21		700 895 8 13
+L22		700 938 8 13
+L23a_inc      	161 996 8 13
+L23a      	517 996 8 13
+L23b_inc      	161 1032 8 13
+L23b      	517 1032 8 13
+L23		700 1063 8 13
+
+
+Page 3
+CoordReference:  40, 750  61, 64
+		550, 50  841, 1134    110-dpi
+
+Your1stName:     50 129 0 15.4
+YourInitial:    288 129 0
+YourLastName:   312 129 0 15.4
+YourSocSec#:    701 129 0 14.3
+
+L24      	700 166 8 13
+L25      	700 216 8 13
+L26      	700 248 8 13
+
+L28a      	435 328 8 13
+L28b      	435 361 8 13
+L28      	700 383 8 13
+L29      	700 424 8 13
+L30      	700 456 8 13
+L31      	700 488 8 13
+L32      	700 519 8 13
+
+L33a      	779 584 4 13
+L33b      	779 615 4 13
+L33c      	779 645 4 13
+L33d      	779 680 4 13
+L33e      	779 710 4 13
+L33f      	779 742 4 13
+L33     	758 773 5 13
+L34     	758 804 5 13
+L35a		128 869 4 13
+L35b		345 869 4 13
+L35		779 869 4 13
+L36		700 901 8 13
+L37		700 932 8 13
+L38a		509 992 8 13
+L38b		509 1025 8 13
+L38c		509 1058 8 13
+L38		700 1091 8 13
+
+
+Page 4
+CoordReference:  40, 750  61, 64
+		550, 50  841, 1134    110-dpi
+
+Your1stName:     50 129 0 15.4
+YourInitial:    288 129 0
+YourLastName:   312 129 0 15.4
+YourSocSec#:    701 129 0 14.3
+
+L39      	700 170 8 13
+L40      	700 201 8 13
+L41		700 234 8 13
+L42		700 264 8 13
+L43a		249 313 1 13
+L43b		433 313 4 13
+L43c		691 320
+L43		777 313	4 13
+L44		777 380 4 13
+L46a		378 445 2 13
+L46num		443 445
+L46		777 443 4 13
+L47		700 478 8 13
+L48		700 510 8 13
+L49		700 541 8 13
+L50		700 573 8 13
+L51		700 617 8 13
+L52		700 649 8 13
+L53		700 691 8 13
+L54		700 788 8 13
+RoutingNum:	 75 756 9 13
+AccntNum:	392 756 9 13
+Check_CheckingAccnt	809 716
+Check_SavingsAccnt	809 735
+Payment_Interest: 	125 882 5 13
+Payment_Penalty:  	344 882 5 13
+M2210_Amount:	 	604 882 5 13
+Check_EnclosedM2210:	508 861
+Check_SelfEmployed:	212 996
+Check_DORdiscuss:	498 996
+Check_DoNotEfile:	831 996
