@@ -5,7 +5,6 @@ FontSz 12
 Typeface Courier
 CoordReference:  40, 750  61, 64
                  550, 50  841, 1134    110-dpi
-                 
 FiscalYearEnd:	62	191	0	14.3
 CkAmended	62	233		
 NOLTaxYear:	216	284	0	14.3
@@ -121,11 +120,12 @@ Page 5
 YourLName:	61	192		
 YourSSN:	567	192	0	14.3
 L32	579	284	11	14.4
-L33	579	338	11	14.4
+L33	579	357	11	14.4
 L34	579	412	11	14.4
-L35	579	467	11	14.4
-L36	579	522	11	14.4
-L37	579	577	11	14.4
+L35	579	485	11	14.4
+L36	579	540	11	14.4
+L37	579	595	11	14.4
+L38	579	651	11	14.4
 L39	579	705	11	14.4
 L40	579	760	11	14.4
 L41	579	833	11	14.4
@@ -153,6 +153,8 @@ CkAcctChecking	94	893
 CkAcctSavings	94	930		
 AcctRoutingNumber:	271	925	9	14.4
 AcctNumber:	513	925	17	14.4
+CkL55a	576	1002		
+L55b	579	1054	11	14.4
 Page 7				
 YourLName:	61	192		
 YourSSN:	567	192	0	14.3
@@ -242,4 +244,4 @@ SchASC_F4	513	283	14	14.4
 SchASC_F5:	359	338	3	14.4
 SchASC_F6	513	338	14	14.4
 SchASC_F7	513	411	14	14.4
-
+                 

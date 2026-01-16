@@ -1,6 +1,7 @@
 /************************************************************************/
 /* taxsolve_OR_40.c -                                                   */
-/* Contributed by Rylan Luke, 3/2025					*/
+/* Contributed by Rylan Luke, 3/2025                                    */
+/* Updated by RL for 2025 tax year, 1/2026                              */
 /*                                                                      */
 /* GNU Public License - GPL:                                            */
 /* This program is free software; you can redistribute it and/or        */
@@ -41,9 +42,9 @@ float thisversion=2.00;
 // Arrays of TAX_TABLE entries are terminated with start = -1.
 // Incrementing start values in array are required.
 typedef struct TAX_TABLE {
-    double start;   // Start of range definition; end is defined by next 'start' in array.
-    double rate;    // Marginal percentage rate for this interval
-    double matcherr;
+    double start;       // Start of range definition; end is defined by next 'start' in array.
+    double rate;        // Marginal percentage rate for this interval
+    double error_match; // Amount to correct this breakpoint, based on errors in the Oregon tax tables and formulas
 } TAX_TABLE, *P_TAX_TABLE;
 
 // TAXYEAR_DEPENDENT
@@ -93,7 +94,9 @@ double TaxFunction(double val, P_TAX_TABLE p_tax_table) {
         incr = round(100.0 * incr) / 100.0; // to nearest cent
         incr = round(incr);                 // to nearest dollar
 
-        retval += incr;
+        // As well as the increment, add in the error_match value for this range
+        retval += (incr + p_tax_table->error_match);
+
         // printf("TaxFunction: val: %6.2f, incr: %6.2f, retval: %6.4f, next_start: %6.2f, start: %6.2f, rate: %6.2f\n", 
         //  val, incr, retval, next_start, p_tax_table->start, p_tax_table->rate);
 
@@ -163,22 +166,22 @@ typedef struct LIMIT_TABLE {
 
 // Single limit for fed tax subtraction
 LIMIT_TABLE or_40_single_fed_sub_table[] = {
-    { 0,      8250 },
-    { 125000, 6600 },
-    { 130000, 4950 },
-    { 135000, 3300 },
-    { 140000, 1650 },
+    { 0,      8500 },
+    { 125000, 6800 },
+    { 130000, 5100 },
+    { 135000, 3400 },
+    { 140000, 1700 },
     { 145000, 0    },
     { -1,     0    },
 };
 
 // Married/sep limit for fed tax subtraction
 LIMIT_TABLE or_40_m_sep_fed_sub_table[] = {
-    { 0,      4125 },
-    { 125000, 3300 },
-    { 130000, 2475 },
-    { 135000, 1650 },
-    { 140000, 825  },
+    { 0,      4250 },
+    { 125000, 3400 },
+    { 130000, 2550 },
+    { 135000, 1700 },
+    { 140000, 850  },
     { 145000, 0    },
     { -1,     0    },
 };
@@ -186,11 +189,11 @@ LIMIT_TABLE or_40_m_sep_fed_sub_table[] = {
 // Used for all other cases except single, and married filing separately:
 // married/joint, head of household, and widow
 LIMIT_TABLE or_40_other_fed_sub_table[] = {
-    { 0,      8250 },
-    { 250000, 6600 },
-    { 260000, 4950 },
-    { 270000, 3300 },
-    { 280000, 1650 },
+    { 0,      8500 },
+    { 250000, 6800 },
+    { 260000, 5100 },
+    { 270000, 3400 },
+    { 280000, 1700 },
     { 290000, 0    },
     { -1,     0    },
 };
@@ -234,17 +237,18 @@ typedef struct FILING_STATUS_CFG {
 
 // TAXYEAR_DEPENDENT
 FILING_STATUS_CFG status_cfg[] = {
-   { "SINGLE",        "Single",            "CkSingle", or_40_single_tax_table, or_40_single_fed_sub_table, 2745.00, 1200.00, 100000.00, 10000.0 },
-   { "MARRIED/JOINT", "Married/Joint",     "CkMFJ",    or_40_joint_tax_table,  or_40_other_fed_sub_table,  5495.00, 1000.00, 200000.00, 10000.0 },
-   { "MARRIED/SEP",   "Married/Separate",  "CkMFS",    or_40_single_tax_table, or_40_m_sep_fed_sub_table,  2745.00, 1000.00, 100000.00,  5000.0 },
-   { "HEAD_OF_HOUSE", "Head of Household", "CkHH",     or_40_joint_tax_table,  or_40_other_fed_sub_table,  4420.00, 1200.00, 200000.00, 10000.0 },
-   { "WIDOW",         "Surviving Spouse",  "CkQW",     or_40_joint_tax_table,  or_40_other_fed_sub_table,  5495.00, 1000.00, 200000.00, 10000.0 },
+   { "SINGLE",        "Single",            "CkSingle", or_40_single_tax_table, or_40_single_fed_sub_table, 2835.00, 1200.00, 100000.00, 40000.0 },
+   { "MARRIED/JOINT", "Married/Joint",     "CkMFJ",    or_40_joint_tax_table,  or_40_other_fed_sub_table,  5670.00, 1000.00, 200000.00, 40000.0 },
+   { "MARRIED/SEP",   "Married/Separate",  "CkMFS",    or_40_single_tax_table, or_40_m_sep_fed_sub_table,  2835.00, 1000.00, 100000.00, 20000.0 },
+   { "HEAD_OF_HOUSE", "Head of Household", "CkHH",     or_40_joint_tax_table,  or_40_other_fed_sub_table,  4560.00, 1200.00, 200000.00, 40000.0 },
+   { "WIDOW",         "Surviving Spouse",  "CkQW",     or_40_joint_tax_table,  or_40_other_fed_sub_table,  5670.00, 1000.00, 200000.00, 40000.0 },
    { "",              NULL,                "",         NULL,                   NULL,                       0.00,    0.00,    0.0,       0.0 },
 };
 
 // These constants do not vary with filing status
+// TAXYEAR_DEPENDENT
 const double EXEMPTION_CREDIT_DISABILITY_LIMIT = 100000.00;
-const double EXEMPTION_CREDIT = 249.0;
+const double EXEMPTION_CREDIT = 256.0;
 
 //Get status configuration based on filing status match string, as capitalized from the f1040 import, and return it.
 P_FILING_STATUS_CFG get_status_cfg(char *status) {
@@ -264,13 +268,11 @@ P_FILING_STATUS_CFG get_status_cfg(char *status) {
 // Also update 'f1040_imp_defs' to add mapping.
 typedef struct FED_1040_IMP_OR_40 {
         double L6b;     // Taxable social security benefits
-        double L11;     // AGI (Adjusted gross income)
+        double L11a;    // AGI (Adjusted gross income)
         double L22;     // Total tax before "other taxes, including self-employment tax"
         double S2_1a;   // Excess advance premium tax credit repayment
-        double S2_8;    // Additional tax on IRAs or other tax-favored accounts
-        double S2_16;   // Recapture of low-income housing credit
-        double S2_10;   // Repayment of first-time homebuyer credit
         double L29;     // American Opportunity credit
+        double L30;     // Refundable adoption credit
         char *Status;
         char *Your1stName;
         char *YourLastName;
@@ -300,13 +302,11 @@ FED_1040_IMP_OR_40 f1040i;
 // Mapping from label name to address of local data struct element; either double or char*
 static FORM_IMPORT_DEF f1040_imp_defs[] = {
         { "L6b",    &f1040i.L6b, NULL },
-        { "L11",    &f1040i.L11, NULL },
+        { "L11a",   &f1040i.L11a, NULL },
         { "L22",    &f1040i.L22, NULL },
         { "L29",    &f1040i.L29, NULL },
+        { "L30",    &f1040i.L30, NULL },
         { "S2_1a",  &f1040i.S2_1a, NULL },
-        { "S2_8",   &f1040i.S2_8, NULL },
-        { "S2_10",  &f1040i.S2_10, NULL },
-        { "S2_16",  &f1040i.S2_16, NULL },
         { "Status", NULL, &f1040i.Status },
         { "Your1stName:", NULL, &f1040i.Your1stName },
         { "YourLastName:", NULL, &f1040i.YourLastName },
@@ -450,7 +450,6 @@ void show_fname_init_or_40(char *combined_name, char *first_name_label, char *in
         fprintf(outfile, "%s %c\n", initial_label, initial);
 }
 
-
 // Format and print a social security number to the output file, inserting
 // spaces, and ignoring any input characters (e.g. ' ' or '-') which are not
 // numeric digits.
@@ -485,30 +484,45 @@ int main( int argc, char *argv[] )
 
  /* Decode any command-line arguments. */
  i = 1;  k=1;
- while (i < argc)
- {
-  if (strcmp(argv[i],"-verbose")==0)  { verbose = 1; }
-  else
-  if (k==1)
-   {
-    infname = strdup(argv[i]);
-    infile = fopen(infname,"r");
-    if (infile==0) {printf("ERROR: Parameter file '%s' could not be opened.\n", infname ); exit(1);}
-    k = 2;
-    /* Base name of output file on input file. */
-    strcpy(outfname,infname);
-    j = strlen(outfname)-1;
-    while ((j>=0) && (outfname[j]!='.')) j--;
-    if (j<0) strcat(outfname,"_out.txt"); else strcpy(&(outfname[j]),"_out.txt");
-    outfile = fopen(outfname,"w");
-    if (outfile==0) {printf("ERROR: Output file '%s' could not be opened.\n", outfname); exit(1);}
-    printf("Writing results to file:  %s\n", outfname);
-   }
-  else
-   {printf("Unknown command-line parameter '%s'\n", argv[i]); exit(1);}
-  i = i + 1;
- }
- if (infile==0) {printf("Error: No input file on command line.\n"); exit(1);}
+while (i < argc) {
+    if (strcmp(argv[i],"-verbose")==0)  { 
+        verbose = 1; 
+    } else if (k==1) {
+        infname = strdup(argv[i]);
+        infile = fopen(infname,"r");
+        if (infile==0) {
+            printf("ERROR: Parameter file '%s' could not be opened.\n", infname ); 
+            exit(1);
+        }
+        k = 2;
+        /* Base name of output file on input file. */
+        strcpy(outfname,infname);
+
+        j = strlen(outfname)-1;
+
+        while ((j>=0) && (outfname[j]!='.')) 
+            j--;
+
+        if (j<0) 
+            strcat(outfname,"_out.txt"); 
+        else 
+            strcpy(&(outfname[j]),"_out.txt");
+        outfile = fopen(outfname,"w");
+        if (outfile==0) {
+            printf("ERROR: Output file '%s' could not be opened.\n", outfname); 
+            exit(1);
+        }
+        printf("Writing results to file:  %s\n", outfname);
+    } else {
+        printf("Unknown command-line parameter '%s'\n", argv[i]); 
+        exit(1);
+    }
+    i = i + 1;
+}
+if (infile==0) {
+    printf("Error: No input file on command line.\n"); 
+    exit(1);
+}
 
  /* Pre-initialize all lines to zeros. */
  for (i=0; i<MAX_LINES; i++) { L[i] = 0.0; }
@@ -540,7 +554,15 @@ int main( int argc, char *argv[] )
             printf("%6.2f\t%6.2f\t%6.2f\n", v, TaxLookup(v, or_40_single_tax_table), TaxLookup(v, or_40_joint_tax_table));
     }
 
-    for (v = 49000; v <= 65000; v+= 10.0) {
+    for (v = 49990.0; v <= 50030.0; v+= 1.0) {
+        printf("%6.2f\t%6.2f\t%6.2f\n", v, TaxLookup(v, or_40_single_tax_table), TaxLookup(v, or_40_joint_tax_table));
+    }
+
+    for (v = 124990.0; v <= 125030.0; v+= 1.0) {
+        printf("%6.2f\t%6.2f\t%6.2f\n", v, TaxLookup(v, or_40_single_tax_table), TaxLookup(v, or_40_joint_tax_table));
+    }
+
+    for (v = 249990.0; v <= 250030.0; v+= 1.0) {
         printf("%6.2f\t%6.2f\t%6.2f\n", v, TaxLookup(v, or_40_single_tax_table), TaxLookup(v, or_40_joint_tax_table));
     }
 #endif
@@ -549,6 +571,7 @@ int main( int argc, char *argv[] )
 
     if (strlen(f1040_filename) != 0) {
         IMPORT_STATUS imp_stat = ImportReturnData( f1040_filename, f1040_imp_defs, f1040_imp_defs_size);
+
 
         if (imp_stat.err != IMPORT_ERR_SUCCESS) {
             ImportPrintStatus(outfile, "Form 1040", imp_stat);
@@ -566,35 +589,33 @@ int main( int argc, char *argv[] )
 
         fprintf( outfile, "INFO: --- Imported 1040 Data from file '%s' ---\n", f1040_filename);
         fprintf( outfile, "INFO: --- All strings converted to upper case ---\n");
-        fprintf( outfile, "INFO: f1040i.L6b   -- %6.2f\n", f1040i.L6b);
-        fprintf( outfile, "INFO: f1040i.L11   -- %6.2f\n", f1040i.L11);
-        fprintf( outfile, "INFO: f1040i.L22   -- %6.2f\n", f1040i.L22);
-        fprintf( outfile, "INFO: f1040i.S2_1a   -- %6.2f\n", f1040i.S2_1a);
-        fprintf( outfile, "INFO: f1040i.S2_8   -- %6.2f\n", f1040i.S2_8);
-        fprintf( outfile, "INFO: f1040i.S2_10   -- %6.2f\n", f1040i.S2_10);
-        fprintf( outfile, "INFO: f1040i.S2_16   -- %6.2f\n", f1040i.S2_16);
-        fprintf( outfile, "INFO: f1040i.L29   -- %6.2f\n", f1040i.L29);
-        fprintf( outfile, "INFO: f1040i.Status: -- %s\n", f1040i.Status);
-        fprintf( outfile, "INFO: f1040i.Your1stName: -- %s\n", f1040i.Your1stName);
-        fprintf( outfile, "INFO: f1040i.YourLastName: -- %s\n", f1040i.YourLastName);
-        fprintf( outfile, "INFO: f1040i.YourSocSec#: -- %s\n", f1040i.YourSocSec);
-        fprintf( outfile, "INFO: f1040i.Spouse1stName: -- %s\n", f1040i.Spouse1stName);
-        fprintf( outfile, "INFO: f1040i.SpouseLastName: -- %s\n", f1040i.SpouseLastName);
-        fprintf( outfile, "INFO: f1040i.SpouseSocSec#: -- %s\n", f1040i.SpouseSocSec);
-        fprintf( outfile, "INFO: f1040i.Number&Street: -- %s\n", f1040i.NumberStreet);
-        fprintf( outfile, "INFO: f1040i.Apt#: -- %s\n", f1040i.Apt);
-        fprintf( outfile, "INFO: f1040i.Town/City: -- %s\n", f1040i.City);
-        fprintf( outfile, "INFO: f1040i.State: -- %s\n", f1040i.State);
-        fprintf( outfile, "INFO: f1040i.ZipCode: -- %s\n", f1040i.ZipCode);
-        fprintf( outfile, "INFO: f1040i.Dep1FirstName: -- %s\n", f1040i.Dep1FirstName);
-        fprintf( outfile, "INFO: f1040i.Dep1LastName: -- %s\n", f1040i.Dep1LastName);
-        fprintf( outfile, "INFO: f1040i.Dep1SocSec: -- %s\n", f1040i.Dep1SocSec);
-        fprintf( outfile, "INFO: f1040i.Dep2FirstName: -- %s\n", f1040i.Dep2FirstName);
-        fprintf( outfile, "INFO: f1040i.Dep2LastName: -- %s\n", f1040i.Dep2LastName);
-        fprintf( outfile, "INFO: f1040i.Dep2SocSec: -- %s\n", f1040i.Dep2SocSec);
-        fprintf( outfile, "INFO: f1040i.Dep3FirstName: -- %s\n", f1040i.Dep3FirstName);
-        fprintf( outfile, "INFO: f1040i.Dep3LastName: -- %s\n", f1040i.Dep3LastName);
-        fprintf( outfile, "INFO: f1040i.Dep3SocSec: -- %s\n", f1040i.Dep3SocSec);
+        fprintf( outfile, "INFO: f1040i.L6b   = %9.2f -- Taxable social security benefits\n", f1040i.L6b);
+        fprintf( outfile, "INFO: f1040i.L11a  = %9.2f -- AGI (Adjusted gross income)\n", f1040i.L11a);
+        fprintf( outfile, "INFO: f1040i.L22   = %9.2f -- Total tax before 'other taxes, including self-employment tax'\n", f1040i.L22);
+        fprintf( outfile, "INFO: f1040i.S2_1a = %9.2f -- Excess advance premium tax credit repayment\n", f1040i.S2_1a);
+        fprintf( outfile, "INFO: f1040i.L29   = %9.2f -- American Opportunity credit\n", f1040i.L29);
+        fprintf( outfile, "INFO: f1040i.L30   = %9.2f -- Refundable adoption credit\n", f1040i.L30);
+        fprintf( outfile, "INFO: f1040i.Status:  = '%s'\n", f1040i.Status);
+        fprintf( outfile, "INFO: f1040i.Your1stName:  = '%s'\n", f1040i.Your1stName);
+        fprintf( outfile, "INFO: f1040i.YourLastName:  = '%s'\n", f1040i.YourLastName);
+        fprintf( outfile, "INFO: f1040i.YourSocSec#:  = '%s'\n", f1040i.YourSocSec);
+        fprintf( outfile, "INFO: f1040i.Spouse1stName:  = '%s'\n", f1040i.Spouse1stName);
+        fprintf( outfile, "INFO: f1040i.SpouseLastName:  = '%s'\n", f1040i.SpouseLastName);
+        fprintf( outfile, "INFO: f1040i.SpouseSocSec#:  = '%s'\n", f1040i.SpouseSocSec);
+        fprintf( outfile, "INFO: f1040i.Number&Street:  = '%s'\n", f1040i.NumberStreet);
+        fprintf( outfile, "INFO: f1040i.Apt#:  = '%s'\n", f1040i.Apt);
+        fprintf( outfile, "INFO: f1040i.Town/City:  = '%s'\n", f1040i.City);
+        fprintf( outfile, "INFO: f1040i.State:  = '%s'\n", f1040i.State);
+        fprintf( outfile, "INFO: f1040i.ZipCode:  = '%s'\n", f1040i.ZipCode);
+        fprintf( outfile, "INFO: f1040i.Dep1FirstName:  = '%s'\n", f1040i.Dep1FirstName);
+        fprintf( outfile, "INFO: f1040i.Dep1LastName:  = '%s'\n", f1040i.Dep1LastName);
+        fprintf( outfile, "INFO: f1040i.Dep1SocSec:  = '%s'\n", f1040i.Dep1SocSec);
+        fprintf( outfile, "INFO: f1040i.Dep2FirstName:  = '%s'\n", f1040i.Dep2FirstName);
+        fprintf( outfile, "INFO: f1040i.Dep2LastName:  = '%s'\n", f1040i.Dep2LastName);
+        fprintf( outfile, "INFO: f1040i.Dep2SocSec:  = '%s'\n", f1040i.Dep2SocSec);
+        fprintf( outfile, "INFO: f1040i.Dep3FirstName:  = '%s'\n", f1040i.Dep3FirstName);
+        fprintf( outfile, "INFO: f1040i.Dep3LastName:  = '%s'\n", f1040i.Dep3LastName);
+        fprintf( outfile, "INFO: f1040i.Dep3SocSec:  = '%s'\n", f1040i.Dep3SocSec);
     } else {
         fprintf( outfile, "ERROR: --- No Imported 1040 Form Data : no filename provided ---\n");
         exit(1);
@@ -660,7 +681,7 @@ int main( int argc, char *argv[] )
     P_FILING_STATUS_CFG p_cfg = get_status_cfg(f1040i.Status);
 
     if (p_cfg == NULL) {
-        fprintf(outfile,"Error: unrecognized filing status '%s'. Check form1040 imported info. Exiting.\n", f1040i.Status); 
+        fprintf(outfile,"ERROR: unrecognized filing status '%s'. Check form1040 imported info. Exiting.\n", f1040i.Status); 
         exit(1);
     }
 
@@ -768,9 +789,9 @@ int main( int argc, char *argv[] )
     //====== Page 3 ======
 
     double L10_worksheet_L4;
-    double L10_worksheet_L7;
+    double L10_worksheet_L8;
     GetLine("L10_worksheet_L4", &L10_worksheet_L4);
-    GetLine("L10_worksheet_L7", &L10_worksheet_L7);
+    GetLine("L10_worksheet_L8", &L10_worksheet_L8);
 
 
     GetLine("L12", &L[12]);
@@ -816,6 +837,7 @@ int main( int argc, char *argv[] )
     GetLine("L35", &L[35]);
     GetLine("L36", &L[36]);
     GetLine("L37", &L[37]);
+    GetLine("L38", &L[38]);
 
     GetLine("L43", &L[43]);
     GetLine("L44", &L[44]);
@@ -854,6 +876,13 @@ int main( int argc, char *argv[] )
     AcctNumber = GetTextLine("AcctNumber:");
     // There may be letters in account number, so convert to upper case.
     capitalize(AcctNumber);
+
+    // Kicker donation 
+    int b55a;
+    GetYesNoSL("CkL55a", &b55a);
+    double L55b;
+    GetLine("L55b", &L55b);
+    
 
     //====== Oregon Schedule OR-A Data ======
 
@@ -1015,7 +1044,7 @@ int main( int argc, char *argv[] )
     // Now that all data has been accumulated, calculations can be begin on OR-40, and schedules.
     // First calculated and display OR-A and OR-ASC, as they create values used in the main OR-40 form
     // Get fed AGI into OR-40 form array before calculating OR-A
-    L[7] = round(f1040i.L11);
+    L[7] = round(f1040i.L11a);
     double fed_agi = L[7];
     
 
@@ -1040,7 +1069,7 @@ int main( int argc, char *argv[] )
 
     // If limited, show info message.
     if (SchA_L9_Sum > p_cfg->income_and_property_tax_deduction_limit) {
-        fprintf(outfile, "INFO: Total income and property taxes on Schedule A = %8.2f has been limited to %8.2f\n", 
+        fprintf(outfile, "INFO: Total income and property taxes on Schedule A = %3.2f has been limited to %3.2f\n", 
             SchA_L9_Sum, SchA_L[9]);
     }
 
@@ -1138,7 +1167,7 @@ int main( int argc, char *argv[] )
     double SchASC_E1_prior_this_sum;
     SchASC_E1_prior_this_sum =  SchASC_E[2] +  SchASC_E[3];
     if (SchASC_E[4] > SchASC_E1_prior_this_sum) {
-        fprintf(outfile, "Schedule ASC Section E line E4 has been limited to the sum of E2 and E3: %8.2f\n", SchASC_E1_prior_this_sum);
+        fprintf(outfile, "INFO: Schedule ASC Section E line E4 has been limited to the sum of E2 and E3: %3.2f\n", SchASC_E1_prior_this_sum);
     }
     SchASC_E[4] = SmallerOf(SchASC_E[4], SchASC_E1_prior_this_sum);
     showline_wlabel_or_40_nz("SchASC_E4", SchASC_E[4]);
@@ -1151,7 +1180,7 @@ int main( int argc, char *argv[] )
     SchASC_E5_prior_this_sum =  SchASC_E[6] +  SchASC_E[7];
 
     if (SchASC_E[8] > SchASC_E5_prior_this_sum) {
-        fprintf(outfile, "Schedule ASC Section E line E8 has been limited to the sum of E6 and E7: %8.2f\n", SchASC_E5_prior_this_sum);
+        fprintf(outfile, "INFO: Schedule ASC Section E line E8 has been limited to the sum of E6 and E7: %3.2f\n", SchASC_E5_prior_this_sum);
     }
     SchASC_E[8] = SmallerOf(SchASC_E[8], SchASC_E5_prior_this_sum);
     showline_wlabel_or_40_nz("SchASC_E8", SchASC_E[8]);
@@ -1190,7 +1219,7 @@ int main( int argc, char *argv[] )
     //=== Subtractions from Taxable Income ===
 
     // Federal Tax Worksheet
-    #define FTW_NUM_LINES 11
+    #define FTW_NUM_LINES 12
     double ftw_L[FTW_NUM_LINES + 1];    // Add one extra to allow 1-based; [0] entry is ignored.
 
     char *ftw_line_description[FTW_NUM_LINES + 1] = {
@@ -1201,11 +1230,12 @@ int main( int argc, char *argv[] )
         "Other taxes (see instructions)",
         "Line 3 plus line 4",
         "American Opportunity credit (form 1040, line 29)",
+        "Refundable adoption credit (Form 1040 or 1040-ST, line 30)",
         "Premium tax credit (Form 8962, line 24)",
-        "Line 6 plus line 7",
-        "Line 5 minus line 8. (If less than 0, enter 0)",
+        "Line 6 plus line 7 plus line 8",
+        "Line 5 minus line 9. (If less than 0, enter 0)",
         "Maximum subtraction amount from Table 4",
-        "Smaller of line 9 or line 10.  This is your federal tax liability subtraction"
+        "Smaller of line 10 or line 11.  This is your federal tax liability subtraction"
     };
 
     ftw_L[1] = round(f1040i.L22);
@@ -1214,11 +1244,12 @@ int main( int argc, char *argv[] )
     ftw_L[4] = L10_worksheet_L4;
     ftw_L[5] = ftw_L[3] + ftw_L[4];
     ftw_L[6] = round(f1040i.L29);
-    ftw_L[7] = L10_worksheet_L7;
-    ftw_L[8] = ftw_L[6] + ftw_L[7];
-    ftw_L[9] = NotLessThanZero(ftw_L[5] - ftw_L[8]);
-    ftw_L[10] = GetLimit(fed_agi, p_cfg->p_fed_liability_limit);
-    ftw_L[11] = SmallerOf(ftw_L[9], ftw_L[10]);
+    ftw_L[7] = round(f1040i.L30);
+    ftw_L[8] = L10_worksheet_L8;
+    ftw_L[9] = ftw_L[6] + ftw_L[7] + ftw_L[8];
+    ftw_L[10] = NotLessThanZero(ftw_L[5] - ftw_L[9]);
+    ftw_L[11] = GetLimit(fed_agi, p_cfg->p_fed_liability_limit);
+    ftw_L[12] = SmallerOf(ftw_L[10], ftw_L[11]);
 
     int line;
     fprintf( outfile, "INFO: Federal tax liability subtraction worksheet\n" );
@@ -1386,6 +1417,7 @@ int main( int argc, char *argv[] )
     shownum_or_40_nz(35);
     shownum_or_40_nz(36);
     shownum_or_40_nz(37);
+    shownum_or_40_nz(38);
 
     L[39] = SchASC_F[7];
     shownum_or_40_nz(39);
@@ -1450,7 +1482,7 @@ int main( int argc, char *argv[] )
     double L52_pre_sum = L[48] + L[49] + L[50] + L[51];
     L[52] = SmallerOf(L52_pre_sum, L[47]);
     if (L52_pre_sum > L[47]) {
-        fprintf(outfile, "INFO: Refund checkoff amount request in L52 of %8.2f has been limited to refund amount: %8.2f\n", 
+        fprintf(outfile, "INFO: Refund checkoff amount request in L52 of %3.2f has been limited to refund amount: %3.2f\n", 
             L52_pre_sum, L[47]);
     }
 
@@ -1472,6 +1504,13 @@ int main( int argc, char *argv[] )
     fprintf(outfile, "AcctRoutingNumber: %s\n", AcctRoutingNumber);
     fprintf(outfile, "AcctNumber: %s\n", AcctNumber);
 
+    // Kicker donation options
+    if (b55a)
+        fprintf(outfile, "CkL55a X\n");
+    showline_wlabel_or_40_nz("L55b", L55b);
+
+// This tests all the combinations for inserting the commas required by the OR forms
+#undef SHOWNUM_OR_40_TEST
 #ifdef SHOWNUM_OR_40_TEST
     L[7] = -567891234.0;
     shownum_or_40(7);

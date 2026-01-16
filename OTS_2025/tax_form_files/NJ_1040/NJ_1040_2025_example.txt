@@ -10,6 +10,8 @@ SpouseBlindDisa no      { Spouse Blind or Disabled (answer: yes, no) (Ignored if
 YouVeteran      no      { You Veteran? (answer: yes, no) }
 SpouseVeteran   no      { Spouse Veteran? (answer: yes, no) (Ignored if not joint return.) }
 
+DigitalAssets   no      { Did you exchange Digital Assets in 2025 ? (answer: yes, no) }
+
 L10          0          { Number of qualified dependent children. }
 L11          0          { Number of other dependents. }
 L12          0          { Dependents attending college. }

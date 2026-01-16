@@ -272,7 +272,7 @@ void GeneralPopup( char *title, char *mesg, int to_text_win )       /* Used for 
    k++;
   }
  winwdth = 50 + maxcols * 8;
- winhght = 70 + 18 * nlines + 5;
+ winhght = 70 + 18 * nlines + 15;
  orig_winhght = winhght;
  if (winhght < 500) 
   {
@@ -296,7 +296,7 @@ void GeneralPopup( char *title, char *mesg, int to_text_win )       /* Used for 
     }
   }
  make_label( winframe, xpos, ypos, mesg );
- make_button( winframe, winwdth/2 - 30, orig_winhght - 38, "  Ok  ", dismiss_general_warning, &warnwin );
+ make_button( winframe, winwdth/2 - 30, orig_winhght - 45, "  Ok  ", dismiss_general_warning, &warnwin );
  gtk_window_set_keep_above( (GtkWindow *)warnwin, 1 );
  show_wind( warnwin );
 }

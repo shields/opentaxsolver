@@ -4,6 +4,10 @@ Title: Oregon Form OR-40 - 2025
 
 FileName1040:  { File-name of Form 1040 output file. }
 
+{ --- -------------- ---
+ ---  OR-40 Form  --- 
+ --- -------------- ---}
+
 { --- Fiscal Year, Amended Return, Special Status --- }
 FiscalYearEnd: { For fiscal year filers, enter fiscal year end as MM/DD/YYYY}
 CkAmended No { Is this an amended return ? (answer: Yes, No) }
@@ -75,7 +79,7 @@ L6d ; { Total number of dependent children with a qualifying disability (see ins
 
 { --- Subtractions from Taxable Income --- }
 L10_worksheet_L4 ; { Federal Tax Worksheet line 4 'Other Taxes'. Form 1040 section 2 line 17 with exceptions. }
-L10_worksheet_L7 ; { Federal Tax Worksheet line 7 'Premium tax credit (Form 8962, line 24)' }
+L10_worksheet_L8 ; { Federal Tax Worksheet line 8 'Premium tax credit (Form 8962, line 24)' }
 
 L12 ; { Oregon income tax refund included in federal income }
 
@@ -102,20 +106,22 @@ L21 ; { Interest on certain installment sales }
 L26 ; { Political contribution credit. See limits in instructions }
 
 { --- Payments and Refundable Credits --- }
-L32 ; { Oregon income tax withheld. Include a copy of your Forms W-2 and 1099 }
-L33 ; { Prior-year refund applied as estimated payment  }
-L34 ; { Estimated tax payments for 2025.  Include all estimated payments, including
-any extension payment, that you made by April 15, 2025 }
-L35 ; { Estimated tax payments from Schedule OR-K-1, line 20  }
-L36 ; { Earned income credit  }
-L37 ; { Oregon Kids Credit }
+L32 ; { Oregon surplus (kicker). If you elect to donate your kicker 
+to the State School Fund, enter 0 and see line 55 }
+L33 ; { Oregon income tax withheld. Include a copy of your Forms W-2 and 1099 }
+L34 ; { Prior-year refund applied as estimated payment  }
+L35 ; { Estimated tax payments for 2025.  Include all estimated payments, including
+any extension payment, that you made by April 15, 2026 }
+L36 ; { Estimated tax payments from Schedule OR-K-1, line 20  }
+L37 ; { Earned income credit  }
+L38 ; { Oregon Kids Credit }
 
 { --- Tax to pay or refund --- }
 L43 ; { Penalty and interest for filing or paying late }
 L44 ; { Interest on underpayment of estimated tax. Include Form OR-10 }
 L44a ; { Exception number from Form OR-10, line 1 }
 CkL44b No { Enter Yes if you annualized (answer: Yes, No) }
-L48 ; { Amount from line 47 you want to apply as a payment of your 2025
+L48 ; { Amount from line 47 you want to apply as a payment of your 2026
 estimated tax }
 L49 ; { Charitable checkoff donations from Schedule OR-DONATE, line 30 }
 L50 ; { Political party $3 checkoff }
@@ -131,7 +137,15 @@ CkAcctSavings No { Savings account? (answer: Yes, No) }
 AcctRoutingNumber: { Enter 9 digit ACH routing number }
 AcctNumber: { Enter ACH account number, up to 17 digits }
 
-{ --- OR-40 Supporting Schedules --- }
+{ --- Kicker Donation Options --- }
+CkL55a No { Donate kicker to State School Fund? (answer: Yes, No) }
+L55b ; { Complete the kicker worksheet in the instructions and enter the
+amount here. This election is irrevocable. }
+
+
+{ --- -------------------------------- ---
+ ---  OR-40 Supporting Schedules  ---
+ --- -------------------------------- ---}
 
 { --- Schedule OR-A --- }
 

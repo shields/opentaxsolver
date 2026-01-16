@@ -1,6 +1,6 @@
 /************************************************************************/
 /* TaxSolve_NC_D400_2025.c - North Carolina 2025 NC-DC400 State Taxes.	*/
-/* Copyright (C) 2025 - S.Jenkins					*/
+/* Copyright (C) 2026 - S.Jenkins					*/
 /* 									*/
 /* Compile:   gcc taxsolve_NC_D400_2025.c -o taxsolve_NC_D400_2025	*/
 /* Run:  ./taxsolve_NC_D400_2025		  			*/
@@ -22,7 +22,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* 1-2-2025	http://opentaxsolver.sourceforge.com/			*/
+/* 1-2-2026	http://opentaxsolver.sourceforge.com/			*/
 /*	Earlier versions - Lincoln Baxter (lab@lincolnbaxter.com)	*/
 /*									*/
 /************************************************************************/
@@ -46,7 +46,7 @@ float thisversion=23.00;
 #define Yes 1
 #define No  0
 
-double flat_tax_rate = 0.045;		/* Not updated for 2025. */
+double flat_tax_rate = 0.0425;		/* Updated for 2025. */
 
 
 struct FedReturnData
@@ -152,16 +152,6 @@ int main( int argc, char *argv[] )
  /* --- Decode any command line options. -- */
  /*-----------------------------------------*/
  printf("NC D400 2025 - v%3.2f\n", thisversion);
-
- #if (1)
-   add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
-  #ifdef microsoft
-   system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
-  #else
-   system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\" &" );
-  #endif
-#endif
-
  jj = 1;  k=1;
  while (jj < argc)
  {
@@ -279,7 +269,7 @@ int main( int argc, char *argv[] )
  L[6] = Conditional_Round( L[6] );
 
  switch (status)
-  {									/* Not updated for 2025. */
+  {									/* Updated for 2025. */
    case SINGLE: 		 stdded   = 12750.0; 	/* NC std single deduction. */
 				 min2file = 12750.0;
 	break;
@@ -306,7 +296,7 @@ int main( int argc, char *argv[] )
  L[8] = L[6] + L[7];
 
  switch (status)
-  { /* Child Deduction Table. */					/* Not updated for 2025. */
+  { /* Child Deduction Table. */					/* Updated for 2025. */
    case MARRIED_FILING_JOINTLY: 
    case WIDOW: 
 		if (L[6] <= 40000.0)	ChildDeduction = 3000.0;	else

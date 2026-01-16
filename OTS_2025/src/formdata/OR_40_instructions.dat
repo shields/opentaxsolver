@@ -101,10 +101,10 @@ Don't include any additions to tax from Schedule 2, line 17 that are penalties,
 interest, excise tax, or other amounts that aren't income tax. If you have no
 other taxes, enter 0.
 
-[L10_worksheet_L7] Lines from worksheet not listed here are auto-calculated. See
+[L10_worksheet_L8] Lines from worksheet not listed here are auto-calculated. See
 output file for all worksheet values.  From 'Instructions for Federal tax
 liability subtraction worksheet':
-Line 7: Enter your total premium tax credit amount from federal Form 8962, line
+Line 8: Enter your total premium tax credit amount from federal Form 8962, line
 24. This is your allowable premium credit regardless of any excess advance
 payments you received or credit you're claiming on your federal return.
 
@@ -123,7 +123,7 @@ If someone else can claim you as a dependent, your standard deduction is limited
 to the larger of:
 - Your earned income plus $450, up to the maximum
 allowed for your filing status (see Table 5); or
-- $1,300.
+- $1,350.
 This limit applies even if the other person doesn't actually claim you as a
 dependent on their return.  If you're a dependent and not married, use the
 worksheet to figure your standard deduction. If you're a dependent and married,
@@ -142,7 +142,7 @@ the standard deduction is more than your itemized deductions.
 [StdDedOverride] See instructions for CkStdDedOverride above.
 
 [CkL17a] Standard deduction-Age 65 or older, or blind. If you or your spouse
-turned age 65 by January 1, 2025, or were blind at the end of the tax year,
+turned age 65 by January 1, 2026, or were blind at the end of the tax year,
 you're entitled to a larger standard deduction. If you or your spouse are
 permanently blind, you may also qualify for the severe disability exemption
 claimed on lines 6a and 6b.
@@ -197,18 +197,50 @@ standard tax table or tax formula is automatically inserted.
 [L21] Interest on certain installment sales. Did you have installment sales that
 required you to pay interest on the deferred tax liability for federal purposes?
 If so, you must also compute interest for Oregon using the same method as for
-federal. The annual interest rate is 8 percent for 2024 and 9 percent for 2025.
+federal. The annual interest rate is 9 percent for 2025 and 8 percent for 2026.
 
 [L26] Political contribution credit. If your federal AGI isn't more than $75,000
 ($150,000 if you're filing a joint return), you may claim a standard credit of
 up to $50 ($100 if you're filing a joint return) for cash contributions you made
-during 2024 to any:
+during 2025 to any:
 - Qualified political party.
 - Qualified candidate for federal, state, or local elective office, or the
   candidate's campaign, for an election in Oregon.
 - Political action committee certified in Oregon.
 
-[L32] Oregon income tax withheld. Enter the total Oregon tax withheld from your
+[L32] Oregon surplus (kicker). The Oregon surplus, known as the "kicker," is a
+way for state government to return some of your taxes to you when revenues 
+are more than predicted. The Oregon Department of Administrative Services
+determines whether there is a surplus and the amount to be returned to
+taxpayers as a kicker. If there's a surplus, the kicker may be claimed on the
+return in the same way as a payment. If there's no surplus, there's no kicker.
+Eligibility. To be eligible for a kicker, you must:
+
+1. File your 2024 Oregon return before you file your 2025 return.
+2. Have an Oregon personal income tax liability for 2024.
+3. File a 2025 Oregon return, even if you don't otherwise have a filing
+requirement.
+
+Kicker amount. In general, your kicker is a percentage of your total Oregon
+personal income tax liability for the prior year, as adjusted or amended. Your
+total personal income tax liability is your Oregon income tax before all
+payments or credits other than the credit for income taxes paid to another
+state on mutually-taxed income. For 2025, your kicker is 9.863 percent of your
+2024 total Oregon personal income tax liability.
+
+Online assistance: our "What's My Kicker" tool can calculate your kicker amount
+if:
+
+- Your filing status was the same for 2024 and 2025, and
+- You filed with the same spouse (if married) for both years.
+
+Look for "What's my Kicker" on Revenue Online at www.oregon.gov/dor when a
+kicker is available.
+
+See Form OR-40 instructions for calculating the kicker amount in a series of
+complicated worksheets.
+
+[L33] Oregon income tax withheld. Enter the total Oregon tax withheld from your
 wages and other income. State tax withheld from wages is shown in box 17 of Form
 W-2 and in the State area of various 1099 forms. Don't include FICA (Social
 Security) tax withheld or tax withheld from your wages by other states.  You
@@ -217,29 +249,29 @@ Form 1099 showing Oregon income tax withheld with your Oregon return.
 
 If you don't have a Form W-2 or 1099, you must provide other proof of Oregon tax
 withheld. Proof may include a copy of a final paycheck stub or a letter from
-your employer. If you file before February 1, 2025, we can only accept a Form
+your employer. If you file before February 1, 2026, we can only accept a Form
 W-2 or 1099 as proof.  
 
 If you have tax to pay, you may want to increase the amount your employer or
 other payer withholds from your wages. You can find withholding information and
 do a "paycheck checkup" on our website.
 
-[L33] Prior-year refund applied as estimated tax payment. Enter the amount of
-any prior-year refund you applied as a payment of 2024 estimated tax.  If we
+[L34] Prior-year refund applied as estimated tax payment. Enter the amount of
+any prior-year refund you applied as a payment of 2025 estimated tax.  If we
 adjusted your applied refund, be sure to use the adjusted amount. If you need to
 verify your applied refund amount, log into or create your Revenue Online
 account on our website or contact us.
 
-[L34] Estimated tax payments for 2024. Enter the total estimated tax payments
-you made before April 15, 2025. For calendar-year filers, these payments were
-due April 15, 2024; June 17, 2024; September 16, 2024; and January 15, 2025. If
+[L35] Estimated tax payments for 2025. Enter the total estimated tax payments
+you made before April 15, 2026. For calendar-year filers, these payments were
+due April 15, 2025; June 16, 2025; September 15, 2025; and January 15, 2026. If
 you're filing on extension, include any extension payment made on or before the
 due date (without extensions), but don't include any payments made after April
-15, 2025. Don't include the amount reported on line 33. If you need to verify
+15, 2026. Don't include the amount reported on line 34. If you need to verify
 your estimated payments, log into or create your Revenue Online account on our
 website or contact us.
 
-[L35] Estimated tax payments from Schedule OR-K-1, line 20. An Oregon
+[L36] Estimated tax payments from Schedule OR-K-1, line 20. An Oregon
 pass-through entity (PTE) or an out-of-state PTE with Oregon-source income may
 choose to make estimated Oregon tax payments on its owners' behalf. PTEs report
 these payments to us on Form OR-19 and to owners on Schedule OR-K-1.
@@ -250,7 +282,7 @@ that the PTE reported to us on Form OR-19. Don't include any PTE elective tax
 payments or credit from Schedule OR- 21-K-1. See Publication OR-17 for
 information about the PTE elective tax and related credit.
 
-[L36] Earned income credit. Oregon's earned income credit is a percentage of the
+[L37] Earned income credit. Oregon's earned income credit is a percentage of the
 earned income tax credit (EITC) claimed on your federal return. The percentage
 is based on the age of your youngest dependent at the end of the tax year.  Note
 to RDPs: You may claim this credit if you would otherwise qualify for the EITC
@@ -264,7 +296,7 @@ them.
 
 Use the worksheet in the Form OR-40 instructions to figure your credit.
 
-[L37] Oregon Kids Credit. The Oregon Kids Credit is available for certain
+[L38] Oregon Kids Credit. The Oregon Kids Credit is available for certain
 taxpayers with qualifying dependent children who were under the age of six at
 the end of the tax year. See "Exemption credit" in Publication OR-17 for
 information about qualifying children.  Eligibility. To be eligible for the
@@ -272,18 +304,20 @@ Oregon Kids Credit, you must:
 
 1. Use a filing status other than married filing separately. If you're married
 and filing separate returns, you do not qualify for this credit.
-2. Have one or more dependents age five or younger at the end of 2024 listed on
+2. Have one or more dependents age five or younger at the end of 2025 listed on
 your Oregon return.*
-3. Have qualifying income under $30,750.
+3. Have qualifying income under $31,550, including Oregon additions and
+subtractions and with excluded foreign earned income and total losses greater
+than $20,000 added back. Use the Oregon Kids Credit worksheet to figure your
+credit.
 
 If you're eligible, use the Oregon Kids Credit worksheet to figure your credit.
-Credit amount. For 2024, the maximum amount of the Oregon Kids Credit is $1,000
+Credit amount. For 2025, the maximum amount of the Oregon Kids Credit is $1,050
 per qualifying dependent, for up to five dependents. Your credit amount may be
 limited by your income.
 
 * Note for divorced, separated, or unmarried parents:
 If a child is listed as a dependent on your Oregon return only because the
-
 custodial parent released the child's dependent exemption to you, the child
 doesn't qualify for purposes of this credit.  If you're the custodial parent of
 an otherwise qualifying child, you may be able to claim this credit even if the
@@ -291,10 +325,10 @@ child's dependent exemption has been released to the other parent.
 
 Use the worksheet in the Form OR-40 instructions to figure your credit.
 
-[L43] Your 2024 tax must be paid by April 15, 2025, even if you requested an
-extension of time to file your return. Your 2024 return must be filed by April
-15, 2025. If you requested an extension, your return must be filed by October
-15, 2025.  Round the total of penalties and interest to the nearest whole
+[L43] Your 2025 tax must be paid by April 15, 2026, even if you requested an
+extension of time to file your return. Your 2025 return must be filed by April
+15, 2026. If you requested an extension, your return must be filed by October
+15, 2026.  Round the total of penalties and interest to the nearest whole
 dollar. For more information and examples showing how penalties and interest are
 calculated, see "Interest and penalties" in Publication OR-17. See OR-40
 instructions for calculations.
@@ -322,8 +356,8 @@ statements with your records.
 
 [L48] Apply refund as estimated tax payment. Enter the amount of your refund you
 want to apply as an estimated tax payment for a later year. The payment will be
-applied to the 2025 tax year unless you're filing this return after January 15,
-2026. For more information about open estimated tax accounts, see "Payments and
+applied to the 2026 tax year unless you're filing this return after January 15,
+2027. For more information about open estimated tax accounts, see "Payments and
 refunds" in Publication OR-17.
 
 Instructions for amended returns. Enter the amount, if any, from a refund on
@@ -429,6 +463,25 @@ with the digits 01 through 12, 21 through 32, or 61 through 72.
 characters (both numbers and letters).  Don't include hyphens, spaces, or
 special symbols.
 
+[CkL55a] See instructions for L55b.
+
+[L55b] Kicker donation. You may choose to donate all of your kicker to the
+Oregon State School Fund.  The election to donate your kicker can't be changed
+after the due date of the original return. No partial donations are allowed. If
+any amount other than 0 is entered on line 32, your donation won't be made.
+
+To make the donation:
+1. See the instructions for line 32 to calculate your kicker amount.
+2. Make sure that you've entered 0 on line 32.
+3. Check box 55a (CkL55a).
+4. Enter your entire kicker amount on line 55b.
+
+Reminder: This election is irrevocable. The election to donate your kicker
+can't be changed or revoked after the due date of the original return. To make
+a change or correction to your election, your amended return must be received
+by the due date of the original return.  See the instructions for calculating
+your kicker for more information.
+
 [SchA_L1] You can deduct only the part of your medical and dental expenses that
 exceeds 7.5 percent of the amount of your federal adjusted gross income on Form
 OR-40, line 7, or Form OR-40-N or OR-40-P, line 29F.
@@ -459,6 +512,11 @@ other states, and taxes on real or personal property located in the United
 States that are based on the property's value (known as ad valorem tax).
 Income-based taxes paid to a local government within Oregon, such as Portland's
 Arts Tax, may be deducted because they're not paid to the State of Oregon.
+
+Limitation on income and property tax 
+The total amount of income and property taxes you can deduct can't be more than
+$40,000 ($20,000 if married filing separately). The same limit that applies to
+your federal deduction also applies to your Oregon deduction.
 
 Enter the total of the state and local income taxes you paid to a local
 government or to a state other than Oregon, reduced as explained above for any
@@ -491,7 +549,6 @@ already included on lines 5, 6, or 7.
 
 [SchA_L10_Type] List the type and amount of other deductible taxes that aren't
 already included on lines 5, 6, or 7.
-
 
 [SchA_L12] Enter the home mortgage interest and points reported to you on
 federal Form 1098, Mortgage Interest Statement.
@@ -571,9 +628,8 @@ subtractions, and the Special Oregon medical subtraction worksheet.
 [SchASC_C1:] Tax recaptures increase your tax for the year when you must forfeit
 a prior credit. For information about forfeiting a credit, see "Additions to
 tax" in Publication OR-17.  For recaptures with a code between 950 and 999,
-enter the code and the amount of tax you're adding. Use each code only once. See
-Schedule OR-ASC instructions for common subtractions, and the Special Oregon
-medical subtraction worksheet. See publication OR-CODES for the list of codes.
+enter the code and the amount of tax you're adding. Use each code only once.
+See publication OR-CODES for the list of codes.
 
 [SchASC_D1:] Standard credits are nonrefundable credits that can only be claimed
 on the current year's tax return. Credit amounts that aren't used in the current

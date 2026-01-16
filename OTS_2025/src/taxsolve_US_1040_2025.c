@@ -1878,6 +1878,15 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ) );
  check_form_version( word, "Title:  US Federal 1040 Tax Form - 2025" );
 
+ #if (1)
+   add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
+  #ifdef microsoft
+   system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
+  #else
+   system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\" &" );
+  #endif
+#endif
+
  get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
  if (strncasecmp(word,"Single",4)==0) status = SINGLE; else

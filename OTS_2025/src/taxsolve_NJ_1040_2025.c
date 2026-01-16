@@ -40,8 +40,8 @@ double COJ[MAX_LINES], S[MAX_LINES], F[MAX_LINES];
 #define WIDOW		        5
 
 
-double TaxRateFormula( double x, int status )				/* Checked/Not updated for 2025. */
-{
+double TaxRateFormula( double x, int status )				/* Checked/Updated for 2025. */
+{  /* From instruction booklet page 65. */
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))	/* Single, Married/sep */
   {
    if (x < 20000.0)   return x * 0.014;               else
@@ -152,16 +152,6 @@ int main( int argc, char *argv[] )
 
  /* Intercept any command-line arguments. */
  printf("NJ 1040 2025 - v%3.1f\n", thisversion);
-
- #if (1)
-   add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
-  #ifdef microsoft
-   system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
-  #else
-   system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\" &" );
-  #endif
-#endif
-
  i = 1;  k=1;
  while (i < argc)
  {
@@ -296,6 +286,12 @@ int main( int argc, char *argv[] )
  L[9] = 6000.0 * L[9];
  shownum(9); 
 
+ GetYesNoSL( "DigitalAssets", &answer );   		/* Exemptions, Blind/disabled. */
+ if (answer)
+  fprintf(outfile,"Check_DA_y = X\n");
+ else
+  fprintf(outfile,"Check_DA_n = X\n");
+
  get_parameter( infile, 's', word, "L10" );	/* Exemptions, children. */
  get_param_single_line( infile, 'i', &j, "L10");
  fprintf(outfile, "L10a = %d\n", j );
@@ -310,7 +306,7 @@ int main( int argc, char *argv[] )
 
  get_parameter( infile, 's', word, "L12" );	/* Exemptions, college kids. */
  get_param_single_line( infile, 'i', &j, "L12"); 
- fprintf(outfile, "L11a = %d\n", j );
+ fprintf(outfile, "L12a = %d\n", j );
  L[12] = 1000.0 * j;
  shownum(12); 
 

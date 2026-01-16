@@ -1196,35 +1196,6 @@ int ImportLine( FILE *infile, char *line, int line_buffer_length )
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void ConvertSlashes( char *fname )
 { /* Convert slashes in file name based on machine type. */
   char *ptr;
@@ -1395,7 +1366,6 @@ void ImportPrintStatus(FILE *outfile, char *msg, IMPORT_STATUS stat) {
 #undef IMPORT_DEBUG
 
 IMPORT_STATUS ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_imp_def, int num_imp_defs)
-
 {
     char iline[IMPORT_LINE_BUFFER_LEN];
     char delimit[] = " \t=;";
@@ -1518,9 +1488,11 @@ IMPORT_STATUS ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_i
 #ifdef IMPORT_DEBUG
                         ImportPrintToken(ret_stat.line_num, "========== String", iline, &lt);
 #endif
-                        // Since 'label' is not a null terminated string, use
+                        // Since the token is not necessarily a null terminated string, use
                         // ImportTokenDup instead of strdup, to create a null terminated
-                        // copy of the current token.
+                        // copy of the current token. strdup could also be used, since the string
+                        // is the rest of the line, and the line has a null terminator,
+                        // but that is less robust than this solution.
                         char *str_result = ImportTokenDup(iline + lt.start, lt.len);
                         if (str_result == NULL) {
                             fclose( infile );

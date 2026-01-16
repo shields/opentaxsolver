@@ -30,15 +30,18 @@
 #include "taxsolve_routines.c"
 
 float thisversion=23.00;
-
+int status=0;
+double YourAgeDed=0.0, SpouseAgeDed=0.0;
+struct date_record yourDOB, spouseDOB, DL;
+ 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
 #define MARRIED_FILING_SEPARAT  3
 #define HEAD_OF_HOUSEHOLD       4
 #define WIDOW		        5
 
-double TaxRateFunction( double income, int status )
-{
+double TaxRateFunction( double income, int status )			/* Updated for 2025. */
+{ /* From Tax Rate Schedule, instructions page 35. */
  if (income < 3000.0) return income * 0.02; else
  if (income < 5000.0) return  60.0 + (income - 3000.0) * 0.03; else
  if (income < 17000.0) return 120.0 + (income - 5000.0) * 0.05; else
@@ -59,7 +62,45 @@ void Report_bracket_info( double income, double tx, int status )
 }
 
 
-struct date_record yourDOB, spouseDOB, DL;
+void Age65_and_Older_Deduction_Worksheet( double FAGI, double L5 )	   /* Updated for 2025. */
+{
+ double AFAGI=0.0, conformity_adj=0.0, threshold, reduction;
+ // int j;
+ // double ws[100];
+ // for (j=0; j<100; j++)
+ //  ws[j] = 0.0;
+
+ AFAGI = FAGI + L5 + conformity_adj;
+ if ((status == MARRIED_FILING_JOINTLY) || (status == MARRIED_FILING_SEPARAT))
+  threshold = 75000.0;
+ else
+  threshold = 50000.0;
+
+ if ((yourDOB.year < 1939) || ((yourDOB.year == 1939) && (yourDOB.day == 1)))
+  YourAgeDed = 12000.0;
+ else
+ if ((yourDOB.year < 1961) || ((yourDOB.year == 1961) && (yourDOB.day == 1)))
+  {
+   reduction = largerof( 0.0, AFAGI - threshold );
+   YourAgeDed = largerof( 12000.0 - reduction, 0.0 );
+  }
+ else
+  YourAgeDed = 0.0;
+
+ if (status != MARRIED_FILING_JOINTLY)
+  return;
+
+ if ((spouseDOB.year < 1939) || ((spouseDOB.year == 1939) && (spouseDOB.day == 1)))
+  SpouseAgeDed = 12000.0;
+ else
+ if ((spouseDOB.year < 1961) || ((spouseDOB.year == 1961) && (spouseDOB.day == 1)))
+  {
+   reduction = largerof( 0.0, AFAGI - threshold );
+   SpouseAgeDed = largerof( 12000.0 - reduction, 0.0 );
+  }
+ else
+  SpouseAgeDed = 0.0;
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -68,8 +109,8 @@ int main( int argc, char *argv[] )
 {
  int i, j, k;
  char word[1000], outfname[4000], *lnameptr, lastname[1024], *socsec, *datestr, *twrd, *infname=0;
- int status=0, exemptionsA=0, exemptionsB=0, youBlind=0, spouseBlind=0;
  time_t now;
+ int exemptionsA=0, exemptionsB=0, youBlind=0, spouseBlind=0;
  double L19b=0.0, std_ded=0.0, min2file, STA_VAGI=0.0;
 
  /* Intercept any command-line arguments. */
@@ -217,7 +258,7 @@ int main( int argc, char *argv[] )
  fprintf(outfile,"NExemptionsA = %d\n", exemptionsA );
  fprintf(outfile,"ExemptionsA = %d\n", 930 * exemptionsA );
 
- if (yourDOB.year < 1960)			/* Not updated for 2025. */
+ if ((yourDOB.year < 1961) || ((yourDOB.year == 1961) && (yourDOB.day == 1)))	   /* Updated for 2025. */
   {
    fprintf(outfile,"YouOver65 = 1\n" );		/* You are 65 or over. */
    exemptionsB = 1;
@@ -239,7 +280,7 @@ int main( int argc, char *argv[] )
  get_param_single_line( infile, 'b', &spouseBlind, "SpouseBlind"); 
  if (status == MARRIED_FILING_JOINTLY)
   {
-   if (spouseDOB.year < 1960)			/* Not updated for 2025. */
+   if ((spouseDOB.year < 1961) || ((spouseDOB.year == 1961) && (spouseDOB.day == 1)))	/* Updated for 2025. */
     {
      fprintf(outfile,"SpouseOver65 = 1\n" );	/* Spouse is 65 or over. */
      exemptionsB++;
@@ -271,9 +312,14 @@ int main( int argc, char *argv[] )
  L[3] = L[1] + L[2];
  showline(3);
 
- GetLineF( "L4", &L[4] );	/* Deduction for age on Jan 1, 2025. */
+ GetLine( "L5", &L[5] );	/* Social Security Act, Tier 1 Railroad Retirement Act benef. */
 
- GetLineF( "L5", &L[5] );	/* Social Security Act, Tier 1 Railroad Retirement Act benef. */
+ Age65_and_Older_Deduction_Worksheet( L[1], L[5] );
+ showline_wlabelnz( "YourAgeDed", YourAgeDed );
+ showline_wlabelnz( "SpouseAgeDed", SpouseAgeDed );
+ L[4] = YourAgeDed + SpouseAgeDed;
+ showline(4);
+ showline(5);
 
  GetLineF( "L6", &L[6] );	/* State Income Tax refund or overpayment credit */
 
@@ -288,10 +334,10 @@ int main( int argc, char *argv[] )
  GetLineF( "L10", &L[10] );	/* Deductions - Std or Itemized minus income taxes */
 
  switch (status)
-  {							/* Not updated for 2025. */
-   case SINGLE:  		  std_ded = 8500.0;  min2file = 11950.0;  break;
-   case MARRIED_FILING_JOINTLY:  std_ded = 17000.0;  min2file = 23900.0;  break;
-   case MARRIED_FILING_SEPARAT:  std_ded = 8500.0;  min2file = 11950.0;  break;
+  {							/* Updated for 2025. */
+   case SINGLE:  		  std_ded = 8750.0;  min2file = 11950.0;  break;
+   case MARRIED_FILING_JOINTLY:  std_ded = 17500.0;  min2file = 23900.0;  break;
+   case MARRIED_FILING_SEPARAT:  std_ded = 8750.0;  min2file = 11950.0;  break;
    default:  printf("Unexpected status.\n");
 	     fprintf(outfile,"Unexpected status.\n");
 	     exit(1);  
@@ -392,6 +438,15 @@ int main( int argc, char *argv[] )
    L[36] = L[28] - L[34];
    showline_wmsg( 36, "YOUR REFUND" );
   }
+
+ GetTextLineF( "BankRoutingNumber:" );
+ GetTextLineF( "BankAccountNumber:" );
+ GetYesNoSL( "CheckingAccnt:", &j );
+ if (j)
+  fprintf(outfile,"Check_CheckingAccnt = X\n");
+ GetYesNoSL( "SavingsAccnt:", &j );
+ if (j)
+  fprintf(outfile,"Check_SavingsAccnt = X\n");
 
  if (L[9] < min2file)
   {

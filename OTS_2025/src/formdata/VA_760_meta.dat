@@ -7,6 +7,7 @@ FontSz 10
 no_zero_entries
 no_commas
 round_to_whole_numbers
+solid_status_check 12 7 8 .
 
  Your1stName:	 80 149 0
  YourMI:	273 149 0
@@ -14,6 +15,7 @@ round_to_whole_numbers
  YourSocSec#: 	560 156 0 14.6
  Y1st4:		786 156 0 14.6
  YourDOB:	560 246 0 14.6
+ LocalityCode:	808 273 0 14.6
  YourDrivLic:	490 368 0 14.6
  YourDLdate: 	705 368 0 14.6
 
@@ -40,14 +42,14 @@ round_to_whole_numbers
  SpouseOver65	595 533
  YouBlind	645 533
  SpouseBlind	689 533
- NExemptionsB	732 533
- ExemptionsB	820 533
+ NExemptionsB	732 534
+ ExemptionsB	820 534
 
  L1	655 586 9 14.5
  L2	655 624 9 14.5
  L3	655 659 9 14.5
- L4	655 703 9 14.5
- YourAgeDed 143 710 5 14.5
+ L4	655 704 9 14.5
+ YourAgeDed   148 710 5 14.5
  SpouseAgeDed 400 710 5 14.5
  L5	655 740 9 14.5
  L6     655 776 9 14.5
@@ -93,3 +95,7 @@ CoordReference:  40, 750  61, 64
  L35    643 866	9 14.5
  L36    643 904	9 14.5
 
+ BankRoutingNumber:	260 975 9 14.5
+ BankAccountNumber:	510 975 9 13
+ Check_CheckingAccnt 	721 948 0
+ Check_SavingsAccnt	816 948 0

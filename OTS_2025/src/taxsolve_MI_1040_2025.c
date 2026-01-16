@@ -217,6 +217,7 @@ printf("L9c = %d\n", L9c );
  L[9] = L9aa + L9bb + L9cc + L9dd + L9ee;
  L[12] = L[10] + L[11];
  L[14] = NotLessThanZero( L[12] - L[13] );
+ L[15] = largerof( L[15], L[9] );		// Allow either Sched-NR Line-19, or 9f (above). 
  L[16] = NotLessThanZero( L[14] - L[15] );
  L[17] = flat_tax_rate * L[16];
  L[20] = NotLessThanZero( L[17] - L[18] - L[19] );
