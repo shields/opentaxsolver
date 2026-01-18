@@ -1178,13 +1178,14 @@ int mouse_clicked( GtkWidget *widget, GdkEventButton *event, gpointer data )
    warnwin = 0;
   }
  xpos = (int)(event->x);
- if (((xpos > 100) && (xpos < 245)) || (xpos > 710))
+ if (xpos > 120)		// (((xpos > 100) && (xpos < 245)) || (xpos > 710))
   return 1;	/* Too close to buttons or text-forms of a tax-line, so return from here. */
 
  /* Find the closest tax-line to where clicked. */
  // printf("Mouse button %d Pressed at: %d, %d, %g\n", (int)(event->button), (int)(event->x), (int)(event->y), (double)(event->time) );
  adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)scrolledpane );
  vpos = (int)(event->y + gtk_adjustment_get_value( adj ));
+ vpos = vpos - 40;   /* Remove vertical offset. */
  txline = taxlines_hd;
  while (txline!=0)
   {
@@ -1195,9 +1196,9 @@ int mouse_clicked( GtkWidget *widget, GdkEventButton *event, gpointer data )
     } 
    txline = txline->nxt;
   }
+
  if ((closest_line != 0) && (vpos - closest_line->vpos > -30))
   { /* Pop up instruction-text window, if clicked near enough, and/or below, a tax-line with instructions. */
-   // printf("Picked '%s', dist = %d\n", closest_line->linename, mindist );
    if (closest_line->instructions)
     GeneralPopup( closest_line->instructions->instr_label, closest_line->instructions->instr_text, 0 );
   }
@@ -4390,7 +4391,7 @@ set_label_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_CA_540 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "CA State 540", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_NC_D400 );
  make_radio_button( mpanel, txprogstog, x, y, "NC State DC400", slcttxprog, formid );
@@ -4401,22 +4402,22 @@ set_label_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_AZ_140 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "AZ State 140", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_MI_1040 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MI State 1040", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  fronty2 = y + dy;
 
  y = y1;
  x = winwidth/2 + 40;
  formid = setform( form_OH_IT1040 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "OH State IT1040", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_PA_40 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "PA State 40", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_VA_760 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "VA State 760", slcttxprog, formid );
@@ -4424,7 +4425,7 @@ set_label_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_NY_IT201 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "NY State IT201", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
@@ -4487,6 +4488,9 @@ set_label_color( tmpwdg, "#ff0000" );
     do_scroll();	/* Re-establish the page scrolling position, such as after a new line is added. */
 
    if (schedule_PDF_conversion) do_pdf_conversion();
+
+   if (init_gtk3_scrolled_win)
+    adjust_gtk3_scrolled_win();
   }
  return 0;
 }

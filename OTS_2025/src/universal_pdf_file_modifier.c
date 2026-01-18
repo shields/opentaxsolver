@@ -3,7 +3,7 @@
   background image data files, with arbitrary text overlays.
 
  Provided under LGPL license (v2) by the Behemoth-Software Co..
- Copyright (C)  2024.
+ Copyright (C)  2026.
 
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Library General Public
@@ -40,7 +40,7 @@
 #define MaxPages 400
 #define MAXLINE 2048
 
-float version=1.15;
+float version=1.16;
 int verbose=0;
 int testmode=0;
 int no_zero_entries=0;
@@ -382,6 +382,7 @@ void read_replacement_text( char *fname )
  while (!feof(infile))
   { /*not_eof*/
    idinfo = 0;
+   word2[0] = '\0';
    next_word( line, word1, " \t=\n\r" );
    if (strcmp( word1, "PDFpage:" ) == 0)
     {
@@ -461,6 +462,7 @@ void read_replacement_text( char *fname )
      else
       next_word( line, word2, " \t=\n\r" );
     }
+
    if (word2[0] != '\0')
     {
      if (strcmp( word1, "Status" ) == 0)
@@ -822,7 +824,9 @@ void check_color( struct metadata_rec *item )
 
 /* ------------------------------------------------------------ */
 
-char streambuf[40000];
+#define MAXSTRMBF 500000
+char streambuf[MAXSTRMBF];
+int maxstrmbf=0;
 
 
 void comma_format( char *word )    /* For decimal numeric values, add commas at thousandth positions. */
@@ -883,7 +887,17 @@ void spew_sumline( FILE *outfile, char *line, int *cnt )
 
 void append_buf( char *streambuf, int fontsz, int xpos, int ypos, char *txt )
 {
+ int strmbuflen;
  char tline[2048];
+ strmbuflen = strlen( streambuf );
+ if (strmbuflen > maxstrmbf)
+  maxstrmbf = strmbuflen;
+ // printf("streambuf len = %d\n", strlen( streambuf ) );
+ if (strmbuflen > MAXSTRMBF-2048)
+  {
+   printf("Error: Streambuffer too long.\n");
+   exit(1);
+  }
  if (txtcolor)
   {
    sprintf( tline, "BT %g %g %g rg\n/F1 ", txtred, txtgrn, txtblu );
@@ -1370,6 +1384,7 @@ int main( int argc, char *argv[] )
    k++;
   } /*k-loop*/
 
+ printf("	Max strmbuflen = %d\n", maxstrmbf );
  printf(" Wrote: '%s'\n", outfname );
  return 0;
 }

@@ -24,7 +24,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA             	*/
 /* 02111-1307 USA.                                                      	*/
 /*                                                                      	*/
-/* Version 3.0 - 2-12-2023							*/
+/* Version 3.1 - 1-18-2026							*/
 /********************************************************************************/
 #include "gtk_utils3.h"
 GtkWidget *outer_window=0;
@@ -1025,11 +1025,21 @@ GtkWidget *make_window_wkill( int width, int height, const char *title, GtkWidge
 }
 
 
+GtkWidget *gtk3_scrolled_win;
+int init_gtk3_scrolled_win=0;
+void adjust_gtk3_scrolled_win()
+{
+ GtkAdjustment *adj;
+ adj = gtk_scrolled_window_get_vadjustment( (GtkScrolledWindow *)gtk3_scrolled_win );
+ gtk_adjustment_set_value( adj, 0 );
+ init_gtk3_scrolled_win = 0;
+}
+
 	/* Like above, but set horz/vert-scroll to 1 or 0, to enable or disable respective scroll. */
 GtkWidget *make_scrolled_window_wkill( int width, int height, const char *title, GtkWidget *(*winptr), 
 				      int horzscroll, int vertscroll, int callback(GtkWidget *, void *) )
 {	/* You must call "show_wind(winptr)" after creating all widgets under this window!! */
- GtkWidget *winframe, *swin;
+ GtkWidget *winframe, *mpanel2;
 
  if (*winptr != 0) gtk_widget_destroy( *winptr );
  *winptr = gtk_window_new( GTK_WINDOW_TOPLEVEL );
@@ -1043,23 +1053,17 @@ GtkWidget *make_scrolled_window_wkill( int width, int height, const char *title,
   g_signal_connect( *winptr, "delete_event", G_CALLBACK( killed_any_window ), winptr );
  gtk_window_set_resizable( GTK_WINDOW( *winptr ), 0 );
  winframe = gtk_fixed_new();
- swin = gtk_scrolled_window_new( 0, 0 );
- if (horzscroll) horzscroll = GTK_POLICY_ALWAYS; else horzscroll = GTK_POLICY_NEVER;
- if (vertscroll) vertscroll = GTK_POLICY_ALWAYS; else vertscroll = GTK_POLICY_NEVER;
- gtk_scrolled_window_set_policy( (GtkScrolledWindow *)(swin), (GtkPolicyType)horzscroll, (GtkPolicyType)vertscroll );
- gtk_container_add( GTK_CONTAINER( winframe ), swin );
  gtk_container_add( GTK_CONTAINER( *winptr ), winframe );
-
-#if (0)
- swin = gtk_scrolled_window_new( 0, 0 );
+ mpanel2 = gtk_fixed_new();
+ gtk3_scrolled_win = gtk_scrolled_window_new( 0, 0 );
  if (horzscroll) horzscroll = GTK_POLICY_ALWAYS; else horzscroll = GTK_POLICY_NEVER;
  if (vertscroll) vertscroll = GTK_POLICY_ALWAYS; else vertscroll = GTK_POLICY_NEVER;
- gtk_scrolled_window_set_policy( (GtkScrolledWindow *)swin, (GtkPolicyType)horzscroll, (GtkPolicyType)vertscroll );
- gtk_scrolled_window_add_with_viewport( (GtkScrolledWindow *)swin, winframe );
- gtk_container_add( GTK_CONTAINER( *winptr ), swin );
-#endif
-
- return winframe;
+ gtk_scrolled_window_set_policy( (GtkScrolledWindow *)(gtk3_scrolled_win), (GtkPolicyType)horzscroll, (GtkPolicyType)vertscroll );
+ gtk_container_add( GTK_CONTAINER( gtk3_scrolled_win ), mpanel2 );
+ gtk_fixed_put( GTK_FIXED( winframe ), gtk3_scrolled_win, 0, 0 );
+ gtk_widget_set_size_request( gtk3_scrolled_win, width, height );
+ init_gtk3_scrolled_win = 1;
+ return mpanel2; 
 }
 
 

@@ -1,6 +1,6 @@
 /************************************************************************/
 /* TaxSolve_HSA_f8889.c - 						*/
-/* Copyright (C)  2025 - A. Roberts					*/
+/* Copyright (C)  2026 - A. Roberts					*/
 /* 									*/
 /* Compile:								*/
 /*  cc taxsolve_HSA_f8889.c -o ../bin/taxsolve_HSA_f8889		*/
@@ -113,7 +113,7 @@ int main( int argc, char *argv[] )
  showline( 5 );
 
  GetLine( "L6", &L[6] );
- if (!value_was_detected)
+ if ((!value_was_detected) || (L[6] == 0.0))
   L[6] = L[5];			/* If user did not supply a value for L6, then L6 must be set to L5. */
  showline( 6 );
 
