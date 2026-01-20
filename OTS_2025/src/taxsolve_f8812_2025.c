@@ -19,7 +19,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=2.00;
+float thisversion=3.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -134,21 +134,21 @@ int main( int argc, char *argv[] )
  printf("L4 = %d\n", (int)L[4] );
  fprintf(outfile,"L4 = %d\n", (int)L[4] );
 
- L[5] = L[4] * 2000.0;		// Checked for tax-year 2025.
+ L[5] = L[4] * 2200.0;		// Updated for tax-year 2025.
  showline( 5 );
 
  GetLine( "L6", &L[6] );	// Number of other dependents, including any qualifying children
  printf("L6 = %d\n", (int)L[6] );
  fprintf(outfile,"L6 = %d\n", (int)L[6] );
 
- L[7] = L[6] * 500.0;		// Checked for tax-year 2025.
+ L[7] = L[6] * 500.0;		// Checked/Updated for tax-year 2025.
  showline( 7 );
 
  L[8] = L[5] + L[7];
  showline( 8 );
 
  switch (status)
-  {				// Checked for tax-year 2025.
+  {				// Checked/Updated for tax-year 2025.
    case MARRIED_FILING_JOINTLY: 	L[9] = 400000.0;  break;
    default:  				L[9] = 200000.0;
   }
@@ -161,7 +161,7 @@ int main( int argc, char *argv[] )
    L[10] = (double)((int)((L[10]-0.01) / 1000.0) + 1) * 1000.0;
  showline( 10 );
 
- L[11] = L[10] * 0.05;		// Checked for tax-year 2025.
+ L[11] = L[10] * 0.05;		// Checked/Updated for tax-year 2025.
  showline( 11 );
 
  GetLine( "L13", &L[13] );	// Amount from Credit Limit Worksheet A 
@@ -227,15 +227,18 @@ int main( int argc, char *argv[] )
         { /*E*/
 	 L[19] = L18a - 2500.0;		// Checked/updated for tax-year 2025.
 	 showline( 19 );
+	 fprintf(outfile,"CkL19y = X\n");
 	 L[20] = L[19] * 0.15;
 	 showline( 20 );
 
 	 if (L16b <= 5100.0)		// Checked/updated for tax-year 2025.
 	  { /*F*/
+	   fprintf(outfile,"CkL20y = X\n");
 	   L[27] = SmallerOf( L[17], L[20] );
 	  } /*F*/
 	 else
 	  { /*G*/
+	    fprintf(outfile,"CkL20n = X\n");
 	   if (L[20] >= L[17])
 	    { /*H*/
 	      L[27] = L[17];
@@ -258,6 +261,7 @@ int main( int argc, char *argv[] )
        else
 	{
 	 fprintf(outfile,"Note that L18a <= 2,500/\n");
+	 fprintf(outfile,"CkL19n = X\n");
 	 L[20] = 0.0;
 	 showline( 20 );
 	}

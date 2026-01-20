@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=5.01;
+float thisversion=6.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -47,12 +47,12 @@ int BoxA = 0, BoxB = 0, BoxC = 0, BoxD = 0, BoxE = 0, Num_Days = 0;
 
 /*-----------Tax Routines Copied From taxsolve_US_1040_2025.c----------------*/
 
-			/* Following values taken from 1040-Instructions pg 110. */	/* Not updated for 2025. */
+			/* Following values taken from 1040-Instructions pg 80. */	/* Updated for 2025. */
 double brkpt[4][9]={
-		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 609350.0, 9e19 },  /* Single */
-		{ 0.0,  23200.0,  94300.0, 201050.0, 383900.0, 487450.0, 731201.0, 9e19 },  /* Married, filing jointly. */
-		{ 0.0,  11600.0,  47150.0, 100525.0, 191950.0, 243725.0, 365600.0, 9e19 },  /* Married, filing separate. */
-		{ 0.0,  16550.0,  63100.0, 100500.0, 191150.0, 243700.0, 609350.0, 9e19 },  /* Head of Household. */
+		{ 0.0,  11925.0,  48475.0, 103350.0, 197300.0, 250525.0, 626350.0, 9e19 },  /* Single */
+		{ 0.0,  23850.0,  96950.0, 206700.0, 394600.0, 501050.0, 751600.0, 9e19 },  /* Married, filing jointly. */
+		{ 0.0,  11925.0,  48475.0, 103350.0, 197300.0, 250525.0, 375800.0, 9e19 },  /* Married, filing separate. */
+		{ 0.0,  17000.0,  64850.0, 103350.0, 197300.0, 250500.0, 626350.0, 9e19 },  /* Head of Household. */
 		     };
   double txrt[4][9] ={
 		{ 0.1, 0.12, 0.22, 0.24, 0.32, 0.35, 0.37 },	/* Single */
@@ -180,8 +180,9 @@ int main( int argc, char *argv[] )
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
  check_form_version( word, "Title:  Form 2210 for Tax Year 2025" );
 
- fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
+ // fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
+ // MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2025."
+ // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
 
 
  fprintf(outfile, "%s\n", "==================================================");
@@ -212,7 +213,7 @@ int main( int argc, char *argv[] )
   fprintf(outfile,"Error: Unexpected Entity '%s', assuming 'Individual'.\n", word );
  fprintf(outfile,"Entity = %s (%d)\n", word, entity);
 
-get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
+ get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
  if (strncasecmp(word,"Single",4)==0) status = SINGLE; else
  if (strncasecmp(word,"Married/Joint",13)==0) status = MARRIED_FILING_JOINTLY; else
@@ -393,7 +394,6 @@ else
 		d[3] = d[1] * d[2];
 
 		for(i = 4; i <= 8; i++){
-		
 			a[i] = 0;
 			b[i] = 0;
 			c[i] = 0;

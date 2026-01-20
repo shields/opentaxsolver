@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=2.00;
+float thisversion=3.00;
 
 #include <stdio.h>
 #include <time.h>

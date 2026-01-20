@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=3.00;
+float thisversion=4.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -103,9 +103,10 @@ int main( int argc, char *argv[] )
  /* ----- Accept form data and process the numbers.         ------ */
  /* ----- Place all your form-specific code below here .... ------ */
 
- fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
- fprintf(outfile,"--- NOT YET FULLY UPDATED FOR 2025. ---\n\n");
- add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
+ // fprintf(outfile,"\n--- THIS IS PRELIMINARY USER-CONTRIBUTED FORM ---\n");
+ // fprintf(outfile,"--- NOT YET FULLY UPDATED FOR 2025. ---\n\n");
+ // MarkupPDF( 1, 240, 40, 17, 1.0, 0, 0 ) NotReady "This program is NOT updated for 2025."
+ // add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
 
 
  // Example:
@@ -194,7 +195,7 @@ int main( int argc, char *argv[] )
    showline( 15 );
    L[16] = SmallerOf(L[12], L[15]);
    showline( 16 );
-   L[17] = L[16] * 0.038;
+   L[17] = L[16] * 0.038;			// Updated/checked for tax-year 2025.
    showline_wmsg( 17, "Include on your tax return see instructions)" );
  }
  else{

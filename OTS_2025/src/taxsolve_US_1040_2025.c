@@ -219,9 +219,9 @@ void capgains_qualdividends_worksheets( int status )			/* Updated for 2025. */
 /* simply add them to this section.  The balance of the routine will be helpful in either case. */
 /* --- Anyone indicated to fill-out Form 6251 should review the 6251 instruction booklet. ---	*/ 
 /*----------------------------------------------------------------------------------------------*/
-double form6251_AlternativeMinimumTax( int itemized )						/* Not updated for 2025. */
+double form6251_AlternativeMinimumTax( int itemized )						/* Updated for 2025. */
 {
- double thresholdA=0.0, thresholdB=0.0, thresholdC=0.0, amtexmption=0.0;
+ double thresholdA=0.0, thresholdB=0.0, thresholdC=0.0, amt_exmption=0.0;
  double offsetA=0.0;
  double sched1a_l38=0.0;
  double amtws1a=0.0, amtws2a=0.0, amtws2b=0.0, amtws2e=0.0;
@@ -266,60 +266,60 @@ double form6251_AlternativeMinimumTax( int itemized )						/* Not updated for 20
  for (j = 1; j <= 3; j++)
   amtws[4] = amtws[4] + amtws[j];
 
- if ((status == MARRIED_FILING_SEPARAT) && (amtws[4] > 875950.0))
+ if ((status == MARRIED_FILING_SEPARAT) && (amtws[4] > 900350.0))
   {
-   if (amtws[4] > 1084150.0)
-    amtws[4] = amtws[4] + 63250.0;
+   if (amtws[4] > 1174350.0)
+    amtws[4] = amtws[4] + 68500.0;
    else
-    amtws[4] = amtws[4] + 0.25 * (amtws[4] - 831150.0);
+    amtws[4] = amtws[4] + 0.25 * (amtws[4] - 900350.0);
   }
 
  /* Part II */
  switch (status)
   {
      case SINGLE: case HEAD_OF_HOUSEHOLD:
-	thresholdA = 626350.0;
-	thresholdB = 952150.0;
-	thresholdC = 232600;
-	offsetA = 4652.0;
-	amtexmption = 88100.0;
+	thresholdA = 626350.0;		/* Phase-out. */
+	thresholdB = 978750.0;
+	thresholdC = 239100;
+	offsetA = 4782.0;
+	amt_exmption = 88100.0;
 	break;
      case MARRIED_FILING_JOINTLY: case WIDOW: 
 	thresholdA = 1252700.0;
-	thresholdB = 1751900.0;
-	thresholdC = 232600.0;
-	offsetA = 4652.0;
-	amtexmption = 137000.0;
+	thresholdB = 1800700.0;
+	thresholdC = 239100.0;
+	offsetA = 4782.0;
+	amt_exmption = 137000.0;
 	break;
      case MARRIED_FILING_SEPARAT: 
 	thresholdA = 626350.0;
-	thresholdB = 875950.0;
-	thresholdC = 116300.0;
-	offsetA = 2326.0;
-        amtexmption = 68500.0;
+	thresholdB = 900350.0;
+	thresholdC = 119550.0;
+	offsetA = 2391.0;
+        amt_exmption = 68500.0;
 	break;
      default:  printf("Status %d not handled.\n", status);  exit(1); 
   }
 
  if (amtws[4] > thresholdA)
-  { /* Exemption Worksheet - page 9. */
+  { /* Exemption Worksheet for line-5 - page 9. */
     double ews[20];
    if (amtws[4] >= thresholdB)
-    amtexmption = 0.0;
+    amt_exmption = 0.0;
    else
     {
-     ews[1] = amtexmption;
+     ews[1] = amt_exmption;
      ews[2] = amtws[4];
      ews[3] = thresholdA;
      ews[4] = NotLessThanZero( ews[2] - ews[3] );
      ews[5] = 0.25 * ews[4];
      ews[6] = NotLessThanZero( ews[1] - ews[5] );
-     amtexmption = ews[6];
+     amt_exmption = ews[6];
      /* Does not handle "Certain Children Under Age 24". */
     }
   }
 
- amtws[5] = amtexmption;
+ amtws[5] = amt_exmption;
  amtws[6] = NotLessThanZero( amtws[4] - amtws[5] );
  if (amtws[6] > 0.0)
   { /* AMT Lines 7 through 9, */
@@ -1878,7 +1878,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ) );
  check_form_version( word, "Title:  US Federal 1040 Tax Form - 2025" );
 
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
   #ifdef microsoft
    system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );

@@ -1,7 +1,7 @@
 /***********************************************************************
  TaxSolve_AZ_140_2025.c - Arizina State Tax Program.
    Project:  http://opentaxsolver.sourceforge.com/
-   Date:     1-2-2025
+   Date:     1-20-2026
 
    GNU Public License - GPL:
    This program is free software; you can redistribute it and/or
@@ -22,7 +22,7 @@
    Original Author:  E. Strnod 9/12/2025
  ***********************************************************************/
 
-float thisversion = 3.01;
+float thisversion = 4.00;
 
 #include <stdio.h>
 #include <time.h>
@@ -47,12 +47,12 @@ float thisversion = 3.01;
 
 double getAZStdDedAmt() 
 {
-	double azStdDedAmt[5][1]={				/* Not updated for 2025. */
+	double azStdDedAmt[5][1]={				/* Updated for 2025. */
 			{0.0},
-			{ 14600.0 },  /* Single */
-			{ 29200.0 },  /* Married, filing jointly. */
-			{ 14600.0 },  /* Married, filing separate. */
-			{ 21900.0 }   /* Head of Household. */
+			{ 15750.0 },  /* Single */
+			{ 31500.0 },  /* Married, filing jointly. */
+			{ 15750.0 },  /* Married, filing separate. */
+			{ 23625.0 }   /* Head of Household. */
 			     };
 	return azStdDedAmt[status][0];
 }
@@ -60,7 +60,7 @@ double getAZStdDedAmt()
 double getAZTaxAmt( double azTaxableIncome ) 
 {
 	double taxAmt = 0.0;
-	taxAmt = 0.025 * azTaxableIncome;			/* Not updated for 2025. */
+	taxAmt = 0.025 * azTaxableIncome;			/* Updated for 2025. */
 	return taxAmt;
 }
 
@@ -86,7 +86,7 @@ int main( int argc, char *argv[] )
 
 	printf("Arizona Form 140, 2024 - v%3.2f\n", thisversion);
 
-	#if (1)
+	#if (0)
 		add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
 		#ifdef microsoft
 		 system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
@@ -335,7 +335,7 @@ int main( int argc, char *argv[] )
 	GetLineF("L22", &L[22]);
 	GetLineF("L23", &L[23]);
 
-	L[24] = L[23] * 0.25;					/* Not updated for 2025. */
+	L[24] = L[23] * 0.25;					/* Updated for 2025. */
 	showline(24);
 
 	GetLineF("L25", &L[25]);
@@ -495,8 +495,8 @@ int main( int argc, char *argv[] )
 	}
 
 
-	// multiply 6C by 33% for 7C and place result in L44
-	L[44] = SD6C * 0.33;							/* Not updated for 2025. */
+	// multiply 6C by 34% for 7C and place result in L44
+	L[44] = SD6C * 0.34;							/* Updated for 2025. */
 	showline(44);
 
 	// subtract L43 and L44 from L42 and place greater of 0 or result in L45 (taxable income)

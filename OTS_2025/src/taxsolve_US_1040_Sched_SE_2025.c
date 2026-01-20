@@ -106,7 +106,7 @@ int main( int argc, char *argv[] )
  GetTextLineF( "YourName:" );
  GetTextLineF( "YourSocSec#:" );
 
-											/* Not updated for 2025. */
+											/* Updated for 2025. */
 								/* -- Uncomment and implement these lines for 2025. -- */
  // GetYesNoSL( "CkMinister:", &CkMinister );	/* Check if you're a minister/religeous practioner w/self-employment. */
  if (CkMinister)
@@ -116,7 +116,7 @@ int main( int argc, char *argv[] )
 
  GetLine( "L2", &L[2] );	/* Net Profit/Loss, Sched-C line-31. */	
  GetLine( "L5a", &L5a );	/* Church employee income from Form W-2 */	
- L[7] = 168600.0;           	/* Constant value for tax year 2025 */			/* Not updated for 2025. */
+ L[7] = 176100.0;           	/* Constant value for tax year 2025 */			/* Updated for 2025. */
  GetLine( "L8a", &L8a );	/* Wages & Tips */
  GetLine( "L8b", &L8b );	/* Unreported tips from Form 4137, line 10 */
  GetLine( "L8c", &L8c );	/* Wages from Form 8919, line 10 */
@@ -126,7 +126,7 @@ int main( int argc, char *argv[] )
  L[3] = L1a + L1b + L[2];
  showline(3);
  if (L[3] > 0.0)
-  L4a = L[3] * 0.9235;									/* Not updated for 2025. */
+  L4a = L[3] * 0.9235;									/* Updated for 2025. */
  else
   L4a = L[3];
  showline_wlabel( "L4a", L4a );
@@ -147,19 +147,26 @@ int main( int argc, char *argv[] )
     showline_wlabel( "L4c", L4c );
     showline_wlabel( "L5a", L5a );
     L5b = NotLessThanZero( L5a * 0.9235 );
+    if (L5b < 100.0)
+     L5b = 0.0;
     showline_wlabel( "L5b", L5b );
     L[6] = L4c + L5b;
     showline(6);
     showline_wlabel("L8a", L8a);
-    showline_wlabel("L8b", L8b);
-    showline_wlabel("L8c", L8c);
-    L8d = L8a + L8b + L8c;
-    showline_wlabel("L8d", L8d);
-    L[9] = NotLessThanZero( L[7] - L8d );
-    showline(9);
-    L[10] = 0.124 * SmallerOf( L[6], L[9] );
-    showline(10);
-    L[11] = L[6] * 0.029;									/* Not updated for 2025. */
+
+    if (L8a <= L[7])
+     { /*Lines8b_through_10*/
+       showline_wlabel("L8b", L8b);
+       showline_wlabel("L8c", L8c);
+       L8d = L8a + L8b + L8c;
+       showline_wlabel("L8d", L8d);
+       L[9] = NotLessThanZero( L[7] - L8d );
+       showline(9);
+       L[10] = 0.124 * SmallerOf( L[6], L[9] );
+       showline(10);
+     } /*Lines8b_through_10*/
+
+    L[11] = L[6] * 0.029;									/* Updated for 2025. */
     showline(11);
     L[12] = L[10] + L[11];
     showline_wmsg( 12, "Also enter this number on Schedule-2, line 4." );
