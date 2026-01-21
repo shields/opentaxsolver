@@ -47,44 +47,44 @@ float thisversion=6.00;
 /* 2025 tax rates are used in California for calculating estimated taxes */
 
 double TaxRateFormula( double income, int status )
-{									/* Not updated for 2025. */
+{									/* Updated for 2025. */
  double tax;
  if ((status==SINGLE) || (status==MARRIED_FILING_SEPARAT))
   {
-   if (income <  10756.00)  tax =             0.01 * income;                else
-   if (income <  25499.00)  tax =   107.56 +  0.02 * (income -  10756.00);  else
-   if (income <  40245.00)  tax =   402.42 +  0.04 * (income -  25499.00);  else
-   if (income <  55866.00)  tax =   992.26 +  0.06 * (income -  40245.00);  else
-   if (income <  70606.00)  tax =  1929.52 +  0.08 * (income -  55866.00);  else
-   if (income < 360659.00)  tax =  3108.72 + 0.093 * (income -  70606.00);  else
-   if (income < 432787.00)  tax = 30083.65 + 0.103 * (income - 360659.00);  else
-   if (income < 721314.00)  tax = 37512.83 + 0.113 * (income - 432787.00);
-   else                     tax = 70116.38 + 0.123 * (income - 721314.00);
+   if (income <  11079.00)  tax =             0.01 * income;                else
+   if (income <  26264.00)  tax =   110.79 +  0.02 * (income -  11079.00);  else
+   if (income <  41452.00)  tax =   414.49 +  0.04 * (income -  26264.00);  else
+   if (income <  57542.00)  tax =  1022.01 +  0.06 * (income -  41452.00);  else
+   if (income <  72724.00)  tax =  1987.41 +  0.08 * (income -  57542.00);  else
+   if (income < 371479.00)  tax =  3201.97 + 0.093 * (income -  72724.00);  else
+   if (income < 445771.00)  tax = 30986.19 + 0.103 * (income - 371479.00);  else
+   if (income < 742953.00)  tax = 38638.27 + 0.113 * (income - 445771.00);
+   else                     tax = 72219.84 + 0.123 * (income - 742953.00);
   }
  else
  if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))
   {
-   if (income <   21512.00)  tax =              0.01 * income;                 else
-   if (income <   50998.00)  tax =    215.12 +  0.02 * (income -   21512.00);  else
-   if (income <   80490.00)  tax =    804.84 +  0.04 * (income -   50998.00);  else
-   if (income <  111732.00)  tax =   1984.52 +  0.06 * (income -   80490.00);  else
-   if (income <  141212.00)  tax =   3859.04 +  0.08 * (income -  111732.00);  else
-   if (income <  721318.00)  tax =   6217.44 + 0.093 * (income -  141212.00);  else
-   if (income <  865574.00)  tax =  60167.30 + 0.103 * (income -  721318.00);  else
-   if (income < 1442628.00)  tax =  75025.67 + 0.113 * (income -  865574.00);
-   else                      tax = 140232.77 + 0.123 * (income - 1442628.00);
+   if (income <   22158.00)  tax =              0.01 * income;                 else
+   if (income <   52528.00)  tax =    221.58 +  0.02 * (income -   22158.00);  else
+   if (income <   82904.00)  tax =    828.98 +  0.04 * (income -   52528.00);  else
+   if (income <  115084.00)  tax =   2044.02 +  0.06 * (income -   82904.00);  else
+   if (income <  145448.00)  tax =   3974.82 +  0.08 * (income -  115084.00);  else
+   if (income <  742958.00)  tax =   6403.94 + 0.093 * (income -  145448.00);  else
+   if (income <  891542.00)  tax =  61972.37 + 0.103 * (income -  742958.00);  else
+   if (income < 1485906.00)  tax =  77276.52 + 0.113 * (income -  891542.00);
+   else                      tax = 144439.65 + 0.123 * (income - 1485906.00);
   }
  else
   { /* Head of Household. */
-   if (income <  21527.00)  tax =             0.01 * income;                else
-   if (income <  51000.00)  tax =   215.27 +  0.02 * (income -  21527.00);  else
-   if (income <  65744.00)  tax =   804.73 +  0.04 * (income -  51000.00);  else
-   if (income <  81364.00)  tax =  1394.49 +  0.06 * (income -  65744.00);  else
-   if (income <  96107.00)  tax =  2331.69 +  0.08 * (income -  81364.00);  else
-   if (income < 490493.00)  tax =  3511.13 + 0.093 * (income -  96107.00);  else
-   if (income < 588593.00)  tax = 40189.03 + 0.103 * (income - 490493.00);  else
-   if (income < 980987.00)  tax = 50293.33 + 0.113 * (income - 588593.00); 
-   else                     tax = 94633.85 + 0.123 * (income - 980987.00);
+   if (income <   22173.00)  tax =             0.01 * income;                else
+   if (income <   52530.00)  tax =   221.73 +  0.02 * (income -  22173.00);  else
+   if (income <   67716.00)  tax =   828.87 +  0.04 * (income -  52530.00);  else
+   if (income <   83805.00)  tax =  1436.31 +  0.06 * (income -  67716.00);  else
+   if (income <   98990.00)  tax =  2401.65 +  0.08 * (income -  83805.00);  else
+   if (income <  505208.00)  tax =  3616.45 + 0.093 * (income -  98990.00);  else
+   if (income <  606251.00)  tax = 41394.72 + 0.103 * (income - 505208.00);  else
+   if (income < 1010417.00)  tax = 51802.15 + 0.113 * (income - 606251.00); 
+   else                      tax = 97472.91 + 0.123 * (income - 1010417.00);
   }
  return (int)(tax+0.5);
 }
@@ -111,17 +111,17 @@ double TaxRateFunction( double income, int status )     /* Emulates table lookup
 }
 
 
-double		/* Reoccuring threshold values. */	/* Not updated for 2025. */
-	thresh_sep_single =	237035.0,
-	thresh_mfj =		474075.0,
-	thresh_HoH =		355558.0;
+double		/* Reoccuring threshold values. */	/* Updated for 2025. */
+	thresh_sep_single =	252203.0,
+	thresh_mfj =		504411.0,
+	thresh_HoH =		378310.0;
 
-double		/* Other recurring values */		/* Not updated for 2025 */
-	line_11_multiplier = 0.04799165,
-	line_12_multiplier = 0.00019;
+double		/* Other recurring values */		/* Updated for 2025 */
+	line_11_multiplier = 0.05576573,
+	line_12_multiplier = 0.00022;
 
-double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status){
-
+double L6WS(int column, double IIIL4, double ScdA, double IIIL5, double FAIWSL3, int status)
+{
 	double L[14];
 	int i;
 
@@ -267,7 +267,7 @@ for(i = 0; i <= 13; i++){
  fprintf(outfile,"\n%s,  v%2.2f, %s\n", word, thisversion, ctime( &now ));
  check_form_version( word, "Title:  Form 5805 for Tax Year 2025" );
 
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
    fprintf(outfile, "This program is NOT ready for 2025.\n\n");
    #ifdef microsoft

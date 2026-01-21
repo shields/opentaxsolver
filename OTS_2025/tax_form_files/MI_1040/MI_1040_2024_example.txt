@@ -20,26 +20,29 @@ L18b	180	; 	{ Credit for Income Tax Imposed by government units outside MI. }
 L19a	19	; 	{ Amount of Michigan Historic Preservation Tax. }
 L19b	190	; 	{ Credit for Michigan Historic Preservation Tax. }
 
-L21	21	; 	{ Voluntary Contributions from Form 4642, line 6. }
-L22	22	; 	{ Penalty for nonqualified withdrawal from Form 5792, Michigan 1st-Time Home Buyer Savings Program, line 5 .}
-L23	23	; 	{ USE TAX. Use tax due on Internet, mail order or other out-of-state purchases from Worksheet 1. }
+L20a    200     ;       { Amount for organ donation expenses. }
+L20b    20      ;       { Credit for organ donation expenses. }
 
-L25	24	; 	{ Property Tax Credit. Include MI-1040CR or MI-1040CR-2. }
-L26	25	; 	{ Farmland Preservation Tax Credit. Include MI-1040CR-5. }
-L27a	27	; 	{ Earned Income Tax Credit. }
-L28	28	; 	{ Michigan Historic Preservation Tax Credit (refundable). Include Form 3581. }
-L29	29	; 	{ Credit for allocated share of tax paid by an electing flow-through entity. }
-L30	30	; 	{ Michigan tax withheld from Schedule W, line 6. Include Schedule W. }
-L31     31      ;       { Estimated tax, extension payments and 2024 credit forward. }
+L22	22	; 	{ Voluntary Contributions from Form 4642, line 6. }
+L23	23	; 	{ Penalty for nonqualified withdrawal from Form 5792, Michigan 1st-Time Home Buyer Savings Program, line 5 .}
+L24	24	; 	{ USE TAX. Use tax due on Internet, mail order or other out-of-state purchases from Worksheet 1. }
+
+L26	25	; 	{ Property Tax Credit. Include MI-1040CR or MI-1040CR-2. }
+L27	26	; 	{ Farmland Preservation Tax Credit. Include MI-1040CR-5. }
+L28a	28	; 	{ Earned Income Tax Credit. }
+L29	29	; 	{ Michigan Historic Preservation Tax Credit (refundable). Include Form 3581. }
+L30	30	; 	{ Credit for allocated share of tax paid by an electing flow-through entity. }
+L31	31	; 	{ Michigan tax withheld from Schedule W, line 6. Include Schedule W. }
+L32     32      ;       { Estimated tax, extension payments and 2024 credit forward. }
 
  { -- Line-32 (below) for Amended Returns only -- }
-Ck32a	Y		{ You had a refund and/or credit forward on the original return. (answer: Y, N) }
-Ck32b	Y		{ You paid with the original return.  (answer: Y, N)}
-L32c	32	; 	{ }
+Ck33a	Y		{ You had a refund and/or credit forward on the original return. (answer: Y, N) }
+Ck33b	Y		{ You paid with the original return.  (answer: Y, N)}
+L33c	33	; 	{ }
 
 Interest   5	; 	{ Interest on underpayment. }
 Penalty	   6	; 	{ Panalty on underpayment. }
-L36	   7	; 	{ Credit Forward. Amount of line 35 to be credited to your 2025 estimated tax. }
+L37	   7	; 	{ Credit Forward. Amount of line 35 to be credited to your 2025 estimated tax. }
 
  { -------------------------------------------- }
  { --- Optional info for Auto-Fillout only. --- }

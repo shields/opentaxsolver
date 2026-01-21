@@ -4361,7 +4361,7 @@ set_widget_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_CA_540 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "CA State 540", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_NC_D400 );
  make_radio_button( mpanel, txprogstog, x, y, "NC State DC400", slcttxprog, formid );
@@ -4376,7 +4376,7 @@ set_widget_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_MI_1040 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MI State 1040", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  fronty2 = y + dy;
 
  y = y1;
@@ -4395,7 +4395,7 @@ set_widget_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_NY_IT201 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "NY State IT201", slcttxprog, formid );
- gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );

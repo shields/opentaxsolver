@@ -18,7 +18,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
   02111-1307 USA.
 
-  1-2-2026	http://opentaxsolver.sourceforge.com/
+  1-20-2026	http://opentaxsolver.sourceforge.com/
 
  ************************************************************************/
 
@@ -39,7 +39,7 @@ float thisversion=2.00;
 #define Yes 1
 #define No  0
 
-double flat_tax_rate = 0.0425;		/* Not updated for 2025. */
+double flat_tax_rate = 0.0425;		/* Updated for 2025. */
 
 
 /* ------------------- Main -------------------------------------- */
@@ -49,7 +49,7 @@ int main( int argc, char *argv[] )
  char word[1000], *infname=0, outfname[1000], *socsec, socsectmp[500], labelx[1000];
  time_t now;
  int residency=0, L9a=0, L9b=0, L9c=0, L9d=0, L9e=0;
- double L9aa=0.0, L9bb=0.0, L9cc=0.0, L9dd=0.0, L9ee=0.0, L18a=0.0, L19a=0.0, L27a=0.0;
+ double L9aa=0.0, L9bb=0.0, L9cc=0.0, L9dd=0.0, L9ee=0.0, L18a=0.0, L19a=0.0, L20a=0.0, L28a=0.0;
  double interest=0.0, penalty=0.0;
 
  /*-----------------------------------------*/
@@ -57,7 +57,7 @@ int main( int argc, char *argv[] )
  /*-----------------------------------------*/
  printf("MI-1040 2025 - v%3.2f\n", thisversion);
 
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
   #ifdef microsoft
    system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
@@ -182,37 +182,39 @@ printf("L9c = %d\n", L9c );
  GetLine( "L18b", &L[18] );
  GetLine( "L19a", &L19a );
  GetLine( "L19b", &L[19] );
+ GetLine( "L20a", &L20a );
+ GetLine( "L20b", &L[20] );
 
- GetLine( "L21", &L[21] );
  GetLine( "L22", &L[22] );
  GetLine( "L23", &L[23] );
+ GetLine( "L24", &L[24] );
 
- GetLine( "L25", &L[25] );
  GetLine( "L26", &L[26] );
- GetLine( "L27a", &L27a );
+ GetLine( "L27", &L[27] );
+ GetLine( "L28a", &L28a );
 
- GetLine( "L28", &L[28] );
  GetLine( "L29", &L[29] );
  GetLine( "L30", &L[30] );
  GetLine( "L31", &L[31] );
+ GetLine( "L32", &L[32] );
 
- check_if_yes( "Ck32a" );
- check_if_yes( "Ck32b" );
- GetLine( "L32c", &L[32] );
+ check_if_yes( "Ck33a" );
+ check_if_yes( "Ck33b" );
+ GetLine( "L33c", &L[33] );
 
  GetLine( "Interest", &interest );
  GetLine( "Penalty", &penalty );
- GetLine( "L36", &L[36] );
+ GetLine( "L37", &L[37] );
 
 
  /*-------------------------------*/
  /* ---- Do Tax Calculations ---- */
  /*-------------------------------*/
 
- L9aa = 5600.0 * L9a;
- L9bb = 3300.0 * L9b;
+ L9aa = 5800.0 * L9a;				/* Updated for 2025. */
+ L9bb = 3400.0 * L9b;
  L9cc = 500.0 * L9c;
- L9dd = 5600.0 * L9d;
+ L9dd = 5800.0 * L9d;
  L9ee = 1500.0 * L9e;
  L[9] = L9aa + L9bb + L9cc + L9dd + L9ee;
  L[12] = L[10] + L[11];
@@ -220,23 +222,21 @@ printf("L9c = %d\n", L9c );
  L[15] = largerof( L[15], L[9] );		// Allow either Sched-NR Line-19, or 9f (above). 
  L[16] = NotLessThanZero( L[14] - L[15] );
  L[17] = flat_tax_rate * L[16];
- L[20] = NotLessThanZero( L[17] - L[18] - L[19] );
- L[24] = L[20] +  L[21] +  L[22] +  L[23];
- L[27] = 0.30 * L27a;
+ L[21] = NotLessThanZero( L[17] - L[18] - L[19] - L[20] );
+ L[25] = L[21] +  L[22] +  L[23] +  L[24];
+ L[28] = 0.30 * L28a;
 
- for (j=25; j <= 32; j++)
-  L[33] = L[33] + L[j];
+ for (j=26; j <= 33; j++)
+  L[34] = L[34] + L[j];
 
- if (L[33] < L[24])
+ if (L[34] < L[25])
   { /*Owe*/
-    L[34] = L[24] - L[33] + interest + penalty;
-
+    L[35] = L[25] - L[34] + interest + penalty;
   } /*Owe*/
  else
   { /*Refund*/
-    L[35] = L[33] - L[24];
-    L[37] = L[35] - L[36];
-
+    L[36] = L[34] - L[25];
+    L[38] = L[36] - L[37];
   } /*Refund*/
 
 
@@ -265,6 +265,8 @@ printf("L9c = %d\n", L9c );
  showline(12);	/* */
  showline(13);	/* */
  showline_wmsg(14, "Income subject to tax." );	/* Income subject to tax. */
+
+
  showline(15);	/* */
  showline_wmsg(16, "Taxable income." );		/* */
  showline_wmsg(17, "Tax." );			/* */
@@ -275,20 +277,23 @@ printf("L9c = %d\n", L9c );
  showline_wlabelnz( "L19a", L19a );
  showline_wlabelnz( "L19b", L[19] );
 
- for (j=20; j <= 26; j++)
+ showline_wlabelnz( "L20a", L20a );
+ showline_wlabelnz( "L20b", L[20] );
+
+ for (j=21; j <= 27; j++)
   showline(j);
 
- showline_wlabelnz( "L27a", L27a );
+ showline_wlabelnz( "L28a", L28a );
  
- for (j=27; j <= 33; j++)
+ for (j=28; j <= 34; j++)
   showline(j);
 
  showline_wlabelnz( "interest", interest );
  showline_wlabelnz( "penalty", penalty );
- ShowLineNonZero_wMsg( 34, "You OWE." );
- showline(35); 
+ ShowLineNonZero_wMsg( 35, "You OWE." );
  showline(36); 
- ShowLineNonZero_wMsg( 37, "REFUND." );
+ showline(37); 
+ ShowLineNonZero_wMsg( 38, "REFUND." );
 
 
 

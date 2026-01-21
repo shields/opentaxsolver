@@ -1,6 +1,6 @@
 /************************************************************************/
 /* taxsolve_ma_1_2025.c - OpenTaxSolver for Mass Form 1 		*/
-/* Copyright (C) 2025 							*/
+/* Copyright (C) 2026 							*/
 /* 									*/
 /* OTS Project Home Page and Updates:  					*/
 /*		http://opentaxsolver.sourceforge.com/			*/
@@ -27,7 +27,7 @@
 /* Robert Heller 2-10-2004	heller@deepsoft.com			*/
 /* Updated 1-26-05	Aston Roberts & Robert Heller			*/
 /*  ...									*/
-/* Updated 1-16-2025	Aston Roberts 					*/
+/* Updated 1-20-2026	Aston Roberts 					*/
 /************************************************************************/
 
 #include <stdio.h>
@@ -56,7 +56,7 @@ double Sum( double *v, int start_slot, int end_slot )
 
 
 double ComputeTax(double taxableIncome)
-{ double taxrate=0.05;					/* Not updated for 2025. */
+{ double taxrate=0.05;					/* Updated for 2025. */
  if (taxableIncome < 24000.0)
   return (int)(taxrate * (taxableIncome + 25.0) + 0.5);
  else
@@ -84,7 +84,7 @@ int main( int argc, char *argv[] )
  
  printf("Massachusetts Form-1 2025 - v%3.2f\n", thisversion);
  
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
   #ifdef microsoft
    system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
@@ -292,7 +292,7 @@ int main( int argc, char *argv[] )
  showline_wlabel( "L14a", L[14] );
  L[14] = L[14] / 2.0;
  if (status == MARRIED_FILING_SEPARAT)
-  L[14] = smallerof( L[14] , 2000.0 );			/* Not updated for 2025. */
+  L[14] = smallerof( L[14] , 2000.0 );			/* Updated for 2025. */
  else
   L[14] = smallerof( L[14] , 4000.0 );
  ShowLineNonZero(14);
@@ -353,9 +353,9 @@ int main( int argc, char *argv[] )
  L28a = Sum( L, 22, 26 );
  showline_wlabel( "L28a", L28a );
 
- if (L[19] > 1053750.0)					/* Not updated for 2025. */
+ if (L[19] > 1083150.0)					/* Updated for 2025. */
   {
-   L28b = 0.04 * (L[19] - 1053750.0);
+   L28b = 0.04 * (L[19] - 1083150.0);
    showline_wlabel( "L28b", L28b );
   }
  L[28] = L28a + L28b;
@@ -379,7 +379,7 @@ int main( int argc, char *argv[] )
      switch (status)
       {
        case SINGLE:  
-		threshA = 8000.0;			/* Not updated for 2025. */
+		threshA = 8000.0;			/* Updated for 2025. */
 		threshB = 14000.0;
 		break;
        case HEAD_OF_HOUSEHOLD:
@@ -500,28 +500,31 @@ int main( int argc, char *argv[] )
  GetLine( "L49", &L[49] );	/* Excess Paid Family Leave withholding. */
  ShowLineNonZero(49);
 
- L[50] = Sum( L, 38, 42 ) + Sum( L, 48, 49 );
- showline_wmsg( 50, "total");
+ GetLine( "L50", &L[50] );	/* Nonresident withholding of Massachusetts real estate (Sched 62-WH). */
+ ShowLineNonZero(50);
 
- GetLine( "L52", &L[52] );	/* Overpayment to be applied to next year's estimated tax */
+ L[51] = Sum( L, 38, 42 ) + Sum( L, 48, 50 );
+ showline_wmsg( 51, "total");
+
+ GetLine( "L53", &L[53] );	/* Overpayment to be applied to next year's estimated tax */
 
  /* Refund or Owe section. */
- if (L[37] < L[50]) 
+ if (L[37] < L[51]) 
   {
-   L[51] = L[50] - L[37];
-   fprintf(outfile,"L51 = %6.2f  Overpayment!\n", L[51] );
-   if (L[52] > L[51])
-    L[52] = L[51];
-   showline_wmsg( 52, "Overpayment to be applied to next year's estimated tax" );
-   L[53] = L[51] - L[52];
-   fprintf(outfile,"L53 = %6.2f  THIS IS YOUR REFUND\n", L[53] );
+   L[52] = L[51] - L[37];
+   fprintf(outfile,"L52 = %6.2f  Overpayment!\n", L[52] );
+   if (L[53] > L[52])
+    L[53] = L[52];
+   showline_wmsg( 53, "Overpayment to be applied to next year's estimated tax" );
+   L[54] = L[52] - L[53];
+   fprintf(outfile,"L54 = %6.2f  THIS IS YOUR REFUND\n", L[54] );
   }
  else 
   {
-   L[54] = L[37] - L[50];
-   fprintf(outfile,"L54 = %6.2f  TAX DUE !!!\n", L[54] );
-   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[54] / (L[37] + 1e-9) );
-   if ((L[54] > 400.0) && (L[50] < 0.80 * L[37]))
+   L[55] = L[37] - L[51];
+   fprintf(outfile,"L55 = %6.2f  TAX DUE !!!\n", L[55] );
+   fprintf(outfile,"         (Which is %2.1f%% of your total tax.)\n", 100.0 * L[55] / (L[37] + 1e-9) );
+   if ((L[55] > 400.0) && (L[51] < 0.80 * L[37]))
     fprintf(outfile," You may owe Underpayment of Estimated Tax penalty.\n");
   }
 

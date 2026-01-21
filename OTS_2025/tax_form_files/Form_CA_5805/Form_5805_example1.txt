@@ -26,7 +26,7 @@ Wthd_Per_2			; { Amount Withheld for period with estimated tax due date
 Wthd_Per_3			; { Amount Withheld for period with estimated tax due date
  9/15/23 }
 Wthd_Per_4			; { Amount Withheld for period with estimated tax due date
- 1/15/24 }
+ 1/15/25 }
  {For estates and trusts: Was the date of death less than two years from
  the end of the taxable year?  Estates and grantor trusts, which receive
  the residue of the decedent’s estate, are required to make estimated
@@ -59,9 +59,9 @@ L8			; { Enter the total amount, if any, of estimated tax
  Do not file form FTB 5805.  Otherwise, return to the form and complete the
  next entry (Num_Days).  Again click "Save" amd "Compute Tax" to calculate your
  penalty. }
- {If the amount on line 10 was paid ON OR AFTER 4/15/24, enter -0-. 
+ {If the amount on line 10 was paid ON OR AFTER 4/15/25, enter -0-. 
  Otherwise, enter number of days the amount on line 10 was paid BEFORE
- 4/15/24. }
+ 4/15/25. }
 Num_Days			; { Number of days }
  {--- Part III Annualized Income Installment Method Schedule. ---}
  {Use this schedule ONLY if you earned taxable income at an UNEVEN RATE
@@ -234,30 +234,30 @@ WSII_2b			; { Enter the estimated tax payments for the period
 WSII_2c			; { Enter the estimated tax payments for the period
  1/1/23-8/31/23 that were made by 9/15/23.}
 WSII_2d	20000		; { Enter the estimated tax payments for the period
- 1/1/23-12/31/23 that were made by 1/15/24}
+ 1/1/23-12/31/23 that were made by 1/15/25}
  {After you make the above entries, click "Save" and then click "Calculate
  Tex" to see if you have an underpayment for any period.  If so, you may owe
  a penalty.   Read the instructions for how to calculate the penalty, make
  the following entires, and again click "Save" and "Calculate Tax".  Because
  calculating the penalty can be complex, carefully check the results to
  ensure that they are correct for your particular tax situation.}
-WSII_10a	261		; { Number of days from 4/15/24 to the date the amount on
- line 8 was paid or 12/31/24, whichever is earlier  (see
+WSII_10a	261		; { Number of days from 4/15/25 to the date the amount on
+ line 8 was paid or 12/31/25, whichever is earlier  (see
  instructions).}
-WSII_10b	200		; { Number of days from 6/15/24 to the date the amount on
- line 8 was paid or 12/31/24, whichever is earlier  (see
+WSII_10b	200		; { Number of days from 6/15/25 to the date the amount on
+ line 8 was paid or 12/31/25, whichever is earlier  (see
  instructions).}
-WSII_12a	105		; { Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12a	105		; { Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12b	105		; { Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12b	105		; { Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12c	105		; { Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12c	105		; { Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12d	90		; { Number of days from 1/15/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12d	90		; { Number of days from 1/15/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
  {After you have filled out all of the applicable fields above, click
  "Save" to save this form and  then click "Compute Tax" to see if you owe a

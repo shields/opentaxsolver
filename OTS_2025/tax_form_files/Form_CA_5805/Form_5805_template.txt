@@ -25,13 +25,13 @@ Quest3		{  (answer: Yes, No, N/A) }
  or Form 541, line 29 and line 31. }
 
 Wthd_Per_1 ;{ Amount Withheld for period with estimated tax due date
- 4/15/23 }
+ 4/15/24 }
 Wthd_Per_2 ;{ Amount Withheld for period with estimated tax due date
- 6/15/23 }
+ 6/15/24 }
 Wthd_Per_3 ;{ Amount Withheld for period with estimated tax due date
- 9/15/23 }
+ 9/15/24 }
 Wthd_Per_4 ;{ Amount Withheld for period with estimated tax due date
- 1/15/24 }
+ 1/15/25 }
 
 {For estates and trusts: Was the date of death less than two years from
  the end of the taxable year?  Estates and grantor trusts, which receive
@@ -73,9 +73,9 @@ L8	;{ Enter the total amount, if any, of estimated tax
  next entry (Num_Days).  Again click "Save" amd "Compute Tax" to calculate your
  penalty. }
 
-{If the amount on line 10 was paid ON OR AFTER 4/15/24, enter -0-. 
+{If the amount on line 10 was paid ON OR AFTER 4/15/25, enter -0-. 
  Otherwise, enter number of days the amount on line 10 was paid BEFORE
- 4/15/24. }
+ 4/15/25. }
 
 Num_Days 	;{ Number of days }
 
@@ -93,33 +93,33 @@ Num_Days 	;{ Number of days }
  year filers must adjust dates accordingly.}
 
 SchdAI_1a	;{ Enter your California adjusted gross income (AGI) for
- the period 1/1/23-3/31/23.  Form 540NR filers, see
+ the period 1/1/24-3/31/24.  Form 540NR filers, see
  instructions. Estates or Trusts, enter the amount from Form
- 541, line 20 attributable to the period 1/1/23-2/28/23).}
+ 541, line 20 attributable to the period 1/1/24-2/28/24).}
 SchdAI_1b	;{ Enter your California adjusted gross income (AGI) for
- the period 1/1/23-5/31/23.  Form 540NR filers, see
+ the period 1/1/24-5/31/24.  Form 540NR filers, see
  instructions. Estates or Trusts, enter the amount from Form
- 541, line 20 attributable to the period 1/1/23-4/30/23)}
+ 541, line 20 attributable to the period 1/1/24-4/30/24)}
 SchdAI_1c	;{ Enter your California adjusted gross income (AGI) for
- the period 1/1/23-8/31/23.  Form 540NR filers, see
+ the period 1/1/24-8/31/24.  Form 540NR filers, see
  instructions. Estates or Trusts, enter the amount from Form
- 541, line 20 attributable to the period 1/1/23-7/31/23)}
+ 541, line 20 attributable to the period 1/1/24-7/31/24)}
 SchdAI_1d	;{ Enter your California adjusted gross income (AGI) for
- the period 1/1/23-12/31/23.  Form 540NR filers, see
+ the period 1/1/24-12/31/24.  Form 540NR filers, see
  instructions. Estates or Trusts, enter the amount from Form
- 541, line 20 attributable to the period 1/1/23-11/30/23)}
+ 541, line 20 attributable to the period 1/1/24-11/30/24)}
 
 SchdAI_4a	;{ If you itemize, enter itemized deductions for the period
- 1/1/23-3/31/23; otherwise, enter -0-.  Estates and trusts:
+ 1/1/24-3/31/24; otherwise, enter -0-.  Estates and trusts:
  enter "0". }
 SchdAI_4b	;{ If you itemize, enter itemized deductions for the period
- 1/1/23-5/31/23; otherwise, enter -0-.  Estates and trusts:
+ 1/1/24-5/31/24; otherwise, enter -0-.  Estates and trusts:
  enter "0". }
 SchdAI_4c	;{ If you itemize, enter itemized deductions for the period
- 1/1/23-8/31/23; otherwise, enter -0-.  Estates and trusts:
+ 1/1/24-8/31/24; otherwise, enter -0-.  Estates and trusts:
  enter "0". } 	
 SchdAI_4d	;{ If you itemize, enter itemized deductions for the period
- 1/1/23-12/31/23; otherwise, enter -0-.    Estates and
+ 1/1/24-12/31/24; otherwise, enter -0-.    Estates and
  trusts: enter "0". }
 
 SchdAI_7a	;{ Enter the full amount of your standard deduction from
@@ -182,18 +182,18 @@ SchdAI_13d	;{ Enter the total credit amount from your 2025 Form 540,
  instructions.}
 
 SchdAI_14ba	;{ Enter the alternative minimum tax and mental health tax
- for the period 1/1/23-3/31/23.  Estates and trusts: for the
- period 1/1/23-2/28/23. Figure the alternative minimum tax
+ for the period 1/1/24-3/31/24.  Estates and trusts: for the
+ period 1/1/24-2/28/24. Figure the alternative minimum tax
  and mental health services tax you owe based on income
  earned during the period. }
 SchdAI_14bb	;{ Enter the alternative minimum tax and mental health tax
- for the period 1/1/23-5/31/23.  Estates and trusts: for the
- period 1/1/23-4/30/23. Figure the alternative minimum tax
+ for the period 1/1/24-5/31/24.  Estates and trusts: for the
+ period 1/1/24-4/30/24. Figure the alternative minimum tax
  and mental health services tax you owe based on income
  earned during the period. }
 SchdAI_14bc	;{ Enter the alternative minimum tax and mental health tax
- for the period 1/1/23-8/31/23.  Estates and trusts: for the
- period 1/1/23-7/31/23. Figure the alternative minimum tax
+ for the period 1/1/24-8/31/24.  Estates and trusts: for the
+ period 1/1/24-7/31/24. Figure the alternative minimum tax
  and mental health services tax you owe based on income
  earned during the period. }
 SchdAI_14bd	;{ Enter the amounts from your 2025 Form 540, line 61 and
@@ -214,44 +214,44 @@ SchdAI_14dd	;{ Enter the excess SDI from Form 540, line 74 or Form
  of California, subtract your military pay from your federal AGI. }
 
 FAIWS_1a	;{ Enter your federal adjusted gross income for the period
- 1/1/23-3/31/23.  See instructions for federal Form 2220,
+ 1/1/24-3/31/24.  See instructions for federal Form 2220,
  Schedule AI, Part I, line 1.  (Estates and trusts: enter
  your taxable income without your exemption for the period
- 1/1/23-2/28/23),}
+ 1/1/24-2/28/24),}
 FAIWS_1b	;{ Enter your federal adjusted gross income for the period
- 1/1/23-5/31/23.  See instructions for federal Form 2220,
+ 1/1/24-5/31/24.  See instructions for federal Form 2220,
  Schedule AI, Part I, line 1.  (Estates and trusts: enter
  your taxable income without your exemption for the period
- 1/1/23-4/30/23),}
+ 1/1/24-4/30/24),}
 FAIWS_1c	;{ Enter your federal adjusted gross income for the period
- 1/1/23-8/31/23.  See instructions for federal Form 2220,
+ 1/1/24-8/31/24.  See instructions for federal Form 2220,
  Schedule AI, Part I, line 1.  (Estates and trusts: enter
  your taxable income without your exemption for the period
- 1/1/23-7/31/23),}
+ 1/1/24-7/31/24),}
 FAIWS_1d	;{ Enter your federal adjusted gross income for the period
- 1/1/23-12/31/23.  See instructions for federal Form 2220,
+ 1/1/24-12/31/24.  See instructions for federal Form 2220,
  Schedule AI, Part I, line 1.  (Estates and trusts: enter
  your taxable income without your exemption for the period
- 1/1/23-11/30/23),}
+ 1/1/24-11/30/24),}
 
 {--- Line 6 Worksheet (for high-income filers who itemize deductions) ---}
 
 L6WS_2a	;{ Enter the sum of the amounts on federal Schedule A (Form
  1040), line 4, line 9, and line 15 plus any gambling losses
- included on line 16 for  the period 1/1/23-3/31/23 (Estates
- and trusts:  for the period 1/1/23-2/28/23). }
+ included on line 16 for  the period 1/1/24-3/31/24 (Estates
+ and trusts:  for the period 1/1/24-2/28/24). }
 L6WS_2b	;{ Enter the sum of the amounts on federal Schedule A (Form
  1040), line 4, line 9, and line 15 plus any gambling losses
- included on line 16 for  the period 1/1/23-5/31/23. 
- (Estates and trusts:  for the period 1/1/23-4/30/23)..}
+ included on line 16 for  the period 1/1/24-5/31/24. 
+ (Estates and trusts:  for the period 1/1/24-4/30/24)..}
 L6WS_2c	;{ Enter the sum of the amounts on federal Schedule A (Form
  1040), line 4, line 9, and line 15 plus any gambling losses
- included on line 16 for  the period 1/1/23-8/31/23. 
- (Estates and trusts:  for the period 1/1/23-7/31/23),}
+ included on line 16 for  the period 1/1/24-8/31/24. 
+ (Estates and trusts:  for the period 1/1/24-7/31/24),}
 L6WS_2d	;{ Enter the sum of the amounts on federal Schedule A (Form
  1040), line 4, line 9, and line 15 plus any gambling losses
- included on line 16 for  the period 1/1/23-12/31/23. 
- (Estates and trusts:  for the period 1/1/23-11/30/23).}
+ included on line 16 for  the period 1/1/24-12/31/24. 
+ (Estates and trusts:  for the period 1/1/24-11/30/24).}
 
 {--- Worksheet II - Regular Method to Figure Your Underpayment and Penalty ---}
 
@@ -259,15 +259,15 @@ L6WS_2d	;{ Enter the sum of the amounts on federal Schedule A (Form
  paid each period by that period's due date. }
 
 WSII_2a	;{ Enter the estimated tax payments for the period
- 1/1/23-3/31/23 that were made by 4/15/23, including any
+ 1/1/24-3/31/24 that were made by 4/15/24, including any
  overpayment of tax from your 2024 tax return that you
  elected to apply to the 2025 estimated tax.}
 WSII_2b	;{ Enter the estimated tax payments for the period
- 1/1/23-5/31/23 that were made by 6/15/23.}
+ 1/1/24-5/31/24 that were made by 6/15/24.}
 WSII_2c	;{ Enter the estimated tax payments for the period
- 1/1/23-8/31/23 that were made by 9/15/23.}
+ 1/1/24-8/31/24 that were made by 9/15/24.}
 WSII_2d	;{ Enter the estimated tax payments for the period
- 1/1/23-12/31/23 that were made by 1/15/24}
+ 1/1/24-12/31/24 that were made by 1/15/25}
 
 {After you make the above entries, click "Save" and then click "Calculate
  Tex" to see if you have an underpayment for any period.  If so, you may owe
@@ -276,23 +276,23 @@ WSII_2d	;{ Enter the estimated tax payments for the period
  calculating the penalty can be complex, carefully check the results to
  ensure that they are correct for your particular tax situation.}
 
-WSII_10a	;{ Number of days from 4/15/23 to the date the amount on
- line 8 was paid or 12/31/23, whichever is earlier  (see
+WSII_10a	;{ Number of days from 4/15/24 to the date the amount on
+ line 8 was paid or 12/31/24, whichever is earlier  (see
  instructions).}
-WSII_10b	;{ Number of days from 6/15/23 to the date the amount on
- line 8 was paid or 12/31/23, whichever is earlier  (see
+WSII_10b	;{ Number of days from 6/15/24 to the date the amount on
+ line 8 was paid or 12/31/24, whichever is earlier  (see
  instructions).}
-WSII_12a	;{ Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12a	;{ Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12b	;{ Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12b	;{ Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12c	;{ Number of days from 1/1/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12c	;{ Number of days from 1/1/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
-WSII_12d	;{ Number of days from 1/15/24 to the date the amount on
- line 8 was paid or 4/15/24, whichever is earlier  (see
+WSII_12d	;{ Number of days from 1/15/25 to the date the amount on
+ line 8 was paid or 4/15/25, whichever is earlier  (see
  instructions).}
 
 {After you have filled out all of the applicable fields above, click

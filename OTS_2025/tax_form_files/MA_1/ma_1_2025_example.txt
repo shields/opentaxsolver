@@ -85,7 +85,8 @@ L44		;	{ Senior Circuit Breaker Credit, sched CB }
 L46num		;	{ Number of dependent household members under 13 or over 65. }
 L47		;	{ Other refundable credits, Sched CMS. }
 L49             ;       { Excess Paid Family Leave withholding. }
-L52	 1,000	;	{ Overpayment you want applied to next year's estimated tax. }
+L50             ;       { Nonresident withholding of Massachusetts real estate (Sched 62-WH). }
+L53	 1,000	;	{ Overpayment you want applied to next year's estimated tax. }
 
 
 { -------------------------------------------- } 

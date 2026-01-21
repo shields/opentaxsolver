@@ -30,12 +30,12 @@ Lb      	700 647 8 13
 2a.     	782 814 4 13
 2bnum   	608 846 2 13
 2b.     	761 846 5 13
-Check_2cyou 	243 885 0
-Check_2csp 	328 885 0
+Check_2cyou 	241 885 0
+Check_2csp 	327 884 0
 2cnum   	628 878 1 13
 2c.     	780 878 4 13
-Check_2dyou 	243 916 0
-Check_2dsp 	328 916 0
+Check_2dyou 	241 916 0
+Check_2dsp 	327 916 0
 2dnum   	628 910 1 13
 2d.     	780 910 4 13
 2e.     	741 940 6 13
@@ -64,8 +64,8 @@ L9      	700 427 8 13
 L10		700 459 8 13
 L11a		778 509 4 13
 L11b		778 540 4 13
-L14a		558 662 5 13
-L14		779 661 4 13
+L14a		558 660 5 13
+L14		779 660 4 13
 L15		700 694 8 13
 L16		700 725 8 13
 L17		700 757 8 13
@@ -115,9 +115,9 @@ L35b		345 872 4 13
 L35		779 872 4 13
 L36		700 903 8 13
 L37		700 934 8 13
-L38a		509 1009 8 13
-L38b		509 1040 8 13
-L38c		509 1075 8 13
+L38a		529 1009 8 13
+L38b		529 1040 8 13
+L38c		529 1075 8 13
 L38		700 1107 8 13
 
 
@@ -152,13 +152,13 @@ L53		700 681 8 13
 L54		700 723 8 13
 RoutingNum:	 75 786 9 13
 AccntNum:	392 786 9 13
-Check_CheckingAccnt	809 746
-Check_SavingsAccnt	809 767
+Check_CheckingAccnt	805 746
+Check_SavingsAccnt	805 767
 L55		700 818 8 13
-Payment_Interest: 	125 913 5 13
-Payment_Penalty:  	344 913 5 13
-M2210_Amount:	 	604 913 5 13
+Payment_Interest: 	125 914 5 13
+Payment_Penalty:  	344 914 5 13
+M2210_Amount:	 	604 914 5 13
 Check_EnclosedM2210:	508 892
-Check_SelfEmployed:	212 1022
-Check_DORdiscuss:	498 1022
-Check_DoNotEfile:	831 1022
+Check_SelfEmployed:	210 1024
+Check_DORdiscuss:	495 1024
+Check_DoNotEfile:	828 1024
