@@ -25,6 +25,7 @@ round_to_whole_numbers
  Town:		 72 304 0
  StateName:	338 304 0
  Zipcode: 	377 304 0 11
+ Country:	495 304
 
  Number&Street:	  72 341 0
  AptNumber:	 570 341
@@ -49,8 +50,14 @@ round_to_whole_numbers
   CkD2_1y:	799 453
   CkD2_1n:	859 453
 
-  CkE1_1y:	799 637
-  CkE1_1n:	859 637
+  D2_2:		835 490
+  D2_3:		835 527
+
+  CkD2_4y:	799 581
+  CkD2_4n:	859 581
+
+  CkE1y:	799 637
+  CkE1n:	859 637
   E2_DaysNYC:	813 673
 
   F1_MonthsYouNYC	839 708	
@@ -111,6 +118,8 @@ round_to_whole_numbers
  H7_Relat:	425 1060
  H7_SocSec:	567 1060
  H7_DOB:	750 1060
+
+ CkMoreThan7Dep 363 1095
 
 Page 2
 CoordReference:  40, 750  61, 64
@@ -218,7 +227,7 @@ CoordReference:  40, 750  61, 64
  L69    486 253	12 8
  L69a   486 271	12 8
  L70    486 290	12 8
-! L70a   486 308 12 8
+ L70a   486 308 12 8
  L71	486 326 12 8
  L72	486 345	12 8
  L73	486 363	12 8
@@ -233,8 +242,8 @@ CoordReference:  40, 750  61, 64
  L80	705 691	12 8
  L81	484 730	12 8
  L82	484 748	12 8
- L83b	224 839 
- L83c	570 839 
+ L83b	224 838 
+ L83c	570 838 
  L84date: 459 866 	
  L84	  705 866 12 8
 

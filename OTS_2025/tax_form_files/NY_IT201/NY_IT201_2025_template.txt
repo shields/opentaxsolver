@@ -13,13 +13,16 @@ SchooldDist		{ School District (for PDF form). }
 SchoolCode		  { School Code (for PDF form). }
 
 D1_ForeignAcct	   n	{ Did you have a foreign account? (answer: y, n) }
-D2_1-YonkRelCred  n/a  { Yonker resident recv. Prop. relief credit? (answer: y, n, n/a)) }
-D2_2-YRCamount	   	{ Enter amount of Yonkers Relief Credit (or leave blank). }
-D3-NonQualComp	   n	{ Required to report NonQualified Deferred Comp? (answer: y, n) }
+
+D2_1-LivedYonkers  n    { Did you or spouse maintain living quarters in Yonkers? (answer: y, n)) }
+D2_2-MonthsYouYonkers   { Months You lived in Yonkers (or leave blank). }
+D2_3-MonthsSpYonkers    { Months Spouse lived in Yonkers (or leave blank). }
+D2_4-WorkYonkers   n	{ Did you or spouse work in Yonkers in 2025? (answer: y, n) }
+
 E1_LivedNYC	   n	{ Did you or spouse maintain living quarters in NYC? (answer: y, n) }
 E2_DaysNYC              { Days NYC? (or leave blank) }
-F1_MonthsYouNYC   	{ Months You lived in NYC }
-F2_MonthsSpNYC   	{ Months Spouse lived in NYC }
+F1_MonthsYouNYC   	{ Months You lived in NYC (or leave blank). }
+F2_MonthsSpNYC   	{ Months Spouse lived in NYC (or leave blank). }
 G_SpecCondCode	    	{ 2-character special condition code if applicable. }
 
 Dependent  	no	{ Are you a Dependent on another's return? (answer: yes, no) }

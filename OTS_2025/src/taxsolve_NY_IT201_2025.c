@@ -1,6 +1,6 @@
 /************************************************************************/
 /* TaxSolve_NY_IT-201_2025.c - NY State Tax form IT-201 for 2025.	*/
-/* Copyright (C) 2003-2025 - Aston Roberts, Skeet Monker		*/
+/* Copyright (C) 2003-2026 - Skeet Monker				*/
 /* 									*/
 /* Compile:   gcc taxsolve_NY_IT201_2025.c -o taxsolve_NY_IT201_2025	*/
 /* Run:	      ./taxsolve_NY_IT201_2025  NY_IT201_2025.txt 		*/
@@ -48,10 +48,11 @@ char 	statusnames[10][20]={"0","Single","Married/Joint","Married/Sep","Head_of_H
 char 	*Your1stName="", *YourLastName="", *YourInitial="", 
 	*Spouse1stName="", *SpouseLastName="", *SpouseInitial="";
 char	*YourSocSec=0, *SpouseSocSec=0, *MailAddress=0, *AptNumber=0,
-	Town[2048]="", StateName[1024]="", Zipcode[1024]="";
+	*Town=0, *StateName=0, *Zipcode=0;
 
 double L47a=0.0;                 /* NYC resident tax on line 47 */
 double L69a=0.0;                 /* NYC school tax credit (rate reduction amount) */
+double L70a=0.0;                 /* NYC income tax elimination credit. */
 
 struct FedReturnData
  {
@@ -470,11 +471,19 @@ int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 	AptNumber = strdup( fline );
     }
    else
-   if (strcmp(word,"TownStateZip:") == 0)
-    { /* Expect:  town name, NY, 10033	*/
-     next_word( fline, Town, "," );
-     next_word( fline, StateName, " \t," );
-     next_word( fline, Zipcode, " \t," );
+   if (strcmp(word,"Town/City:") == 0)
+    { 
+     Town = strdup( fline );
+    }
+   else
+   if (strcmp(word,"State:") == 0)
+    { 
+     StateName = strdup( fline );
+    }
+   else
+   if (strcmp(word,"ZipCode:") == 0)
+    { 
+     Zipcode = strdup( fline );
     }
    else
    if ((strncmp(word,"Dep",3) == 0) && (strstr(word,"_FirstName:") != 0))
@@ -522,8 +531,8 @@ double TaxRateFunction( double income, int status )
  double tax;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:				  /* Not updated for 2025. */
-	if (income <=    17150.0) tax =             0.04 * income; else	  /* Data from Instructions pg 45. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				  /* Updated for 2025. */
+	if (income <=    17150.0) tax =             0.04 * income; else	  /* Data from Instructions pg 33. */
 	if (income <=    23600.0) tax =     686.0 + 0.045  * (income - 17150.0); else
 	if (income <=    27900.0) tax =     976.0 + 0.0525 * (income - 23600.0); else
 	if (income <=   161550.0) tax =    1202.0 + 0.0550 * (income - 27900.0); else
@@ -566,7 +575,7 @@ void Report_bracket_info( double income, double tx, int status )
  double rate;
  switch (status)
   {
-   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Not updated for 2025. */
+   case MARRIED_FILING_JOINTLY: case WIDOW:				/* Updated for 2025. */
 	if (income <=    17150.0) rate = 0.04;  else
 	if (income <=    23600.0) rate = 0.045;  else
 	if (income <=    27900.0) rate = 0.0525;  else
@@ -636,7 +645,7 @@ double NYcityTaxRateFunction( double income, int status )	/* From Instructions p
  if (income < 65000.0)
   income = m * dx + 0.5 * dx;      /* Place into center of a $50 bracket. */
 
- if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Not updated for 2025. */
+ if ((status==MARRIED_FILING_JOINTLY) || (status==WIDOW))		/* Updated for 2025. */
   {
    if (income < 21600.0)  tax = income * 0.03078; else
    if (income < 45000.0)  tax = (income - 21600.00) * 0.03762 + 665.00; else
@@ -666,7 +675,7 @@ double NYcityTaxRateFunction( double income, int status )	/* From Instructions p
 }
 
 
-void worksheet1()	/*Tax Computation Worksheet 1 (pg 46) */		/* Not updated for 2025. */
+void worksheet1()	/*Tax Computation Worksheet 1 (pg 34) */		/* Updated for 2025. */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 1.\n");
   ws[1] = L[33];
@@ -688,7 +697,7 @@ void worksheet1()	/*Tax Computation Worksheet 1 (pg 46) */		/* Not updated for 2
 }
 
 
-void worksheet2()	/*Tax Computation Worksheet 2 (pg 47) */
+void worksheet2()	/*Tax Computation Worksheet 2 (pg 34) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 2.\n");
   ws[1] = L[33];
@@ -706,7 +715,7 @@ void worksheet2()	/*Tax Computation Worksheet 2 (pg 47) */
 }
 
 
-void worksheet3()	/*Tax Computation Worksheet 3 (pg 47) */
+void worksheet3()	/*Tax Computation Worksheet 3 (pg 34) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 3.\n");
   ws[1] = L[33];
@@ -724,7 +733,7 @@ void worksheet3()	/*Tax Computation Worksheet 3 (pg 47) */
 }
 
 
-void worksheet4()	/*Tax Computation Worksheet 4 (pg 47) */
+void worksheet4()	/*Tax Computation Worksheet 4 (pg 34) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 4.\n");
   ws[1] = L[33];
@@ -742,7 +751,7 @@ void worksheet4()	/*Tax Computation Worksheet 4 (pg 47) */
 }
 
 
-void worksheet5()	/*Tax Computation Worksheet 5 (pg 48) */
+void worksheet5()	/*Tax Computation Worksheet 5 (pg 35) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 5.\n");
   ws[1] = L[33];
@@ -760,7 +769,7 @@ void worksheet5()	/*Tax Computation Worksheet 5 (pg 48) */
 }
 
 
-void worksheet6()	/*Tax Computation Worksheet 6 (pg 48) */
+void worksheet6()	/*Tax Computation Worksheet 6 (pg 35) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 6.\n");
   ws[1] = L[38];
@@ -769,7 +778,7 @@ void worksheet6()	/*Tax Computation Worksheet 6 (pg 48) */
 }
 
 
-void worksheet7()	/*Tax Computation Worksheet 7 (pg 48) */
+void worksheet7()	/*Tax Computation Worksheet 7 (pg 36) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 7.\n");
   ws[1] = L[33];
@@ -791,7 +800,7 @@ void worksheet7()	/*Tax Computation Worksheet 7 (pg 48) */
 }
 
 
-void worksheet8()	/*Tax Computation Worksheet 8 (pg 49) */
+void worksheet8()	/*Tax Computation Worksheet 8 (pg 36) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 8.\n");
   ws[1] = L[33];
@@ -809,7 +818,7 @@ void worksheet8()	/*Tax Computation Worksheet 8 (pg 49) */
 }
 
 
-void worksheet9()	/*Tax Computation Worksheet 9 (pg 49) */
+void worksheet9()	/*Tax Computation Worksheet 9 (pg 36) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 9.\n");
   ws[1] = L[33];
@@ -827,7 +836,7 @@ void worksheet9()	/*Tax Computation Worksheet 9 (pg 49) */
 }
 
 
-void worksheet10()	/*Tax Computation Worksheet 10 (pg 49) */
+void worksheet10()	/*Tax Computation Worksheet 10 (pg 36) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 10.\n");
   ws[1] = L[33];
@@ -845,7 +854,7 @@ void worksheet10()	/*Tax Computation Worksheet 10 (pg 49) */
 }
 
 
-void worksheet11()	/*Tax Computation Worksheet 11 (pg 50) */
+void worksheet11()	/*Tax Computation Worksheet 11 (pg 37) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 11.\n");
   ws[1] = L[38];
@@ -854,7 +863,7 @@ void worksheet11()	/*Tax Computation Worksheet 11 (pg 50) */
 }
 
 
-void worksheet12()	/*Tax Computation Worksheet 12 (pg 50) */
+void worksheet12()	/*Tax Computation Worksheet 12 (pg 38) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 12.\n");
   ws[1] = L[33];
@@ -876,7 +885,7 @@ void worksheet12()	/*Tax Computation Worksheet 12 (pg 50) */
   }
 
 
-void worksheet13()	/*Tax Computation Worksheet 13 (pg 50) */
+void worksheet13()	/*Tax Computation Worksheet 13 (pg 38) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 13.\n");
   ws[1] = L[33];
@@ -894,7 +903,7 @@ void worksheet13()	/*Tax Computation Worksheet 13 (pg 50) */
 }
 
 
-void worksheet14()	/*Tax Computation Worksheet 14 (pg 51) */
+void worksheet14()	/*Tax Computation Worksheet 14 (pg 38) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 14.\n");
   ws[1] = L[33];
@@ -912,7 +921,7 @@ void worksheet14()	/*Tax Computation Worksheet 14 (pg 51) */
 }
 
 
-void worksheet15()	/*Tax Computation Worksheet 15 (pg 51) */
+void worksheet15()	/*Tax Computation Worksheet 15 (pg 38) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 15.\n");
   ws[1] = L[33];
@@ -930,7 +939,7 @@ void worksheet15()	/*Tax Computation Worksheet 15 (pg 51) */
 }
 
 
-void worksheet16()	/*Tax Computation Worksheet 16 (pg 50) */
+void worksheet16()	/*Tax Computation Worksheet 16 (pg 39) */
 { double ws[100];
   printf(" Doing Tax Computation Worksheet 16.\n");
   ws[1] = L[38];
@@ -940,8 +949,8 @@ void worksheet16()	/*Tax Computation Worksheet 16 (pg 50) */
 
 
 void tax_computation_worksheet( int status )	/* Called for Line-39 when Line-33 > $107,650. */
-{ /* Worksheets from pages 45-50. Come here when AGI L[33] > $107,650. */
- switch (status)								/* Not updated for 2025. */
+{ /* Worksheets from pages 34-39. Come here when AGI L[33] > $107,650. */
+ switch (status)								/* Updated for 2025. */
   {
      case MARRIED_FILING_JOINTLY:  case WIDOW:			// 1-6
 	if (L[33] <= 25000000.0)
@@ -1041,7 +1050,7 @@ int main( int argc, char *argv[] )
  /* Intercept any command-line arguments. */
  printf("NY-IT201 - 2011 - v%3.1f\n", thisversion);
 
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
   #ifdef microsoft
    system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
@@ -1135,22 +1144,27 @@ int main( int argc, char *argv[] )
  else
   fprintf(outfile,"CkD1n: X\n");
 
- answ = GetTextLineF( "D2_1-YonkRelCred" );
+ answ = GetTextLine( "D2_1-LivedYonkers" );
  next_word( answ, word, " \t;" );
  if (toupper( word[0] ) == 'Y')
   fprintf(outfile,"CkD2_1y: X\n");
  else
- if ((mystrcasestr( word, "N/A" ) == 0) && (toupper( word[0] ) == 'N'))
   fprintf(outfile,"CkD2_1n: X\n");
 
- GetTextLineF( "D2_2-YRCamount" );
- 
- answ = GetTextLineF( "D3-NonQualComp" );
+ answ = GetTextLine( "D2_2-MonthsYouYonkers" );
+ next_word( answ, word, " \t;" );
+ fprintf(outfile,"D2_2: %s\n", word );
+
+ answ = GetTextLine( "D2_3-MonthsSpYonkers" );
+ next_word( answ, word, " \t;" );
+ fprintf(outfile,"D2_3: %s\n", word );
+
+ answ = GetTextLine( "D2_4-WorkYonkers" );
  next_word( answ, word, " \t;" );
  if (toupper( word[0] ) == 'Y')
-  fprintf(outfile,"CkD3y: X\n");
+  fprintf(outfile,"CkD2_4y: X\n");
  else
-  fprintf(outfile,"CkD3n: X\n");
+  fprintf(outfile,"CkD2_4n: X\n");
 
  answ = GetTextLineF( "E1_LivedNYC" );
  next_word( answ, word, " \t;" );
@@ -1489,7 +1503,7 @@ int main( int argc, char *argv[] )
  switch (status)	/* Determine the Std. Deduction. Instructions Pg. 11. */
   {
    case SINGLE: if (Dependent)   std_ded = 3100.0; 
-		else 		 std_ded = 8000.0;			/* Not updated for 2025. */
+		else 		 std_ded = 8000.0;			/* Updated for 2025. */
 	break;
    case MARRIED_FILING_JOINTLY:  std_ded = 16050.0; break;
    case MARRIED_FILING_SEPARAT:  std_ded =  8000.0; break;
@@ -1552,7 +1566,7 @@ int main( int argc, char *argv[] )
  get_parameter( infile, 'i', &Exemptions, "Exemptions" );
  if (Dependent)
   L[40] = 0.0;
- else	/* From tables starting on page 22. */
+ else	/* From tables starting on page 12. */
  if (status==SINGLE)
   {
    if (L[19] <  5000.0) L[40] = 75.0; else
@@ -1764,8 +1778,9 @@ int main( int argc, char *argv[] )
 
     showline_wlabel( "L69a", L69a );
 
-    /* L[70] = earned_income_credit; */
-    /* showline(70); */
+    // L[70] = earned_income_credit;
+    // showline(70);
+    // showline( "L70a", L70a );
   } /*NYC*/
 
  GetLineF( "L71", &L[71] );	/* Other refundable credits, IT-201-ATT line 18) */
@@ -1819,12 +1834,13 @@ int main( int argc, char *argv[] )
   fprintf(outfile,"Number&Street: %s\n", MailAddress );
  if (AptNumber)
   fprintf(outfile,"Apt#: %s\n", AptNumber );
- if (Town[0] != '\0')
+ if (Town)
   fprintf(outfile,"Town: %s\n", Town );
- if (StateName[0] != '\0')
+ if (StateName)
   fprintf(outfile,"StateName: %s\n", StateName );
- if (Zipcode[0] != '\0')
+ if (Zipcode)
   fprintf(outfile,"Zipcode: %s\n", Zipcode );
+ fprintf(outfile,"Country: USA\n");
 
  consume_leading_trailing_whitespace( YourLastName );
  if (strlen( YourLastName ) > 0)

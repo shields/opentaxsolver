@@ -4413,7 +4413,7 @@ set_label_color( tmpwdg, "#ff0000" );
  x = winwidth/2 + 40;
  formid = setform( form_OH_IT1040 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "OH State IT1040", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_PA_40 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "PA State 40", slcttxprog, formid );
