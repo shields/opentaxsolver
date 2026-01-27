@@ -49,8 +49,10 @@ L27         0   ;       { Penalties and underpayment interest. }
  SpouseLastName:  Watson 
  SpouseSocSec#:	 987-65-4321
  Number&Street:	123 Homestead Lane
+ AddressLine2:  Apt. 67
  Town:		Wilksberry Acers
  Zipcode:   	19207
+ CountryCode:	US
  Phone:		215-171-7171
  SchoolCode:    J347
  SchooldDist:	Millwood

@@ -34,7 +34,7 @@ float thisversion=3.00;
 // Imported form data; add elements as needed, using the same variable name as in the imported form label for clarity.
 // Also update 'f1040_imp_defs' to add mapping.
 typedef struct FED_1040_IMP_F8995_T {
-        double L11;
+        double L11a;
         double L12;
         double S1_3;
         double S1_15;
@@ -49,7 +49,7 @@ FED_1040_IMP_F8995 f1040i;
 
 // Mapping from label name to address of local data struct element; either double or char*
 static FORM_IMPORT_DEF f1040_imp_defs[] = {
-        { "L11", &f1040i.L11, NULL },
+        { "L11a", &f1040i.L11a, NULL },
         { "L12", &f1040i.L12, NULL },
         { "S1_3", &f1040i.S1_3, NULL },
         { "S1_15", &f1040i.S1_15, NULL },
@@ -140,9 +140,15 @@ int main( int argc, char *argv[] )
  char *f1040_filename = GetTextLine( "FileName1040") ;
 
  if (strlen(f1040_filename) != 0) {
-     ImportReturnData( f1040_filename, f1040_imp_defs, f1040_imp_defs_size);
+     IMPORT_STATUS imp_stat = ImportReturnData( f1040_filename, f1040_imp_defs, f1040_imp_defs_size);
+
+     if (imp_stat.err != IMPORT_ERR_SUCCESS) {
+        ImportPrintStatus(outfile, "Form 1040", imp_stat);
+        exit(1);
+     }
+     
      fprintf( outfile, "INFO: --- Imported 1040 Data from file '%s' ---\n", f1040_filename);
-     fprintf( outfile, "INFO: f1040i.L11   -- %6.2f\n", f1040i.L11);
+     fprintf( outfile, "INFO: f1040i.L11a   -- %6.2f\n", f1040i.L11a);
      fprintf( outfile, "INFO: f1040i.L12  -- %6.2f\n", f1040i.L12);
      fprintf( outfile, "INFO: f1040i.S1_15   -- %6.2f\n", f1040i.S1_15);
      fprintf( outfile, "INFO: f1040i.S1_16   -- %6.2f\n", f1040i.S1_16);
@@ -160,7 +166,13 @@ int main( int argc, char *argv[] )
  printf("f_sch_c_filename: '%s'\n", f_sch_c_filename);
 
  if (strlen(f_sch_c_filename) != 0) {
-     ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+     IMPORT_STATUS imp_stat = ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+
+     if (imp_stat.err != IMPORT_ERR_SUCCESS) {
+        ImportPrintStatus(outfile, "Schedule C", imp_stat);
+        exit(1);
+     }
+     
      fprintf( outfile, "INFO: --- Imported Schedule C Data from file '%s' ---\n", f_sch_c_filename);
      fprintf( outfile, "INFO: f_sch_c.L7  --  %6.2f\n", f_sch_c.L7);
      fprintf( outfile, "INFO: f_sch_c.L31 --  %6.2f\n", f_sch_c.L31);
@@ -185,9 +197,9 @@ int main( int argc, char *argv[] )
  fprintf(outfile, "YourSocSec#: %s\n", f1040i.YourSocSec);
 
  // showline_wlabel( "INFO: Net QBI Income (this form L1-<row>-c)", f1040i.S1_3 - f1040i.S1_26);
- // showline_wlabel( "INFO: Form 1040 Line 11", f1040i.L11);
+ // showline_wlabel( "INFO: Form 1040 Line 11", f1040i.L11a);
  // showline_wlabel( "INFO: Form 1040 Line 12c", f1040i.L12);
- // showline_wlabel( "INFO: Taxable Income Before QBI Deduction (this form L11)", f1040i.L11 - f1040i.L12);
+ // showline_wlabel( "INFO: Taxable Income Before QBI Deduction (this form L11a)", f1040i.L11a - f1040i.L12);
 
  char * L1_row_names[] = { "i", "ii", "iii", "iv", "v" };
  char * L1_col_names[] = { "a", "b", "c" };
@@ -234,19 +246,19 @@ int main( int argc, char *argv[] )
 
 
  // double L11_prelim;
- // GetLine( "L11", &L11_prelim );
+ // GetLine( "L11a", &L11_prelim );
  // 
  // if ((L11_prelim == 0.0) && auto_calc) {
- //     fprintf(outfile, "INFO: Auto calculating QBI L11\n");
- //     L[11] = f1040i.L11 - f1040i.L12;
- //     fprintf(outfile, "INFO: %6.2f = f1040i.L11 - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11, f1040i.L12);
+ //     fprintf(outfile, "INFO: Auto calculating QBI L11a\n");
+ //     L[11] = f1040i.L11a - f1040i.L12;
+ //     fprintf(outfile, "INFO: %6.2f = f1040i.L11a - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11a, f1040i.L12);
  // } else {
  //    L[11] = L11_prelim;
  // }
 
- // Calculate line 11 from 1040 line 11 and line 12 values
- L[11] = f1040i.L11 - f1040i.L12;
- fprintf(outfile, "INFO: Line 11 = %6.2f = f1040i.L11 - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11, f1040i.L12);
+ // Calculate line 11 from 1040 line 11a and line 12 values
+ L[11] = f1040i.L11a - f1040i.L12;
+ fprintf(outfile, "INFO: Line 11 = %6.2f = f1040i.L11a - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11a, f1040i.L12);
 
  GetLine( "L12", &L[12] );
 

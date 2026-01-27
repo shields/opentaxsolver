@@ -1,6 +1,6 @@
 /************************************************************************/
 /* TaxSolve_PA40_2025.c - Pennsylvania 2025 PA-40 State Tax Form.	*/
-/* Copyright (C) 2025, - Aston Roberts					*/
+/* Copyright (C) 2026, - Aston Roberts					*/
 /* 									*/
 /* Compile:   gcc taxsolve_PA40_2025.c -o taxsolve_PA40_2025		*/
 /* Run:	      ./taxsolve_PA40_2025  PA40_2025.txt 			*/
@@ -21,7 +21,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2026	aston_roberts@yahoo.com			*/
+/* Aston Roberts 1-27-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
 #define thisversion 23.00
@@ -35,7 +35,7 @@
 #define Yes 1
 #define No  0
 
-double Tax_Rate = 0.0307;		/* Not updated for 2025 tax-year. */
+double Tax_Rate = 0.0307;		/* Updated for 2025 tax-year. */
 
 
 double pos( double x )
@@ -58,7 +58,7 @@ int main( int argc, char *argv[] )
  /* Decode any command-line arguments. */
  printf("PA40 - 2025 - v%3.1f\n", thisversion);
 
- #if (1)
+ #if (0)
    add_pdf_markup( "NotReady", 1, 240, 40, 17, 1, 1.0, 0, 0, "\"This program is NOT ready for 2025.\"" );
   #ifdef microsoft
    system( "start bin\\notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\"" );
@@ -228,9 +228,11 @@ int main( int argc, char *argv[] )
  SpouseLastName = GetTextLineF( "SpouseLastName:" );
  GetTextLineF( "SpouseSocSec#:" );
  GetTextLineF( "Number&Street:" );
+ GetTextLineF( "AddressLine2:" );
  GetTextLineF( "Town:" );
  fprintf(outfile,"State: PA\n");
  GetTextLineF( "Zipcode:" );
+ GetTextLineF( "CountryCode:" );
  GetTextLineF( "Phone:" );
  GetTextLineF( "SchoolCode:" );
  GetTextLineF( "SchooldDist:" );

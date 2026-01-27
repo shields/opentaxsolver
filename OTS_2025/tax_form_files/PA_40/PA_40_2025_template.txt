@@ -51,8 +51,10 @@ L27         0   ;       { Penalties and underpayment interest. }
  SpouseLastName: 
  SpouseSocSec#:	 
  Number&Street:	
+ AddressLine2:	
  Town:		
  Zipcode:   	
+ CountryCode:	US
  Phone:		
  SchoolCode:    
  SchooldDist:	

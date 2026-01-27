@@ -4371,8 +4371,8 @@ int main(int argc, char *argv[] )
  make_sized_label( mpanel, winwidth / 2 - 60, y, "2025 Tax Year", 11.0 );
 
  /* Place warning about this being a 'development version' when being revised. */
-tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
-set_label_color( tmpwdg, "#ff0000" );
+  // tmpwdg = make_label( mpanel, winwidth / 2 - 120, y+15, "-- DEVELOPMENT VERSION ONLY --" );
+  // set_label_color( tmpwdg, "#ff0000" );
 
  y = y + 33;
  make_sized_label( mpanel, 10, 135, "Select Tax Program:", 12.0 );
@@ -4417,7 +4417,7 @@ set_label_color( tmpwdg, "#ff0000" );
  y = y + dy;
  formid = setform( form_PA_40 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "PA State 40", slcttxprog, formid );
-gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
+ // gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_VA_760 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "VA State 760", slcttxprog, formid );

@@ -18,19 +18,21 @@ solid_status_check 11 4 20 .
  SpouseLastName: 116 401
 
  Number&Street:	116 451 0
+ AddressLine2:	116 500 0
  Town:		116 550 0
  State:		440 550 0
  Zipcode: 	510 550 0 13
 
- Check_R_PennResident 652 225 0
- Check_N_NonResident  652 243 0
- Check_P_PartYrResid  652 259 0
+ Check_R_PennResident 650 227 0
+ Check_N_NonResident  650 243 0
+ Check_P_PartYrResid  650 259 0
 
- Check_single   652 315 0
- Check_mfj      652 333 0
- Check_sep      652 349 0
+ Check_single   650 315 0
+ Check_mfj      650 333 0
+ Check_sep      650 349 0
 
- Phone:		116 598 0 11
+ CountryCode:	116 598 0 11
+ Phone:		230 598 0 11
  SchoolCode:    510 598 0 11
  SchooldDist:   735 579
  YourOccupation: 650 617

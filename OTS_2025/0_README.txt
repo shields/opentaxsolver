@@ -1,9 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-January 2, 2026 v23.00 - For Tax-Year 2025.
-
-  -- UNDER DEVELOPMENT --
+January 27, 2026 v23.00 - For Tax-Year 2025.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -18,9 +16,10 @@ This package contains programs and templates for:
 	- US-1040 - which also does the Schedules A, B, D, and forms 8949. 
 	- Schedule C for US-1040.
 	- State Income Taxes for Ohio, New Jersey, Virginia, Pennsylvania,
-	  Massachusetts, North Carolina, and California taxes being updated.
+	  Massachusetts, North Carolina, Arizona, Michigan, New York, Oregon,
+	  and California taxes updated for the 2025 Tax-Year.
 Also contains an Automatic PDF Form-Fillout function:
-	- Supports all Federal Forms and State Forms.
+	- Supports Federal Forms and State Forms.
 	  Saves time by filling out many of the numbers.  
 	  You may still need to enter some information or check boxes
 	  that are not handled by OTS.
@@ -33,8 +32,7 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
-  * v23.00 (1/2/2026) - Preliminary pre-release for Tax-Year 2025.
-		  -- UNDER DEVELOPMENT --
+  * v23.00 (1/27/2026) - Preliminary release for Tax-Year 2025.
 	- Please check back for more updates.
 
 Usage:

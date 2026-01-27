@@ -123,7 +123,13 @@ int main( int argc, char *argv[] )
  int autocalc = 0;
 
  if (strlen(f_sch_c_filename) != 0) {
-     ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+     IMPORT_STATUS imp_stat = ImportReturnData( f_sch_c_filename, f_sch_c_imp_defs, f_sch_c_imp_defs_size);
+
+     if (imp_stat.err != IMPORT_ERR_SUCCESS) {
+        ImportPrintStatus(outfile, "Schedule C", imp_stat);
+        exit(1);
+     }
+     
      fprintf( outfile, "INFO: --- Imported Sch C Data from file '%s' ---\n", f_sch_c_filename);
      fprintf( outfile, "INFO: Sch C L29 --  %6.2f\n", f_sch_c.L29);
      fprintf( outfile, "INFO: Sch C YourName: -- %s\n", f_sch_c.YourName);
