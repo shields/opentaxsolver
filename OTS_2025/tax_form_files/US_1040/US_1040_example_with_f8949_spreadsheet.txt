@@ -67,13 +67,13 @@ CkL3c2		 { Were your child's dividends included in L3b ? (answer: Yes, No) }
  { --- Other Income & Credits --- }
 L4a	41.41	;       { IRA distributions. (1099-R) }
 L4b	41.00	;       { Taxable IRA distributions. (1099-R) }
- Rollover  Y		 { Rollover ? (answer: Yes, No) }
- QCD	 no		{ Qualified Charitable Distribution ? (answer: yes, no) }
+Rollover  Y		 { Rollover ? (answer: Yes, No) }
+QCD	 no		{ Qualified Charitable Distribution ? (answer: yes, no) }
 
 L5a	43.43	;       { Pensions, Annuities. (1099-R) }
 L5b	43.00	;       { Taxable Pensions, Annuities. (1099-R) }
- Rollover		 { Rollover ? (answer: Yes, No) }
- PSO 			 { PSO ? (answer: Yes, No) }
+Rollover		 { Rollover ? (answer: Yes, No) }
+PSO 			 { PSO ? (answer: Yes, No) }
 
 L6a	  6	;       { Social Security benefits.  Forms SSA-1099 box-5. }
 
