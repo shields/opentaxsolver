@@ -21,7 +21,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Aston Roberts 1-2-2025	aston_roberts@yahoo.com			*/
+/* Aston Roberts 1-28-2026	aston_roberts@yahoo.com			*/
 /* Ellen Strnod  9/14/2025						*/
 /************************************************************************/
 
@@ -41,6 +41,7 @@
 #define WIDOW		        5
 
 int status=0;	/* Value for filing status. */
+#define MAXSTRLEN 2048      /* Maximum string-length for temporary strings. */
 char 	*Your1stName="", *YourLastName="", *your_socsec="",
 	*Spouse1stName="", *SpouseLastName="", *spouse_socsec="",
 	*street_address="", *apartment="", *town="", *state="", *zipcode="";
@@ -62,59 +63,10 @@ struct FedReturnData
 	DepSocSec[10][512], DepRelation[10][512];
  } PrelimFedReturn;
 
- void convert_slashes( char *fname )
- { /* Convert slashes in file name based on machine type. */
-   char *ptr;
-  #ifdef __MINGW32__
-   char slash_sreach='/', slash_replace='\\';
-  #else
-   char slash_sreach='\\', slash_replace='/';
-  #endif
-   ptr = strchr( fname, slash_sreach );
-   while (ptr)
-    {
-     ptr[0] = slash_replace;
-     ptr = strchr( fname, slash_sreach );
-    }
- }
-
- void grab_line_value( char *label, char *fline, double *value )
- {
-  char twrd[2048];
-  next_word(fline, twrd, " \t=;");
-  if ((twrd[0] != '\0') && (sscanf(twrd,"%lf", value) != 1))
-   {
-    printf("Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
-    fprintf(outfile,"Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
-   }
- }
-
- void grab_line_string( char *fline, char *strng )
- { /* Grab a string and copy it into pre-allocated character array. */
-  char twrd[2048];
-  strng[0] = '\0';
-  do
-   {
-    next_word(fline, twrd, " \t=" );
-    if (twrd[0] != ';')
-     { strcat( strng, twrd );  strcat( strng, " " ); }
-   }
-  while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
- }
-
-
- void grab_line_alloc( char *fline, char **strng )
- { /* Grab a string and allocate space for it. */
-  char twrd[4096];
-  grab_line_string( fline, twrd );
-  if (twrd[0] != '\0')
-   *strng = strdup( twrd );
- }
-
- int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
+int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
  {
   FILE *infile;
-  char fline[2000], word[2000], tword[2000];
+  char fline[MAXSTRLEN], word[MAXSTRLEN], tword[MAXSTRLEN];
   int linenum, j;
 
   for (linenum=0; linenum<MAX_LINES; linenum++)
@@ -182,7 +134,7 @@ struct FedReturnData
     exit( 1 );
    }
   fed_data->Itemized = 1; /* Set initial default values. */
-  read_line(infile,fline);  linenum = 0;
+  read_line_safe( infile, fline, MAXSTRLEN );  linenum = 0;
   while (!feof(infile))
    {
 	if (strstr(fline, "CkYouOver65")!=0) fed_data->Over65 = 1;
@@ -546,7 +498,7 @@ struct FedReturnData
         return 0;
        }
      }
-    read_line(infile,fline);
+    read_line_safe( infile, fline, MAXSTRLEN );
    }
   fclose(infile);
   return 1;

@@ -1,0 +1,47 @@
+Title:  Fed-1040 Schedule 1-A Tax Form - 2025
+
+{ --- EXAMPLE --- }
+
+FileName1040:   tax_form_files/US_1040/US_1040_example_out.txt  { File-name of Federal Return output file. }
+
+{ ----- Part I Modified Adjusted Gross Income (MAGI) Amount ----- }
+
+L2a	21	;  { Any income from Puerto Rico that you excluded. }
+L2b	22	;  { Amount from Form 2555, line 45. }
+L2c	23	;  { Amount from Form 2555, line 50. }
+L2d	24	;  { Amount from Form 4563, line 15. }
+
+{ ----- Part II No Tax on Tips ----- }
+{ Caution: Fill out Part II only if you received qualified tips. 
+  These tips must have been received in an occupation listed at
+  IRS.gov/TippedOccupations.
+}
+
+L4a    4,000	;  { Qualified tips included on Form W-2, box 7. }
+L4b    4,010	;  { Qualified tips included on Form 4137, line 1, row A, column (c). }
+L5     5,000	;  { Qualified tips received in the course of a trade or business. }
+
+{ ----- Part III No Tax on Overtime ----- }
+{ Caution: Fill out Part III only if you received qualified overtime compensation. }
+
+L14a	141	; { Qualified overtime compensation included in Form W-2, box 1. }
+L14b	142	; { Qualified overtime compensation included in 1099-NEC, box 1, or 1099-MISC, box 3. }
+
+{ ----- Part IV No Tax on Car Loan Interest ----- }
+{ Caution: Fill out Part IV only if you, paid or accrued Qualified Passenger Vehicle Loan Interest (QPVLI). }
+
+L22a	M45H456YVX3431234  { Applicable passenger vehicle Vin. }
+L22aii	220	; { Interest deducted on Schedule C, E, or F. }
+L22aiii	221	; { Interest Schedule 1A. }
+
+L22b	V4U923844S8143210  { Applicable second passenger vehicle Vin. }
+L22bii	 22	; { Interest deducted on Schedule C, E, or F. }
+L22biii	 21	; { Interest Schedule 1A. }
+
+
+{ ----- Options ----- }
+Round_PDF_to_Whole_Dollars  Y   { Controls format of PDF form. (answer: Yes, No) } 
+
+{
+ --------------------------------------------
+}

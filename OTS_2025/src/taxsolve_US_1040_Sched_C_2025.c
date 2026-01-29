@@ -24,7 +24,7 @@
 /* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA		*/
 /* 02111-1307 USA							*/
 /* 									*/
-/* Not updated for 2025 tax year:					*/
+/* Updated for 2025 tax year:						*/
 /*  S.Jenkins 1-2-2026   						*/
 /* Earlier Updates	Robert Heller  heller@deepsoft.com		*/
 /************************************************************************/
@@ -342,7 +342,7 @@ int main( int argc, char *argv[] )
  L[7] = L[5] + L[6];
  showline_wmsg(7, "Gross income");
  showline(8);
- L[9] = L[9] + 0.67 * L44a;				/* Not updated for 2025. */
+ L[9] = L[9] + 0.70 * L44a;				/* Updated for 2025. */
  showline(9);
  showline(10);
  showline(11);

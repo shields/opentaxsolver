@@ -26,7 +26,7 @@
 /* Corrections 2023 taxes - Jason Striegel				*/
 /************************************************************************/
 
-float thisversion=23.00;
+float thisversion=23.01;
 
 #include "taxsolve_routines.c"
 
@@ -69,24 +69,6 @@ struct dependent_info
 int nDeps=0;
 
 
-void convert_slashes( char *fname )
-{ /* Convert slashes in file name based on machine type. */
-  char *ptr;
- #ifdef __MINGW32__
-  char slash_sreach='/', slash_replace='\\';
- #else
-  char slash_sreach='\\', slash_replace='/';
- #endif
-
-  ptr = strchr( fname, slash_sreach );
-  while (ptr)
-   {
-    ptr[0] = slash_replace;
-    ptr = strchr( fname, slash_sreach );
-   }
-}
-
-
 char *pull_initial( char *name )
 { /* Expect names like:  "John, D.", and pull initial out. */
   int j=0;
@@ -105,21 +87,6 @@ char *pull_initial( char *name )
    strcpy( midinitial, "" );
   return strdup( midinitial );
 }
-
-
- void grab_line_string( char *fline, char *strng )
- { /* Grab a string and copy it into pre-allocated character array. */
-  char twrd[2048];
-  strng[0] = '\0';
-  do
-   {
-    next_word(fline, twrd, " \t=" );
-    if (twrd[0] != ';')
-     { strcat( strng, twrd );  strcat( strng, " " ); }
-   }
-  while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
- }
-
 
 
 int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )

@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=6.00;
+float thisversion=6.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -479,10 +479,10 @@ else
 	
 		/* Schedule AI - Part II - Annualized Self-Employment Tax */
 	
-		a[29] = 42150;			/* Not updated for 2025 */
-		b[29] = 70250;
-		c[29] = 112400;
-		d[29] = 168600;
+		a[29] = 44025.0;			/* Updated for 2025 */
+		b[29] = 73375.0;
+		c[29] = 117400.0;
+		d[29] = 176100.0;
 	
 		a[31] = NotLessThanZero(a[29] - a[30]);
 		b[31] = NotLessThanZero(b[29] - b[30]);	

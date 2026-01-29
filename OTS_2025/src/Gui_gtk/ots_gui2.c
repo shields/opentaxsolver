@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.77;
-char package_date[]="January 2, 2026";
-char ots_release_package[]="23.00";
+float version=2.78;
+char package_date[]="January 29, 2026";
+char ots_release_package[]="23.01";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1068,6 +1068,9 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	 instructions_filename = strdup( "f1040sse_instructions.dat" );
 	else
+	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+	 instructions_filename = strdup( "f1040s1a_instructions.dat" );
+	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	 instructions_filename = strdup( "f8829_instructions.dat" );
 	else
@@ -1267,6 +1270,9 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+	  check_form_version( title_line, "Title:  Fed-1040 Schedule 1-A" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	  check_form_version( title_line, "Title: 2025 Form 8829" );
@@ -2633,6 +2639,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, "US_1040_Sched_SE" );
   }
  else
+ if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "US_1040_Sched_1-A" );
+  }
+ else
  if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
   {
    supported_pdf_form = 1;
@@ -3660,7 +3673,8 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
-        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
+        { form_other, "taxsolve_US_1040_Sched_1-A","f1040s1a_meta.dat", "f1040s1a_pdf.dat" }
   };
 
 
@@ -4399,7 +4413,7 @@ int main(int argc, char *argv[] )
  y = y + dy;
  formid = setform( form_MA_1 );
  tmpwdg = make_radio_button( mpanel, txprogstog, x, y, "MA State 1", slcttxprog, formid );
- if (0)
+ if (0)   /* Need to leave one of these in code, to prevent compiler warning about unused variable. */
   gtk_widget_set_sensitive( tmpwdg, grayed_out );  /* Gray-out for this version - Not Ready. */
  y = y + dy;
  formid = setform( form_OR_40 );

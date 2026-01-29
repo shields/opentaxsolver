@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-January 27, 2026 v23.00 - For Tax-Year 2025.
+January 29, 2026 v23.01 - For Tax-Year 2025.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,10 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+  * v23.01 (1/29/2026) - Fixed US-1040 template "Rollover" lines.
+	Fix to AZ State PDF metadata. Updated Fed Sched-C and 2210 programs.
+	Added the new Fed Schedule 1-A for No-Tax on Tips+Overtime+SocSec.
+	Code consolidation of re-used routines.
   * v23.00 (1/27/2026) - Preliminary release for Tax-Year 2025.
 	- Please check back for more updates.
 

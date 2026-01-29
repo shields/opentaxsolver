@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=23.00;
+float thisversion=23.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -192,58 +192,6 @@ struct FedReturnData
 	Dep1stName[10][512], DepLastName[10][512], 
 	DepSocSec[10][512], DepRelation[10][512];
  } PrelimFedReturn;
-
-
-void convert_slashes( char *fname )
-{ /* Convert slashes in file name based on machine type. */
-  char *ptr;
- #ifdef __MINGW32__
-  char slash_sreach='/', slash_replace='\\';
- #else
-  char slash_sreach='\\', slash_replace='/';
- #endif
-  ptr = strchr( fname, slash_sreach );
-  while (ptr)
-   {
-    ptr[0] = slash_replace;
-    ptr = strchr( fname, slash_sreach );
-   }
-}
-
-
-void grab_line_value( char *label, char *fline, double *value )
-{
- char twrd[2048];
- next_word(fline, twrd, " \t=;");
- if ((twrd[0] != '\0') && (sscanf(twrd,"%lf", value) != 1))
-  {
-   printf("Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
-   fprintf(outfile,"Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
-  }
-}
-
-
-void grab_line_string( char *fline, char *strng )
-{ /* Grab a string and copy it into pre-allocated character array. */
- char twrd[2048];
- strng[0] = '\0';
- do
-  {
-   next_word(fline, twrd, " \t=" );
-   if (twrd[0] != ';')
-    { strcat( strng, twrd );  strcat( strng, " " ); }
-  }
- while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
-}
-
-
-void grab_line_alloc( char *fline, char **strng )
-{ /* Grab a string and allocate space for it. */
- char twrd[4096];
- grab_line_string( fline, twrd );
- if (twrd[0] != '\0')
-  *strng = strdup( twrd );
-}
 
 
 int ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )

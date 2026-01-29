@@ -28,7 +28,7 @@
 /* Aston Roberts 1-5-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=23.00;
+float thisversion=23.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -40,6 +40,7 @@ float thisversion=23.00;
 
 #define CAP_GAIN_ADJUSTMENT_CODES  "BTNHDQXRWLESCMOZY"   	/* Form 8949 Instructions */
 #define MAXADJERRCNT 25     /* Max number of adj_code errors to print to terminal */ 
+#define MAXSTRLEN 2048	    /* Maximum string-length for temporary strings. */
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -483,28 +484,10 @@ struct FedReturnData
  } LastYearsReturn;
 
 
-void convert_slashes( char *fname )
-{ /* Convert slashes in file name based on machine type. */
-  char *ptr;
- #ifdef __MINGW32__
-  char slash_sreach='/', slash_replace='\\';
- #else
-  char slash_sreach='\\', slash_replace='/';
- #endif
-
-  ptr = strchr( fname, slash_sreach );
-  while (ptr)
-   {
-    ptr[0] = slash_replace;
-    ptr = strchr( fname, slash_sreach );
-   }
-}
-
-
 void ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
 {
  FILE *infile;
- char fline[1000], word[1000];
+ char fline[MAXSTRLEN], word[MAXSTRLEN];
  int linenum;
 
  for (linenum=0; linenum<MAX_LINES; linenum++) 
@@ -520,7 +503,7 @@ void ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
   }
  printf("Importing Last Year's Federal Return Data from file '%s'\n", fedlogfile );
  fed_data->Itemized = 1; /* Set initial default values. */
- read_line(infile,fline);  linenum = 0;
+ read_line_safe( infile, fline, MAXSTRLEN );  linenum = 0;
  while (!feof(infile))
   {
    if (strstr(fline,"Use standard deduction.")!=0) fed_data->Itemized = 0;
@@ -547,7 +530,7 @@ void ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )
       }
      if (verbose) printf("FedLin[%d] = %2.2f\n", linenum, fed_data->schedD[linenum]);
     }
-   read_line(infile,fline);
+   read_line_safe( infile, fline, MAXSTRLEN );
   }
  fclose(infile);
 }
@@ -821,7 +804,7 @@ void Display_adj_code_err()
 /* Grab Spreadsheet for Capital Sales (Gain/Loss) of Form-8949 from a CSV or Tab-delimited file. */
 void get_CSV_8949( char *spreadsheet_name )
 {
- char sline[4096], word[4096], delim=',';
+ char sline[(2*MAXSTRLEN)], word[(2*MAXSTRLEN)], delim=',';
  char descrip[512], date_bought[512], date_sold[512], adj_code[512], adjcodeerrmsg[4096];
  double proceeds, cost, adj_amnt;
  struct date_rec buydate, selldate, annivdate;
@@ -851,7 +834,7 @@ void get_CSV_8949( char *spreadsheet_name )
  else
  if (strstr( word, ".TXT" ))
   { /* Try to determine if file is CSV or TSV. */
-    read_line_safe( sfile, sline, 4096 );
+    read_line_safe( sfile, sline, 2 * MAXSTRLEN );
     if (strstr( sline, "\t" ))
      delim = '\t';
     fclose( sfile );	/* Reload file. */
@@ -872,7 +855,7 @@ void get_CSV_8949( char *spreadsheet_name )
  /* Expect 1st line of spreadsheet file to be:
        Description, Date_Acquired, Date_Sold, Proceeds, Cost, Code, Adjustment
  */
- read_line_safe( sfile, sline, 4096 );
+ read_line_safe( sfile, sline, 2 * MAXSTRLEN );
  next_csv( sline, word, delim );	capitalize( word );
  if (!strstr( word, "DESCRIP" ))  err++;
  next_csv( sline, word, delim );	capitalize( word );
@@ -891,7 +874,7 @@ void get_CSV_8949( char *spreadsheet_name )
    return;
   }
   
- read_line_safe( sfile, sline, 4096 );
+ read_line_safe( sfile, sline, 2 * MAXSTRLEN );
  while (!feof( sfile ))
   {
    consume_leading_trailing_whitespace( sline );
@@ -989,7 +972,7 @@ void get_CSV_8949( char *spreadsheet_name )
        } /*short-gain/loss*/
 
     } /*valid_line*/
-   read_line_safe( sfile, sline, 4096 );
+   read_line_safe( sfile, sline, 2 * MAXSTRLEN );
   }
  fclose( sfile );
 }
@@ -1802,7 +1785,7 @@ void Calc_StudentLoan_Sched1L21()		/* Instructions page 99 */
 int main( int argc, char *argv[] )						/* Updated for 2025. */
 {
  int argk, j, k, itemize=0;
- char word[2000], outfname[2000], *infname="", labelx[1024]="";
+ char word[MAXSTRLEN], outfname[MAXSTRLEN], *infname="", labelx[1024]="";
  time_t now;
  double exemption_threshold=0.0;
  double S_STD_DEDUC, MFS_STD_DEDUC, MFJ_STD_DEDUC, HH_STD_DEDUC, std_deduc;
@@ -1873,7 +1856,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  */
 
  /* Accept Form's "Title" line, and put out with date-stamp for your records. */
- read_line( infile, word );
+ read_line_safe( infile, word, MAXSTRLEN );
  now = time(0);
  fprintf(outfile,"\n%s,	 v%2.2f, %s\n", word, thisversion, ctime( &now ) );
  check_form_version( word, "Title:  US Federal 1040 Tax Form - 2025" );

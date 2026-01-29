@@ -685,14 +685,16 @@ void gen_date_rec(char *datestr, char *emssg, struct date_rec *date )
 }
 
 
+/* --- Begin file reading routines. --- */
+/* The following routines are used by several programs to read data from other form program results. */
+
 void read_line( FILE *infile, char *line )
-{
+{ /* Read a line of text from a file, and terminate with null ('\0'), unlike fgets which leaves newline. */
  int j=0;
  do  line[j++] = getc(infile);  while ((!feof(infile)) && (line[j-1] != '\n'));
  if ((j > 1) && (line[j-2] == '\r')) j--;
  line[j-1] = '\0';
 }
-
 
 void read_line_safe( FILE *infile, char *line, int maxlen )
 {
@@ -708,7 +710,6 @@ void read_line_safe( FILE *infile, char *line, int maxlen )
  if ((j > 1) && (line[j-2] == '\r')) j--;
  line[j-1] = '\0';
 }
-
 
 void read_comment_filtered_line( FILE *infile, char *line, int maxlen )
 { /* Read next line, while filtering-out any comments. */
@@ -729,6 +730,57 @@ void read_comment_filtered_line( FILE *infile, char *line, int maxlen )
  line[j] = '\0';
  consume_leading_trailing_whitespace( line );
 }
+
+void convert_slashes( char *fname )
+{ /* Convert slashes in file name based on machine type. */
+  char *ptr;
+ #ifdef __MINGW32__
+  char slash_sreach='/', slash_replace='\\';
+ #else
+  char slash_sreach='\\', slash_replace='/';
+ #endif
+  ptr = strchr( fname, slash_sreach );
+  while (ptr)
+   {
+    ptr[0] = slash_replace;
+    ptr = strchr( fname, slash_sreach );
+   }
+}
+
+void grab_line_value( char *label, char *fline, double *value )
+{
+ char twrd[2048];
+ next_word(fline, twrd, " \t=;");
+ if ((twrd[0] != '\0') && (sscanf(twrd,"%lf", value) != 1))
+  {
+   printf("Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
+   fprintf(outfile,"Error: Reading Fed %s '%s%s'\n", label, twrd, fline);
+  }
+}
+
+void grab_line_string( char *fline, char *strng )
+{ /* Grab a string and copy it into pre-allocated character array. */
+ char twrd[2048];
+ strng[0] = '\0';
+ do
+  {
+   next_word(fline, twrd, " \t=" );
+   if (twrd[0] != ';')
+    { strcat( strng, twrd );  strcat( strng, " " ); }
+  }
+ while ((fline[0] != '\0') && (strstr( twrd, ";" ) == 0));
+}
+
+void grab_line_alloc( char *fline, char **strng )
+{ /* Grab a string and allocate space for it. */
+ char twrd[4096];
+ grab_line_string( fline, twrd );
+ if (twrd[0] != '\0')
+  *strng = strdup( twrd );
+}
+
+/* --- End file reading routines. --- */
+
 
 
 /* Show a line-number and it's value. */

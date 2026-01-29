@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.17;
-char package_date[]="January 2, 2026";
-char ots_release_package[]="23.00";
+float version=3.18;
+char package_date[]="January 29, 2026";
+char ots_release_package[]="23.01";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1097,6 +1097,9 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	 instructions_filename = strdup( "f1040sse_instructions.dat" );
 	else
+	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+	 instructions_filename = strdup( "f1040s1a_instructions.dat" );
+	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	 instructions_filename = strdup( "f8829_instructions.dat" );
 	else
@@ -1297,6 +1300,9 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
+	else
+	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+	  check_form_version( title_line, "Title:  Fed-1040 Schedule 1-A" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	  check_form_version( title_line, "Title: 2025 Form 8829" );
@@ -2683,6 +2689,13 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, "US_1040_Sched_SE" );
   }
  else
+ if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
+  {
+   supported_pdf_form = 1;
+   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
+   strcat( directory_dat, "US_1040_Sched_1-A" );
+  }
+ else
  if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
   {
    supported_pdf_form = 1;
@@ -3710,7 +3723,8 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
-        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
+        { form_other, "taxsolve_US_1040_Sched_1-A","f1040s1a_meta.dat", "f1040s1a_pdf.dat" }
     };
 
 
@@ -3762,7 +3776,7 @@ void do_pdf_conversion()
     if (round_pdf_to_whole_dollars)
      strcpy( updf_options, "-round_to_whole_numbers" );
 
-    prepare_universal_pdf_cmd( "", ppdf->form_meta_data_name, wrkingfname,  ppdf->form_pdf_name, outputname );
+    prepare_universal_pdf_cmd( updf_options, ppdf->form_meta_data_name, wrkingfname,  ppdf->form_pdf_name, outputname );
     printf("Issuing: %s\n", fillout_pdf_command );
     add_status_line( outputname );
     execute_cmd( fillout_pdf_command );

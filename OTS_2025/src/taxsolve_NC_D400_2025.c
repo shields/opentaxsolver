@@ -36,7 +36,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=23.00;
+float thisversion=23.01;
 
 #define SINGLE                  1
 #define MARRIED_FILING_JOINTLY  2
@@ -55,24 +55,6 @@ struct FedReturnData
   int Itemized, Limited, Limited_L6;
   double Sched_A[MAX_LINES];
  };
-
-
-void convert_slashes( char *fname )
-{ /* Convert slashes in file name based on OS type. */
-  char *ptr;
- #ifdef __MINGW32__
-  char slash_sreach='/', slash_replace='\\';
- #else
-  char slash_sreach='\\', slash_replace='/';
- #endif
-
-  ptr = strchr( fname, slash_sreach );
-  while (ptr)
-   {
-    ptr[0] = slash_replace;
-    ptr = strchr( fname, slash_sreach );
-   }
-}
 
 
 void ImportFederalReturnData( char *fedlogfile, struct FedReturnData *fed_data )

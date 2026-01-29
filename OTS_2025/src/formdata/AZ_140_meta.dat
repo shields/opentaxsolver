@@ -6,18 +6,18 @@ Page 1
                   550, 50  841, 1134	110-dpi
  round_to_whole_numbers
                   
- Your1stName: 85 141
- YourLastName: 448 141
- YourSocSec#: 784 141
- Spouse1stName:85 178
+ Your1stName:     85 141
+ YourLastName:   448 141
+ YourSocSec#:    784 141
+ Spouse1stName:   85 178
  SpouseLastName: 448 178
- SpouseSocSec#: 784 178
- Number&Street: 85 215
- Apt#: 535 215
- DaytimePhone#: 689 215
- Town/City: 85 252
- State: 332 252
- ZipCode: 478 252
+ SpouseSocSec#:  784 178
+ Number&Street:   85 215
+ Apt#: 		 535 215
+ DaytimePhone#:  689 215
+ Town/City: 	  85 252
+ State: 	 332 252
+ ZipCode: 	 478 252
  PriorLastNames: 613 252
 
  L4Chk 114 272
