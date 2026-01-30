@@ -33,7 +33,8 @@ Also contains an Automatic PDF Form-Fillout function:
 
 History:
   * v23.01 (1/29/2026) - Fixed US-1040 template "Rollover" lines.
-	Fix to AZ State PDF metadata. Updated Fed Sched-C and 2210 programs.
+	Fix to AZ State PDF metadata. Updated Fed Schedules A and C,
+	as well was the Fed 2210 programs.
 	Added the new Fed Schedule 1-A for No-Tax on Tips+Overtime+SocSec.
 	Code consolidation of re-used routines.
   * v23.00 (1/27/2026) - Preliminary release for Tax-Year 2025.

@@ -2213,9 +2213,9 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  for (j=0; j<10; j++)
    localtax[j] = 0.0;
  if (status != MARRIED_FILING_SEPARAT)
-  loctaxlimit = 10000.0;
+  loctaxlimit = 40000.0;					/* Updated for 2025. */
  else
-  loctaxlimit = 5000.0;
+  loctaxlimit = 20000.0;
  GetLine( "A5a", &localtax[1] );	/* State and local income taxes. Or sales taxes. */
 
  GetYesNo( "CheckBoxA5a", &j );
@@ -2255,6 +2255,47 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  SchedA[4] = NotLessThanZero( SchedA[1] - SchedA[3] );
  localtax[4] =  localtax[1] +  localtax[2] +  localtax[3];
  localtax[5] = smallerof( localtax[4], loctaxlimit );
+
+ /* State and Local Tax Deduction Worksheet. */
+ if (((L[11] > 500000.0) &&  (localtax[4] > 10000.0)) || 
+     ((status ==  MARRIED_FILING_SEPARAT) && (L[11] > 500000.0) && (localtax[4] > 5000.0)))
+  { double ws[100];
+    fprintf(outfile,"\n  Doing Sched-A State and Local Tax Deduction (STTD) Worksheet.\n");
+    ws[1] = 40000.0;
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 1, ws[1] );
+    ws[2] = L[11];
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 2, ws[2] );
+    fprintf(outfile,"Sched-A State and Local Tax Deduction Worksheet -- Assuming no Puerto Rico income, Form 2555 or 4563 entries.\n");
+    ws[3] = 0.0;
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 3, ws[3] );
+    ws[4] = ws[2] + ws[3];
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 4, ws[4] );
+    if (status ==  MARRIED_FILING_SEPARAT)
+     ws[5] = 250000.0;
+    else
+     ws[5] = 500000.0;
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 5, ws[5] );
+    if (ws[4] > ws[5])
+     {
+      ws[6] = ws[4] - ws[5];
+      fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 6, ws[6] );
+      ws[7] = 0.30 * ws[6];
+      fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 7, ws[7] );
+      ws[8] = ws[1] - ws[7];
+      fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 8, ws[8] );
+      ws[9] = LargerOf( ws[8], 10000.0 );
+     }
+    else
+     ws[9] = ws[1];
+    fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 9, ws[9] );
+    if (status ==  MARRIED_FILING_SEPARAT)
+     ws[10] = SmallerOf( ws[9]/2.0, localtax[4] ); 
+    else
+     ws[10] = SmallerOf( ws[9], localtax[4] );
+    fprintf(outfile,"Sched-A State and Local Tax Deduction Worksheet ws[10] = %6.2f\n\n", ws[10] );
+    localtax[5] = ws[10];
+  }
+
  SchedA[7] = localtax[5] + SchedA[6];
  homemort[5] = homemort[0] + homemort[1] + homemort[2] + homemort[3];
  SchedA[10] = homemort[5] + SchedA[9];
