@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-January 29, 2026 v23.01 - For Tax-Year 2025.
+February 5, 2026 v23.02 - For Tax-Year 2025.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,9 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+  * v23.02 (2/5/2026) - Combined Fed Schedule 1-A into the main 1040
+	program. Removed entry for Line 13b, which is now calculated
+	from the Sched 1-A entries.
   * v23.01 (1/29/2026) - Fixed US-1040 template "Rollover" lines.
 	Fix to AZ State PDF metadata. Updated Fed Schedules A and C,
 	as well was the Fed 2210 programs.

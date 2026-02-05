@@ -38,6 +38,7 @@ L1i		; { Nontaxable combat pay election. }
 L2a      	;
 
  { -- Taxable Interest -- 1099-INT(s) box 1 }
+ {  (Place payer name in comment on same line.) }
 L2b      	
 		;
 
@@ -66,7 +67,7 @@ PSO 			 { PSO ? (answer: Yes, No) }
 L6a		;       { Social Security benefits.  Forms SSA-1099 box-5. }
 
 L13a		;	{ Qualified business income deduction. }
-L13b		;	{ Additional deductions from Schedule 1-A, Line 38. }
+
 L19		; 	{ Child tax credit/credit for other dependents. }
 
 L25a		;       { Federal income tax withheld, from W-2's, box-2. }
@@ -212,6 +213,41 @@ S1_24j		;	{ Housing deduction from Form 2555 }
 S1_24k		;	{ Excess deductions of section 67(e) expenses from Schedule K-1 }
 S1_24z		;	{ Other adjustments. }
 S1_24z_Type:		 { Type of Other adjustments. }
+
+
+{ ----- Schedule 1-A ----- }
+
+{ -- Part I Modified Adjusted Gross Income (MAGI) Amount -- }
+S1A_2a		;  { Any income from Puerto Rico that you excluded. }
+S1A_2b		;  { Amount from Form 2555, line 45. }
+S1A_2c		;  { Amount from Form 2555, line 50. }
+S1A_2d		;  { Amount from Form 4563, line 15. }
+
+{ -- Part II No Tax on Tips -- }
+{ Caution: Fill out Part II only if you received qualified tips. 
+  These tips must have been received in an occupation listed at
+  IRS.gov/TippedOccupations.
+}
+S1A_4a    	;  { Qualified tips included on Form W-2, box 7. }
+S1A_4b    	;  { Qualified tips included on Form 4137, line 1, row A, column (c). }
+S1A_5     	;  { Qualified tips received in the course of a trade or business. }
+
+{ -- Part III No Tax on Overtime -- }
+{ Caution: Fill out Part III only if you received qualified overtime compensation. }
+S1A_14a		; { Qualified overtime compensation included in Form W-2, box 1. }
+S1A_14b		; { Qualified overtime compensation included in 1099-NEC, box 1, or 1099-MISC, box 3. }
+
+{ -- Part IV No Tax on Car Loan Interest -- }
+{ Caution: Fill out Part IV only if you, paid or accrued Qualified Passenger Vehicle Loan Interest (QPVLI). }
+S1A_22a		{ Applicable passenger vehicle Vin. }
+S1A_22aii		; { Interest deducted on Schedule C, E, or F. }
+S1A_22aiii		; { Interest Schedule 1A. }
+S1A_22b		{ Applicable second passenger vehicle Vin. }
+S1A_22bii	 	; { Interest deducted on Schedule C, E, or F. }
+S1A_22biii	 	; { Interest Schedule 1A. }
+
+{ -- Part V - (completed automatically) -- }
+{					 }
 
 
 { ---- Tax and Credits ---- }

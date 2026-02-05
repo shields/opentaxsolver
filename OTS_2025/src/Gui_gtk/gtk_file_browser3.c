@@ -658,7 +658,7 @@ void fb_create_new_dir( GtkWidget *wdg, void *data )
   char *title="Create New Directory";
  #endif
 
- panel = make_window( winwd, winht, title, &fbcrdirwin );
+ panel = make_window( winwd+10, winht, title, &fbcrdirwin );
  make_label( panel, 2, 1, title );
  fb_crdir_formbox = make_formbox( panel, 5, 20, 50, "", fbdata.maxlength, fb_add_new_dir, 0 );
  make_button( panel, 10, winht - 35, " Create ", fb_add_new_dir, 0 );
@@ -706,6 +706,7 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
    const char *headings[4]={ " ", "       Date       ", "       File Name      " };
  #endif
 
+ if (debug) printf(" Rendering BrowseFiles0.\n");
  line = (char *)malloc(MXLEN);
  word = (char *)malloc(MXLEN);
  twrd1 = (char *)malloc(MXLEN);
@@ -931,13 +932,13 @@ void renderBrowseFiles0( char *prompt, int maxlength, char *directory, char *wil
  make_label( fbrowser_frame, 296, ypos - 11, "Sort by:" );
  if (fb_sort_state)
   {
-   radio_sort_by_date = make_radio_button( fbrowser_frame, 0, 427, ypos-13, "Dates", fb_re_sort_bydate, "Dates" );
-   radio_sort_by_alpha = make_radio_button( fbrowser_frame, radio_sort_by_date, 353, ypos-13, "Names", fb_re_sort_alpha, "Alpha" );
+   radio_sort_by_date = make_radio_button( fbrowser_frame, 0, 427, ypos-11, "Dates", fb_re_sort_bydate, "Dates" );
+   radio_sort_by_alpha = make_radio_button( fbrowser_frame, radio_sort_by_date, 353, ypos-11, "Names", fb_re_sort_alpha, "Alpha" );
   }
  else
   {
-   radio_sort_by_alpha = make_radio_button( fbrowser_frame, 0, 353, ypos-13, "Names", fb_re_sort_alpha, "Alpha" );
-   radio_sort_by_date = make_radio_button( fbrowser_frame, radio_sort_by_alpha, 427, ypos-13, "Dates", fb_re_sort_bydate, "Dates" );
+   radio_sort_by_alpha = make_radio_button( fbrowser_frame, 0, 353, ypos-11, "Names", fb_re_sort_alpha, "Alpha" );
+   radio_sort_by_date = make_radio_button( fbrowser_frame, radio_sort_by_alpha, 427, ypos-11, "Dates", fb_re_sort_bydate, "Dates" );
   }
 
  make_label( fbrowser_frame, 2, ypos, prompt );
@@ -1020,8 +1021,10 @@ static gboolean fb_expose_event( GtkWidget *widget, GdkEventExpose *event, gpoin
  gtk_window_get_size( GTK_WINDOW( fbwindow ), &new_width, &new_height );
  if ((abs( new_width - fbwinwidth ) > 15) || (abs( new_height - fbwinheight ) > 15))
   {
-   fbwinwidth = new_width;
-   fbwinheight = new_height;
+   if (abs( new_width - fbwinwidth ) > 15)
+    fbwinwidth = new_width - 5;
+   if (abs( new_height - fbwinheight ) > 15)
+    fbwinheight = new_height - 5;
    gtk_widget_destroy( fbrowser_frame );
    fbrowser_frame = gtk_fixed_new();
    gtk_container_add( GTK_CONTAINER( fbwinframe ), fbrowser_frame );
@@ -1044,6 +1047,7 @@ void BrowseFiles0( char *prompt, int maxlength, char *directory, char *wildcards
  fbdata.wildcards = strdup( wildcards );
  fbdata.filename = strdup( filename );
  fbdata.callback = callback;
+ if (debug) printf(" Creating file-browser window of %dx%d.\n", fbwinwidth+10, fbwinheight );
  fbwinframe = make_window( fbwinwidth+10, fbwinheight, "File Browser", &fbwindow );
  gtk_window_set_resizable( GTK_WINDOW( fbwindow ), 1 );
  g_signal_connect( fbwindow, "draw", G_CALLBACK(fb_expose_event), NULL);

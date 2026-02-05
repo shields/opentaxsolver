@@ -277,7 +277,71 @@ Page 4
  S1_26  776 836 12
 
 
-Page 5
+Page 5		! Sched 1-A page-1
+ YourNames: 	 75 156
+ YourSocSec#: 	700 156
+ S1A_1	770 196 12
+ S1A_2a	628 214 12
+ S1A_2b	628 235 12
+ S1A_2c	628 253 12
+ S1A_2d	628 270 12
+ S1A_2e	770 287 12
+ S1A_3	770 307 12
+ S1A_4a	628 508 12
+ S1A_4b	628 545 12
+ S1A_4c	770 598 12
+ S1A_5	770 673 12
+ S1A_6	770 692 12
+ S1A_7	770 711 12
+ S1A_8	770 730 12
+ S1A_9	770 748 12
+ S1A_10	770 767 12
+ S1A_11	770 802 12
+ S1A_12	770 821 12
+ S1A_13	770 840 12
+
+ S1A_14a	628 949 12
+ S1A_14b	628 985 12
+
+ S1A_14c	770 1004 12
+ S1A_15	770 1023 12
+ S1A_16	770 1041 12
+ S1A_17	770 1060 12
+ S1A_18	770 1078 12
+ S1A_19	770 1115 12
+ S1A_20	770 1134 12
+ S1A_21	770 1152 12
+
+
+Page 6		! Sched 1-A page-2
+S1A_22a	172 256	 0 16
+S1A_22aii	662 258 12
+S1A_22aiii	770 258 12
+
+S1A_22b	172 284	 0 16
+S1A_22bii	662 287 12
+S1A_22biii	770 287 12
+
+S1A_23	770 307 12
+S1A_24	770 325 12
+S1A_25	770 343 12
+S1A_26	770 362 12
+S1A_27	770 380 12
+S1A_28	770 416 12
+S1A_29	770 435 12
+S1A_30	770 472 12
+S1A_31	770 545 12
+S1A_32	770 564 12
+S1A_33	770 583 12
+S1A_34	770 601 12
+S1A_35	770 620 12
+S1A_36a	770 657 12
+S1A_36b	770 693 12
+S1A_37	770 712 12
+S1A_38	770 765 12
+
+
+Page 7
  YourNames: 	 92 157
  YourSocSec#:	720 157
  no_zero_entries
@@ -306,7 +370,7 @@ Page 5
  S2_15	778 1067 12
  S2_16	778 1095 12
 
-Page 6
+Page 8
  S2_17a	625 156 12
  S2_17a_Type: 172 160
  S2_17b	625 185 12
@@ -333,7 +397,7 @@ Page 6
  S2_21  775 900 12
 
 
-Page 7
+Page 9
  YourNames: 	 92 157
  YourSocSec#:	720 157
  S3_1	778 195 12
@@ -374,7 +438,7 @@ Page 7
  S3_15	778 930 12
 
 
-Page 8
+Page 10
  YourNames: 	 92 156
  YourSocSec#:	740 156
  A1	628 196 12
@@ -405,7 +469,7 @@ Page 8
  CheckBoxA18 713 1150
 
 
-Page 9
+Page 11
  YourNames: 	 92 156
  YourSocSec#:	746 156
 
@@ -484,7 +548,7 @@ Page 9
  CkB8_N		856 1150
 
 
-Optional_Page 10
+Optional_Page 12
 
  YourNames: 	135 142
  YourSocSec#:	492 142
@@ -557,7 +621,7 @@ Optional_Page 10
  Btotal	     650 1036 12
 
 
-Optional_Page 11
+Optional_Page 13
  YourNames: 	 92 174
  YourSocSec#:	736 174
  CkDisposeQualOpport_Y 759 195
@@ -607,7 +671,7 @@ Optional_Page 11
  D15	771 1132 12 
 
 
-Optional_Page 12
+Optional_Page 14
  no_zero_entries
  D16	751 138 12
  CkD17y 103 324
@@ -622,7 +686,7 @@ Optional_Page 12
  CkD22n 103 838
 
 
-Optional_Page 13	! Form-8949 Short
+Optional_Page 15	! Form-8949 Short
 
  YourNames: 	 90 158
  YourSocSec#:	580 158
@@ -741,7 +805,7 @@ Optional_Page 13	! Form-8949 Short
  FontSz 10
 
 
-Optional_Page 14	! Form-8949 Long
+Optional_Page 16	! Form-8949 Long
 
  YourNames: 	 90 102
  YourSocSec#:	580 102
@@ -862,7 +926,7 @@ Optional_Page 14	! Form-8949 Long
 
 
 
-Optional_Page 15	! AMT Form-6251
+Optional_Page 17	! AMT Form-6251
  YourNames: 	 92 155
  YourSocSec#:	736 155
 
@@ -906,7 +970,7 @@ Optional_Page 15	! AMT Form-6251
  AMT_Form_6251_L11    767 1152 12
 
 
-Optional_Page 16
+Optional_Page 18
 
  AMT_Form_6251_L12    767 140 12
  AMT_Form_6251_L13    767 214 12

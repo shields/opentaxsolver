@@ -28,7 +28,7 @@
 /* Aston Roberts 1-5-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=23.01;
+float thisversion=23.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -69,7 +69,8 @@ double qcgws[MAX_LINES];	/* Support for AMT calculation. (qual.div+cap.gain wrks
 double amtws2c=0.0;		/* Investment interest expense (difference between regular tax and AMT) - AMT entry */
 double amtws2g=0.0;		/* Specified private activity bond interest exempt from regular tax - AMT entry */
 int Do_SchedD=No, Do_QDCGTW=No, Do_SDTW=No;
-int status, under65=Yes, over65=No, dependent=No, force_print_all_pdf_forms=0;
+int status, under65=Yes, dependent=No, force_print_all_pdf_forms=0;
+int over65you=0, over65spouse=0;
 int ForceItemize=0;
 double localtax[10], loctaxlimit, homemort[10];
 double  collectibles_gains=0.0, ws_sched_D[MAX_LINES];
@@ -438,7 +439,7 @@ double form6251_AlternativeMinimumTax( int itemized )						/* Updated for 2025. 
  if (force_print_all_pdf_forms) 
   file_amt = 1;
  if (file_amt)
-  fprintf(outfile,"PDFpage: 15 15\n");	/* Optional PDF Page. */
+  fprintf(outfile,"PDFpage: 17 17\n");	/* Optional PDF Page. */
  showline_wlabelnz( "AMT_Form_6251_L1a", amtws1a );
  showline_wlabelnz( "AMT_Form_6251_L1b", amtws[1] );
  for (j=2; j<100; j++) 
@@ -463,7 +464,7 @@ double form6251_AlternativeMinimumTax( int itemized )						/* Updated for 2025. 
      fprintf(outfile," 		AMT_Form_6251_L%d = %8.2f\n", j, amtws[j] );
     }
    if (file_amt && (j == 11))
-    fprintf(outfile,"EndPDFpage.\nPDFpage: 16 16\n");
+    fprintf(outfile,"EndPDFpage.\nPDFpage: 18 18\n");
   }
  if (file_amt)
   fprintf(outfile,"EndPDFpage.\n");
@@ -1132,7 +1133,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-A/D" );	/* (A) Basis Reported to IRS. */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:", "13 13\n F8949_ckA X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (A) Basis Reported to IRS:", "15 15\n F8949_ckA X" );
    SchedDd[1] = total_sales;
    SchedDe[1] = total_costs;
    SchedDg[1] = total_adjs;
@@ -1141,7 +1142,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (D) Basis Reported to IRS:", "14 14\n F8949_ckD X" );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (D) Basis Reported to IRS:", "16 16\n F8949_ckD X" );
    SchedDd[8] = total_sales;
    SchedDe[8] = total_costs;
    SchedDg[8] = total_adjs;
@@ -1152,7 +1153,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-B/E" );	/* (B) Basis NOT Reported to IRS. */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (B) Basis NOT Reported to IRS:", "13 13\n F8949_ckB X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (B) Basis NOT Reported to IRS:", "15 15\n F8949_ckB X" );
    SchedDd[2] = total_sales;
    SchedDe[2] = total_costs;
    SchedDg[2] = total_adjs;
@@ -1161,7 +1162,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (E) Basis NOT Reported to IRS:", "14 14\n F8949_ckE X"  );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (E) Basis NOT Reported to IRS:", "16 16\n F8949_ckE X"  );
    SchedDd[9] = total_sales;
    SchedDe[9] = total_costs;
    SchedDg[9] = total_adjs;
@@ -1172,7 +1173,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-C/F" );	/* (C) Cannot check (A) or (B). */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (C) Not reported on Form 1099-B.\n", "13 13\n F8949_ckC X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (C) Not reported on Form 1099-B.\n", "15 15\n F8949_ckC X" );
    SchedDd[3] = total_sales;
    SchedDe[3] = total_costs;
    SchedDg[3] = total_adjs;
@@ -1181,7 +1182,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (F) Not reported on Form 1099-B.\n", "14 14\n F8949_ckF X" );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term Cap Gains+Losses, CHECK (F) Not reported on Form 1099-B.\n", "16 16\n F8949_ckF X" );
    SchedDd[10] = total_sales;
    SchedDe[10] = total_costs;
    SchedDg[10] = total_adjs;
@@ -1195,7 +1196,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-G/J" );	/* (G/J) Basis Reported to IRS. */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term DA Cap Gains+Losses, CHECK (G) Basis Reported to IRS:", "13 13\n F8949_ckG X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term DA Cap Gains+Losses, CHECK (G) Basis Reported to IRS:", "15 15\n F8949_ckG X" );
    SchedDd[1] = total_sales;
    SchedDe[1] = total_costs;
    SchedDg[1] = total_adjs;
@@ -1204,7 +1205,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (J) Basis Reported to IRS:", "14 14\n F8949_ckJ X" );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (J) Basis Reported to IRS:", "16 16\n F8949_ckJ X" );
    SchedDd[8] = total_sales;
    SchedDe[8] = total_costs;
    SchedDg[8] = total_adjs;
@@ -1215,7 +1216,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-H/K" );	/* (H) Basis NOT Reported to IRS. */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (H) Basis NOT Reported to IRS:", "13 13\n F8949_ckH X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term Cap Gains+Losses, CHECK (H) Basis NOT Reported to IRS:", "15 15\n F8949_ckH X" );
    SchedDd[2] = total_sales;
    SchedDe[2] = total_costs;
    SchedDg[2] = total_adjs;
@@ -1224,7 +1225,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (K) Basis NOT Reported to IRS:", "14 14\n F8949_ckK X"  );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (K) Basis NOT Reported to IRS:", "16 16\n F8949_ckK X"  );
    SchedDd[9] = total_sales;
    SchedDe[9] = total_costs;
    SchedDg[9] = total_adjs;
@@ -1235,7 +1236,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  get_gain_and_losses( "CapGains-I/L" );	/* (I) Cannot check (G) or (H). */
  if (short_trades)
   {
-   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term DA Cap Gains+Losses, CHECK (I) Not reported on Form 1099-B.\n", "13 13\n F8949_ckI X" );
+   print_capgain_list( short_trades, 1, "Form 8949 Part-I, Short-Term DA Cap Gains+Losses, CHECK (I) Not reported on Form 1099-B.\n", "15 15\n F8949_ckI X" );
    SchedDd[3] = total_sales;
    SchedDe[3] = total_costs;
    SchedDg[3] = total_adjs;
@@ -1244,7 +1245,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
   }
  if (long_trades)
   {
-   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (L) Not reported on Form 1099-B.\n", "14 14\n F8949_ckL X" );
+   print_capgain_list( long_trades, 3, "Form 8949 Part-II, Long-Term DA Cap Gains+Losses, CHECK (L) Not reported on Form 1099-B.\n", "16 16\n F8949_ckL X" );
    SchedDd[10] = total_sales;
    SchedDe[10] = total_costs;
    SchedDg[10] = total_adjs;
@@ -1313,7 +1314,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
  if (Do_SchedD)
   { /*Sched-D*/
    fprintf(outfile," Cap Gains/Losses Schedule-D\n");
-   fprintf(outfile,"PDFpage: 11 11\n");
+   fprintf(outfile,"PDFpage: 13 13\n");
    // Do_QDCGTW = Yes;	/* Tentatively set to do: Qualified Dividends and Capital Gain tax Worksheet. */
    fprintf(outfile,"\tNet Forms-8949 Short-term Gains = %10.2f\n", stcg );
    fprintf(outfile,"\tNet Forms-8949 Long-term Gains  = %10.2f\n", ltcg);
@@ -1341,7 +1342,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
    fprintf(outfile," D14 = %6.2f	(Carry-over Loss)\n", SchedD[14] );
    SchedD[15] = SchedD8ah + SchedD[8] + SchedD[9] + SchedD[10] + SchedD[11] + SchedD[12] + SchedD[13] + SchedD[14];
    fprintf(outfile," D15 = %6.2f		{ Net long-term capital gain or loss }\n", SchedD[15] );
-   fprintf(outfile,"EndPDFpage.\nPDFpage: 12 12\n");
+   fprintf(outfile,"EndPDFpage.\nPDFpage: 14 14\n");
 
    /* Part ||| */
    SchedD[16] = SchedD[7] + SchedD[15];
@@ -1667,7 +1668,7 @@ void Grab_ScheduleB_Payer_Lines( char *infname, FILE *outfile )
 		fprintf(outfile,"Btotal = %8.2f\n", total );
 		fprintf(outfile,"EndPDFpage.\n");
 	     }
-	    fprintf(outfile,"PDFpage: 10 10\n");
+	    fprintf(outfile,"PDFpage: 12 12\n");
 	    fprintf(outfile,"SchedB_Additional_form:  Schedule B - Additional Interest Income\n");
 	    strcpy( pgstr, "Baddi_" );
 	    cnt = 1;	ncnt = 30;	total = 0.0;
@@ -1707,7 +1708,7 @@ void Grab_ScheduleB_Payer_Lines( char *infname, FILE *outfile )
 		fprintf(outfile,"Btotal = %8.2f\n", total );
 		fprintf(outfile,"EndPDFpage.\n");
 	     }
-	    fprintf(outfile,"PDFpage: 10 10\n");
+	    fprintf(outfile,"PDFpage: 12 12\n");
 	    fprintf(outfile,"SchedB_Additional_form:  Schedule B - Additional Dividend Income\n");
 	    strcpy( pgstr, "Baddi_" );
 	    cnt = 1;	ncnt = 30;	total = 0.0;
@@ -1777,6 +1778,151 @@ void Calc_StudentLoan_Sched1L21()		/* Instructions page 99 */
 }
 
 
+int got_Sched_1A=0;
+
+void sched_1A( double s1A_L2a )
+{ /*sched_1-A*/
+ int j;
+ double sched1A_L[100]={0.0};
+ double sched1A_L2a=0.0, sched1A_L2b=0.0, sched1A_L2c=0.0, sched1A_L2d=0.0, sched1A_L4a=0.0, sched1A_L4b=0.0;
+ double sched1A_L14a=0.0, sched1A_L14b=0.0, sched1A_L22aii=0.0, sched1A_L22aiii=0.0, sched1A_L22bii=0.0, sched1A_L22biii=0.0;
+ double sched1A_L36a=0.0, sched1A_L36b=0.0;
+
+ /* Part I */
+ fprintf(outfile,"\n -- Doing Schedule 1-A --\n");
+ // fprintf(outfile,"PDFpage: 17\n");
+ sched1A_L[1] = L[11];	/* Fed-1040 line-11b. */
+ showline_wlabelnz( "S1A_1", sched1A_L[1] );
+ // GetLineF( "S1A_2a", &sched1A_L2a );	
+ sched1A_L2a = s1A_L2a;
+ showline_wlabelnz( "S1A_2a", sched1A_L2a );
+ GetLineF( "S1A_2b", &sched1A_L2b );	
+ GetLineF( "S1A_2c", &sched1A_L2c );	
+ GetLineF( "S1A_2d", &sched1A_L2d );	
+ sched1A_L[2] = sched1A_L2a + sched1A_L2b + sched1A_L2c + sched1A_L2d;
+ showline_wlabelnz( "S1A_2e", sched1A_L[2] );
+ sched1A_L[3] = sched1A_L[1] + sched1A_L[2];
+ showline_wlabelnz( "S1A_3", sched1A_L[3] );
+
+ /* Part II */
+ GetLineF( "S1A_4a", &sched1A_L4a );
+ GetLineF( "S1A_4b", &sched1A_L4b );
+ sched1A_L[4] = LargerOf( sched1A_L4a, sched1A_L4b );
+ showline_wlabelnz( "S1A_4c", sched1A_L[4] );
+ GetLineF( "S1A_5", &sched1A_L[5] );
+ sched1A_L[6] = sched1A_L[4] + sched1A_L[5];
+ showline_wlabelnz( "S1A_6", sched1A_L[6] );
+ sched1A_L[7] = SmallerOf( sched1A_L[6], 25000.0 );
+ showline_wlabelnz( "S1A_7", sched1A_L[7] );
+ sched1A_L[8] = sched1A_L[3];
+ showline_wlabelnz( "S1A_8", sched1A_L[8] );
+ if (status == MARRIED_FILING_JOINTLY)
+  sched1A_L[9] = 300000.0;
+ else
+  sched1A_L[9] = 150000.0;
+ showline_wlabelnz( "S1A_9", sched1A_L[9] );
+ sched1A_L[10] = NotLessThanZero( sched1A_L[8] - sched1A_L[9] );
+ showline_wlabelnz( "S1A_10", sched1A_L[10] );
+ j = sched1A_L[10] / 1000.0;
+ sched1A_L[11] = j;
+ fprintf(outfile, "S1A_11 = %d\n", j );
+ sched1A_L[12] = 100.0 * sched1A_L[11];
+ showline_wlabelnz( "S1A_12", sched1A_L[12] );
+ sched1A_L[13] = NotLessThanZero( sched1A_L[7] - sched1A_L[12] );
+ showline_wlabelnz( "S1A_13", sched1A_L[13] );
+
+ /* Part III */
+ GetLineF( "S1A_14a", &sched1A_L14a );
+ GetLineF( "S1A_14b", &sched1A_L14b );
+ sched1A_L[14] = sched1A_L14a + sched1A_L14b;
+ showline_wlabelnz( "S1A_14c", sched1A_L[14] );
+ if (status == MARRIED_FILING_JOINTLY)
+  sched1A_L[15] = SmallerOf( sched1A_L[14], 25000.0 );
+ else
+  sched1A_L[15] = SmallerOf( sched1A_L[14], 12500.0 );
+ showline_wlabelnz( "S1A_15", sched1A_L[15] );
+ sched1A_L[16] = sched1A_L[3];
+ showline_wlabelnz( "S1A_16", sched1A_L[16] );
+ if (status == MARRIED_FILING_JOINTLY)
+  sched1A_L[17] = 300000.0;
+ else
+  sched1A_L[17] = 150000.0;
+ showline_wlabelnz( "S1A_17", sched1A_L[17] );
+ sched1A_L[18] = NotLessThanZero( sched1A_L[16] - sched1A_L[17] );
+ showline_wlabelnz( "S1A_18", sched1A_L[18] );
+ j = sched1A_L[18] / 1000.0;
+ sched1A_L[19] = j;
+ fprintf(outfile, "S1A_19 = %d\n", j );
+ sched1A_L[20] = 100.0 * sched1A_L[19];
+ showline_wlabelnz( "S1A_20", sched1A_L[20] );
+ sched1A_L[21] = NotLessThanZero( sched1A_L[15] - sched1A_L[20] );
+ showline_wlabelnz( "S1A_21", sched1A_L[21] );
+ // fprintf(outfile,"EndPDFpage.\n");
+
+ /* Part IV */
+ // fprintf(outfile,"PDFpage: 18\n");
+ GetTextLineF( "S1A_22a" );
+ GetLineF( "S1A_22aii", &sched1A_L22aii );
+ GetLineF( "S1A_22aiii", &sched1A_L22aiii );
+ GetTextLineF( "S1A_22b" );
+ GetLineF( "S1A_22bii", &sched1A_L22bii );
+ GetLineF( "S1A_22biii", &sched1A_L22biii );
+ sched1A_L[23] = sched1A_L22aiii + sched1A_L22biii;
+ showline_wlabelnz( "S1A_23", sched1A_L[23] );
+ sched1A_L[24] = SmallerOf( sched1A_L[23], 10000.0 );
+ showline_wlabelnz( "S1A_24", sched1A_L[24] );
+ sched1A_L[25] = sched1A_L[3];
+ showline_wlabelnz( "S1A_25", sched1A_L[25] );
+ if (status == MARRIED_FILING_JOINTLY)
+  sched1A_L[26] = 200000.0;
+ else
+  sched1A_L[26] = 100000.0;
+ showline_wlabelnz( "S1A_26", sched1A_L[26] );
+ sched1A_L[27] = NotLessThanZero( sched1A_L[25] - sched1A_L[26] );
+ showline_wlabelnz( "S1A_27", sched1A_L[27] );
+ j = sched1A_L[27] / 1000.0;
+ sched1A_L[28] = j;
+ fprintf(outfile, "S1A_28 = %d\n", j );
+ sched1A_L[29] = 300.0 * sched1A_L[28];
+ showline_wlabelnz( "S1A_20", sched1A_L[20] );
+ sched1A_L[30] = NotLessThanZero( sched1A_L[24] - sched1A_L[29] );
+ showline_wlabelnz( "S1A_30", sched1A_L[30] );
+
+ /* Part V */
+ sched1A_L[31] = sched1A_L[3];
+ showline_wlabelnz( "S1A_31", sched1A_L[31] );
+ if (status == MARRIED_FILING_JOINTLY)
+  sched1A_L[32] = 150000.0;
+ else
+  sched1A_L[32] = 75000.0;
+ showline_wlabelnz( "S1A_32", sched1A_L[32] );
+ sched1A_L[33] = NotLessThanZero( sched1A_L[31] - sched1A_L[32] );
+ showline_wlabelnz( "S1A_33", sched1A_L[33] );
+ sched1A_L[34] = 0.06 * sched1A_L[33];
+ showline_wlabelnz( "S1A_34", sched1A_L[34] );
+ sched1A_L[35] = NotLessThanZero( 6000.0 - sched1A_L[34] );
+ showline_wlabelnz( "S1A_35", sched1A_L[35] );
+ if (over65you)
+  {
+   sched1A_L36a = sched1A_L[35];
+   showline_wlabel( "S1A_36a", sched1A_L36a );
+  }
+ if ((status == MARRIED_FILING_JOINTLY) && (over65spouse))
+  {
+   sched1A_L36b = sched1A_L[35];
+   showline_wlabel( "S1A_36b", sched1A_L36b );
+  }
+ sched1A_L[37] = sched1A_L36a + sched1A_L36b;
+ showline_wlabelnz( "S1A_37", sched1A_L[37] );
+
+ /* Part VI */
+ sched1A_L[38] = sched1A_L[13] + sched1A_L[21] + sched1A_L[30] + sched1A_L[37];
+ showline_wlabelnz( "S1A_38", sched1A_L[38] );
+ // fprintf(outfile,"EndPDFpage.\n\n");
+ fprintf(outfile,"n");
+ L13b = sched1A_L[38];
+ got_Sched_1A = 1;
+} /*sched_1-A*/
 
 
 /*----------------------------------------------------------------------*/
@@ -1894,6 +2040,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
   {
    under65 = 0;
    fprintf(outfile,"CkYouOver65 X\n");
+   over65you = 1;
   }
 
  get_parameter( infile, 's', word, "You_Blind?" );	/* Are you blind ? (Y/N) */
@@ -1908,7 +2055,10 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  if (j == 0)
   under65++;
  else
-  fprintf(outfile,"CkSpouseOver65 X\n");
+  {
+   fprintf(outfile,"CkSpouseOver65 X\n");
+   over65spouse = 1;
+  }
 
  get_parameter( infile, 's', word, "Spouse_Blind?" );	/* Is Spouse blind ? (Y/N) */
  get_param_single_line( infile, 'b', &j, "Spouse_Blind?" );
@@ -1990,7 +2140,8 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  GetLineF( "L6a", &L6a );	/* Social Security benefits.  Forms SSA-1099 box-5. */
 
  GetLine( "L13a", &L[13] );	/* Qualified business income deduction. */
- GetLine( "L13b", &L13b );	/* Additional deductions from Schedule 1-A, Line 38. */
+ // if (!got_Sched_1A)
+ // GetLine( "L13b", &L13b );	/* Additional deductions from Schedule 1-A, Line 38. */
  GetLine( "L19", &L[19] );	/* Child tax credit/credit for other dependents. */
 
  GetLine( "L25a", &L25a );	/* Federal income tax withheld, Forms W-2, 1099 */
@@ -2208,8 +2359,37 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  /* -- End of Schedule-1 -- */
 
 
+ L[11] = L[9] - L[10];		/* Is L11b. */
+
+
+ int got_A1=0;
+ get_parameter( infile, 'l', word, "S1A_2a or A1" );     /* sched1A_L2a or A1 */		/* Fix next year. */
+ if (strcmp( word, "S1A_2a" ) == 0)
+  { double sched1A_L2a;
+   get_parameters( infile, 'f', &sched1A_L2a, "S1A_2a" );
+   // GetLineF( "sched1A_L2a", &sched1A_L2a );
+   sched_1A( sched1A_L2a );	/* Do Schedule 1-A. */
+  }
+ else
+ if (strcmp( word, "A1" ) == 0)
+  {
+   get_parameters( infile, 'f', &SchedA[1], "A1" );
+   got_A1 = 1;
+  }
+ else
+  {
+   printf("ERROR1: Found '%s' when expecting 'S1A_2a' or 'A1'.\n", word ); 
+   fprintf(outfile,"ERROR1: Found '%s' when expecting 'S1A_2a' or 'A1'.\n", word );
+   exit(1);
+  }
+
+
+
+
+
  /* -- Schedule A - Input -- */
- GetLine( "A1", &SchedA[1] );	/* Unreimbursed medical expenses. */
+ if (!got_A1)
+  GetLine( "A1", &SchedA[1] );	/* Unreimbursed medical expenses. */
  for (j=0; j<10; j++)
    localtax[j] = 0.0;
  if (status != MARRIED_FILING_SEPARAT)
@@ -2247,7 +2427,6 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
 
  GetYesNo( "B7a", &SchedB7a );
 
- L[11] = L[9] - L[10];
 
  /* -- Calculate Schedule A -- */
  SchedA[2] = L[11];
@@ -2378,7 +2557,6 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
   }
 
 
- if (under65 == 0) over65 = 1; 
  switch (status)	/* Check for minimum income to file. (min2file) */		/* Updated for 2025. */
   {			/* Listed in Instructions page-9, in Chart A - For Most People. */
    case SINGLE:  		  if (under65) exemption_threshold = 15700.0;
@@ -2388,7 +2566,6 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
 				  else 
 				  if (under65==1) exemption_threshold = 33100.0;  
 				  else  exemption_threshold = 34700.0;
-				  if (under65 != 2) over65 = 1;
 	break;
    case MARRIED_FILING_SEPARAT:  exemption_threshold = 5.0;
 	break;

@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-double thisversion=23.00;
+double thisversion=23.01;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -384,6 +384,8 @@ int main( int argc, char *argv[] )
  showline_wmsg( 13, "Total Ohio tax liability" );
  Report_bracket_info( L[7], L[13], status );
  showline_wmsg( 14, "Ohio income tax withheld" );
+ if (L[14] != 0.0)
+  fprintf(outfile,"   Remember to also fill-out and submit Schedule of Ohio Withholding.  <---\n");
  for (j = 15; j <= 16; j++)
   showline(j);
  showline_wmsg( 17, "Total Ohio tax payments" );

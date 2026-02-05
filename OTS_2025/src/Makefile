@@ -48,7 +48,6 @@ TAXSOLVE := \
     taxsolve_HSA_f8889 \
     taxsolve_f8606 \
     taxsolve_US_1040_Sched_SE_2025 \
-    taxsolve_US_1040_Sched_1-A \
     taxsolve_f8812_2025 \
     taxsolve_f8829_2025 \
     taxsolve_f8995_2025 \

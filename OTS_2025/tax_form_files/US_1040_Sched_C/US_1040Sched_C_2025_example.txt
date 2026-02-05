@@ -84,7 +84,7 @@ L18	1,929.00	 { Office expense }
 L19	0	 { Pension & profit sharing plans }
 		;
 
-L20a	5,923.99	 { Vehicles and equiment Rent or Lease }
+L20a	5,923.99	 { Vehicles and equipment Rent or Lease }
 		;
 
 L20b	819.11	 { Rent or lease Other business property }
@@ -126,7 +126,7 @@ L34:	No	 { Changed method ?  (answer: Yes, No) }
 L35	10,000.00	 { Inventory at beginning of year }
 
 		;
-L36	2,000.00	 { Purchases minus cost of personel items }
+L36	2,000.00	 { Purchases minus cost of personnel items }
 	-800.00	
 
 		;

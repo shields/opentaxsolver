@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.78;
-char package_date[]="January 29, 2026";
-char ots_release_package[]="23.01";
+float version=2.79;
+char package_date[]="February 5, 2026";
+char ots_release_package[]="23.02";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -1068,9 +1068,6 @@ void read_instructions( int init )
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	 instructions_filename = strdup( "f1040sse_instructions.dat" );
 	else
-	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-	 instructions_filename = strdup( "f1040s1a_instructions.dat" );
-	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	 instructions_filename = strdup( "f8829_instructions.dat" );
 	else
@@ -1270,9 +1267,6 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
-	else
-	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-	  check_form_version( title_line, "Title:  Fed-1040 Schedule 1-A" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	  check_form_version( title_line, "Title: 2025 Form 8829" );
@@ -2639,13 +2633,6 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, "US_1040_Sched_SE" );
   }
  else
- if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-  {
-   supported_pdf_form = 1;
-   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
-   strcat( directory_dat, "US_1040_Sched_1-A" );
-  }
- else
  if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
   {
    supported_pdf_form = 1;
@@ -3215,10 +3202,14 @@ void get_pdf_viewer()
  strcat( fname, "gui_settings.conf" );
  configfile = fopen( fname, "r" );
  if (configfile == 0)
-  printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
+  {
+   if (verbose || debug)
+    printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
+  }
  else
   {
    /* Expect config file to have options like:  PDF_VIEWER: acroread	*/
+   printf(" Reading config file '%s'\n", fname );
    fgets( line, 2048, configfile );
    while (!feof(configfile))
     {
@@ -3673,8 +3664,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
-        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
-        { form_other, "taxsolve_US_1040_Sched_1-A","f1040s1a_meta.dat", "f1040s1a_pdf.dat" }
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
   };
 
 
@@ -4240,7 +4230,7 @@ int main(int argc, char *argv[] )
     printf("OTS GUI v%1.2f, %s:\n", version, package_date );
     printf(" Command-line Options:\n");
     printf("  -verbose          - Show debugging messages.\n");
-    printf("  -winsz wd ht      - Set the window size to wd x ht.\n");
+    printf("  -winsz wd ht      - Set the window size to wd x ht.  (Default is %d %d)\n", winwidth, winht );
     printf("  -debug            - Set debug mode.\n");
     printf("  -taxsolver xx     - Set path and name of the tax-solver executable.\n");
     printf("  -workdir yy       - Set path for opening and saving data files.\n");

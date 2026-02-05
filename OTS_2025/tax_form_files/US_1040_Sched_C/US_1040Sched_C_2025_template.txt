@@ -65,7 +65,7 @@ L18		 { Office expense }
 		;
 L19		 { Pension & profit sharing plans }
 		;
-L20a		 { Vehicles and equiment Rent or Lease }
+L20a		 { Vehicles and equipment Rent or Lease }
 		;
 L20b		 { Rent or lease Other business property }
 		;
@@ -95,7 +95,7 @@ L33:		 { Method to value closing inventory:  (answer: Cost, Market, Other) }
 L34:		 { Changed method ?  (answer: Yes, No) }
 L35		 { Inventory at beginning of year }
 		;
-L36		 { Purchases minus cost of personel items }
+L36		 { Purchases minus cost of personnel items }
 		;
 L37		 { Cost of labor (not paid to yourself) }
 		;

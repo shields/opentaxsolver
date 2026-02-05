@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.18;
-char package_date[]="January 29, 2026";
-char ots_release_package[]="23.01";
+float version=3.19;
+char package_date[]="February 5, 2026";
+char ots_release_package[]="23.02";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -96,21 +96,20 @@ char ots_release_package[]="23.01";
 */
 /************************************************************/
 
+int verbose=0, debug=0;
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <sys/stat.h>
-// #include "backcompat.c"
 #include "gtk_utils3.c"		/* Include the graphics library. */
 #include "gtk_file_browser3.c"
 
  GtkWidget *mpanel, *mpanel2, *warnwin=0, *popupwin=0, *resultswindow=0, *scrolledpane, *title_label;
- int operating_mode=1, need_to_resize=0, debug=0;
+ int operating_mode=1, need_to_resize=0;
  double last_resize_time;
 
-int verbose=0;
-int winwidth=450, winht=480;
+int winwidth=510, winht=510;
 FILE *infile;
 int ots_column=0, ots_line=0;	/* Input file position. */
 #define MaxFname 4096
@@ -976,13 +975,11 @@ struct instruct_rec *new_instruction( char *line_label, char *buf, int *buflen )
 void strcat_safe( char *dst, const char *src, int maxlen, int *buflen )
 { 
   int j, k=0, oneless;
-//printf("Adding: '%s' + '%s' = ", dst, src );
   oneless = maxlen - 1;
   j = *buflen;
   while ((j < oneless) && (src[k] != '\0')) { dst[j++] = src[k++]; }
   dst[j] = '\0';
   *buflen = j;
-//printf("'%s'\n", dst );
 }
 
 
@@ -1096,9 +1093,6 @@ void read_instructions( int init )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	 instructions_filename = strdup( "f1040sse_instructions.dat" );
-	else
-	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-	 instructions_filename = strdup( "f1040s1a_instructions.dat" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	 instructions_filename = strdup( "f8829_instructions.dat" );
@@ -1300,9 +1294,6 @@ void check_form_type( char *title_line )
 	else
 	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_SE" ) != 0)
 	  check_form_version( title_line, "Title:  1040 Schedule SE" );
-	else
-	if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-	  check_form_version( title_line, "Title:  Fed-1040 Schedule 1-A" );
 	else
 	if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
 	  check_form_version( title_line, "Title: 2025 Form 8829" );
@@ -2689,13 +2680,6 @@ void set_tax_solver( char *fname )
    strcat( directory_dat, "US_1040_Sched_SE" );
   }
  else
- if (strstr( taxsolvestrng, "taxsolve_US_1040_Sched_1-A" ) != 0)
-  {
-   supported_pdf_form = 1;
-   strcat( directory_dat, slashstr );		/* Set the directory name for the form template & example files. */
-   strcat( directory_dat, "US_1040_Sched_1-A" );
-  }
- else
  if (strstr( taxsolvestrng, "taxsolve_f8829" ) != 0)
   {
    supported_pdf_form = 1;
@@ -3265,10 +3249,14 @@ void get_pdf_viewer()
  strcat( fname, "gui_settings.conf" );
  configfile = fopen( fname, "r" );
  if (configfile == 0)
-  printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
+  {
+   if (verbose || debug)
+    printf("Did not find any 'gui_settings.conf' to read for optional settings.\n");
+  }
  else
   {
    /* Expect config file to have options like:  PDF_VIEWER: acroread	*/
+   printf(" Reading config file '%s'\n", fname );
    fgets( line, 2048, configfile );
    while (!feof(configfile))
     {
@@ -3723,8 +3711,7 @@ FORM_PDF_CONVERT form_pdfs[] =
         { form_other, "taxsolve_f8960",            "f8960_meta.dat",    "f8960_pdf.dat" },
         { form_other, "taxsolve_f2210",            "f2210_meta.dat",    "f2210_pdf.dat" },
         { form_other, "taxsolve_f8812",            "f8812_meta.dat",    "f8812_pdf.dat" },
-        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" },
-        { form_other, "taxsolve_US_1040_Sched_1-A","f1040s1a_meta.dat", "f1040s1a_pdf.dat" }
+        { form_other, "taxsolve_CA_5805",          "CA_5805_meta.dat",  "CA_5805_pdf.dat" }
     };
 
 
@@ -3992,7 +3979,7 @@ void quit_wcheck( GtkWidget *wdg, void *x )
 
 
 static gboolean handle_draw_event( GtkWidget *wdg, cairo_t *cr, void *data )
-{
+{ /* Expose event */
  unsigned char *logodata;
  int imgwd, imght, x1, y1, x2, y2, new_width, new_height;
 
@@ -4005,10 +3992,10 @@ static gboolean handle_draw_event( GtkWidget *wdg, cairo_t *cr, void *data )
    y2 = y1 + imght;
    attach_image_from_pixbuf( mpanel, logodata, x1, y1, imgwd, imght, 1 );
    make_rectangular_separator( mpanel, x1 - 2, y1 - 2, x2 - 2, y2 + 2 );
-   gtk_widget_show_all( outer_window );
    x1 = 20;   	   	x2 = winwidth - 20;
    y1 = fronty1 - 8;	y2 = fronty2;
    make_rectangular_separator( mpanel, x1, y1, x2, y2 );
+   gtk_widget_show_all( outer_window );
   } /*mode1*/
  else
   { /*mode2*/
@@ -4036,13 +4023,6 @@ int myfilterfunc( char *word )
   }
  else return 0;
 }
-
-
-//gboolean filterfunc( const GtkFileFilterInfo *finfo, gpointer data )
-//{
- // printf("Got '%s'\n", finfo->filename );
-// return myfilterfunc( finfo->filename );
-//}
 
 
 void receive_filename( char *fname )
@@ -4238,7 +4218,7 @@ int main(int argc, char *argv[] )
  float x, y, dy, y1, y2;
  GtkWidget *txprogstog, *button, *tmpwdg;
 
- sprintf(ots_pkg_mssg, "OTS Release %s", ots_release_package );  printf("%s\n\n", ots_pkg_mssg );
+ sprintf(ots_pkg_mssg, "OTS Release %s", ots_release_package );  printf("%s\n", ots_pkg_mssg );
  sprintf(vrsnmssg, "GUI v%1.2f", version );  printf("%s\n", vrsnmssg );
  start_cmd = strdup(argv[0]);
  invocation_path = strdup(argv[0]);
@@ -4265,7 +4245,7 @@ int main(int argc, char *argv[] )
     printf("OTS GUI v%1.2f, %s:\n", version, package_date );
     printf(" Command-line Options:\n");
     printf("  -verbose          - Show debugging messages.\n");
-    printf("  -winsz wd ht      - Set the window size to wd x ht.\n");
+    printf("  -winsz wd ht      - Set the window size to wd x ht.  (Default is %d %d)\n", winwidth, winht );
     printf("  -debug            - Set debug mode.\n");
     printf("  -taxsolver xx     - Set path and name of the tax-solver executable.\n");
     printf("  -workdir yy       - Set path for opening and saving data files.\n");
@@ -4374,12 +4354,7 @@ int main(int argc, char *argv[] )
  /* When the window is given the "delete_event" signal by the window manager, exit the program. */
  g_signal_connect( outer_window, "delete_event", G_CALLBACK(quit), NULL );
 
-// gtk_widget_set_app_paintable( outer_window, TRUE );
-// g_signal_connect( outer_window, "expose-event", G_CALLBACK(on_expose_event), NULL);
  g_signal_connect( outer_window, "draw", G_CALLBACK( handle_draw_event ), NULL );  
-
-
- make_rectangular_separator( mpanel, 59, 6, 387, 102 );
 
  y = 105;
  make_sized_label( mpanel, winwidth / 2 - 60, y, "2025 Tax Year", 11.0 );
