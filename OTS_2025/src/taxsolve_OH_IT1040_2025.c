@@ -29,7 +29,7 @@
 
 #include "taxsolve_routines.c"
 
-double thisversion=23.01;
+double thisversion=23.02;
 
 #define SINGLE 		        1
 #define MARRIED_FILING_JOINTLY  2
@@ -39,7 +39,7 @@ double thisversion=23.01;
 double TaxRateFunction( double x, int status )
 {							/* Updated for 2025. */
  if (x <=  26050.0) return    0.0; else
- if (x <= 100000.0) return  360.69 + (x-26050.0)  * 0.0275;
+ if (x <= 100000.0) return  342.0 + (x-26050.0)  * 0.0275;
  else		    return 2394.32 + (x-100000.0) * 0.03125; 
 }
 

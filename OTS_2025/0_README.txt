@@ -33,8 +33,10 @@ Also contains an Automatic PDF Form-Fillout function:
 
 History:
   * v23.02 (2/5/2026) - Combined Fed Schedule 1-A into the main 1040
-	program. Removed entry for Line 13b, which is now calculated
-	from the Sched 1-A entries.
+	program. This adds several lines to the Fed-1040 input file.
+	Removed entry for Line 13b, which is now calculated from the
+	Sched 1-A entries.  Fixed Ohio tax rate function.
+	Fixed Fed-1040 Schedule-D pdf labels for D1ad and D8ad.
   * v23.01 (1/29/2026) - Fixed US-1040 template "Rollover" lines.
 	Fix to AZ State PDF metadata. Updated Fed Schedules A and C,
 	as well was the Fed 2210 programs.

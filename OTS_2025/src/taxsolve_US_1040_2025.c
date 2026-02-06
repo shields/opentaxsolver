@@ -1121,7 +1121,7 @@ void get_gain_and_losses( char *label )
 /************************************************************************/
 void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
 {
- char word[4092], *LastYearsOutFile=0, labelx[1024]="";
+ char word[4092], *LastYearsOutFile=0;
  int j, doline22=0;
  double stcg=0.0, ltcg=0.0;      /* Variables for short and long term gains. */
  double SchedDd[20], SchedDe[20], SchedDg[20];
@@ -1256,7 +1256,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
 
  GetLine( "D1ad", &SchedD1ad );
  GetLine( "D1ae", &SchedD1ae );
- showline_wlabelnz( labelx, SchedD1ad );
+ showline_wlabelnz( "D1ad", SchedD1ad );
  showline_wlabelnz( "D1ae", SchedD1ae );
  SchedD1ah = SchedD1ad - SchedD1ae;
  showline_wlabelnz( "D1ah", SchedD1ah );
@@ -1277,7 +1277,7 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
 
  GetLine( "D8ad", &SchedD8ad );
  GetLine( "D8ae", &SchedD8ae );
- showline_wlabelnz( labelx, SchedD8ad );
+ showline_wlabelnz( "D8ad", SchedD8ad );
  showline_wlabelnz( "D8ae", SchedD8ae );
  SchedD8ah = SchedD8ad - SchedD8ae;
  showline_wlabelnz( "D8ah", SchedD8ah );
