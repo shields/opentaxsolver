@@ -24,7 +24,7 @@
 /* Aston Roberts 1-2-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=23.01;
+float thisversion=23.02;
 
 #include <stdio.h>
 #include <time.h>
@@ -1268,9 +1268,9 @@ int main( int argc, char *argv[] )
  sched540part2_5c = PrelimFedReturn.schedA5c;
  sched540part2_5d = sched540part2_5a + sched540part2_5b + sched540part2_5c;
  if (status != MARRIED_FILING_SEPARAT)
-  sched540part2[5] = smallerof( sched540part2_5d, 10000.0 );	/* Will be Line 5e. */
+  sched540part2[5] = smallerof( sched540part2_5d, 40000.0 );	/* Will be Line 5e. */
  else
-  sched540part2[5] = smallerof( sched540part2_5d, 5000.0 );
+  sched540part2[5] = smallerof( sched540part2_5d, 20000.0 );
 
  GetLine("CA540_P2_Sub_5a", &(sched540part2_sub[5]) );
  sched540part2_sub[5] = sched540part2_5a;
