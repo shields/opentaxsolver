@@ -44,9 +44,9 @@
 /*							*/
 /********************************************************/
 
-float version=2.79;
-char package_date[]="February 5, 2026";
-char ots_release_package[]="23.02";
+float version=2.80;
+char package_date[]="February 12, 2026";
+char ots_release_package[]="23.03";
 
 /************************************************************/
 /* Design Notes - 					    */

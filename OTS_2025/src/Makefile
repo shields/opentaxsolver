@@ -64,8 +64,7 @@ EXE_TAXSOLVE := $(patsubst %,../bin/%$(EFS), $(TAXSOLVE))
 
 #====== IO programs; in ../bin/ ======
 IO := \
-     universal_pdf_file_modifier \
-     convert_results2xfdf
+     universal_pdf_file_modifier
 
 # List of ior programs in ../bin/
 EXE_IO := $(patsubst %,../bin/%$(EFS), $(IO))
