@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-February 12, 2026 v23.03 - For Tax-Year 2025.
+February 20, 2026 v23.04 - For Tax-Year 2025.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,7 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+  * v23.04 (2/20/2026) - Fix to OR State Line-10.
   * v23.03 (2/12/2026) - Updated CA State program Sched-540 part-2 Line 5e
 	SALT limit amount.  Added informational messages to Fed-1040 results.
 	Fed-1040 Schedule 1-A now properly prevents deductions for MF-Sep.

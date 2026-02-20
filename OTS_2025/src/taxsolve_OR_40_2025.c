@@ -24,7 +24,7 @@
 // NOTE: Search for TAXYEAR_DEPENDENT to find likely entries
 // which need to be updated for each tax year.
 
-float thisversion=2.00;
+float thisversion=2.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -1258,7 +1258,7 @@ if (infile==0) {
     }
     
     // Federal tax liability allowed for subtraction, from line 11 of worksheet.
-    L[10] = ftw_L[11];
+    L[10] = ftw_L[12];
     shownum_or_40(10);
 
     // Taxable social security amount
