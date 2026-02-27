@@ -1085,6 +1085,16 @@ void format_socsec( char *line, int kind )
 }
 
 
+void date_rec_to_str( char *restrict str, const struct date_rec *restrict drec )
+{
+  const char sep = '/';
+  sprintf( str, "%d%c%d%c%d",
+      drec->month, sep,
+      drec->day, sep,
+      drec->year
+  );
+}
+
 void remove_certain_chars( char *line, char *badchars )
 { /* Removes any specified characters from a string, so as to uniformly format dates, ID numbers, etc.. */
   int j=0, k, m=0;

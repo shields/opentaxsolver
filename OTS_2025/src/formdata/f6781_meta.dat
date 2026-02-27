@@ -1,0 +1,113 @@
+Page 1
+
+  TxtColor: 0 0 0.6
+
+ CoordReference:  40, 750  61, 64
+                  550, 50  841, 1134	110-dpi
+
+  round_to_whole_numbers
+
+  YourName:	 60 155
+  YourSocSec#:	737 155
+
+  BoxA:		286 176
+  BoxB:		286 194
+  BoxC:		604 176
+  BoxC:		604 194
+
+  L1row1_a:	 81 269
+  L1row1_b	553 269 12
+  L1row1_c	663 269 12
+  L1row2_a:	 81 288
+  L1row2_b	553 288 12
+  L1row2_c	663 288 12
+  L1row3_a:	 81 307
+  L1row3_b	553 307 12
+  L1row3_c	663 307 12
+
+  L2b		553 324 12
+  L2c		663 324 12
+  L3		771 343 12
+  L4		771 361 12
+  L5		771 379 12
+  L6		771 453 12
+  L7		771 472 12
+  L8		771 508 12
+  L9		771 545 12
+
+  FontSz 7
+
+  L10row1_a:	 81 691
+  L10row1_b:	291 691
+  L10row1_c:	355 691
+  L10row1_d	422 691 13
+  L10row1_e	511 691 13
+  L10row1_f	600 691 13
+  L10row1_g	689 691 13
+  L10row1_h	778 691 13
+  L10row2_a:	 81 710
+  L10row2_b:	291 710
+  L10row2_c:	355 710
+  L10row2_d	422 710 13
+  L10row2_e	511 710 13
+  L10row2_f	600 710 13
+  L10row2_g	689 710 13
+  L10row2_h	778 710 13
+
+
+  FontSz 10
+
+  L11a		771 747 12
+  L11b		771 783 12
+
+  FontSz 7
+
+  L12row1_a:	 81 893
+  L12row1_b:	424 893
+  L12row1_c:	487 893
+  L12row1_d	553 893 17
+  L12row1_e	663 893 17
+  L12row1_f	771 893 17
+
+  FontSz 10
+
+  L13a		771 949 12
+  L13b		771 985 12
+
+  FontSz 7
+  
+  L14row1_a:	 81 1095
+  L14row1_b:	487 1095
+  L14row1_c 	553 1095 17
+  L14row1_d 	663 1095 17
+  L14row1_e 	771 1095 17
+  L14row2_a:	 81 1113
+  L14row2_b:	487 1113
+  L14row2_c 	553 1113 17
+  L14row2_d 	663 1113 17
+  L14row2_e 	771 1113 17
+  L14row3_a:	 81 1131
+  L14row3_b:	487 1131
+  L14row3_c 	553 1131 17
+  L14row3_d 	663 1131 17
+  L14row3_e 	771 1131 17
+
+
+
+  FontSz 10	
+
+Page 2
+
+
+
+
+Page 3
+
+
+
+
+Page 4
+
+
+
+

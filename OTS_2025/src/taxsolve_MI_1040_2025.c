@@ -18,7 +18,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
   02111-1307 USA.
 
-  1-20-2026	http://opentaxsolver.sourceforge.com/
+  2-24-2026	http://opentaxsolver.sourceforge.com/
 
  ************************************************************************/
 
@@ -31,7 +31,7 @@
 
 #include "taxsolve_routines.c"
 
-float thisversion=2.00;
+float thisversion=2.01;
 
 #define SINGLE                  1
 #define MARRIED_FILING_JOINTLY  2
@@ -231,12 +231,12 @@ printf("L9c = %d\n", L9c );
 
  if (L[34] < L[25])
   { /*Owe*/
-    L[35] = L[25] - L[34] + interest + penalty;
+    L[36] = L[25] - L[34] + interest + penalty;
   } /*Owe*/
  else
   { /*Refund*/
-    L[36] = L[34] - L[25];
-    L[38] = L[36] - L[37];
+    L[37] = L[34] - L[25];
+    L[39] = L[37] - L[38];
   } /*Refund*/
 
 
@@ -290,10 +290,10 @@ printf("L9c = %d\n", L9c );
 
  showline_wlabelnz( "interest", interest );
  showline_wlabelnz( "penalty", penalty );
- ShowLineNonZero_wMsg( 35, "You OWE." );
- showline(36); 
+ ShowLineNonZero_wMsg( 36, "You OWE." );
  showline(37); 
- ShowLineNonZero_wMsg( 38, "REFUND." );
+ showline(38); 
+ ShowLineNonZero_wMsg( 39, "REFUND." );
 
 
 

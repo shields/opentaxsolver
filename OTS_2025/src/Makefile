@@ -53,6 +53,7 @@ TAXSOLVE := \
     taxsolve_f8995_2025 \
     taxsolve_f8959_2025 \
     taxsolve_f8960_2025 \
+    taxsolve_f6781_2025 \
     taxsolve_f2210_2025 \
     taxsolve_CA_5805_2025 \
     taxsolve_AZ_140_2025 \

@@ -1,6 +1,7 @@
 /************************************************************************/
 /* taxsolve_f8995.c -                                                   */
 /* Contributed by Rylan Luke, 1/2025					*/
+/*  Updated 2/25/2026.							*/
 /*                                                                      */
 /* GNU Public License - GPL:                                            */
 /* This program is free software; you can redistribute it and/or        */
@@ -20,7 +21,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=3.00;
+float thisversion=3.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -36,6 +37,7 @@ float thisversion=3.00;
 typedef struct FED_1040_IMP_F8995_T {
         double L11a;
         double L12;
+        double L13b;
         double S1_3;
         double S1_15;
         double S1_16;
@@ -51,6 +53,7 @@ FED_1040_IMP_F8995 f1040i;
 static FORM_IMPORT_DEF f1040_imp_defs[] = {
         { "L11a", &f1040i.L11a, NULL },
         { "L12", &f1040i.L12, NULL },
+        { "L13b", &f1040i.L13b, NULL },
         { "S1_3", &f1040i.S1_3, NULL },
         { "S1_15", &f1040i.S1_15, NULL },
         { "S1_16", &f1040i.S1_16, NULL },
@@ -257,8 +260,7 @@ int main( int argc, char *argv[] )
  // }
 
  // Calculate line 11 from 1040 line 11a and line 12 values
- L[11] = f1040i.L11a - f1040i.L12;
- fprintf(outfile, "INFO: Line 11 = %6.2f = f1040i.L11a - f1040i.L12 = %6.2f - %6.2f\n",  L[11], f1040i.L11a, f1040i.L12);
+ L[11] = f1040i.L11a - f1040i.L12 - f1040i.L13b;
 
  GetLine( "L12", &L[12] );
 
@@ -298,6 +300,8 @@ int main( int argc, char *argv[] )
  showline       ( 9 );
 
  showline( 10 );
+ fprintf(outfile, "INFO: Line 11 = %6.2f = f1040i.L11a - f1040i.L12 - f1040i.L13b = %6.2f - %6.2f - %6.2f\n",
+		  L[11], f1040i.L11a, f1040i.L12, f1040i.L13b );
  showline( 11 );
  ShowLineNonZero( 12 );
  showline( 13 );

@@ -1,7 +1,7 @@
 Open Tax Solver - Package
 --------------------------
 
-February 20, 2026 v23.04 - For Tax-Year 2025.
+February 27, 2026 v23.05 - For Tax-Year 2025.
 
 See project homepage:	http://opentaxsolver.sourceforge.net/
 
@@ -32,6 +32,10 @@ Also contains an Automatic PDF Form-Fillout function:
   RPLCSTRNG_02
 
 History:
+  * v23.05 (2/27/2026) - Fix to MI State lines 35-39.
+	Updated Form 8995 to include 1040 line 13b in its line 11 calculation.
+	Removed the now redundant QCD note in Fed 1040.
+	Added new Form 6781 by contributor.
   * v23.04 (2/20/2026) - Fix to OR State Line-10.
   * v23.03 (2/12/2026) - Updated CA State program Sched-540 part-2 Line 5e
 	SALT limit amount.  Added informational messages to Fed-1040 results.

@@ -62,9 +62,9 @@
 /* 02111-1307 USA.                                                    */
 /**********************************************************************/
 
-float version=3.20;
-char package_date[]="February 20, 2026";
-char ots_release_package[]="23.04";
+float version=3.21;
+char package_date[]="February 27, 2026";
+char ots_release_package[]="23.05";
 
 /************************************************************/
 /* Design Notes - 					    */
@@ -4000,7 +4000,7 @@ static gboolean handle_draw_event( GtkWidget *wdg, cairo_t *cr, void *data )
  else
   { /*mode2*/
    gtk_window_get_size( GTK_WINDOW( outer_window ), &new_width, &new_height );
-   if ((abs(new_width - winwidth) > 5) || (abs( new_height - winht ) > 5))
+   if ((abs(new_width - winwidth) > 20) || (abs( new_height - winht ) > 10))
     {
      winwidth = new_width;
      winht = new_height;

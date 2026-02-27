@@ -28,7 +28,7 @@
 /* Aston Roberts 1-5-2026	aston_roberts@yahoo.com			*/
 /************************************************************************/
 
-float thisversion=23.03;
+float thisversion=23.04;
 
 #include <stdio.h>
 #include <time.h>
@@ -1307,7 +1307,9 @@ void get_cap_gains()		/* This is Schedule-D. */			/* Updated for 2025. */
    SchedD[14] = -SchedD[14];
   }
 
- if ((SchedD[4] != 0.0) || (SchedD[5] != 0.0) || (SchedD[6] != 0.0) || (SchedD[11] != 0.0) || 
+ if ((SchedD1ah != 0.0) || (SchedD[1] != 0.0) || (SchedD[2] != 0.0) || (SchedD[3] != 0.0) || 
+     (SchedD8ah != 0.0) || (SchedD[8] != 0.0) || (SchedD[9] != 0.0) || (SchedD[10] != 0.0) ||
+     (SchedD[4] != 0.0) || (SchedD[5] != 0.0) || (SchedD[6] != 0.0) || (SchedD[11] != 0.0) || 
      (SchedD[12] != 0.0) || (SchedD[13] != 0.0) || (SchedD[14] != 0.0))
   { Do_SchedD = Yes; }	/* Set Do_SchedD in case it was not already set by Cap-Gain/Loss in rows 1-3, or 8-10. */
 
@@ -2133,7 +2135,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  GetYesNoSL( "QCD", &j );		/* Qualified Charitable Distribution ? (answer: yes, no) */
  if (j)
   {
-   fprintf(outfile,"QCD = QCD\n");
+   // fprintf(outfile,"QCD = QCD\n");	/* No longer required as of 2025. */
    fprintf(outfile,"CkL4c2 X\n");
   }
  printf("QCD = %d\n", j );

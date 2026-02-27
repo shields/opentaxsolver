@@ -18,10 +18,10 @@
 /* 02111-1307 USA                                                       */
 /*									*/
 /* Provided by Fred Robinson - 2025-7-8.				*/	
-/* Updated 1-15-2025.							*/
+/* Updated 2-24-2026.							*/
 /************************************************************************/
 
-float thisversion = 3.00;
+float thisversion = 3.01;
 
 #include <math.h>
 #include <stdio.h>
@@ -153,13 +153,15 @@ int main(int argc, char *argv[])
         L[10] = 1.0;
       }
 
-      double integral;
+      double integral, round_bias=0.5;
       double fractional = modf(L[10], &integral);
       int integral_int, fractional_int;
       integral_int = integral;
-      fractional_int = abs( (int)(1000.0 * fractional) );
+      if (fractional < 0.0)
+       round_bias = -0.5;
+      fractional_int = abs( (int)(1000.0 * fractional + round_bias) );
       fprintf(outfile, "L10intpart %d\n", integral_int);
-      fprintf(outfile, "L10rest %03d\n", fractional_int);
+      fprintf(outfile, "L10rest \"%03d\"\n", fractional_int );
 
       L[11] = L[8] * L[10];
       showline(11);
