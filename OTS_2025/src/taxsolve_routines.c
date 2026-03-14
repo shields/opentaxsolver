@@ -1442,6 +1442,7 @@ IMPORT_STATUS ImportReturnData(char *return_filename, P_FORM_IMPORT_DEF p_form_i
     ret_stat.value = 0.0;
     ret_stat.string = "";
     ret_stat.desc = "";
+    ret_stat.err = IMPORT_ERR_SUCCESS;
 
     // Zero all values, and set all strings to "". This ensures reasonable
     // values, whether or not the file exists, and whether or not the fields exist.
