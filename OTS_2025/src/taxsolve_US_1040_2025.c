@@ -2997,7 +2997,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  if (strlen( YourLastName ) > 0)
   {
    if (strcmp( YourLastName, SpouseLastName ) == 0)
-    fprintf(outfile,"YourNames: %s & %s, %s\n", Your1stName, Spouse1stName, YourLastName );
+    fprintf(outfile,"YourNames: %s & %s %s\n", Your1stName, Spouse1stName, YourLastName );
    else
    if (strlen( SpouseLastName ) > 0)
     fprintf(outfile,"YourNames: %s %s & %s %s\n", Your1stName, YourLastName, Spouse1stName, SpouseLastName );

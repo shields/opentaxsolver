@@ -1719,7 +1719,7 @@ int main( int argc, char *argv[] )
    fprintf(outfile,"YourName: %s\n", YourName );
 
    if (strcmp( YourLastName, SpouseLastName ) == 0)
-    sprintf(YourNames,"%s & %s, %s", Your1stName, Spouse1stName, YourLastName );
+    sprintf(YourNames,"%s & %s %s", Your1stName, Spouse1stName, YourLastName );
    else
    if (strlen( SpouseLastName ) > 0)
     sprintf(YourNames,"%s %s & %s %s", Your1stName, YourLastName, Spouse1stName, SpouseLastName );
