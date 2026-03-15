@@ -1,0 +1,12 @@
+# Compiled binaries
+**/bin/
+
+# Generated PDFs
+*_filled.pdf
+
+# macOS
+.DS_Store
+
+# Editor files
+*.swp
+*~
