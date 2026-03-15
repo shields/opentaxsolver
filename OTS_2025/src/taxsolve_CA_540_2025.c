@@ -48,7 +48,9 @@ double 	sched540part2[MAX_LINES], sched540part2_sub[MAX_LINES], sched540part2_ad
 	sched540part2_add8a=0.0, sched540part2_add8b=0.0, sched540part2_add8c=0.0, sched540part2_sub8d=0.0;
  char 	*Your1stName="", *YourLastName="", *your_socsec="", 
 	*Spouse1stName="", *SpouseLastName="", *spouse_socsec="",
-	*street_address="", *apartment="", *town="", *zipcode="";
+	*street_address="", *apartment="", *town="", *zipcode="",
+	*res_street="", *res_apt="", *res_city="", *res_zip="",
+	*pmb="";
 
 
 double TaxRateFormula( double income, int status )
@@ -803,6 +805,12 @@ int main( int argc, char *argv[] )
  get_parameter( infile, 'b', &j, "CkSameAddress:");
  if (j != 0)
   fprintf(outfile, "CkSameAddress: X\n");
+
+ pmb = GetOptionalTextLine("PMB:");
+ res_street = GetOptionalTextLine("ResStreet:");
+ res_apt = GetOptionalTextLine("ResApt:");
+ res_city = GetOptionalTextLine("ResCity:");
+ res_zip = GetOptionalTextLine("ResZipCode:");
 
  get_parameter( infile, 's', word, "L6" );   /* Are you a dependent? (yes/No). */
 
@@ -1663,6 +1671,8 @@ int main( int argc, char *argv[] )
    showline(113);
    L[115] = L[99] - (L[110] + L[112] + L[113]);
    showline(115);
+   L[116] = L[115];
+   showline(116);
   }
  else
   {
@@ -1730,12 +1740,21 @@ int main( int argc, char *argv[] )
  // GetTextLineF( "Number&Street:" );
  Show_String_wLabel( "Number&Street:", street_address );
  // GetTextLineF( "Apt#:" );
- Show_String_wLabel( "Apt#:", apartment );
+ if (pmb[0] != '\0')
+  Show_String_wLabel( "PMB:", pmb );
+ else
+  Show_String_wLabel( "Apt#:", apartment );
  // GetTextLineF( "Town:" );
  Show_String_wLabel( "Town:", town );
  fprintf(outfile,"State: CA\n");
  // GetTextLineF( "Zipcode:" );
  Show_String_wLabel( "ZipCode:", zipcode );
+ Show_String_wLabel( "ResStreet:", res_street );
+ Show_String_wLabel( "ResApt:", res_apt );
+ Show_String_wLabel( "ResCity:", res_city );
+ if (res_city[0] != '\0')
+  fprintf(outfile, "ResState: CA\n");
+ Show_String_wLabel( "ResZipCode:", res_zip );
  GetTextLineF( "YourDOB:" );
  GetTextLineF( "SpouseDOB:" );
 
@@ -1755,6 +1774,42 @@ int main( int argc, char *argv[] )
    // printf("\nLine '%s' = '%s'\n", labelx, word );
    if (word[0] != '\0')
     { /*valid_entry*/
+      if (strstr( labelx,"RouteNumL116" ) != 0)
+       {
+	fprintf(outfile, "RouteNumL116: \"%s\"\n", word );
+       }
+      else
+      if (strstr( labelx,"AcctTypeL116" ) != 0)
+       {
+	if (strcasecmp( word, "Savings" ) == 0)
+	 fprintf(outfile, "CkSavingsL116: X\n");
+	if (strcasecmp( word, "Checking" ) == 0)
+	 fprintf(outfile, "CkCheckingL116: X\n");
+       }
+      else
+      if (strstr( labelx,"AccntNumL116" ) != 0)
+       {
+	fprintf(outfile, "AccntNum:116: \"%s\"\n", word );
+       }
+      else
+      if (strstr( labelx,"RouteNumL117" ) != 0)
+       {
+	fprintf(outfile, "RouteNumL117: \"%s\"\n", word );
+       }
+      else
+      if (strstr( labelx,"AcctTypeL117" ) != 0)
+       {
+	if (strcasecmp( word, "Savings" ) == 0)
+	 fprintf(outfile, "CkSavingsL117: X\n");
+	if (strcasecmp( word, "Checking" ) == 0)
+	 fprintf(outfile, "CkCheckingL117: X\n");
+       }
+      else
+      if (strstr( labelx,"AccntNumL117" ) != 0)
+       {
+	fprintf(outfile, "AccntNumL117: \"%s\"\n", word );
+       }
+      else
       if (strstr( labelx,"WantHealthInfo" ) != 0)
        {
         if (toupper(word[0]) == 'Y')
