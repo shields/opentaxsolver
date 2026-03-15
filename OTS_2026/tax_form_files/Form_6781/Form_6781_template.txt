@@ -1,0 +1,57 @@
+Title: Form 6781 - Gains and Losses From Section 1256 Contracts and Straddles
+
+{ --- Your Identity --- }
+
+YourName:	
+YourSocSec#:	
+
+{ Check all applicable boxes. See instructions. }
+BoxA	N	{ Mixed straddle election }
+BoxB	N	{ Straddle-by-straddle identification election }
+BoxC	N	{ Mixed straddle account election }
+BoxD	N	{ Net section 1256 contracts loss election }
+
+{ --- Part I | Section 1256 Contracts Marked to Market --- }
+
+{ Listing of gains/losses. }
+{ Enter for each: $Loss, $Gain, Description }
+L1	-300.99		0.0		{ Brokerage 1 }
+	;
+
+L4	;	{ 1099-B adjustments. See instructions and attach statement. }
+L6	;	{ Loss carryback amount, if Box D checked. }
+
+
+{ --- Part II | Gains and Losses From Straddles --- }
+{  -- Section A | Losses From Straddles -- }
+
+{ Line 10 Listing of losses. }
+{			(a)	(b)		(c)	(d)		(e)		(g) }
+{ Enter for each: Description, EntryDate, ClosingDate, $GrossSales, $CostBasis, $OffsettingGain }
+L10	{ -30 SPX , 2-10-24 }	1-2-23		02-10-24
+				1000		1100
+				35.87
+	;
+L11a		;	{ Short-term portion of loss from L10(h) }
+L11b		;	{ Long-term portion of loss from L10(h) }
+
+
+{  -- Section B | Gains From Straddles -- }
+
+{ Line 12 Listing of gains. }
+{			(a)	(b)		(c)	(d)		(e) }
+{ Enter for each: Description, EntryDate, ClosingDate, $GrossSales, $CostBasis }
+L12	{ 12 QQQ , 3-30-24 }	1-2-23		03-30-24
+				900		780
+	;
+L13a	;		{ Short-term portion of gain from L12(f) }
+L13b	;		{ Long-term portion of gain from L12(f) }
+
+{ --- Part III | Unrecognized Gains From Positions Held on Last Day of Tax Year }
+
+{ Line 14 Listing of gains. }
+{			(a)	(b)		(c)		(d) }
+{ Enter for each: Description, AcquisitionDate, $YearEndFMV, $CostBasis }
+L14	{ 20 SPX }	12-1-24 	100 	98
+		;
+

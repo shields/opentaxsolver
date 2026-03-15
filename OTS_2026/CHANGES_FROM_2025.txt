@@ -1,0 +1,165 @@
+Changes from OTS_2025 to OTS_2026 (Pro Forma)
+===============================================
+
+This document records every constant changed from the 2025 to 2026
+pro forma version. Values marked (est.) are estimated from inflation
+adjustments; all others are from IRS Rev. Proc. 2025-32 or enacted
+legislation (OBBB, CA SB 1144).
+
+Scope reduction:
+  - Removed all non-CA state solvers and form files
+  - Removed formdata/ directory (no 2026 PDFs)
+  - Version reset to 0.01 in all solvers
+
+======================================================================
+Federal: taxsolve_US_1040_2026.c
+======================================================================
+
+Tax brackets (brkpt array):
+  Single:       0, 11925, 48475, 103350, 197300, 250525, 626350
+             -> 0, 12400, 50400, 105700, 201775, 256225, 640600
+  MFJ:          0, 23850, 96950, 206700, 394600, 501050, 751600
+             -> 0, 24800, 100800, 211400, 403550, 512450, 768700
+  MFS:          0, 11925, 48475, 103350, 197300, 250525, 375800
+             -> 0, 12400, 50400, 105700, 201775, 256225, 384350
+  HOH:          0, 17000, 64850, 103350, 197300, 250500, 626350
+             -> 0, 17700, 67450, 105700, 201775, 256200, 640600
+  Rates: unchanged (10/12/22/24/32/35/37%)
+
+Standard deduction (0 boxes checked):
+  Single:    15750 -> 16100
+  MFJ:       31500 -> 32200
+  MFS:       15750 -> 16100
+  HOH:       23625 -> 24150
+
+Standard deduction (1 box checked):
+  Single:    17750 -> 18150
+  MFJ:       33100 -> 33850
+  MFS:       17350 -> 17750
+  HOH:       25625 -> 26200
+
+Standard deduction (2 boxes checked):
+  Single:    19750 -> 20200
+  MFJ:       34700 -> 35500
+  MFS:       18950 -> 19400
+  HOH:       27625 -> 28250
+
+Standard deduction (3 boxes checked):
+  MFJ:       36300 -> 37150
+  MFS:       20550 -> 21050
+
+Standard deduction (4 boxes checked):
+  MFJ:       37900 -> 38800
+  MFS:       22150 -> 22700
+
+Capital gains 0% threshold:
+  Single/MFS:  48350 ->  49450
+  MFJ/Widow:   96700 ->  98900
+  HOH:         64750 ->  66250 (est.)
+
+Capital gains 20% threshold:
+  Single:     533400 -> 545500
+  MFS:        300000 -> 306750 (est.)
+  MFJ/Widow:  600050 -> 613700
+  HOH:        566700 -> 579650 (est.)
+
+AMT exemption:
+  Single/HOH:   88100 ->  90100
+  MFJ/Widow:   137000 -> 140200
+  MFS:          68500 ->  70100
+
+AMT phase-out thresholds:
+  Single/HOH thresholdA:  626350 ->  640600
+  Single/HOH thresholdB:  978750 -> 1001000 (est.)
+  Single/HOH thresholdC:  239100 ->  244600 (est.)
+  MFJ/Widow thresholdA:  1252700 -> 1281200 (est.)
+  MFJ/Widow thresholdB:  1800700 -> 1841600 (est.)
+  MFJ/Widow thresholdC:   239100 ->  244600 (est.)
+  MFS thresholdA:          626350 ->  640600
+  MFS thresholdB:          900350 ->  920600 (est.)
+  MFS thresholdC:          119550 ->  122300 (est.)
+
+MFS AMTI add-back:
+  Threshold:    900350 ->  920600
+  Upper limit: 1174350 -> 1201000
+  Exemption:     68500 ->   70100
+
+SALT deduction cap (OBBB indexed):
+  Non-MFS:  40000 -> 40400
+  MFS:      20000 -> 20200
+
+65+ age check date:
+  January 2, 1961 -> January 2, 1962
+
+ApplyTo year: 2025 -> 2026
+
+Schedule 1-A thresholds: unchanged
+  Tips cap: $25,000
+  Overtime cap: $25,000/$12,500
+  Auto-pay cap: $10,000
+  Phase-out thresholds: unchanged
+
+======================================================================
+California: taxsolve_CA_540_2026.c
+======================================================================
+
+Tax brackets (~2.971% CPI adjustment, all est.):
+  Single/MFS:
+    11079, 26264, 41452, 57542, 72724, 371479, 445771, 742953
+ -> 11408, 27044, 42683, 59251, 74884, 382514, 459009, 765025
+
+  MFJ/Widow:
+    22158, 52528, 82904, 115084, 145448, 742958, 891542, 1485906
+ -> 22816, 54088, 85366, 118502, 149768, 765028, 918018, 1530038
+
+  HOH:
+    22173, 52530, 67716, 83805, 98990, 505208, 606251, 1010417
+ -> 22832, 54091, 69728, 86294, 101932, 520215, 624262, 1040427
+
+  Rates: unchanged (1/2/4/6/8/9.3/10.3/11.3/12.3%)
+
+Standard deduction (est.):
+  Single/MFS:  5706 ->  5876
+  MFJ/HOH/Widow: 11412 -> 11751
+
+Exemption credits:
+  Blind/65+ credit:  153 -> 158 (est.)
+  Dependent credit:  475 -> 700 (SB 1144, exact)
+
+Itemized deduction thresholds (est.):
+  Single/MFS:  252203 -> 259697
+  HOH:         378310 -> 389551
+  MFJ/Widow:   504411 -> 519399
+
+CA SALT limit (Sched 540 Part 2):
+  Non-MFS:  40000 -> 40400
+  MFS:      20000 -> 20200
+
+Mental Health Services Tax: unchanged ($1,000,000)
+
+======================================================================
+HSA Form 8889 (template/example files)
+======================================================================
+
+Contribution limits:
+  Self-only:   $4,300 -> $4,400
+  Family:      $8,550 -> $8,750
+  Catch-up (55+): $1,000 (unchanged)
+
+======================================================================
+Other forms (year references only, no constant changes)
+======================================================================
+
+  taxsolve_f8812_2026.c  - Child tax credit $2,200 (unchanged)
+  taxsolve_f8959_2026.c  - Medicare thresholds (unchanged, not indexed)
+  taxsolve_f8960_2026.c  - NIIT thresholds (unchanged, not indexed)
+  taxsolve_f8995_2026.c  - QBI deduction (unchanged)
+  taxsolve_f8829_2026.c  - Home office (year refs only)
+  taxsolve_f2210_2026.c  - Underpayment penalty (year refs only)
+  taxsolve_f6781_2026.c  - Gains/losses (year refs only)
+  taxsolve_f8606.c       - Nondeductible IRAs (year refs only)
+  taxsolve_US_1040_Sched_C_2026.c  - Schedule C (year refs only)
+  taxsolve_US_1040_Sched_SE_2026.c - Self-employment (year refs only)
+  taxsolve_CA_5805_2026.c - CA underpayment (year refs only)
+  taxsolve_HSA_f8889.c   - HSA (year refs only; limits in templates)
+  taxsolve_US_1040_Sched_1-A.c - Tips/OT/SS (year refs only)

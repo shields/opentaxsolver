@@ -1,0 +1,25 @@
+DISCLAIMER - OTS_2026 Pro Forma Tax Year 2026
+==============================================
+
+This is an UNOFFICIAL, EXPERIMENTAL fork of OpenTaxSolver for pro forma
+2026 tax year scenario modeling. It is:
+
+  - NOT endorsed by, affiliated with, or supported by Aston Roberts or
+    the OpenTaxSolver project.
+
+  - NOT tax advice. Do not rely on this software for actual tax filing
+    or compliance purposes.
+
+  - NOT guaranteed to accurately reflect 2026 tax law or IRS/FTB rules.
+    Many values are ESTIMATES based on inflation adjustments and
+    preliminary legislation; official numbers may differ.
+
+  - For scenario modeling and planning purposes ONLY.
+
+  - USE AT YOUR OWN RISK.
+
+This fork is based on known and estimated 2026 tax parameters as of
+March 2026, including provisions from the "One, Big, Beautiful Bill"
+(OBBB) and IRS Revenue Procedure 2025-32. No PDF form filling is
+supported (no 2026 PDF forms exist). Only federal (US 1040) and
+California (CA 540) returns are included.
