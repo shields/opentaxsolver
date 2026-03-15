@@ -2487,8 +2487,8 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  localtax[5] = smallerof( localtax[4], loctaxlimit );
 
  /* State and Local Tax Deduction Worksheet. */
- if (((L[11] > 500000.0) &&  (localtax[4] > 10000.0)) || 
-     ((status ==  MARRIED_FILING_SEPARAT) && (L[11] > 500000.0) && (localtax[4] > 5000.0)))
+ if (((L[11] > 500000.0) &&  (localtax[4] > 10000.0)) ||
+     ((status ==  MARRIED_FILING_SEPARAT) && (L[11] > 250000.0) && (localtax[4] > 5000.0)))
   { double ws[100];
     fprintf(outfile,"\n  Doing Sched-A State and Local Tax Deduction (STTD) Worksheet.\n");
     ws[1] = 40000.0;
