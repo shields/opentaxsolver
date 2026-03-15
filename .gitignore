@@ -1,5 +1,9 @@
 # Compiled binaries
 **/bin/
+**/Run_taxsolve_GUI
+
+# Solver output files
+**/*_out.txt
 
 # Generated PDFs
 *_filled.pdf
