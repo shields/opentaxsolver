@@ -88,6 +88,15 @@ SALT deduction cap (OBBB indexed):
   Non-MFS:  40000 -> 40400
   MFS:      20000 -> 20200
 
+SALT phase-out worksheet (Sched A STTD):
+  Worksheet cap ws[1]:          40000 ->  40400
+  Phase-out threshold ws[5]:   500000 -> 505000 (est.)
+  MFS phase-out threshold:     250000 -> 252500 (est.)
+  Phase-out rate: 30% per dollar over threshold (unchanged)
+  Minimum floor: $10,000 (unchanged)
+  Bug fix: MFS trigger condition now uses MFS threshold
+    (was using $500K in both 2025 original and 2026; fixed in both)
+
 65+ age check date:
   January 2, 1961 -> January 2, 1962
 
@@ -163,3 +172,36 @@ Other forms (year references only, no constant changes)
   taxsolve_CA_5805_2026.c - CA underpayment (year refs only)
   taxsolve_HSA_f8889.c   - HSA (year refs only; limits in templates)
   taxsolve_US_1040_Sched_1-A.c - Tips/OT/SS (year refs only)
+
+======================================================================
+Not considered (potential 2026 law changes NOT addressed)
+======================================================================
+
+The following potential 2026 changes were identified but NOT
+incorporated into this fork. They may affect accuracy for certain
+filers:
+
+  - Child Tax Credit step-up: OBBB phases CTC from $2,000 to $2,500
+    per child over multiple years. The 2025 amount is $2,200; the 2026
+    amount may be $2,300 or $2,500 depending on the phase-in schedule.
+    This fork keeps the 2025 value of $2,200.
+
+  - Clean vehicle / energy credits: OBBB modified or repealed several
+    clean energy tax credits (EV credits, residential energy credits).
+    These are not implemented in OTS at all, so no change was needed
+    in this fork.
+
+  - Student loan interest deduction: May have been modified under OBBB.
+    Not investigated for this fork.
+
+  - Education credits (AOTC/LLC): Possible changes under OBBB. Not
+    investigated for this fork.
+
+  - Estate/gift tax exemption: Made permanent at doubled level by OBBB.
+    Not relevant to income tax solver.
+
+  - Social Security wage base: Expected to increase to ~$184,500 for
+    2026. Only relevant if referenced in Schedule SE; not verified.
+
+  - Mileage rates (Schedule C): IRS standard mileage rate for 2026
+    not yet announced. The 2025 rate is used as placeholder.

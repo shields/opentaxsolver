@@ -2486,12 +2486,12 @@ int main( int argc, char *argv[] )						/* Updated for 2026. */
  localtax[4] =  localtax[1] +  localtax[2] +  localtax[3];
  localtax[5] = smallerof( localtax[4], loctaxlimit );
 
- /* State and Local Tax Deduction Worksheet. */
- if (((L[11] > 500000.0) &&  (localtax[4] > 10000.0)) || 
-     ((status ==  MARRIED_FILING_SEPARAT) && (L[11] > 500000.0) && (localtax[4] > 5000.0)))
+ /* State and Local Tax Deduction Worksheet. */					/* Updated for 2026. */
+ if (((L[11] > 505000.0) &&  (localtax[4] > 10000.0)) ||
+     ((status ==  MARRIED_FILING_SEPARAT) && (L[11] > 252500.0) && (localtax[4] > 5000.0)))
   { double ws[100];
     fprintf(outfile,"\n  Doing Sched-A State and Local Tax Deduction (STTD) Worksheet.\n");
-    ws[1] = 40000.0;
+    ws[1] = 40400.0;
     fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 1, ws[1] );
     ws[2] = L[11];
     fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 2, ws[2] );
@@ -2501,9 +2501,9 @@ int main( int argc, char *argv[] )						/* Updated for 2026. */
     ws[4] = ws[2] + ws[3];
     fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 4, ws[4] );
     if (status ==  MARRIED_FILING_SEPARAT)
-     ws[5] = 250000.0;
+     ws[5] = 252500.0;
     else
-     ws[5] = 500000.0;
+     ws[5] = 505000.0;
     fprintf(outfile,"   Sched-A STTD ws[%d] = %6.2f\n", 5, ws[5] );
     if (ws[4] > ws[5])
      {
