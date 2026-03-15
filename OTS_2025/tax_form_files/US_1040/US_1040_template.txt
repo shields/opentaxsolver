@@ -1,5 +1,8 @@
 Title:  US Federal 1040 Tax Form - 2025
 
+Form8959FileName:	{ Form 8959 output file. If provided, S2_11 and L25c are imported automatically. }
+Form8960FileName:	{ Form 8960 output file. If provided, S2_12 is imported automatically. }
+
 { --- Your Filing Status & Exemptions --- }
 
 Status        Single    { Single, Married/Joint, Head_of_House, Married/Sep, Widow(er) }

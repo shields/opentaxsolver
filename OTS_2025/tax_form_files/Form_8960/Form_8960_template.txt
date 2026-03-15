@@ -1,5 +1,7 @@
 Title: 2025 Form 8960 Net Investment Income Tax-Individuals, Estates, and Trusts
 
+Form1040FileName:	{ Form 1040 output file. If provided, L13 MAGI is imported from 1040 AGI automatically. }
+
 {--- Your Identity --- }
 
 YourName:

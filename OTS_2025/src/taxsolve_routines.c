@@ -1015,43 +1015,73 @@ void capitalize( char *word )
 }
 
 /*------------------------------------------------------------------------------*/
-/* GetTextLineF - Read line with specified label name, and put the contents	*/
-/*  of the remainder of the line to the output file.				*/
+/* read_rest_of_line - Read the remainder of the current line from infile,	*/
+/*  stripping brace-delimited comments.  Returns a strdup'd string.		*/
 /*------------------------------------------------------------------------------*/
-char *GetTextLineF( char *linename )
+static char *read_rest_of_line( void )
 {
- int k=0;
+ int k = 0;
  char line[5000];
- get_parameter( infile, 's', line, linename );
- line[k] = getc(infile);
- while ((!feof(infile)) && (line[k] != '\n'))
+ line[k] = getc( infile );
+ while ((!feof( infile )) && (line[k] != '\n'))
   {
    if (line[k] == '{')
     {
-     do line[k] = getc(infile); while ((!feof(infile)) && (line[k] != '}'));
-     if (line[k] == '}') line[k] = getc(infile);
+     do line[k] = getc( infile ); while ((!feof( infile )) && (line[k] != '}'));
+     if (line[k] == '}') line[k] = getc( infile );
     }
    else
     {
      k++;
      if (k >= 5000)
-      { 
-        line[k-1] = '\0';  
-        while ((!feof(infile)) && (getc(infile) != '\n'));  
-        consume_leading_trailing_whitespace( line );
-	fprintf(outfile, "%s %s\n", linename, line );
-        return strdup( line );
+      {
+       line[k-1] = '\0';
+       while ((!feof( infile )) && (getc( infile ) != '\n'));
+       consume_leading_trailing_whitespace( line );
+       return strdup( line );
       }
-     line[k] = getc(infile);
+     line[k] = getc( infile );
     }
   }
  line[k] = '\0';
  consume_leading_trailing_whitespace( line );
- if (do_all_caps)
-  capitalize( line );
- if (writeout_line)
-  fprintf(outfile, "%s %s\n", linename, line ); 
  return strdup( line );
+}
+
+
+/*------------------------------------------------------------------------------*/
+/* GetTextLineF - Read line with specified label name, and put the contents	*/
+/*  of the remainder of the line to the output file.				*/
+/*------------------------------------------------------------------------------*/
+char *GetTextLineF( char *linename )
+{
+ char line[5000];
+ char *result;
+ get_parameter( infile, 's', line, linename );
+ result = read_rest_of_line();
+ if (do_all_caps)
+  capitalize( result );
+ if (writeout_line)
+  fprintf(outfile, "%s %s\n", linename, result );
+ return result;
+}
+
+
+/* GetOptionalTextLine - Like GetTextLine, but if the expected label is not	*/
+/*  found, rewind the file position and return an empty string.			*/
+/*------------------------------------------------------------------------------*/
+char *GetOptionalTextLine( char *linename )
+{
+ fpos_t saved_pos;
+ char word[4096];
+ fgetpos( infile, &saved_pos );
+ get_word( infile, word );
+ if (strcmp( word, linename ) != 0)
+  {
+   fsetpos( infile, &saved_pos );
+   return strdup( "" );
+  }
+ return read_rest_of_line();
 }
 
 

@@ -20,7 +20,7 @@
 /*                                                                      */
 /************************************************************************/
 
-float thisversion=4.00;
+float thisversion=4.01;
 
 #include <stdio.h>
 #include <time.h>
@@ -37,12 +37,25 @@ float thisversion=4.00;
 #define Yes 1
 #define No  0
 
+#define MAXSTRLEN 2048
+
+/*====== Form 1040 Import (for MAGI) ======*/
+struct {
+	double L11a;	/* Adjusted Gross Income -> L13 (MAGI) */
+} f1040i;
+
+static FORM_IMPORT_DEF f1040_imp_defs[] = {
+	{ "L11a", &f1040i.L11a, NULL },
+};
+int f1040_imp_defs_size = sizeof(f1040_imp_defs) / sizeof(FORM_IMPORT_DEF);
+char f1040_filename[MAXSTRLEN] = "";
+
 /*----------------------------------------------------------------------------*/
 
 int main( int argc, char *argv[] )
 {
  int i, j, k;
- char word[6000], outfname[4000], *infname=0;
+ char word[6000], outfname[4000], *infname=0, *f1040_fn;
  time_t now;
 
  double L4a = 0.0,  L4b = 0.0, L4c = 0.0;
@@ -115,6 +128,15 @@ int main( int argc, char *argv[] )
  //  L[4] = L[2] - L[3];
  //  showline_wlabel( "L4", L[4] );
 
+ /*--- Optional Form 1040 output filename for automatic MAGI import. ---*/
+ f1040_fn = GetOptionalTextLine( "Form1040FileName:" );
+ if (f1040_fn[0] != '\0')
+  {
+   strncpy( f1040_filename, f1040_fn, MAXSTRLEN - 1 );
+   f1040_filename[MAXSTRLEN - 1] = '\0';
+  }
+ free( f1040_fn );
+
  GetTextLineF( "YourName:" );
  GetTextLineF( "YourSocSec#:" );
 
@@ -181,7 +203,17 @@ int main( int argc, char *argv[] )
  showline( 12 );
 
  if(individual == Yes){
-   GetLineF( "L13", &L[13] );
+   if (f1040_filename[0] != '\0')
+    {
+     IMPORT_STATUS imp_stat = ImportReturnData( f1040_filename, f1040_imp_defs, f1040_imp_defs_size );
+     if (imp_stat.err != IMPORT_ERR_SUCCESS)
+      { ImportPrintStatus( outfile, "Form 1040", imp_stat );  exit(1); }
+     GetLine( "L13", &L[13] );	/* consume from input */
+     L[13] = f1040i.L11a;	/* override with imported AGI */
+     showline_wmsg( 13, "(MAGI imported from Form 1040 AGI)" );
+    }
+   else
+    GetLineF( "L13", &L[13] );
    if( status == MARRIED_FILING_JOINTLY)
 	  L[14] = 250000.00;			// Updated/checked for tax-year 2025.
    else if(status == WIDOW)

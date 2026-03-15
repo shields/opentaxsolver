@@ -78,6 +78,30 @@ double  collectibles_gains=0.0, ws_sched_D[MAX_LINES];
 char adj_code_err[MAXADJERRCNT][1024];
 int adjerrcnt=0;
 
+/*====== Form 8959 Import ======*/
+struct {
+	double L18;	/* Additional Medicare Tax (-> Schedule 2, line 11) */
+	double L24;	/* Additional Medicare Tax withholding (-> line 25c) */
+} f8959i;
+
+static FORM_IMPORT_DEF f8959_imp_defs[] = {
+	{ "L18", &f8959i.L18, NULL },
+	{ "L24", &f8959i.L24, NULL },
+};
+int f8959_imp_defs_size = sizeof(f8959_imp_defs) / sizeof(FORM_IMPORT_DEF);
+char f8959_filename[MAXSTRLEN] = "";
+
+/*====== Form 8960 Import ======*/
+struct {
+	double L17;	/* Net Investment Income Tax (-> Schedule 2, line 12) */
+} f8960i;
+
+static FORM_IMPORT_DEF f8960_imp_defs[] = {
+	{ "L17", &f8960i.L17, NULL },
+};
+int f8960_imp_defs_size = sizeof(f8960_imp_defs) / sizeof(FORM_IMPORT_DEF);
+char f8960_filename[MAXSTRLEN] = "";
+
 			/* Following values taken from 1040-Instructions pg 80. */	/* Updated for 2025. */
 double brkpt[4][9]={
 		{ 0.0,  11925.0,  48475.0, 103350.0, 197300.0, 250525.0, 626350.0, 9e19 },  /* Single */
@@ -1952,7 +1976,7 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  char SchedB7b[1024]="";
  double ntcpe=0.0, pyei=0.0;
  double S1_1099K_err=0.0, Sched2_17[50];
- char *S2_17a_Type, *S2_17z_Type, *S3_6z_Type, *S3_13z_Type;
+ char *S2_17a_Type, *S2_17z_Type, *S3_6z_Type, *S3_13z_Type, *f8959_fn, *f8960_fn;
  double charityCC=0.0, charityOT=0.0, charityCO=0.0;
 
  /* Decode any command-line arguments. */
@@ -2025,6 +2049,24 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
    system( "bin/notify_popup -delay 3 -expire 10 \"Warning: This program is NOT ready for 2025.\" &" );
   #endif
 #endif
+
+ /*--- Optional Form 8959 output filename for automatic import. ---*/
+ f8959_fn = GetOptionalTextLine( "Form8959FileName:" );
+ if (f8959_fn[0] != '\0')
+  {
+   strncpy( f8959_filename, f8959_fn, MAXSTRLEN - 1 );
+   f8959_filename[MAXSTRLEN - 1] = '\0';
+  }
+ free( f8959_fn );
+
+ /*--- Optional Form 8960 output filename for automatic import. ---*/
+ f8960_fn = GetOptionalTextLine( "Form8960FileName:" );
+ if (f8960_fn[0] != '\0')
+  {
+   strncpy( f8960_filename, f8960_fn, MAXSTRLEN - 1 );
+   f8960_filename[MAXSTRLEN - 1] = '\0';
+  }
+ free( f8960_fn );
 
  get_parameter( infile, 's', word, "Status" );	/* Single, Married/joint, Married/sep, Head house, Widow(er) */
  get_parameter( infile, 'l', word, "Status?");
@@ -2679,8 +2721,39 @@ int main( int argc, char *argv[] )						/* Updated for 2025. */
  GetLine( "S2_8", &Sched2[8] );		/* Additional tax on IRAs or other tax-favored accounts, Form 5329 */
  GetLine( "S2_9", &Sched2[9] );		/* Household employment taxes. Sched H */
 
- GetLine( "S2_11", &Sched2[11] );	/* Additional Medicare Tax. Attach Form 8959 */
- GetLine( "S2_12", &Sched2[12] );	/* Net investment income tax. Attach Form 8960 */
+ /* 8959 import is fatal on error: if specified, the file must exist and parse.
+    8960 import tolerates FILE_NOT_FOUND because it may not have been run yet
+    in the dependency chain (1040 runs mid-chain before 8960 is finalized). */
+ if (f8959_filename[0] != '\0')
+  {
+   IMPORT_STATUS imp_stat = ImportReturnData( f8959_filename, f8959_imp_defs, f8959_imp_defs_size );
+   if (imp_stat.err != IMPORT_ERR_SUCCESS)
+    { ImportPrintStatus( outfile, "Form 8959", imp_stat );  exit(1); }
+   Sched2[11] = f8959i.L18;
+   L25c += f8959i.L24;
+   L[25] = L25a + L25b + L25c;
+   fprintf( outfile, "INFO: Imported Form 8959 from '%s'\n", f8959_filename );
+   fprintf( outfile, "INFO:  L18 = %8.2f -> S2_11 (Additional Medicare Tax)\n", f8959i.L18 );
+   fprintf( outfile, "INFO:  L24 = %8.2f -> L25c  (Additional Medicare Tax withholding)\n", f8959i.L24 );
+  }
+ else
+  GetLine( "S2_11", &Sched2[11] );	/* Additional Medicare Tax. Attach Form 8959 */
+ if (f8960_filename[0] != '\0')
+  {
+   IMPORT_STATUS imp_stat = ImportReturnData( f8960_filename, f8960_imp_defs, f8960_imp_defs_size );
+   if (imp_stat.err == IMPORT_ERR_SUCCESS)
+    {
+     Sched2[12] = f8960i.L17;
+     fprintf( outfile, "INFO: Imported Form 8960 from '%s'\n", f8960_filename );
+     fprintf( outfile, "INFO:  L17 = %8.2f -> S2_12 (Net Investment Income Tax)\n", f8960i.L17 );
+    }
+   else if (imp_stat.err == IMPORT_ERR_FILE_NOT_FOUND)
+     fprintf( outfile, "INFO: Form 8960 file '%s' not found, skipping NIIT import.\n", f8960_filename );
+   else
+    { ImportPrintStatus( outfile, "Form 8960", imp_stat );  exit(1); }
+  }
+ else
+  GetLine( "S2_12", &Sched2[12] );	/* Net investment income tax. Attach Form 8960 */
  GetLine( "S2_13", &Sched2[13] );	/* Uncollected social security ... from Form W-2, box 12 */
  GetLine( "S2_14", &Sched2[14] );	/* Interest on tax due on installment income */
  GetLine( "S2_15", &Sched2[15] );	/* Interest on the deferred tax on gain from certain installment sales */
